@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useAppStore } from '@/store/useAppStore'
-import { initializeOpenAI } from '@/modules/AIService'
 import { createInitialCards } from '@/modules/GrammarEngine'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 
-type Step = 'welcome' | 'name' | 'level' | 'apiKey' | 'loading'
+type Step = 'welcome' | 'name' | 'level' | 'loading'
 
 const LEVELS: { value: FrenchLevel; label: string; description: string }[] = [
   { value: 'A1', label: 'A1 - Начинающий', description: 'Знаю базовые фразы и слова' },
@@ -19,27 +18,16 @@ const LEVELS: { value: FrenchLevel; label: string; description: string }[] = [
 ]
 
 export default function OnboardingFlow() {
-  const { completeOnboarding, updateSettings } = useAppStore()
+  const { completeOnboarding } = useAppStore()
   const [step, setStep] = useState<Step>('welcome')
   const [name, setName] = useState('')
   const [level, setLevel] = useState<FrenchLevel>('A1')
-  const [apiKey, setApiKey] = useState('')
   const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
 
   const handleComplete = async () => {
-    if (!apiKey.trim()) {
-      setError('Введите API ключ OpenAI')
-      return
-    }
-
     setStep('loading')
-    setIsLoading(true)
 
     try {
-      // Initialize OpenAI
-      initializeOpenAI(apiKey)
-
       // Complete onboarding
       completeOnboarding({
         name: name.trim() || 'Пользователь',
@@ -48,18 +36,15 @@ export default function OnboardingFlow() {
         preferredAiProvider: 'openai',
       })
 
-      // Save API key in settings
-      updateSettings({ openaiApiKey: apiKey })
-
       // Create initial grammar cards (this may take a moment)
       const userId = useAppStore.getState().user?.id
       if (userId) {
         await createInitialCards(userId, level, 3)
       }
     } catch (err) {
-      setError('Ошибка при настройке. Проверьте API ключ.')
-      setStep('apiKey')
-      setIsLoading(false)
+      console.error('Onboarding error:', err)
+      setError('Ошибка при настройке. Попробуйте ещё раз.')
+      setStep('level')
     }
   }
 
@@ -131,53 +116,14 @@ export default function OnboardingFlow() {
                 </button>
               ))}
             </div>
+            {error && (
+              <p className="text-red-500 text-sm mb-4">{error}</p>
+            )}
             <div className="flex gap-3">
               <Button variant="secondary" onClick={() => setStep('name')}>
                 Назад
               </Button>
-              <Button onClick={() => setStep('apiKey')} className="flex-1">
-                Далее
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {step === 'apiKey' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              OpenAI API ключ
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              Для работы AI учителя нужен ваш API ключ OpenAI.{' '}
-              <a
-                href="https://platform.openai.com/api-keys"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 hover:underline"
-              >
-                Получить ключ
-              </a>
-            </p>
-            <Input
-              type="password"
-              value={apiKey}
-              onChange={(e) => {
-                setApiKey(e.target.value)
-                setError('')
-              }}
-              placeholder="sk-..."
-              error={error}
-              className="mb-4"
-            />
-            <div className="flex gap-3">
-              <Button variant="secondary" onClick={() => setStep('level')}>
-                Назад
-              </Button>
-              <Button
-                onClick={handleComplete}
-                isLoading={isLoading}
-                className="flex-1"
-              >
+              <Button onClick={handleComplete} className="flex-1">
                 Завершить
               </Button>
             </div>

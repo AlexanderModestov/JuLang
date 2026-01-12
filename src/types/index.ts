@@ -175,7 +175,6 @@ export interface AppSettings {
   selectedVoice?: string
   notificationsEnabled: boolean
   notificationTime?: string
-  openaiApiKey?: string
 }
 
 // Default values

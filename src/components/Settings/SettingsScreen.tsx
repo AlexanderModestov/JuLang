@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import { useAppStore } from '@/store/useAppStore'
-import { initializeOpenAI } from '@/modules/AIService'
 import { getAvailableVoices } from '@/modules/SpeechService'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
@@ -11,25 +9,8 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function SettingsScreen() {
   const { user, settings, updateUser, updateSettings } = useAppStore()
-  const [apiKey, setApiKey] = useState(settings.openaiApiKey || '')
-  const [isSaving, setIsSaving] = useState(false)
-  const [message, setMessage] = useState('')
 
   const frenchVoices = getAvailableVoices('fr')
-
-  const handleSaveApiKey = async () => {
-    setIsSaving(true)
-    try {
-      initializeOpenAI(apiKey)
-      updateSettings({ openaiApiKey: apiKey })
-      setMessage('API ключ сохранён!')
-    } catch (error) {
-      setMessage('Ошибка при сохранении')
-    } finally {
-      setIsSaving(false)
-      setTimeout(() => setMessage(''), 3000)
-    }
-  }
 
   const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
     updateSettings({ theme })
@@ -58,7 +39,7 @@ export default function SettingsScreen() {
       {/* Profile */}
       <Card>
         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          👤 Профиль
+          Профиль
         </h3>
 
         <div className="space-y-4">
@@ -94,48 +75,10 @@ export default function SettingsScreen() {
         </div>
       </Card>
 
-      {/* API Key */}
-      <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          🔑 API настройки
-        </h3>
-
-        <div className="space-y-4">
-          <Input
-            label="OpenAI API ключ"
-            type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="sk-..."
-            helperText="Ключ хранится локально на вашем устройстве"
-          />
-
-          <div className="flex items-center gap-4">
-            <Button onClick={handleSaveApiKey} isLoading={isSaving}>
-              Сохранить
-            </Button>
-            {message && (
-              <span className="text-sm text-green-600 dark:text-green-400">
-                {message}
-              </span>
-            )}
-          </div>
-
-          <a
-            href="https://platform.openai.com/api-keys"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-primary-600 hover:underline"
-          >
-            Получить API ключ →
-          </a>
-        </div>
-      </Card>
-
       {/* Voice settings */}
       <Card>
         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          🔊 Голосовые настройки
+          Голосовые настройки
         </h3>
 
         <div className="space-y-4">
@@ -179,7 +122,7 @@ export default function SettingsScreen() {
       {/* Theme */}
       <Card>
         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          🎨 Оформление
+          Оформление
         </h3>
 
         <div className="flex gap-2">
@@ -196,9 +139,9 @@ export default function SettingsScreen() {
                 }
               `}
             >
-              {theme === 'light' && '☀️ Светлая'}
-              {theme === 'dark' && '🌙 Тёмная'}
-              {theme === 'system' && '💻 Системная'}
+              {theme === 'light' && 'Светлая'}
+              {theme === 'dark' && 'Тёмная'}
+              {theme === 'system' && 'Системная'}
             </button>
           ))}
         </div>
@@ -207,18 +150,18 @@ export default function SettingsScreen() {
       {/* Data */}
       <Card>
         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          💾 Данные
+          Данные
         </h3>
 
         <div className="space-y-3">
           <Button variant="secondary" className="w-full">
-            📥 Экспортировать данные
+            Экспортировать данные
           </Button>
           <Button variant="secondary" className="w-full">
-            📤 Импортировать данные
+            Импортировать данные
           </Button>
           <Button variant="danger" className="w-full">
-            🗑️ Удалить все данные
+            Удалить все данные
           </Button>
         </div>
       </Card>
