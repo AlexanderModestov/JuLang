@@ -11,7 +11,6 @@ import {
 import { saveConversation } from '@/db'
 import type { Message, Conversation } from '@/types'
 import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
 
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
@@ -205,9 +204,8 @@ export default function ConversationScreen() {
             key={message.id}
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <Card
-              padding="sm"
-              className={`max-w-[80%] ${
+            <div
+              className={`max-w-[80%] p-3 rounded-xl ${
                 message.role === 'user'
                   ? 'bg-primary-600 text-white'
                   : 'bg-gray-100 dark:bg-gray-700'
@@ -221,22 +219,22 @@ export default function ConversationScreen() {
                   onClick={() => speak(message.content)}
                   className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 >
-                  🔊 Прослушать
+                  Прослушать
                 </button>
               )}
-            </Card>
+            </div>
           </div>
         ))}
 
         {isLoading && (
           <div className="flex justify-start">
-            <Card padding="sm" className="bg-gray-100 dark:bg-gray-700">
+            <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700">
               <div className="flex gap-1">
-                <span className="animate-bounce">●</span>
-                <span className="animate-bounce delay-100">●</span>
-                <span className="animate-bounce delay-200">●</span>
+                <span className="animate-bounce">.</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
               </div>
-            </Card>
+            </div>
           </div>
         )}
 
