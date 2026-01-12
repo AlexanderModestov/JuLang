@@ -1,0 +1,223 @@
+{
+  "categories": [
+    "articles",
+    "verbs",
+    "pronouns",
+    "tenses",
+    "adjectives",
+    "prepositions",
+    "syntax"
+  ],
+  "topics": [
+    {
+      "id": "definite-articles",
+      "title": "Les articles définis (le, la, les)",
+      "titleRu": "Определённые артикли",
+      "level": "A1",
+      "category": "articles"
+    },
+    {
+      "id": "indefinite-articles",
+      "title": "Les articles indéfinis (un, une, des)",
+      "titleRu": "Неопределённые артикли",
+      "level": "A1",
+      "category": "articles"
+    },
+    {
+      "id": "etre-avoir-present",
+      "title": "Être et avoir au présent",
+      "titleRu": "Глаголы être и avoir в настоящем времени",
+      "level": "A1",
+      "category": "verbs"
+    },
+    {
+      "id": "regular-verbs-er",
+      "title": "Les verbes en -er au présent",
+      "titleRu": "Глаголы на -er в настоящем времени",
+      "level": "A1",
+      "category": "verbs"
+    },
+    {
+      "id": "negation",
+      "title": "La négation (ne...pas)",
+      "titleRu": "Отрицание",
+      "level": "A1",
+      "category": "syntax"
+    },
+    {
+      "id": "subject-pronouns",
+      "title": "Les pronoms sujets",
+      "titleRu": "Личные местоимения (подлежащие)",
+      "level": "A1",
+      "category": "pronouns"
+    },
+    {
+      "id": "adjective-agreement",
+      "title": "L'accord des adjectifs",
+      "titleRu": "Согласование прилагательных",
+      "level": "A1",
+      "category": "adjectives"
+    },
+    {
+      "id": "passe-compose-avoir",
+      "title": "Le passé composé avec avoir",
+      "titleRu": "Прошедшее время с avoir",
+      "level": "A2",
+      "category": "tenses"
+    },
+    {
+      "id": "passe-compose-etre",
+      "title": "Le passé composé avec être",
+      "titleRu": "Прошедшее время с être",
+      "level": "A2",
+      "category": "tenses"
+    },
+    {
+      "id": "imparfait",
+      "title": "L'imparfait",
+      "titleRu": "Имперфект (прошедшее незавершённое)",
+      "level": "A2",
+      "category": "tenses"
+    },
+    {
+      "id": "direct-object-pronouns",
+      "title": "Les pronoms COD (le, la, les)",
+      "titleRu": "Местоимения прямого дополнения",
+      "level": "A2",
+      "category": "pronouns"
+    },
+    {
+      "id": "indirect-object-pronouns",
+      "title": "Les pronoms COI (lui, leur)",
+      "titleRu": "Местоимения косвенного дополнения",
+      "level": "A2",
+      "category": "pronouns"
+    },
+    {
+      "id": "reflexive-verbs",
+      "title": "Les verbes pronominaux",
+      "titleRu": "Возвратные глаголы",
+      "level": "A2",
+      "category": "verbs"
+    },
+    {
+      "id": "futur-simple",
+      "title": "Le futur simple",
+      "titleRu": "Простое будущее время",
+      "level": "A2",
+      "category": "tenses"
+    },
+    {
+      "id": "subjonctif-present",
+      "title": "Le subjonctif présent",
+      "titleRu": "Сослагательное наклонение",
+      "level": "B1",
+      "category": "tenses"
+    },
+    {
+      "id": "conditionnel-present",
+      "title": "Le conditionnel présent",
+      "titleRu": "Условное наклонение настоящего времени",
+      "level": "B1",
+      "category": "tenses"
+    },
+    {
+      "id": "relative-pronouns",
+      "title": "Les pronoms relatifs (qui, que, où, dont)",
+      "titleRu": "Относительные местоимения",
+      "level": "B1",
+      "category": "pronouns"
+    },
+    {
+      "id": "plus-que-parfait",
+      "title": "Le plus-que-parfait",
+      "titleRu": "Давнопрошедшее время",
+      "level": "B1",
+      "category": "tenses"
+    },
+    {
+      "id": "passive-voice",
+      "title": "La voix passive",
+      "titleRu": "Страдательный залог",
+      "level": "B1",
+      "category": "syntax"
+    },
+    {
+      "id": "gerondif",
+      "title": "Le gérondif",
+      "titleRu": "Герундий",
+      "level": "B1",
+      "category": "verbs"
+    },
+    {
+      "id": "si-clauses",
+      "title": "Les hypothèses avec si",
+      "titleRu": "Условные предложения с si",
+      "level": "B2",
+      "category": "syntax"
+    },
+    {
+      "id": "reported-speech",
+      "title": "Le discours indirect",
+      "titleRu": "Косвенная речь",
+      "level": "B2",
+      "category": "syntax"
+    },
+    {
+      "id": "subjonctif-passe",
+      "title": "Le subjonctif passé",
+      "titleRu": "Прошедшее сослагательное",
+      "level": "B2",
+      "category": "tenses"
+    },
+    {
+      "id": "conditionnel-passe",
+      "title": "Le conditionnel passé",
+      "titleRu": "Прошедшее условное",
+      "level": "B2",
+      "category": "tenses"
+    },
+    {
+      "id": "futur-anterieur",
+      "title": "Le futur antérieur",
+      "titleRu": "Предбудущее время",
+      "level": "B2",
+      "category": "tenses"
+    },
+    {
+      "id": "passe-simple",
+      "title": "Le passé simple",
+      "titleRu": "Простое прошедшее (литературное)",
+      "level": "C1",
+      "category": "tenses"
+    },
+    {
+      "id": "subjonctif-imparfait",
+      "title": "Le subjonctif imparfait",
+      "titleRu": "Имперфект сослагательного",
+      "level": "C1",
+      "category": "tenses"
+    },
+    {
+      "id": "ne-expletif",
+      "title": "Le ne explétif",
+      "titleRu": "Плеонастическое ne",
+      "level": "C1",
+      "category": "syntax"
+    },
+    {
+      "id": "literary-tenses",
+      "title": "Les temps littéraires",
+      "titleRu": "Литературные времена",
+      "level": "C2",
+      "category": "tenses"
+    },
+    {
+      "id": "stylistic-inversion",
+      "title": "L'inversion stylistique",
+      "titleRu": "Стилистическая инверсия",
+      "level": "C2",
+      "category": "syntax"
+    }
+  ]
+}
