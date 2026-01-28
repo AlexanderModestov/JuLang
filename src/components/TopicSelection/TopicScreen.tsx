@@ -56,17 +56,25 @@ export default function TopicScreen() {
   const { user } = useAppStore()
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null)
   const [customTopic, setCustomTopic] = useState('')
+  const [randomTopic, setRandomTopic] = useState<string | null>(null)
 
   const handleStartConversation = (topic: string) => {
-    // Encode topic for URL
     const encodedTopic = encodeURIComponent(topic)
     navigate(`/conversation?topic=${encodedTopic}`)
   }
 
   const handleRandomTopic = () => {
     const allTopics = CATEGORIES.flatMap((c) => c.topics)
-    const randomTopic = allTopics[Math.floor(Math.random() * allTopics.length)]
-    handleStartConversation(randomTopic)
+    const available = randomTopic
+      ? allTopics.filter((t) => t !== randomTopic)
+      : allTopics
+    const picked = available[Math.floor(Math.random() * available.length)]
+    setRandomTopic(picked)
+  }
+
+  const handleSelectCategory = (category: TopicCategory | null) => {
+    setSelectedCategory(category)
+    setRandomTopic(null)
   }
 
   return (
@@ -90,6 +98,25 @@ export default function TopicScreen() {
         🎲 Случайная тема
       </Button>
 
+      {/* Random topic preview */}
+      {randomTopic && (
+        <Card className="border-2 border-primary-300 dark:border-primary-700">
+          <div className="text-center">
+            <p className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+              {randomTopic}
+            </p>
+            <div className="flex gap-3 justify-center">
+              <Button onClick={() => handleStartConversation(randomTopic)}>
+                Начать
+              </Button>
+              <Button variant="secondary" onClick={handleRandomTopic}>
+                Другую
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Custom topic */}
       <Card>
         <h3 className="font-medium text-gray-900 dark:text-white mb-3">
@@ -99,6 +126,7 @@ export default function TopicScreen() {
           <Input
             value={customTopic}
             onChange={(e) => setCustomTopic(e.target.value)}
+            onFocus={() => setRandomTopic(null)}
             placeholder="Например: моя семья, мои планы на выходные..."
             className="flex-1"
           />
@@ -119,7 +147,7 @@ export default function TopicScreen() {
               key={category.id}
               variant="elevated"
               className="cursor-pointer hover:scale-[1.02] transition-transform"
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleSelectCategory(category)}
             >
               <div className="text-center">
                 <span className="text-3xl block mb-2">{category.icon}</span>
@@ -136,7 +164,7 @@ export default function TopicScreen() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setSelectedCategory(null)}
+              onClick={() => handleSelectCategory(null)}
             >
               ← Назад
             </Button>

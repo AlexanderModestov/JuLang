@@ -154,3 +154,55 @@ export async function generateGrammarExplanation(
 
   return response.json()
 }
+
+// Enhance a grammar card explanation with AI
+export async function enhanceCardExplanation(
+  topic: string,
+  level: FrenchLevel,
+  currentExplanation: string,
+  commonMistakes: string[]
+): Promise<string> {
+  const response = await fetch(`${API_BASE}/api/grammar`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'enhance',
+      topic,
+      level,
+      currentExplanation,
+      commonMistakes,
+    }),
+  })
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Unknown error' }))
+    throw new Error(error.error || 'Failed to enhance grammar explanation')
+  }
+
+  const data = await response.json()
+  return data.enhancedExplanation
+}
+
+export interface WordTranslation {
+  lemma: string
+  russian: string
+  gender: 'masculine' | 'feminine' | null
+  type: 'word' | 'expression'
+}
+
+export async function translateWord(
+  word: string,
+  sentence: string
+): Promise<WordTranslation> {
+  const response = await fetch(`${API_BASE}/api/translate-word`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ word, sentence }),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to translate word')
+  }
+
+  return response.json()
+}

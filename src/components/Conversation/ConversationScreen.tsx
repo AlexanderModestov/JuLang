@@ -11,6 +11,7 @@ import {
 import { saveConversation } from '@/db'
 import type { Message, Conversation } from '@/types'
 import Button from '@/components/ui/Button'
+import WordPopup from './WordPopup'
 
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
@@ -24,6 +25,7 @@ export default function ConversationScreen() {
   const [isListening, setIsListening] = useState(false)
   const [mode, setMode] = useState<'text' | 'voice'>('text')
   const [conversationId] = useState(() => crypto.randomUUID())
+  const [popupWord, setPopupWord] = useState<{ word: string; sentence: string } | null>(null)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -212,7 +214,21 @@ export default function ConversationScreen() {
               }`}
             >
               <p className={message.role === 'user' ? 'text-white' : 'text-gray-900 dark:text-white'}>
-                {message.content}
+                {message.role === 'assistant'
+                  ? message.content.split(/(\s+)/).map((part, i) => {
+                      const trimmed = part.replace(/[.,!?;:'"()«»\-—]/g, '')
+                      if (!trimmed || /^\s+$/.test(part)) return part
+                      return (
+                        <span
+                          key={i}
+                          className="cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded px-0.5 transition-colors"
+                          onClick={() => setPopupWord({ word: trimmed, sentence: message.content })}
+                        >
+                          {part}
+                        </span>
+                      )
+                    })
+                  : message.content}
               </p>
               {message.role === 'assistant' && (
                 <button
@@ -255,6 +271,12 @@ export default function ConversationScreen() {
                 placeholder="Écrivez en français..."
                 className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 disabled={isLoading}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                data-gramm="false"
+                data-gramm_editor="false"
               />
               <Button onClick={() => sendMessage(input)} disabled={!input.trim() || isLoading}>
                 Отправить
@@ -276,6 +298,15 @@ export default function ConversationScreen() {
           </p>
         )}
       </div>
+
+      {/* Word translation popup */}
+      {popupWord && (
+        <WordPopup
+          word={popupWord.word}
+          sentence={popupWord.sentence}
+          onClose={() => setPopupWord(null)}
+        />
+      )}
     </div>
   )
 }

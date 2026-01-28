@@ -14,210 +14,570 @@
       "title": "Les articles définis (le, la, les)",
       "titleRu": "Определённые артикли",
       "level": "A1",
-      "category": "articles"
+      "category": "articles",
+      "content": {
+        "rule": "Определённые артикли le (м.р.), la (ж.р.), les (мн.ч.) указывают на конкретный, известный предмет. Перед гласной и h немой используется l'.",
+        "examples": [
+          { "fr": "Le livre est sur la table.", "ru": "Книга на столе." },
+          { "fr": "J'aime les pommes.", "ru": "Я люблю яблоки." },
+          { "fr": "L'eau est froide.", "ru": "Вода холодная." }
+        ],
+        "commonMistakes": [
+          "Пропуск артикля: J'aime musique → J'aime la musique",
+          "Использование le/la вместо l' перед гласной: le ami → l'ami"
+        ]
+      }
     },
     {
       "id": "indefinite-articles",
       "title": "Les articles indéfinis (un, une, des)",
       "titleRu": "Неопределённые артикли",
       "level": "A1",
-      "category": "articles"
+      "category": "articles",
+      "content": {
+        "rule": "Неопределённые артикли un (м.р.), une (ж.р.), des (мн.ч.) указывают на неопределённый предмет или предмет, упоминаемый впервые.",
+        "examples": [
+          { "fr": "J'ai un chat.", "ru": "У меня есть кот." },
+          { "fr": "C'est une bonne idée.", "ru": "Это хорошая идея." },
+          { "fr": "Il y a des livres sur la table.", "ru": "На столе книги." }
+        ],
+        "commonMistakes": [
+          "Des становится de после отрицания: J'ai des amis → Je n'ai pas d'amis",
+          "Des становится de перед прилагательным: des belles fleurs → de belles fleurs"
+        ]
+      }
     },
     {
       "id": "etre-avoir-present",
       "title": "Être et avoir au présent",
       "titleRu": "Глаголы être и avoir в настоящем времени",
       "level": "A1",
-      "category": "verbs"
+      "category": "verbs",
+      "content": {
+        "rule": "Être (быть) и avoir (иметь) — неправильные глаголы, основа для многих конструкций. Être: je suis, tu es, il est, nous sommes, vous êtes, ils sont. Avoir: j'ai, tu as, il a, nous avons, vous avez, ils ont.",
+        "examples": [
+          { "fr": "Je suis étudiant.", "ru": "Я студент." },
+          { "fr": "Elle a vingt ans.", "ru": "Ей двадцать лет." },
+          { "fr": "Nous sommes français.", "ru": "Мы французы." }
+        ],
+        "commonMistakes": [
+          "Путаница между être и avoir для возраста: Je suis 20 ans → J'ai 20 ans",
+          "Забывают liaison: ils ont [ilzɔ̃], nous avons [nuzavɔ̃]"
+        ]
+      }
     },
     {
       "id": "regular-verbs-er",
       "title": "Les verbes en -er au présent",
       "titleRu": "Глаголы на -er в настоящем времени",
       "level": "A1",
-      "category": "verbs"
+      "category": "verbs",
+      "content": {
+        "rule": "Глаголы на -er (90% всех глаголов) спрягаются одинаково: убираем -er и добавляем окончания: -e, -es, -e, -ons, -ez, -ent. Окончания -e, -es, -ent не произносятся.",
+        "examples": [
+          { "fr": "Je parle français.", "ru": "Я говорю по-французски." },
+          { "fr": "Tu regardes la télé.", "ru": "Ты смотришь телевизор." },
+          { "fr": "Ils travaillent beaucoup.", "ru": "Они много работают." }
+        ],
+        "commonMistakes": [
+          "Произношение немых окончаний: je parle [paʁl], не [paʁle]",
+          "Забывают менять основу у глаголов типа manger: nous mangons → nous mangeons"
+        ]
+      }
     },
     {
       "id": "negation",
       "title": "La négation (ne...pas)",
       "titleRu": "Отрицание",
       "level": "A1",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "Отрицание образуется с помощью ne...pas, которые окружают глагол. В разговорной речи ne часто опускается. Перед гласной ne → n'.",
+        "examples": [
+          { "fr": "Je ne parle pas anglais.", "ru": "Я не говорю по-английски." },
+          { "fr": "Il n'aime pas le café.", "ru": "Он не любит кофе." },
+          { "fr": "Nous ne sommes pas fatigués.", "ru": "Мы не устали." }
+        ],
+        "commonMistakes": [
+          "Ставят pas перед глаголом: Je pas parle → Je ne parle pas",
+          "Забывают ne перед гласной: Je aime pas → Je n'aime pas"
+        ]
+      }
     },
     {
       "id": "subject-pronouns",
       "title": "Les pronoms sujets",
       "titleRu": "Личные местоимения (подлежащие)",
       "level": "A1",
-      "category": "pronouns"
+      "category": "pronouns",
+      "content": {
+        "rule": "Личные местоимения: je (я), tu (ты), il/elle/on (он/она/мы разг.), nous (мы), vous (вы/Вы), ils/elles (они м./ж.). Vous используется для вежливости к одному человеку.",
+        "examples": [
+          { "fr": "Je m'appelle Marie.", "ru": "Меня зовут Мари." },
+          { "fr": "On va au cinéma?", "ru": "Пойдём в кино?" },
+          { "fr": "Vous êtes très gentil.", "ru": "Вы очень добры." }
+        ],
+        "commonMistakes": [
+          "Путают tu (близким) и vous (формальное): Bonjour Monsieur, tu vas bien? → vous allez",
+          "Забывают, что on требует глагол в 3-м лице: on sommes → on est"
+        ]
+      }
     },
     {
       "id": "adjective-agreement",
       "title": "L'accord des adjectifs",
       "titleRu": "Согласование прилагательных",
       "level": "A1",
-      "category": "adjectives"
+      "category": "adjectives",
+      "content": {
+        "rule": "Прилагательные согласуются с существительным в роде и числе. Женский род: +e. Множественное число: +s. Ж.р. мн.ч.: +es. Большинство ставятся после существительного.",
+        "examples": [
+          { "fr": "Un livre intéressant / Une histoire intéressante", "ru": "Интересная книга / история" },
+          { "fr": "Les grandes villes", "ru": "Большие города" },
+          { "fr": "Une belle maison", "ru": "Красивый дом" }
+        ],
+        "commonMistakes": [
+          "Забывают согласование: une femme intelligent → intelligente",
+          "Неправильный порядок: un intéressant livre → un livre intéressant (кроме BANGS)"
+        ]
+      }
     },
     {
       "id": "passe-compose-avoir",
       "title": "Le passé composé avec avoir",
       "titleRu": "Прошедшее время с avoir",
       "level": "A2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Passé composé образуется: avoir в présent + participe passé. Используется для завершённых действий в прошлом. Participe passé: -er→-é, -ir→-i, -re→-u (+ неправильные).",
+        "examples": [
+          { "fr": "J'ai mangé une pomme.", "ru": "Я съел яблоко." },
+          { "fr": "Elle a fini son travail.", "ru": "Она закончила работу." },
+          { "fr": "Nous avons vu ce film.", "ru": "Мы видели этот фильм." }
+        ],
+        "commonMistakes": [
+          "Путают с imparfait: Hier je mangeais (описание) vs J'ai mangé (факт)",
+          "Неправильный participe passé: j'ai prendé → j'ai pris"
+        ]
+      }
     },
     {
       "id": "passe-compose-etre",
       "title": "Le passé composé avec être",
       "titleRu": "Прошедшее время с être",
       "level": "A2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Некоторые глаголы (движения и состояния) + возвратные используют être. Participe passé согласуется с подлежащим. Глаголы DR MRS VANDERTRAMP: devenir, revenir, monter, rester, sortir, venir, aller, naître, descendre, entrer, rentrer, tomber, retourner, arriver, mourir, partir.",
+        "examples": [
+          { "fr": "Elle est allée au marché.", "ru": "Она пошла на рынок." },
+          { "fr": "Ils sont partis hier.", "ru": "Они уехали вчера." },
+          { "fr": "Je me suis réveillé tôt.", "ru": "Я проснулся рано." }
+        ],
+        "commonMistakes": [
+          "Забывают согласование: Elle est allé → Elle est allée",
+          "Используют avoir вместо être: J'ai allé → Je suis allé"
+        ]
+      }
     },
     {
       "id": "imparfait",
       "title": "L'imparfait",
       "titleRu": "Имперфект (прошедшее незавершённое)",
       "level": "A2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Imparfait описывает длительные/повторяющиеся действия в прошлом, фон, состояния. Основа: nous в présent без -ons + окончания: -ais, -ais, -ait, -ions, -iez, -aient.",
+        "examples": [
+          { "fr": "Quand j'étais petit, je jouais au foot.", "ru": "Когда я был маленьким, я играл в футбол." },
+          { "fr": "Il faisait beau hier.", "ru": "Вчера была хорошая погода." },
+          { "fr": "Nous habitions à Paris.", "ru": "Мы жили в Париже." }
+        ],
+        "commonMistakes": [
+          "Путают с passé composé: Je mangeais (длительное) vs J'ai mangé (однократное)",
+          "Неправильная основа: nous avons → av- (исключение être: ét-)"
+        ]
+      }
     },
     {
       "id": "direct-object-pronouns",
       "title": "Les pronoms COD (le, la, les)",
       "titleRu": "Местоимения прямого дополнения",
       "level": "A2",
-      "category": "pronouns"
+      "category": "pronouns",
+      "content": {
+        "rule": "COD заменяет существительное без предлога. Me, te, le/la, nous, vous, les. Ставятся перед глаголом. В passé composé participe passé согласуется с COD, если он стоит перед глаголом.",
+        "examples": [
+          { "fr": "Tu vois Marie? — Oui, je la vois.", "ru": "Видишь Мари? — Да, вижу её." },
+          { "fr": "J'ai acheté les fleurs. Je les ai achetées.", "ru": "Я купил цветы. Я их купил." },
+          { "fr": "Il me regarde.", "ru": "Он смотрит на меня." }
+        ],
+        "commonMistakes": [
+          "Ставят после глагола: Je vois la → Je la vois",
+          "Забывают согласование: Je les ai acheté → achetées (если COD женского рода)"
+        ]
+      }
     },
     {
       "id": "indirect-object-pronouns",
       "title": "Les pronoms COI (lui, leur)",
       "titleRu": "Местоимения косвенного дополнения",
       "level": "A2",
-      "category": "pronouns"
+      "category": "pronouns",
+      "content": {
+        "rule": "COI заменяет существительное с предлогом à (обычно одушевлённое). Me, te, lui, nous, vous, leur. Ставятся перед глаголом. Не согласуются в passé composé.",
+        "examples": [
+          { "fr": "Je parle à Marie. → Je lui parle.", "ru": "Я говорю с Мари. → Я с ней говорю." },
+          { "fr": "Il téléphone à ses parents. → Il leur téléphone.", "ru": "Он звонит родителям. → Он им звонит." },
+          { "fr": "Elle m'a donné un cadeau.", "ru": "Она мне подарила подарок." }
+        ],
+        "commonMistakes": [
+          "Путают le/la (COD) и lui (COI): Je le parle → Je lui parle",
+          "Их вместо leur: Je les téléphone → Je leur téléphone"
+        ]
+      }
     },
     {
       "id": "reflexive-verbs",
       "title": "Les verbes pronominaux",
       "titleRu": "Возвратные глаголы",
       "level": "A2",
-      "category": "verbs"
+      "category": "verbs",
+      "content": {
+        "rule": "Возвратные глаголы используют местоимение me/te/se/nous/vous/se. В passé composé спрягаются с être и согласуются с подлежащим (кроме случаев с прямым дополнением после глагола).",
+        "examples": [
+          { "fr": "Je me lève à 7 heures.", "ru": "Я встаю в 7 часов." },
+          { "fr": "Elle s'est habillée vite.", "ru": "Она быстро оделась." },
+          { "fr": "Nous nous sommes promenés.", "ru": "Мы прогулялись." }
+        ],
+        "commonMistakes": [
+          "Забывают местоимение: Je lève → Je me lève",
+          "Используют avoir: Je m'ai levé → Je me suis levé"
+        ]
+      }
     },
     {
       "id": "futur-simple",
       "title": "Le futur simple",
       "titleRu": "Простое будущее время",
       "level": "A2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Futur simple: инфинитив (для -re без e) + окончания avoir: -ai, -as, -a, -ons, -ez, -ont. Неправильные основы: être→ser-, avoir→aur-, aller→ir-, faire→fer-, venir→viendr-.",
+        "examples": [
+          { "fr": "Je parlerai français.", "ru": "Я буду говорить по-французски." },
+          { "fr": "Nous irons à Paris.", "ru": "Мы поедем в Париж." },
+          { "fr": "Il fera beau demain.", "ru": "Завтра будет хорошая погода." }
+        ],
+        "commonMistakes": [
+          "Неправильная основа: je allai → j'irai",
+          "Путают с conditionnel: je parlerai (будущее) vs je parlerais (условное)"
+        ]
+      }
     },
     {
       "id": "subjonctif-present",
       "title": "Le subjonctif présent",
       "titleRu": "Сослагательное наклонение",
       "level": "B1",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Subjonctif используется после выражений желания, эмоций, сомнения, необходимости (il faut que, je veux que, je suis content que). Основа: ils в présent + -e, -es, -e, -ions, -iez, -ent.",
+        "examples": [
+          { "fr": "Il faut que tu viennes.", "ru": "Нужно, чтобы ты пришёл." },
+          { "fr": "Je veux que tu sois heureux.", "ru": "Я хочу, чтобы ты был счастлив." },
+          { "fr": "Je suis content qu'il fasse beau.", "ru": "Я рад, что хорошая погода." }
+        ],
+        "commonMistakes": [
+          "Используют indicatif после que: Je veux que tu viens → viennes",
+          "Забывают subjonctif после эмоций: Je suis triste qu'il part → parte"
+        ]
+      }
     },
     {
       "id": "conditionnel-present",
       "title": "Le conditionnel présent",
       "titleRu": "Условное наклонение настоящего времени",
       "level": "B1",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Conditionnel = основа futur + окончания imparfait (-ais, -ais, -ait, -ions, -iez, -aient). Используется для вежливых просьб, советов, гипотез, желаний.",
+        "examples": [
+          { "fr": "Je voudrais un café.", "ru": "Я бы хотел кофе." },
+          { "fr": "Tu devrais partir.", "ru": "Тебе следовало бы уехать." },
+          { "fr": "Si j'avais de l'argent, je voyagerais.", "ru": "Если бы у меня были деньги, я бы путешествовал." }
+        ],
+        "commonMistakes": [
+          "Путают с futur: je parlerai (будет) vs je parlerais (бы)",
+          "После si в условном: Si je serais → Si j'étais"
+        ]
+      }
     },
     {
       "id": "relative-pronouns",
       "title": "Les pronoms relatifs (qui, que, où, dont)",
       "titleRu": "Относительные местоимения",
       "level": "B1",
-      "category": "pronouns"
+      "category": "pronouns",
+      "content": {
+        "rule": "Qui — подлежащее (кто/который). Que — прямое дополнение (которого). Où — место/время (где/когда). Dont — с de (о котором, чей).",
+        "examples": [
+          { "fr": "L'homme qui parle est mon père.", "ru": "Человек, который говорит — мой отец." },
+          { "fr": "Le livre que j'ai lu est super.", "ru": "Книга, которую я прочитал, отличная." },
+          { "fr": "La fille dont je parle est ma sœur.", "ru": "Девушка, о которой я говорю — моя сестра." }
+        ],
+        "commonMistakes": [
+          "Путают qui и que: L'homme que parle → qui parle",
+          "Забывают dont для глаголов с de: parler de → dont"
+        ]
+      }
     },
     {
       "id": "plus-que-parfait",
       "title": "Le plus-que-parfait",
       "titleRu": "Давнопрошедшее время",
       "level": "B1",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Plus-que-parfait описывает действие, произошедшее до другого прошедшего. Avoir/être в imparfait + participe passé.",
+        "examples": [
+          { "fr": "Quand je suis arrivé, il était déjà parti.", "ru": "Когда я пришёл, он уже ушёл." },
+          { "fr": "Elle avait fini avant moi.", "ru": "Она закончила раньше меня." },
+          { "fr": "J'avais oublié mon livre.", "ru": "Я забыл свою книгу." }
+        ],
+        "commonMistakes": [
+          "Используют passé composé: Quand je suis arrivé, il est parti → était parti",
+          "Забывают согласование с être: Elle était parti → partie"
+        ]
+      }
     },
     {
       "id": "passive-voice",
       "title": "La voix passive",
       "titleRu": "Страдательный залог",
       "level": "B1",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "Пассив: être (в нужном времени) + participe passé. Деятель вводится через par. Participe passé согласуется с подлежащим.",
+        "examples": [
+          { "fr": "La lettre est écrite par Marie.", "ru": "Письмо написано Мари." },
+          { "fr": "Le gâteau a été mangé.", "ru": "Торт был съеден." },
+          { "fr": "Les maisons seront construites.", "ru": "Дома будут построены." }
+        ],
+        "commonMistakes": [
+          "Забывают согласование: La lettre est écrit → écrite",
+          "Путают par и de: aimé de tous (состояние) vs fait par lui (действие)"
+        ]
+      }
     },
     {
       "id": "gerondif",
       "title": "Le gérondif",
       "titleRu": "Герундий",
       "level": "B1",
-      "category": "verbs"
+      "category": "verbs",
+      "content": {
+        "rule": "Gérondif = en + participe présent (-ant). Показывает одновременность, способ, условие. Основа: nous в présent без -ons + ant. Исключения: être→étant, avoir→ayant, savoir→sachant.",
+        "examples": [
+          { "fr": "Il chante en travaillant.", "ru": "Он поёт, работая." },
+          { "fr": "En arrivant, j'ai vu le message.", "ru": "Придя, я увидел сообщение." },
+          { "fr": "C'est en forgeant qu'on devient forgeron.", "ru": "Дело мастера боится." }
+        ],
+        "commonMistakes": [
+          "Забывают en: travaillant → en travaillant",
+          "Неправильная основа: en étudant → en étudiant"
+        ]
+      }
     },
     {
       "id": "si-clauses",
       "title": "Les hypothèses avec si",
       "titleRu": "Условные предложения с si",
       "level": "B2",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "Три типа: 1) Si + présent → futur (реальное). 2) Si + imparfait → conditionnel présent (нереальное настоящее). 3) Si + plus-que-parfait → conditionnel passé (нереальное прошлое).",
+        "examples": [
+          { "fr": "Si tu viens, je serai content.", "ru": "Если придёшь, я буду рад." },
+          { "fr": "Si j'avais de l'argent, je voyagerais.", "ru": "Если бы у меня были деньги, я бы путешествовал." },
+          { "fr": "Si j'avais su, je serais venu.", "ru": "Если бы я знал, я бы пришёл." }
+        ],
+        "commonMistakes": [
+          "Conditionnel после si: Si je serais → Si j'étais",
+          "Futur после si: Si tu viendras → Si tu viens"
+        ]
+      }
     },
     {
       "id": "reported-speech",
       "title": "Le discours indirect",
       "titleRu": "Косвенная речь",
       "level": "B2",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "При переводе в косвенную речь меняются местоимения, времена (concordance des temps), маркеры времени. Présent→imparfait, passé composé→plus-que-parfait, futur→conditionnel.",
+        "examples": [
+          { "fr": "Il dit: «Je pars» → Il dit qu'il part.", "ru": "Он говорит: «Я ухожу» → Он говорит, что уходит." },
+          { "fr": "Elle a dit: «Je viendrai» → Elle a dit qu'elle viendrait.", "ru": "Она сказала: «Я приду» → Она сказала, что придёт." },
+          { "fr": "Il a demandé: «Tu viens?» → Il a demandé si je venais.", "ru": "Он спросил: «Ты придёшь?» → Он спросил, приду ли я." }
+        ],
+        "commonMistakes": [
+          "Забывают согласование времён: Il a dit qu'il vient → viendrait/venait",
+          "Que вместо si для вопросов: Il demande que tu viens → si tu viens"
+        ]
+      }
     },
     {
       "id": "subjonctif-passe",
       "title": "Le subjonctif passé",
       "titleRu": "Прошедшее сослагательное",
       "level": "B2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Subjonctif passé = avoir/être в subjonctif présent + participe passé. Выражает завершённое действие в сослагательном наклонении.",
+        "examples": [
+          { "fr": "Je suis content que tu sois venu.", "ru": "Я рад, что ты пришёл." },
+          { "fr": "Il doute qu'elle ait fini.", "ru": "Он сомневается, что она закончила." },
+          { "fr": "Je regrette qu'il soit parti.", "ru": "Я жалею, что он ушёл." }
+        ],
+        "commonMistakes": [
+          "Используют indicatif: Je suis content que tu es venu → sois venu",
+          "Забывают согласование: qu'elle soit venu → venue"
+        ]
+      }
     },
     {
       "id": "conditionnel-passe",
       "title": "Le conditionnel passé",
       "titleRu": "Прошедшее условное",
       "level": "B2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Conditionnel passé = avoir/être в conditionnel présent + participe passé. Выражает нереализованное действие в прошлом, сожаление.",
+        "examples": [
+          { "fr": "J'aurais voulu venir.", "ru": "Я хотел бы прийти." },
+          { "fr": "Si j'avais su, je serais resté.", "ru": "Если бы я знал, я бы остался." },
+          { "fr": "Elle aurait dû partir plus tôt.", "ru": "Ей следовало бы уехать раньше." }
+        ],
+        "commonMistakes": [
+          "После si в 3-м типе: Si j'aurais su → Si j'avais su",
+          "Путают с plus-que-parfait: j'avais voulu (факт) vs j'aurais voulu (желание)"
+        ]
+      }
     },
     {
       "id": "futur-anterieur",
       "title": "Le futur antérieur",
       "titleRu": "Предбудущее время",
       "level": "B2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Futur antérieur = avoir/être в futur simple + participe passé. Выражает действие, которое будет завершено до другого будущего действия, или предположение о прошлом.",
+        "examples": [
+          { "fr": "Quand tu arriveras, j'aurai fini.", "ru": "Когда ты придёшь, я уже закончу." },
+          { "fr": "Il aura oublié.", "ru": "Наверное, он забыл." },
+          { "fr": "D'ici demain, elle sera partie.", "ru": "К завтрашнему дню она уедет." }
+        ],
+        "commonMistakes": [
+          "Используют futur simple: Quand tu arriveras, je finirai → j'aurai fini",
+          "Забывают согласование: Elle sera parti → partie"
+        ]
+      }
     },
     {
       "id": "passe-simple",
       "title": "Le passé simple",
       "titleRu": "Простое прошедшее (литературное)",
       "level": "C1",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Passé simple — литературное время для завершённых действий. Окончания -er: -ai, -as, -a, -âmes, -âtes, -èrent. -ir/-re: -is, -is, -it, -îmes, -îtes, -irent. Много неправильных форм.",
+        "examples": [
+          { "fr": "Il entra dans la pièce.", "ru": "Он вошёл в комнату." },
+          { "fr": "Elle regarda par la fenêtre.", "ru": "Она посмотрела в окно." },
+          { "fr": "Ils partirent sans dire un mot.", "ru": "Они ушли, не сказав ни слова." }
+        ],
+        "commonMistakes": [
+          "Путают окончания: il parla (говорил), il partit (ушёл)",
+          "Используют в речи (только для письменного/литературного стиля)"
+        ]
+      }
     },
     {
       "id": "subjonctif-imparfait",
       "title": "Le subjonctif imparfait",
       "titleRu": "Имперфект сослагательного",
       "level": "C1",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Subjonctif imparfait образуется от passé simple: 2-е лицо ед.ч. + -se, -ses, accent circonflexe + t, -sions, -siez, -sent. Используется в литературном стиле для согласования времён.",
+        "examples": [
+          { "fr": "Je voulais qu'il vînt.", "ru": "Я хотел, чтобы он пришёл." },
+          { "fr": "Il fallait qu'elle partît.", "ru": "Нужно было, чтобы она ушла." },
+          { "fr": "Je craignais qu'il ne fût trop tard.", "ru": "Я боялся, что слишком поздно." }
+        ],
+        "commonMistakes": [
+          "Используют в разговорной речи (заменяется на subjonctif présent)",
+          "Неправильное ударение: qu'il vint → qu'il vînt"
+        ]
+      }
     },
     {
       "id": "ne-expletif",
       "title": "Le ne explétif",
       "titleRu": "Плеонастическое ne",
       "level": "C1",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "Ne explétif — не имеет отрицательного значения. Используется после avant que, à moins que, de peur que, de crainte que, empêcher que, éviter que и сравнений с plus/moins/autre.",
+        "examples": [
+          { "fr": "Avant qu'il ne parte.", "ru": "До того как он уйдёт." },
+          { "fr": "J'ai peur qu'il ne vienne.", "ru": "Боюсь, что он придёт." },
+          { "fr": "Il est plus grand que je ne pensais.", "ru": "Он выше, чем я думал." }
+        ],
+        "commonMistakes": [
+          "Путают с отрицанием: avant qu'il ne parte (придёт) vs avant qu'il ne parte pas (не придёт)",
+          "Забывают использовать в литературном стиле"
+        ]
+      }
     },
     {
       "id": "literary-tenses",
       "title": "Les temps littéraires",
       "titleRu": "Литературные времена",
       "level": "C2",
-      "category": "tenses"
+      "category": "tenses",
+      "content": {
+        "rule": "Литературные времена: passé simple, passé antérieur (passé simple avoir/être + pp), subjonctif imparfait, subjonctif plus-que-parfait. Используются в литературе, официальных текстах, исторических нарративах.",
+        "examples": [
+          { "fr": "Dès qu'il eut fini, il partit.", "ru": "Как только он закончил, он ушёл." },
+          { "fr": "Elle souhaitait qu'il eût compris.", "ru": "Она желала, чтобы он понял." },
+          { "fr": "Il fit ce qu'il put.", "ru": "Он сделал, что мог." }
+        ],
+        "commonMistakes": [
+          "Смешивают литературный и разговорный стили",
+          "Неправильное образование passé antérieur: il eut fini (правильно)"
+        ]
+      }
     },
     {
       "id": "stylistic-inversion",
       "title": "L'inversion stylistique",
       "titleRu": "Стилистическая инверсия",
       "level": "C2",
-      "category": "syntax"
+      "category": "syntax",
+      "content": {
+        "rule": "Стилистическая инверсия подлежащего и сказуемого после наречий (peut-être, sans doute, à peine, ainsi) и в вставных конструкциях прямой речи. Добавляет формальность и элегантность.",
+        "examples": [
+          { "fr": "Peut-être viendra-t-il demain.", "ru": "Возможно, он придёт завтра." },
+          { "fr": "«Oui», dit-elle.", "ru": "«Да», — сказала она." },
+          { "fr": "À peine était-il arrivé qu'il repartit.", "ru": "Едва он приехал, как уехал снова." }
+        ],
+        "commonMistakes": [
+          "Забывают -t- эвфонический: viendra-il → viendra-t-il",
+          "Используют без надобности в разговорной речи"
+        ]
+      }
     }
   ]
 }

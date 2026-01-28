@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react'
 import { useAppStore } from '@/store/useAppStore'
-import { getAvailableVoices } from '@/modules/SpeechService'
+import { getAvailableVoices, selectBestFrenchVoice, speakWithPauses } from '@/modules/SpeechService'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -10,7 +11,24 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 export default function SettingsScreen() {
   const { user, settings, updateUser, updateSettings } = useAppStore()
 
-  const frenchVoices = getAvailableVoices('fr')
+  const [frenchVoices, setFrenchVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [bestVoice, setBestVoice] = useState<SpeechSynthesisVoice | null>(null)
+
+  useEffect(() => {
+    // Load voices (may be async in some browsers)
+    const loadVoices = () => {
+      const voices = getAvailableVoices('fr')
+      setFrenchVoices(voices)
+      setBestVoice(selectBestFrenchVoice(voices))
+    }
+
+    loadVoices()
+
+    // Some browsers fire voiceschanged event when voices are loaded
+    if (typeof speechSynthesis !== 'undefined') {
+      speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
 
   const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
     updateSettings({ theme })
@@ -75,47 +93,121 @@ export default function SettingsScreen() {
         </div>
       </Card>
 
-      {/* Voice settings */}
+      {/* Voice settings (TTS) */}
       <Card>
         <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-          Голосовые настройки
+          Озвучка
+        </h3>
+
+        <div className="space-y-4">
+          {/* Voice selector */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Голос
+            </label>
+            <select
+              value={user.speechSettings.voiceName || ''}
+              onChange={(e) => updateUser({
+                speechSettings: { ...user.speechSettings, voiceName: e.target.value || null }
+              })}
+              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              <option value="">
+                Автовыбор{bestVoice ? ` (${bestVoice.name})` : ''}
+              </option>
+              {frenchVoices.map((voice) => (
+                <option key={voice.name} value={voice.name}>
+                  {voice.name} ({voice.lang})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Speech rate slider */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Скорость речи: {user.speechSettings.rate.toFixed(1)}x
+            </label>
+            <input
+              type="range"
+              min="0.5"
+              max="1.5"
+              step="0.1"
+              value={user.speechSettings.rate}
+              onChange={(e) => updateUser({
+                speechSettings: { ...user.speechSettings, rate: parseFloat(e.target.value) }
+              })}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>0.5x</span>
+              <span>1.5x</span>
+            </div>
+          </div>
+
+          {/* Pitch slider */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Высота голоса: {user.speechSettings.pitch.toFixed(1)}x
+            </label>
+            <input
+              type="range"
+              min="0.5"
+              max="1.5"
+              step="0.1"
+              value={user.speechSettings.pitch}
+              onChange={(e) => updateUser({
+                speechSettings: { ...user.speechSettings, pitch: parseFloat(e.target.value) }
+              })}
+              className="w-full"
+            />
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>0.5x</span>
+              <span>1.5x</span>
+            </div>
+          </div>
+
+          {/* Listen to example button */}
+          <Button
+            variant="secondary"
+            onClick={() => speakWithPauses(
+              "Bonjour! Comment allez-vous aujourd'hui? J'espère que vous passez une bonne journée.",
+              user.speechSettings
+            )}
+          >
+            Прослушать пример
+          </Button>
+        </div>
+      </Card>
+
+      {/* Voice input settings */}
+      <Card>
+        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+          Голосовой ввод
         </h3>
 
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Скорость речи: {settings.voiceSpeed.toFixed(1)}x
+              Пауза для завершения записи: {user.speechPauseTimeout} сек
             </label>
             <input
               type="range"
-              min="0.5"
-              max="2"
-              step="0.1"
-              value={settings.voiceSpeed}
-              onChange={(e) => updateSettings({ voiceSpeed: parseFloat(e.target.value) })}
+              min="1"
+              max="15"
+              step="1"
+              value={user.speechPauseTimeout}
+              onChange={(e) => updateUser({ speechPauseTimeout: parseInt(e.target.value) })}
               className="w-full"
             />
-          </div>
-
-          {frenchVoices.length > 0 && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Голос
-              </label>
-              <select
-                value={settings.selectedVoice || ''}
-                onChange={(e) => updateSettings({ selectedVoice: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-              >
-                <option value="">По умолчанию</option>
-                {frenchVoices.map((voice) => (
-                  <option key={voice.name} value={voice.name}>
-                    {voice.name} ({voice.lang})
-                  </option>
-                ))}
-              </select>
+            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>1 сек</span>
+              <span>15 сек</span>
             </div>
-          )}
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+              Чем больше значение, тем дольше можно думать между фразами.
+            </p>
+          </div>
         </div>
       </Card>
 

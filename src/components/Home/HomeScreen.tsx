@@ -96,6 +96,25 @@ export default function HomeScreen() {
           </Card>
         </Link>
 
+        <Link to="/vocabulary">
+          <Card
+            variant="elevated"
+            className="cursor-pointer hover:scale-[1.02] transition-transform"
+          >
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">🔤</span>
+              <div>
+                <h3 className="font-semibold text-gray-900 dark:text-white">
+                  Словарь
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Изучайте новые слова и выражения
+                </p>
+              </div>
+            </div>
+          </Card>
+        </Link>
+
         <Link to="/review">
           <Card
             variant="elevated"

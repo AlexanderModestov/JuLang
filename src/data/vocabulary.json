@@ -1,0 +1,52 @@
+{
+  "cards": [
+    { "id": "v-a1-01", "french": "bonjour", "russian": "здравствуйте", "example": "Bonjour, comment allez-vous?", "exampleTranslation": "Здравствуйте, как ваши дела?", "level": "A1", "type": "expression" },
+    { "id": "v-a1-02", "french": "merci", "russian": "спасибо", "example": "Merci beaucoup!", "exampleTranslation": "Большое спасибо!", "level": "A1", "type": "word" },
+    { "id": "v-a1-03", "french": "maison", "russian": "дом", "example": "La maison est grande.", "exampleTranslation": "Дом большой.", "level": "A1", "type": "word", "gender": "feminine" },
+    { "id": "v-a1-04", "french": "livre", "russian": "книга", "example": "Je lis un livre.", "exampleTranslation": "Я читаю книгу.", "level": "A1", "type": "word", "gender": "masculine" },
+    { "id": "v-a1-05", "french": "manger", "russian": "есть, кушать", "example": "Je mange une pomme.", "exampleTranslation": "Я ем яблоко.", "level": "A1", "type": "word" },
+    { "id": "v-a1-06", "french": "boire", "russian": "пить", "example": "Je bois de l'eau.", "exampleTranslation": "Я пью воду.", "level": "A1", "type": "word" },
+    { "id": "v-a1-07", "french": "école", "russian": "школа", "example": "Les enfants vont à l'école.", "exampleTranslation": "Дети идут в школу.", "level": "A1", "type": "word", "gender": "feminine" },
+    { "id": "v-a1-08", "french": "ami", "russian": "друг", "example": "C'est mon meilleur ami.", "exampleTranslation": "Это мой лучший друг.", "level": "A1", "type": "word", "gender": "masculine" },
+    { "id": "v-a1-09", "french": "s'il vous plaît", "russian": "пожалуйста", "example": "Un café, s'il vous plaît.", "exampleTranslation": "Кофе, пожалуйста.", "level": "A1", "type": "expression" },
+    { "id": "v-a1-10", "french": "au revoir", "russian": "до свидания", "example": "Au revoir, à demain!", "exampleTranslation": "До свидания, до завтра!", "level": "A1", "type": "expression" },
+    { "id": "v-a1-11", "french": "chat", "russian": "кот", "example": "Le chat dort sur le canapé.", "exampleTranslation": "Кот спит на диване.", "level": "A1", "type": "word", "gender": "masculine" },
+    { "id": "v-a1-12", "french": "chien", "russian": "собака", "example": "Le chien joue dans le jardin.", "exampleTranslation": "Собака играет в саду.", "level": "A1", "type": "word", "gender": "masculine" },
+    { "id": "v-a1-13", "french": "eau", "russian": "вода", "example": "L'eau est fraîche.", "exampleTranslation": "Вода свежая.", "level": "A1", "type": "word", "gender": "feminine" },
+    { "id": "v-a1-14", "french": "pain", "russian": "хлеб", "example": "J'achète du pain.", "exampleTranslation": "Я покупаю хлеб.", "level": "A1", "type": "word", "gender": "masculine" },
+    { "id": "v-a1-15", "french": "famille", "russian": "семья", "example": "Ma famille est grande.", "exampleTranslation": "Моя семья большая.", "level": "A1", "type": "word", "gender": "feminine" },
+
+    { "id": "v-a2-01", "french": "voyage", "russian": "путешествие", "example": "Bon voyage!", "exampleTranslation": "Хорошего путешествия!", "level": "A2", "type": "word", "gender": "masculine" },
+    { "id": "v-a2-02", "french": "en fait", "russian": "на самом деле", "example": "En fait, je préfère le thé.", "exampleTranslation": "На самом деле, я предпочитаю чай.", "level": "A2", "type": "expression" },
+    { "id": "v-a2-03", "french": "apprendre", "russian": "учить, изучать", "example": "J'apprends le français.", "exampleTranslation": "Я учу французский.", "level": "A2", "type": "word" },
+    { "id": "v-a2-04", "french": "comprendre", "russian": "понимать", "example": "Je ne comprends pas.", "exampleTranslation": "Я не понимаю.", "level": "A2", "type": "word" },
+    { "id": "v-a2-05", "french": "travail", "russian": "работа", "example": "Je cherche du travail.", "exampleTranslation": "Я ищу работу.", "level": "A2", "type": "word", "gender": "masculine" },
+    { "id": "v-a2-06", "french": "être en train de", "russian": "быть в процессе", "example": "Je suis en train de lire.", "exampleTranslation": "Я сейчас читаю.", "level": "A2", "type": "expression" },
+    { "id": "v-a2-07", "french": "argent", "russian": "деньги", "example": "Je n'ai pas assez d'argent.", "exampleTranslation": "У меня недостаточно денег.", "level": "A2", "type": "word", "gender": "masculine" },
+    { "id": "v-a2-08", "french": "santé", "russian": "здоровье", "example": "La santé est importante.", "exampleTranslation": "Здоровье важно.", "level": "A2", "type": "word", "gender": "feminine" },
+    { "id": "v-a2-09", "french": "avoir besoin de", "russian": "нуждаться в", "example": "J'ai besoin d'aide.", "exampleTranslation": "Мне нужна помощь.", "level": "A2", "type": "expression" },
+    { "id": "v-a2-10", "french": "essayer", "russian": "пытаться, пробовать", "example": "Je vais essayer.", "exampleTranslation": "Я попробую.", "level": "A2", "type": "word" },
+
+    { "id": "v-b1-01", "french": "cependant", "russian": "однако", "example": "Il fait beau. Cependant, il fait froid.", "exampleTranslation": "Погода хорошая. Однако, холодно.", "level": "B1", "type": "word" },
+    { "id": "v-b1-02", "french": "avoir l'habitude de", "russian": "иметь привычку", "example": "J'ai l'habitude de me lever tôt.", "exampleTranslation": "У меня привычка вставать рано.", "level": "B1", "type": "expression" },
+    { "id": "v-b1-03", "french": "réussir", "russian": "удаваться, преуспевать", "example": "Il a réussi son examen.", "exampleTranslation": "Он сдал экзамен.", "level": "B1", "type": "word" },
+    { "id": "v-b1-04", "french": "d'ailleurs", "russian": "кстати, впрочем", "example": "D'ailleurs, j'ai oublié de te dire...", "exampleTranslation": "Кстати, я забыл тебе сказать...", "level": "B1", "type": "expression" },
+    { "id": "v-b1-05", "french": "se rendre compte", "russian": "осознавать", "example": "Je me suis rendu compte de mon erreur.", "exampleTranslation": "Я осознал свою ошибку.", "level": "B1", "type": "expression" },
+    { "id": "v-b1-06", "french": "développement", "russian": "развитие", "example": "Le développement durable est essentiel.", "exampleTranslation": "Устойчивое развитие необходимо.", "level": "B1", "type": "word", "gender": "masculine" },
+    { "id": "v-b1-07", "french": "quotidien", "russian": "повседневный", "example": "La vie quotidienne en France.", "exampleTranslation": "Повседневная жизнь во Франции.", "level": "B1", "type": "word" },
+    { "id": "v-b1-08", "french": "en ce qui concerne", "russian": "что касается", "example": "En ce qui concerne le projet, tout va bien.", "exampleTranslation": "Что касается проекта, всё хорошо.", "level": "B1", "type": "expression" },
+
+    { "id": "v-b2-01", "french": "néanmoins", "russian": "тем не менее", "example": "C'est difficile, néanmoins possible.", "exampleTranslation": "Это сложно, тем не менее возможно.", "level": "B2", "type": "word" },
+    { "id": "v-b2-02", "french": "mettre en œuvre", "russian": "осуществлять, внедрять", "example": "Nous allons mettre en œuvre ce plan.", "exampleTranslation": "Мы реализуем этот план.", "level": "B2", "type": "expression" },
+    { "id": "v-b2-03", "french": "en revanche", "russian": "зато, напротив", "example": "Il pleut. En revanche, il ne fait pas froid.", "exampleTranslation": "Идёт дождь. Зато не холодно.", "level": "B2", "type": "expression" },
+    { "id": "v-b2-04", "french": "épanouissement", "russian": "расцвет, самореализация", "example": "L'épanouissement personnel est important.", "exampleTranslation": "Самореализация важна.", "level": "B2", "type": "word", "gender": "masculine" },
+    { "id": "v-b2-05", "french": "à condition que", "russian": "при условии, что", "example": "J'irai, à condition que tu viennes.", "exampleTranslation": "Я пойду, при условии, что ты придёшь.", "level": "B2", "type": "expression" },
+
+    { "id": "v-c1-01", "french": "d'emblée", "russian": "сразу же, с ходу", "example": "Il a compris d'emblée.", "exampleTranslation": "Он понял сразу же.", "level": "C1", "type": "expression" },
+    { "id": "v-c1-02", "french": "pérenniser", "russian": "увековечить, сделать долговечным", "example": "Il faut pérenniser ces résultats.", "exampleTranslation": "Нужно закрепить эти результаты.", "level": "C1", "type": "word" },
+    { "id": "v-c1-03", "french": "au fur et à mesure", "russian": "по мере того как", "example": "Au fur et à mesure, il progressait.", "exampleTranslation": "По мере того как он продвигался.", "level": "C1", "type": "expression" },
+
+    { "id": "v-c2-01", "french": "nonobstant", "russian": "невзирая на", "example": "Nonobstant les difficultés, il a réussi.", "exampleTranslation": "Невзирая на трудности, он преуспел.", "level": "C2", "type": "word" },
+    { "id": "v-c2-02", "french": "en l'occurrence", "russian": "в данном случае", "example": "En l'occurrence, c'est inacceptable.", "exampleTranslation": "В данном случае это неприемлемо.", "level": "C2", "type": "expression" }
+  ]
+}

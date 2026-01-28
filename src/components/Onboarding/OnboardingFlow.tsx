@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { useAppStore } from '@/store/useAppStore'
-import { createInitialCards } from '@/modules/GrammarEngine'
+import { ensureCardsForLevel } from '@/modules/GrammarEngine'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 
-type Step = 'welcome' | 'name' | 'level' | 'loading'
+type Step = 'welcome' | 'name' | 'level' | 'creating'
 
 const LEVELS: { value: FrenchLevel; label: string; description: string }[] = [
   { value: 'A1', label: 'A1 - Начинающий', description: 'Знаю базовые фразы и слова' },
@@ -25,7 +25,7 @@ export default function OnboardingFlow() {
   const [error, setError] = useState('')
 
   const handleComplete = async () => {
-    setStep('loading')
+    setStep('creating')
 
     try {
       // Complete onboarding
@@ -36,10 +36,10 @@ export default function OnboardingFlow() {
         preferredAiProvider: 'openai',
       })
 
-      // Create initial grammar cards (this may take a moment)
+      // Create grammar cards for user's level from static content (instant)
       const userId = useAppStore.getState().user?.id
       if (userId) {
-        await createInitialCards(userId, level, 3)
+        await ensureCardsForLevel(userId, level)
       }
     } catch (err) {
       console.error('Onboarding error:', err)
@@ -130,11 +130,11 @@ export default function OnboardingFlow() {
           </div>
         )}
 
-        {step === 'loading' && (
+        {step === 'creating' && (
           <div className="text-center py-8">
             <div className="animate-spin text-4xl mb-4">⏳</div>
             <p className="text-gray-600 dark:text-gray-400">
-              Подготавливаем ваши первые уроки...
+              Создаём карточки грамматики...
             </p>
           </div>
         )}

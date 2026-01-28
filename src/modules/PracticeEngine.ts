@@ -8,6 +8,7 @@ import type {
 } from '@/types'
 import { generateExercise, checkTranslation, analyzeGrammarUsage } from './AIService'
 import { db } from '@/db'
+import { isEquivalent } from '@/utils/text'
 
 const generateId = () => crypto.randomUUID()
 
@@ -40,6 +41,17 @@ export async function checkWrittenAnswer(
     }
   }
 
+  // Fast check: if answer is equivalent (ignoring diacritics), it's correct
+  if (isEquivalent(userAnswer, exercise.targetText)) {
+    return {
+      isCorrect: true,
+      userAnswer,
+      feedback: 'Très bien!',
+      correctAnswer: exercise.targetText,
+    }
+  }
+
+  // If not equivalent — check via AI for detailed feedback
   const result = await checkTranslation(
     userAnswer,
     exercise.targetText,

@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { AppSettings, User, UserProgress } from '@/types'
+import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS } from '@/types'
 
 interface AppState {
   // User
@@ -16,7 +17,7 @@ interface AppState {
   updateUser: (updates: Partial<User>) => void
   setProgress: (progress: UserProgress) => void
   updateProgress: (updates: Partial<UserProgress>) => void
-  completeOnboarding: (user: Omit<User, 'id' | 'createdAt' | 'updatedAt'>) => void
+  completeOnboarding: (user: Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'speechPauseTimeout' | 'speechSettings'>) => void
   updateSettings: (settings: Partial<AppSettings>) => void
   incrementStreak: () => void
   resetStreak: () => void
@@ -59,6 +60,8 @@ export const useAppStore = create<AppState>()(
         const user: User = {
           id: generateId(),
           ...userData,
+          speechPauseTimeout: getDefaultPauseTimeout(userData.frenchLevel),
+          speechSettings: { ...DEFAULT_SPEECH_SETTINGS },
           createdAt: now,
           updatedAt: now,
         }
@@ -120,6 +123,20 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'julang-app-storage',
+      onRehydrateStorage: () => (state) => {
+        // Migration: add speechPauseTimeout for existing users
+        if (state?.user && state.user.speechPauseTimeout === undefined) {
+          state.updateUser({
+            speechPauseTimeout: getDefaultPauseTimeout(state.user.frenchLevel),
+          })
+        }
+        // Migration: add speechSettings for existing users
+        if (state?.user && state.user.speechSettings === undefined) {
+          state.updateUser({
+            speechSettings: { ...DEFAULT_SPEECH_SETTINGS },
+          })
+        }
+      },
     }
   )
 )

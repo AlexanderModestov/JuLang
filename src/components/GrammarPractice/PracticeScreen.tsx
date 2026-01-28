@@ -267,6 +267,12 @@ export default function PracticeScreen() {
                 placeholder="Введите перевод..."
                 className="w-full px-4 py-3 text-lg border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-4"
                 disabled={!!result}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck={false}
+                data-gramm="false"
+                data-gramm_editor="false"
               />
 
               {result && (

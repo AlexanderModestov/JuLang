@@ -145,7 +145,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 Règle grammaticale en focus: ${grammarTopic}
 Niveau de l'élève: ${level}
 
-Évalue la traduction de l'élève. Sois tolérant aux petites erreurs d'orthographe mais strict sur la grammaire.
+Règles d'évaluation:
+1. Évalue le sens et la grammaire, pas l'orthographe
+2. IMPORTANT: L'absence de signes diacritiques N'EST PAS une erreur
+   - "francais" = "français" — c'est CORRECT
+   - "eleve" = "élève" — c'est CORRECT
+   - "ca va" = "ça va" — c'est CORRECT
+3. NE donne PAS de feedback sur les accents manquants
+4. Considère la réponse comme correcte si le sens et la grammaire sont bons
 
 Réponds en JSON:
 {
@@ -196,6 +203,11 @@ Réponse de l'élève: "${userAnswer}"`,
           {
             role: 'system',
             content: `Analyse si l'élève a utilisé correctement la règle "${grammarTopic}" dans son message.
+
+IMPORTANT: Ignore l'absence de signes diacritiques.
+"francais" = "français", ce n'est pas une erreur.
+
+Évalue UNIQUEMENT la correction de la construction grammaticale.
 
 Réponds en JSON:
 {
