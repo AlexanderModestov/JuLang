@@ -5,6 +5,7 @@ import type {
   Topic,
   PracticeSession,
   VocabularyProgress,
+  TeacherMessage,
 } from '@/types'
 
 export class JuLangDB extends Dexie {
@@ -13,6 +14,7 @@ export class JuLangDB extends Dexie {
   topics!: Table<Topic>
   practiceSessions!: Table<PracticeSession>
   vocabularyProgress!: Table<VocabularyProgress>
+  teacherMessages!: Table<TeacherMessage>
 
   constructor() {
     super('julang')
@@ -54,6 +56,16 @@ export class JuLangDB extends Dexie {
             }
           })
       })
+
+    // Version 4: Add teacher chat messages table
+    this.version(4).stores({
+      grammarCards: 'id, userId, topic, level, nextReview',
+      conversations: 'id, userId, topicId, startedAt',
+      topics: 'id, userId, category, level, isSystem',
+      practiceSessions: 'id, userId, cardId, startedAt',
+      vocabularyProgress: 'id, userId, cardId, nextReview',
+      teacherMessages: '++id, timestamp',
+    })
   }
 }
 

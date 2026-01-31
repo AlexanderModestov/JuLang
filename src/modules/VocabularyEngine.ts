@@ -199,6 +199,10 @@ export async function addCardFromConversation(
     level: 'A1' as const,
     type,
     ...(gender ? { gender } : {}),
+    topic: 'daily' as const,
+    difficulty: 2 as const,
+    frequency: 3 as const,
+    imageUrl: '/images/vocab/default.jpg',
   }
   localStorage.setItem('customVocabularyCards', JSON.stringify(customCards))
 

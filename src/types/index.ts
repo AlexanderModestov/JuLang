@@ -109,6 +109,27 @@ export interface GrammarExample {
   highlight?: string
 }
 
+// Grammar group for categorization
+export type GrammarGroup =
+  | 'articles'      // Артикли
+  | 'tenses'        // Времена
+  | 'pronouns'      // Местоимения
+  | 'prepositions'  // Предлоги
+  | 'adjectives'    // Прилагательные
+  | 'negation'      // Отрицание
+  | 'questions'     // Вопросы
+
+// Static grammar topic from grammar-topics.json
+export interface GrammarTopic {
+  id: string
+  title: string
+  titleRu: string
+  level: FrenchLevel
+  category: string
+  group: GrammarGroup
+  content: GrammarTopicContent
+}
+
 // Static content for a grammar topic
 export interface GrammarTopicContent {
   rule: string
@@ -193,6 +214,19 @@ export interface PronunciationAnalysis {
 }
 
 // Vocabulary types
+export type VocabularyTopic = 'daily' | 'food' | 'travel' | 'work' | 'home' | 'nature' | 'emotions' | 'communication'
+
+export const vocabularyTopicLabels: Record<VocabularyTopic, string> = {
+  daily: 'Повседневное',
+  food: 'Еда',
+  travel: 'Путешествия',
+  work: 'Работа',
+  home: 'Дом',
+  nature: 'Природа',
+  emotions: 'Эмоции',
+  communication: 'Общение',
+}
+
 export interface VocabularyCard {
   id: string
   french: string
@@ -202,6 +236,10 @@ export interface VocabularyCard {
   level: FrenchLevel
   type: 'word' | 'expression'
   gender?: 'masculine' | 'feminine'
+  topic: VocabularyTopic
+  difficulty: 1 | 2 | 3
+  frequency: 1 | 2 | 3 | 4 | 5
+  imageUrl: string
 }
 
 export interface VocabularyProgress {
@@ -221,6 +259,36 @@ export type VocabularyExerciseType = 'fr_to_ru' | 'ru_to_fr' | 'multiple_choice'
 // SRS types
 export type SRSQuality = 0 | 1 | 2 | 3 | 4 | 5
 
+// Teacher chat types
+export type TeacherLanguage = 'ru' | 'fr' | 'adaptive'
+
+export interface TeacherMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  timestamp: Date
+  context: {
+    screen: string
+    itemId?: string
+    itemPreview?: string
+  }
+}
+
+/**
+ * Returns default teacher language based on French level.
+ * A1-A2: Russian (easier to understand)
+ * B1+: Adaptive (mix of French and Russian based on context)
+ */
+export function getDefaultTeacherLanguage(level: FrenchLevel): TeacherLanguage {
+  switch (level) {
+    case 'A1':
+    case 'A2':
+      return 'ru'
+    default:
+      return 'adaptive'
+  }
+}
+
 // Settings
 export interface AppSettings {
   theme: 'light' | 'dark' | 'system'
@@ -228,6 +296,7 @@ export interface AppSettings {
   selectedVoice?: string
   notificationsEnabled: boolean
   notificationTime?: string
+  teacherLanguage?: TeacherLanguage
 }
 
 // Default values
