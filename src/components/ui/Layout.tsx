@@ -13,7 +13,7 @@ export default function Layout({ children }: LayoutProps) {
   const navItems = [
     { path: '/', label: 'Главная', icon: '🏠' },
     { path: '/topics', label: 'Диалог', icon: '💬' },
-    { path: '/review', label: 'Повторение', icon: '📚' },
+    { path: '/grammar', label: 'Грамматика', icon: '📖' },
     { path: '/settings', label: 'Настройки', icon: '⚙️' },
   ]
 
