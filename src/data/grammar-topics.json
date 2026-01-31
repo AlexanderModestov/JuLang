@@ -15,6 +15,7 @@
       "titleRu": "Определённые артикли",
       "level": "A1",
       "category": "articles",
+      "group": "articles",
       "content": {
         "rule": "Определённые артикли le (м.р.), la (ж.р.), les (мн.ч.) указывают на конкретный, известный предмет. Перед гласной и h немой используется l'.",
         "examples": [
@@ -34,6 +35,7 @@
       "titleRu": "Неопределённые артикли",
       "level": "A1",
       "category": "articles",
+      "group": "articles",
       "content": {
         "rule": "Неопределённые артикли un (м.р.), une (ж.р.), des (мн.ч.) указывают на неопределённый предмет или предмет, упоминаемый впервые.",
         "examples": [
@@ -53,6 +55,7 @@
       "titleRu": "Глаголы être и avoir в настоящем времени",
       "level": "A1",
       "category": "verbs",
+      "group": "tenses",
       "content": {
         "rule": "Être (быть) и avoir (иметь) — неправильные глаголы, основа для многих конструкций. Être: je suis, tu es, il est, nous sommes, vous êtes, ils sont. Avoir: j'ai, tu as, il a, nous avons, vous avez, ils ont.",
         "examples": [
@@ -72,6 +75,7 @@
       "titleRu": "Глаголы на -er в настоящем времени",
       "level": "A1",
       "category": "verbs",
+      "group": "tenses",
       "content": {
         "rule": "Глаголы на -er (90% всех глаголов) спрягаются одинаково: убираем -er и добавляем окончания: -e, -es, -e, -ons, -ez, -ent. Окончания -e, -es, -ent не произносятся.",
         "examples": [
@@ -91,6 +95,7 @@
       "titleRu": "Отрицание",
       "level": "A1",
       "category": "syntax",
+      "group": "negation",
       "content": {
         "rule": "Отрицание образуется с помощью ne...pas, которые окружают глагол. В разговорной речи ne часто опускается. Перед гласной ne → n'.",
         "examples": [
@@ -110,6 +115,7 @@
       "titleRu": "Личные местоимения (подлежащие)",
       "level": "A1",
       "category": "pronouns",
+      "group": "pronouns",
       "content": {
         "rule": "Личные местоимения: je (я), tu (ты), il/elle/on (он/она/мы разг.), nous (мы), vous (вы/Вы), ils/elles (они м./ж.). Vous используется для вежливости к одному человеку.",
         "examples": [
@@ -129,6 +135,7 @@
       "titleRu": "Согласование прилагательных",
       "level": "A1",
       "category": "adjectives",
+      "group": "adjectives",
       "content": {
         "rule": "Прилагательные согласуются с существительным в роде и числе. Женский род: +e. Множественное число: +s. Ж.р. мн.ч.: +es. Большинство ставятся после существительного.",
         "examples": [
@@ -148,6 +155,7 @@
       "titleRu": "Прошедшее время с avoir",
       "level": "A2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Passé composé образуется: avoir в présent + participe passé. Используется для завершённых действий в прошлом. Participe passé: -er→-é, -ir→-i, -re→-u (+ неправильные).",
         "examples": [
@@ -167,6 +175,7 @@
       "titleRu": "Прошедшее время с être",
       "level": "A2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Некоторые глаголы (движения и состояния) + возвратные используют être. Participe passé согласуется с подлежащим. Глаголы DR MRS VANDERTRAMP: devenir, revenir, monter, rester, sortir, venir, aller, naître, descendre, entrer, rentrer, tomber, retourner, arriver, mourir, partir.",
         "examples": [
@@ -186,6 +195,7 @@
       "titleRu": "Имперфект (прошедшее незавершённое)",
       "level": "A2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Imparfait описывает длительные/повторяющиеся действия в прошлом, фон, состояния. Основа: nous в présent без -ons + окончания: -ais, -ais, -ait, -ions, -iez, -aient.",
         "examples": [
@@ -205,6 +215,7 @@
       "titleRu": "Местоимения прямого дополнения",
       "level": "A2",
       "category": "pronouns",
+      "group": "pronouns",
       "content": {
         "rule": "COD заменяет существительное без предлога. Me, te, le/la, nous, vous, les. Ставятся перед глаголом. В passé composé participe passé согласуется с COD, если он стоит перед глаголом.",
         "examples": [
@@ -224,6 +235,7 @@
       "titleRu": "Местоимения косвенного дополнения",
       "level": "A2",
       "category": "pronouns",
+      "group": "pronouns",
       "content": {
         "rule": "COI заменяет существительное с предлогом à (обычно одушевлённое). Me, te, lui, nous, vous, leur. Ставятся перед глаголом. Не согласуются в passé composé.",
         "examples": [
@@ -243,6 +255,7 @@
       "titleRu": "Возвратные глаголы",
       "level": "A2",
       "category": "verbs",
+      "group": "tenses",
       "content": {
         "rule": "Возвратные глаголы используют местоимение me/te/se/nous/vous/se. В passé composé спрягаются с être и согласуются с подлежащим (кроме случаев с прямым дополнением после глагола).",
         "examples": [
@@ -262,6 +275,7 @@
       "titleRu": "Простое будущее время",
       "level": "A2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Futur simple: инфинитив (для -re без e) + окончания avoir: -ai, -as, -a, -ons, -ez, -ont. Неправильные основы: être→ser-, avoir→aur-, aller→ir-, faire→fer-, venir→viendr-.",
         "examples": [
@@ -281,6 +295,7 @@
       "titleRu": "Сослагательное наклонение",
       "level": "B1",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Subjonctif используется после выражений желания, эмоций, сомнения, необходимости (il faut que, je veux que, je suis content que). Основа: ils в présent + -e, -es, -e, -ions, -iez, -ent.",
         "examples": [
@@ -300,6 +315,7 @@
       "titleRu": "Условное наклонение настоящего времени",
       "level": "B1",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Conditionnel = основа futur + окончания imparfait (-ais, -ais, -ait, -ions, -iez, -aient). Используется для вежливых просьб, советов, гипотез, желаний.",
         "examples": [
@@ -319,6 +335,7 @@
       "titleRu": "Относительные местоимения",
       "level": "B1",
       "category": "pronouns",
+      "group": "pronouns",
       "content": {
         "rule": "Qui — подлежащее (кто/который). Que — прямое дополнение (которого). Où — место/время (где/когда). Dont — с de (о котором, чей).",
         "examples": [
@@ -338,6 +355,7 @@
       "titleRu": "Давнопрошедшее время",
       "level": "B1",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Plus-que-parfait описывает действие, произошедшее до другого прошедшего. Avoir/être в imparfait + participe passé.",
         "examples": [
@@ -357,6 +375,7 @@
       "titleRu": "Страдательный залог",
       "level": "B1",
       "category": "syntax",
+      "group": "tenses",
       "content": {
         "rule": "Пассив: être (в нужном времени) + participe passé. Деятель вводится через par. Participe passé согласуется с подлежащим.",
         "examples": [
@@ -376,6 +395,7 @@
       "titleRu": "Герундий",
       "level": "B1",
       "category": "verbs",
+      "group": "tenses",
       "content": {
         "rule": "Gérondif = en + participe présent (-ant). Показывает одновременность, способ, условие. Основа: nous в présent без -ons + ant. Исключения: être→étant, avoir→ayant, savoir→sachant.",
         "examples": [
@@ -395,6 +415,7 @@
       "titleRu": "Условные предложения с si",
       "level": "B2",
       "category": "syntax",
+      "group": "questions",
       "content": {
         "rule": "Три типа: 1) Si + présent → futur (реальное). 2) Si + imparfait → conditionnel présent (нереальное настоящее). 3) Si + plus-que-parfait → conditionnel passé (нереальное прошлое).",
         "examples": [
@@ -414,6 +435,7 @@
       "titleRu": "Косвенная речь",
       "level": "B2",
       "category": "syntax",
+      "group": "questions",
       "content": {
         "rule": "При переводе в косвенную речь меняются местоимения, времена (concordance des temps), маркеры времени. Présent→imparfait, passé composé→plus-que-parfait, futur→conditionnel.",
         "examples": [
@@ -433,6 +455,7 @@
       "titleRu": "Прошедшее сослагательное",
       "level": "B2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Subjonctif passé = avoir/être в subjonctif présent + participe passé. Выражает завершённое действие в сослагательном наклонении.",
         "examples": [
@@ -452,6 +475,7 @@
       "titleRu": "Прошедшее условное",
       "level": "B2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Conditionnel passé = avoir/être в conditionnel présent + participe passé. Выражает нереализованное действие в прошлом, сожаление.",
         "examples": [
@@ -471,6 +495,7 @@
       "titleRu": "Предбудущее время",
       "level": "B2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Futur antérieur = avoir/être в futur simple + participe passé. Выражает действие, которое будет завершено до другого будущего действия, или предположение о прошлом.",
         "examples": [
@@ -490,6 +515,7 @@
       "titleRu": "Простое прошедшее (литературное)",
       "level": "C1",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Passé simple — литературное время для завершённых действий. Окончания -er: -ai, -as, -a, -âmes, -âtes, -èrent. -ir/-re: -is, -is, -it, -îmes, -îtes, -irent. Много неправильных форм.",
         "examples": [
@@ -509,6 +535,7 @@
       "titleRu": "Имперфект сослагательного",
       "level": "C1",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Subjonctif imparfait образуется от passé simple: 2-е лицо ед.ч. + -se, -ses, accent circonflexe + t, -sions, -siez, -sent. Используется в литературном стиле для согласования времён.",
         "examples": [
@@ -528,6 +555,7 @@
       "titleRu": "Плеонастическое ne",
       "level": "C1",
       "category": "syntax",
+      "group": "negation",
       "content": {
         "rule": "Ne explétif — не имеет отрицательного значения. Используется после avant que, à moins que, de peur que, de crainte que, empêcher que, éviter que и сравнений с plus/moins/autre.",
         "examples": [
@@ -547,6 +575,7 @@
       "titleRu": "Литературные времена",
       "level": "C2",
       "category": "tenses",
+      "group": "tenses",
       "content": {
         "rule": "Литературные времена: passé simple, passé antérieur (passé simple avoir/être + pp), subjonctif imparfait, subjonctif plus-que-parfait. Используются в литературе, официальных текстах, исторических нарративах.",
         "examples": [
@@ -566,6 +595,7 @@
       "titleRu": "Стилистическая инверсия",
       "level": "C2",
       "category": "syntax",
+      "group": "questions",
       "content": {
         "rule": "Стилистическая инверсия подлежащего и сказуемого после наречий (peut-être, sans doute, à peine, ainsi) и в вставных конструкциях прямой речи. Добавляет формальность и элегантность.",
         "examples": [
