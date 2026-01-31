@@ -31,6 +31,29 @@ export class JuLangDB extends Dexie {
       practiceSessions: 'id, userId, cardId, startedAt',
       vocabularyProgress: 'id, userId, cardId, nextReview',
     })
+
+    // Version 3: Add duration tracking fields to conversations
+    // Migration: For existing conversations without duration data,
+    // set durationMs = 0 (startedAt already exists)
+    this.version(3)
+      .stores({
+        grammarCards: 'id, userId, topic, level, nextReview',
+        conversations: 'id, userId, topicId, startedAt',
+        topics: 'id, userId, category, level, isSystem',
+        practiceSessions: 'id, userId, cardId, startedAt',
+        vocabularyProgress: 'id, userId, cardId, nextReview',
+      })
+      .upgrade((tx) => {
+        return tx
+          .table('conversations')
+          .toCollection()
+          .modify((conversation) => {
+            // Only migrate conversations that don't have durationMs
+            if (conversation.durationMs === undefined) {
+              conversation.durationMs = 0
+            }
+          })
+      })
   }
 }
 

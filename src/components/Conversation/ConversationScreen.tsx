@@ -29,6 +29,7 @@ export default function ConversationScreen() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const [conversationStartedAt] = useState(() => new Date())
 
   useEffect(() => {
     initConversation()
@@ -143,15 +144,19 @@ export default function ConversationScreen() {
       return
     }
 
-    // Save conversation
+    // Save conversation with duration tracking
+    const endedAt = new Date()
+    const durationMs = endedAt.getTime() - conversationStartedAt.getTime()
+
     const conversation: Conversation = {
       id: conversationId,
       userId: user.id,
       topicId: topic,
       aiProvider: 'openai',
       mode: mode,
-      startedAt: messages[0].timestamp,
-      endedAt: new Date(),
+      startedAt: conversationStartedAt,
+      endedAt,
+      durationMs,
       messages,
     }
 

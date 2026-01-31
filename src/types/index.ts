@@ -77,6 +77,7 @@ export interface Conversation {
   mode: ConversationMode
   startedAt: Date
   endedAt?: Date
+  durationMs?: number
   messages: Message[]
   qualityScore?: number
 }
