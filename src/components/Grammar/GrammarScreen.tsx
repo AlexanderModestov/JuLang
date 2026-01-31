@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useAppStore } from '@/store/useAppStore'
+import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllGrammarTopics } from '@/modules/GrammarEngine'
 import type { GrammarTopic, GrammarGroup, FrenchLevel } from '@/types'
 import Card from '@/components/ui/Card'
@@ -10,6 +11,9 @@ const LEVEL_ORDER: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function GrammarScreen() {
   const { user } = useAppStore()
+
+  // Set teacher chat context for grammar screen
+  useTeacherContext({ screen: 'grammar' })
 
   // Get topics filtered by user's level and below
   const topics = useMemo(() => {

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import { useTeacherContext } from '@/store/teacherChatStore'
 import Card from '@/components/ui/Card'
 import MainProgressCard from './MainProgressCard'
 import StatsCard from './StatsCard'
@@ -17,6 +18,9 @@ function formatTotalTime(minutes: number): string {
 export default function HomeScreen() {
   const { user, progress } = useAppStore()
   const { stats, loading: statsLoading } = useHomeStats()
+
+  // Set teacher chat context for home screen
+  useTeacherContext({ screen: 'home' })
 
   if (!user || !progress) return null
 

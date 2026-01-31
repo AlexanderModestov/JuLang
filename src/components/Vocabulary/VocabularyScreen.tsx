@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import { useTeacherContext } from '@/store/teacherChatStore'
 import type { VocabularyCard, VocabularyProgress, VocabularyExerciseType } from '@/types'
 import {
   getNewCards,
@@ -50,6 +51,13 @@ export default function VocabularyScreen() {
   // Filters
   const { filters, setFilter, clearFilters, applyFilters, activeFilterCount } =
     useVocabularyFilters()
+
+  // Set teacher chat context - updates when viewing specific word
+  useTeacherContext({
+    screen: 'vocabulary',
+    itemId: selectedWord?.id,
+    itemPreview: selectedWord ? `${selectedWord.french} - ${selectedWord.russian}` : undefined,
+  })
 
   useEffect(() => {
     if (user) loadData()

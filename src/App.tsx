@@ -10,6 +10,8 @@ import TopicScreen from './components/TopicSelection/TopicScreen'
 import SettingsScreen from './components/Settings/SettingsScreen'
 import VocabularyScreen from './components/Vocabulary/VocabularyScreen'
 import OnboardingFlow from './components/Onboarding/OnboardingFlow'
+import TeacherChatButton from './components/TeacherChat/TeacherChatButton'
+import TeacherChatWidget from './components/TeacherChat/TeacherChatWidget'
 
 // Redirect component for /review/:topicId to /grammar/:topicId
 function ReviewTopicRedirect() {
@@ -42,6 +44,8 @@ function App() {
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <TeacherChatButton />
+      <TeacherChatWidget />
     </Layout>
   )
 }

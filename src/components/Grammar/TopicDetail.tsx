@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllCards, saveCard } from '@/db'
 import {
   getGrammarTopicById,
@@ -28,6 +29,13 @@ export default function TopicDetail() {
   const topic = topicId
     ? (getGrammarTopicById(topicId) as GrammarTopic | undefined)
     : undefined
+
+  // Set teacher chat context with topic information
+  useTeacherContext({
+    screen: 'grammar',
+    itemId: topicId,
+    itemPreview: topic?.titleRu || topic?.title,
+  })
 
   // Get all topics at user's level for "next rule" feature
   const availableTopics = useMemo(() => {

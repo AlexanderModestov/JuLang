@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAppStore } from '@/store/useAppStore'
+import { useTeacherContext } from '@/store/teacherChatStore'
 import { startConversation, continueConversation } from '@/modules/AIService'
 import {
   startListening,
@@ -26,6 +27,13 @@ export default function ConversationScreen() {
   const [mode, setMode] = useState<'text' | 'voice'>('text')
   const [conversationId] = useState(() => crypto.randomUUID())
   const [popupWord, setPopupWord] = useState<{ word: string; sentence: string } | null>(null)
+
+  // Set teacher chat context for conversation screen
+  useTeacherContext({
+    screen: 'conversation',
+    itemId: conversationId,
+    itemPreview: topic,
+  })
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
