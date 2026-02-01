@@ -17,6 +17,9 @@ dist-ssr/
 # Claude Code
 .claude/
 
+# Worktrees
+.worktrees/
+
 # Tauri
 src-tauri/target/
 
