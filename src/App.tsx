@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useParams } from 'react-router-dom'
-import { useAppStore } from './store/useAppStore'
+import { useAuthContext } from './contexts/AuthContext'
+import { AuthScreen, LoadingScreen, MigrationScreen } from './components/Auth'
 import Layout from './components/ui/Layout'
 import HomeScreen from './components/Home/HomeScreen'
 import ConversationScreen from './components/Conversation/ConversationScreen'
@@ -20,9 +21,25 @@ function ReviewTopicRedirect() {
 }
 
 function App() {
-  const { isOnboarded } = useAppStore()
+  const { user, profile, loading, migrating } = useAuthContext()
 
-  if (!isOnboarded) {
+  // Show loading screen while checking auth state
+  if (loading) {
+    return <LoadingScreen />
+  }
+
+  // Show auth screen if not signed in
+  if (!user) {
+    return <AuthScreen />
+  }
+
+  // Show migration screen while migrating local data
+  if (migrating) {
+    return <MigrationScreen />
+  }
+
+  // Show onboarding if user hasn't completed it
+  if (!profile?.is_onboarded) {
     return <OnboardingFlow />
   }
 
