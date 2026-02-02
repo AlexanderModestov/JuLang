@@ -36,41 +36,56 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Load user data from Supabase
   const loadUserData = async (userId: string) => {
-    const [profileData, progressData] = await Promise.all([
-      userDataService.getProfile(userId),
-      userDataService.getProgress(userId),
-    ])
-    setProfile(profileData)
-    setProgress(progressData)
+    try {
+      const [profileData, progressData] = await Promise.all([
+        userDataService.getProfile(userId),
+        userDataService.getProgress(userId),
+      ])
+      setProfile(profileData)
+      setProgress(progressData)
+    } catch (err) {
+      console.error('Failed to load user data:', err)
+      setError('Не удалось загрузить данные пользователя')
+      throw err
+    }
   }
 
   // Handle new user sign-in (check for migration)
   const handleSignIn = async (authUser: User) => {
     setUser(authUser)
+    setError(null)
 
-    // Check if user has existing profile in Supabase
-    const existingProfile = await userDataService.getProfile(authUser.id)
+    try {
+      // Check if user has existing profile in Supabase
+      const existingProfile = await userDataService.getProfile(authUser.id)
 
-    if (existingProfile) {
-      // Returning user - load their data
-      await loadUserData(authUser.id)
-    } else {
-      // New user - check for local data to migrate
-      const hasLocalData = await checkForLocalData()
+      if (existingProfile) {
+        // Returning user - load their data
+        await loadUserData(authUser.id)
+      } else {
+        // New user - check for local data to migrate
+        const hasLocalData = await checkForLocalData()
 
-      if (hasLocalData) {
-        setMigrating(true)
-        const result = await migrateLocalDataToSupabase(authUser.id)
+        if (hasLocalData) {
+          setMigrating(true)
+          try {
+            const result = await migrateLocalDataToSupabase(authUser.id)
 
-        if (result.success) {
-          await clearLocalData()
-          await loadUserData(authUser.id)
-        } else {
-          setError(`Migration error: ${result.error}`)
+            if (result.success) {
+              await clearLocalData()
+              await loadUserData(authUser.id)
+            } else {
+              setError(`Ошибка миграции: ${result.error}`)
+            }
+          } finally {
+            setMigrating(false)
+          }
         }
-        setMigrating(false)
+        // If no local data and no profile, user will go through onboarding
       }
-      // If no local data and no profile, user will go through onboarding
+    } catch (err) {
+      console.error('Failed to handle sign in:', err)
+      setError('Ошибка при входе в систему')
     }
   }
 
@@ -83,10 +98,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      if (session?.user) {
-        await handleSignIn(session.user)
+      try {
+        if (session?.user) {
+          await handleSignIn(session.user)
+        }
+      } catch (err) {
+        console.error('Initial session handling failed:', err)
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
     })
 
     // Listen for auth changes
@@ -94,12 +114,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
           setLoading(true)
-          await handleSignIn(session.user)
-          setLoading(false)
+          try {
+            await handleSignIn(session.user)
+          } catch (err) {
+            console.error('Auth state change handling failed:', err)
+          } finally {
+            setLoading(false)
+          }
         } else if (event === 'SIGNED_OUT') {
           setUser(null)
           setProfile(null)
           setProgress(null)
+          setError(null)
         }
       }
     )
@@ -133,7 +159,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = async () => {
     if (user) {
-      await loadUserData(user.id)
+      try {
+        await loadUserData(user.id)
+      } catch (err) {
+        console.error('Failed to refresh profile:', err)
+      }
     }
   }
 
