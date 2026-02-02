@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useAppStore } from '@/store/useAppStore'
-import { db } from '@/db'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { userDataService } from '@/services/userDataService'
 import { getCardsByLevel } from '@/modules/VocabularyEngine'
 import type { FrenchLevel } from '@/types'
 
@@ -30,39 +30,39 @@ function isSameDay(date1: Date, date2: Date): boolean {
 }
 
 export function useHomeStats(): { stats: HomeStats | null; loading: boolean } {
-  const { user, progress } = useAppStore()
+  const { user, profile, progress } = useAuthContext()
   const [stats, setStats] = useState<HomeStats | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user || !progress) {
+    if (!user || !profile || !progress) {
       setLoading(false)
       return
     }
 
     loadStats()
-  }, [user, progress])
+  }, [user?.id, profile, progress])
 
   const loadStats = async () => {
-    if (!user || !progress) return
+    if (!user || !profile || !progress) return
 
     setLoading(true)
 
     try {
-      // Fetch all data in parallel
+      // Fetch all data in parallel from Supabase
       const [vocabularyProgress, conversations] = await Promise.all([
-        db.vocabularyProgress.where('userId').equals(user.id).toArray(),
-        db.conversations.where('userId').equals(user.id).toArray(),
+        userDataService.getVocabularyProgress(user.id),
+        userDataService.getConversations(user.id),
       ])
 
       // Calculate level progress
-      const currentLevel = user.frenchLevel
+      const currentLevel = profile.french_level || 'A1'
       const nextLevel = getNextLevel(currentLevel)
       const cardsAtLevel = getCardsByLevel(currentLevel)
       const cardIdsAtLevel = new Set(cardsAtLevel.map((c) => c.id))
       const totalCardsAtLevel = cardsAtLevel.length
       const learnedAtLevel = vocabularyProgress.filter(
-        (p) => cardIdsAtLevel.has(p.cardId) && p.repetitions > 0
+        (p) => cardIdsAtLevel.has(p.card_id) && p.repetitions > 0
       ).length
 
       const levelPercent =
@@ -73,10 +73,10 @@ export function useHomeStats(): { stats: HomeStats | null; loading: boolean } {
       // Calculate today's minutes
       const today = new Date()
       const todayConversations = conversations.filter(
-        (c) => c.startedAt && isSameDay(new Date(c.startedAt), today)
+        (c) => c.started_at && isSameDay(new Date(c.started_at), today)
       )
       const todayMs = todayConversations.reduce(
-        (sum, c) => sum + (c.durationMs || 0),
+        (sum, c) => sum + (c.duration_ms || 0),
         0
       )
       const todayMinutes = Math.round(todayMs / 60000)
@@ -88,7 +88,7 @@ export function useHomeStats(): { stats: HomeStats | null; loading: boolean } {
 
       // Calculate total dialogue time
       const totalMs = conversations.reduce(
-        (sum, c) => sum + (c.durationMs || 0),
+        (sum, c) => sum + (c.duration_ms || 0),
         0
       )
       const totalDialogueMinutes = Math.round(totalMs / 60000)
@@ -110,7 +110,7 @@ export function useHomeStats(): { stats: HomeStats | null; loading: boolean } {
         wordsLearned,
         totalDialogueMinutes,
         averageDialogueMinutes,
-        currentStreak: progress.currentStreak,
+        currentStreak: progress.current_streak,
       })
     } catch (error) {
       console.error('Failed to load home stats:', error)

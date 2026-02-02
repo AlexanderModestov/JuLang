@@ -1,5 +1,13 @@
 import { useState, useCallback, useMemo } from 'react'
-import type { VocabularyCard, VocabularyProgress, VocabularyTopic, FrenchLevel } from '@/types'
+import type { VocabularyCard, VocabularyTopic, FrenchLevel } from '@/types'
+
+// Flexible progress type that accepts both Supabase (card_id) and legacy (cardId) formats
+// This allows components to transition gradually to Supabase
+interface ProgressItem {
+  card_id?: string  // Supabase format
+  cardId?: string   // Legacy format
+  repetitions: number
+}
 
 export interface VocabularyFilters {
   topic: VocabularyTopic | null
@@ -12,7 +20,7 @@ export interface UseVocabularyFiltersReturn {
   filters: VocabularyFilters
   setFilter: <K extends keyof VocabularyFilters>(key: K, value: VocabularyFilters[K]) => void
   clearFilters: () => void
-  applyFilters: (words: VocabularyCard[], progress: VocabularyProgress[]) => VocabularyCard[]
+  applyFilters: (words: VocabularyCard[], progress: ProgressItem[]) => VocabularyCard[]
   activeFilterCount: number
 }
 
@@ -24,14 +32,21 @@ const DEFAULT_FILTERS: VocabularyFilters = {
 }
 
 /**
+ * Gets the card ID from a progress item, handling both Supabase and legacy formats
+ */
+function getProgressCardId(progress: ProgressItem): string {
+  return progress.card_id || progress.cardId || ''
+}
+
+/**
  * Determines the learning status of a vocabulary card based on progress.
- * - 'new': no record in vocabularyProgress for this cardId
+ * - 'new': no record in vocabularyProgress for this card_id
  * - 'learning': has record, repetitions < 3
  * - 'learned': repetitions >= 3
  */
 function getCardStatus(
   cardId: string,
-  progressMap: Map<string, VocabularyProgress>
+  progressMap: Map<string, ProgressItem>
 ): 'new' | 'learning' | 'learned' {
   const progress = progressMap.get(cardId)
   if (!progress) return 'new'
@@ -57,9 +72,9 @@ export function useVocabularyFilters(): UseVocabularyFiltersReturn {
   }, [])
 
   const applyFilters = useCallback(
-    (words: VocabularyCard[], progress: VocabularyProgress[]): VocabularyCard[] => {
-      // Create a map for O(1) progress lookup
-      const progressMap = new Map(progress.map((p) => [p.cardId, p]))
+    (words: VocabularyCard[], progress: ProgressItem[]): VocabularyCard[] => {
+      // Create a map for O(1) progress lookup (handles both Supabase and legacy formats)
+      const progressMap = new Map(progress.map((p) => [getProgressCardId(p), p]))
 
       return words.filter((card) => {
         // Filter by topic
