@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import { startConversation, continueConversation } from '@/modules/AIService'
 import {
@@ -17,7 +17,7 @@ import WordPopup from './WordPopup'
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { user, updateProgress, progress } = useAppStore()
+  const { user, profile, progress, updateProgress } = useAuthContext()
 
   const topic = searchParams.get('topic') || 'conversation libre'
   const [messages, setMessages] = useState<Message[]>([])
@@ -48,11 +48,11 @@ export default function ConversationScreen() {
   }, [messages])
 
   const initConversation = async () => {
-    if (!user) return
+    if (!profile) return
 
     setIsLoading(true)
     try {
-      const greeting = await startConversation(topic, user.frenchLevel)
+      const greeting = await startConversation(topic, profile.french_level || 'A1')
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
@@ -73,7 +73,7 @@ export default function ConversationScreen() {
   }
 
   const sendMessage = async (text: string) => {
-    if (!text.trim() || !user || isLoading) return
+    if (!text.trim() || !profile || isLoading) return
 
     const userMessage: Message = {
       id: crypto.randomUUID(),
@@ -88,7 +88,7 @@ export default function ConversationScreen() {
 
     try {
       const allMessages = [...messages, userMessage]
-      const response = await continueConversation(allMessages, user.frenchLevel, topic)
+      const response = await continueConversation(allMessages, profile.french_level || 'A1', topic)
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
@@ -102,7 +102,7 @@ export default function ConversationScreen() {
       // Update progress
       if (progress) {
         updateProgress({
-          totalMessagesSent: progress.totalMessagesSent + 1,
+          total_messages_sent: progress.total_messages_sent + 1,
         })
       }
 
@@ -173,8 +173,8 @@ export default function ConversationScreen() {
     // Update progress
     if (progress) {
       updateProgress({
-        totalConversations: progress.totalConversations + 1,
-        topicsCovered: [...new Set([...progress.topicsCovered, topic])],
+        total_conversations: progress.total_conversations + 1,
+        topics_covered: [...new Set([...progress.topics_covered, topic])],
       })
     }
 

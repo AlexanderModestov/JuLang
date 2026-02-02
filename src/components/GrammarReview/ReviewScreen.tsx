@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { getCardsDueToday, getAllCards } from '@/db'
 import { scheduleCard, getQualityLabel, formatInterval } from '@/modules/SRSEngine'
 import { ensureCardsForLevel } from '@/modules/GrammarEngine'
@@ -12,7 +12,7 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function ReviewScreen() {
   const navigate = useNavigate()
-  const { user, updateProgress, progress } = useAppStore()
+  const { user, profile, progress, updateProgress } = useAuthContext()
 
   const [cards, setCards] = useState<GrammarCard[]>([])
   const [allCards, setAllCards] = useState<GrammarCard[]>([])
@@ -24,13 +24,14 @@ export default function ReviewScreen() {
 
   useEffect(() => {
     loadCards()
-  }, [user])
+  }, [user, profile])
 
   const loadCards = async () => {
-    if (!user) return
+    if (!user || !profile) return
 
     // Ensure cards exist for user's level
-    await ensureCardsForLevel(user.id, user.frenchLevel)
+    const frenchLevel = profile.french_level || 'A1'
+    await ensureCardsForLevel(user.id, frenchLevel)
 
     const dueCards = await getCardsDueToday(user.id)
     const all = await getAllCards(user.id)
@@ -65,7 +66,7 @@ export default function ReviewScreen() {
       setIsComplete(true)
       if (progress) {
         updateProgress({
-          grammarCardsMastered: progress.grammarCardsMastered + 1,
+          grammar_cards_mastered: progress.grammar_cards_mastered + 1,
         })
       }
     }
@@ -78,7 +79,7 @@ export default function ReviewScreen() {
   }, {} as Record<FrenchLevel, GrammarCard[]>)
 
   // Get levels up to user's level
-  const userLevelIndex = LEVELS.indexOf(user?.frenchLevel || 'A1')
+  const userLevelIndex = LEVELS.indexOf(profile?.french_level || 'A1')
   const visibleLevels = LEVELS.slice(0, userLevelIndex + 1)
 
   // Browse mode - show all cards by level

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import Card from '@/components/ui/Card'
 import MainProgressCard from './MainProgressCard'
@@ -16,20 +16,20 @@ function formatTotalTime(minutes: number): string {
 }
 
 export default function HomeScreen() {
-  const { user, progress } = useAppStore()
+  const { profile, progress } = useAuthContext()
   const { stats, loading: statsLoading } = useHomeStats()
 
   // Set teacher chat context for home screen
   useTeacherContext({ screen: 'home' })
 
-  if (!user || !progress) return null
+  if (!profile || !progress) return null
 
   return (
     <div className="space-y-6">
       {/* Greeting */}
       <div className="text-center py-4">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          👋 Привет, {user.name}!
+          Priviet, {profile.name}!
         </h1>
       </div>
 

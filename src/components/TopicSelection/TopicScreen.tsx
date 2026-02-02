@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -53,7 +53,7 @@ const CATEGORIES: TopicCategory[] = [
 
 export default function TopicScreen() {
   const navigate = useNavigate()
-  const { user } = useAppStore()
+  const { profile } = useAuthContext()
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null)
   const [customTopic, setCustomTopic] = useState('')
   const [randomTopic, setRandomTopic] = useState<string | null>(null)
@@ -84,7 +84,7 @@ export default function TopicScreen() {
           Выберите тему для разговора
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Уровень: {user?.frenchLevel}
+          Уровень: {profile?.french_level || 'A1'}
         </p>
       </div>
 

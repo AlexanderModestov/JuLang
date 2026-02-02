@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import type { VocabularyCard, VocabularyProgress, VocabularyExerciseType } from '@/types'
 import {
@@ -33,7 +33,7 @@ function pickExerciseType(): VocabularyExerciseType {
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
-  const { user } = useAppStore()
+  const { user, profile } = useAuthContext()
   const [mode, setMode] = useState<Mode>('menu')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
@@ -60,20 +60,21 @@ export default function VocabularyScreen() {
   })
 
   useEffect(() => {
-    if (user) loadData()
-  }, [user])
+    if (user && profile) loadData()
+  }, [user, profile])
 
   const loadData = async () => {
-    if (!user) return
+    if (!user || !profile) return
     setLoading(true)
+    const frenchLevel = profile.french_level || 'A1'
     const [nc, rq, progress] = await Promise.all([
-      getNewCards(user.id, user.frenchLevel),
+      getNewCards(user.id, frenchLevel),
       getReviewQueue(user.id),
       db.vocabularyProgress.where('userId').equals(user.id).toArray(),
     ])
     setNewCards(nc)
     setReviewQueue(rq)
-    setAllCards(getCardsUpToLevel(user.frenchLevel))
+    setAllCards(getCardsUpToLevel(frenchLevel))
     setAllProgress(progress)
     setLoading(false)
   }
@@ -159,7 +160,7 @@ export default function VocabularyScreen() {
     loadData()
   }
 
-  if (!user || loading) {
+  if (!user || !profile || loading) {
     return (
       <div className="flex justify-center py-12">
         <p className="text-gray-500 dark:text-gray-400">Загрузка...</p>
@@ -359,7 +360,7 @@ export default function VocabularyScreen() {
           Словарь
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Уровень: {user.frenchLevel}
+          Уровень: {profile.french_level || 'A1'}
         </p>
       </div>
 
