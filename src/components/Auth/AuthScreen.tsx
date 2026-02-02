@@ -1,7 +1,7 @@
 import { useAuth } from '../../hooks/useAuth'
 
 export default function AuthScreen() {
-  const { signInWithGoogle, signInWithApple, error, loading } = useAuth()
+  const { signInWithGoogle, /* signInWithApple, */ error, loading } = useAuth()
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
@@ -48,6 +48,7 @@ export default function AuthScreen() {
             <span className="text-gray-700 font-medium">Войти через Google</span>
           </button>
 
+{/* Apple Sign In - temporarily disabled
           <button
             onClick={signInWithApple}
             disabled={loading}
@@ -58,6 +59,7 @@ export default function AuthScreen() {
             </svg>
             <span className="font-medium">Войти через Apple</span>
           </button>
+*/}
         </div>
 
         {/* Footer */}
