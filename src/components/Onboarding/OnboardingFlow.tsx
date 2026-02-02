@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { userDataService } from '@/services/userDataService'
 import { ensureCardsForLevel } from '@/modules/GrammarEngine'
+import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS } from '@/types'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -18,29 +20,37 @@ const LEVELS: { value: FrenchLevel; label: string; description: string }[] = [
 ]
 
 export default function OnboardingFlow() {
-  const { completeOnboarding } = useAppStore()
+  const { user, refreshProfile } = useAuthContext()
   const [step, setStep] = useState<Step>('welcome')
   const [name, setName] = useState('')
   const [level, setLevel] = useState<FrenchLevel>('A1')
   const [error, setError] = useState('')
 
   const handleComplete = async () => {
+    if (!user) return
+
     setStep('creating')
 
     try {
-      // Complete onboarding
-      completeOnboarding({
+      // Create user profile in Supabase
+      await userDataService.createProfile(user.id, {
         name: name.trim() || 'Пользователь',
-        nativeLanguage: 'ru',
-        frenchLevel: level,
-        preferredAiProvider: 'openai',
+        native_language: 'ru',
+        french_level: level,
+        preferred_ai_provider: 'openai',
+        speech_pause_timeout: getDefaultPauseTimeout(level),
+        speech_settings: DEFAULT_SPEECH_SETTINGS,
+        is_onboarded: true,
       })
 
-      // Create grammar cards for user's level from static content (instant)
-      const userId = useAppStore.getState().user?.id
-      if (userId) {
-        await ensureCardsForLevel(userId, level)
-      }
+      // Create user progress
+      await userDataService.createProgress(user.id)
+
+      // Create initial grammar cards (still uses Dexie, will be updated in Task 12)
+      await ensureCardsForLevel(user.id, level)
+
+      // Refresh the auth context to pick up the new profile
+      await refreshProfile()
     } catch (err) {
       console.error('Onboarding error:', err)
       setError('Ошибка при настройке. Попробуйте ещё раз.')
