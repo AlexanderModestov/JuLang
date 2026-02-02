@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { translateWord } from '@/modules/AIService'
 import type { WordTranslation } from '@/modules/AIService'
 import { isLemmaInProgress, addCardFromConversation } from '@/modules/VocabularyEngine'
@@ -12,7 +12,7 @@ interface WordPopupProps {
 }
 
 export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
-  const { user } = useAppStore()
+  const { user } = useAuthContext()
   const [translation, setTranslation] = useState<WordTranslation | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)

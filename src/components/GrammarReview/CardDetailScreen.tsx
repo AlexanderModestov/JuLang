@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { getAllCards, saveCard } from '@/db'
 import { getGrammarTopicById } from '@/modules/GrammarEngine'
 import { enhanceCardExplanation } from '@/modules/AIService'
@@ -12,7 +12,7 @@ import Card from '@/components/ui/Card'
 export default function CardDetailScreen() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
-  const { user } = useAppStore()
+  const { user, profile } = useAuthContext()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
   const [isEnhancing, setIsEnhancing] = useState(false)
@@ -63,8 +63,8 @@ export default function CardDetailScreen() {
   }
 
   const handleSpeak = (text: string) => {
-    if (user) {
-      speakWithPauses(text, user.speechSettings)
+    if (profile) {
+      speakWithPauses(text, profile.speech_settings)
     }
   }
 

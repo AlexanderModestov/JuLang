@@ -1,5 +1,65 @@
-import type { GrammarCard, SRSQuality } from '@/types'
-import { db, saveCard } from '@/db'
+import type { GrammarCard, SRSQuality, FrenchLevel } from '@/types'
+import type { Database } from '@/types/supabase'
+import { userDataService } from '@/services/userDataService'
+
+type SupabaseGrammarCard = Database['public']['Tables']['grammar_cards']['Row']
+
+// Convert Supabase grammar card to local GrammarCard type
+function toLocalGrammarCard(card: SupabaseGrammarCard): GrammarCard {
+  return {
+    id: card.id,
+    userId: card.user_id,
+    topicId: card.topic_id,
+    topic: card.topic,
+    level: card.level as FrenchLevel,
+    explanation: card.explanation || '',
+    examples: card.examples.map((e) => ({
+      french: e.fr,
+      russian: e.ru,
+    })),
+    commonMistakes: card.common_mistakes,
+    isEnhanced: card.is_enhanced,
+    enhancedExplanation: card.enhanced_explanation || undefined,
+    nextReview: new Date(card.next_review),
+    easeFactor: card.ease_factor,
+    interval: card.interval,
+    repetitions: card.repetitions,
+    createdAt: new Date(card.created_at),
+    lastReviewed: card.last_reviewed ? new Date(card.last_reviewed) : undefined,
+    practiceStats: {
+      written_translation: {
+        attempts: card.practice_stats.written_translation.attempts,
+        correct: card.practice_stats.written_translation.correct,
+        lastAttempt: card.practice_stats.written_translation.lastAttempt
+          ? new Date(card.practice_stats.written_translation.lastAttempt)
+          : undefined,
+      },
+      repeat_aloud: {
+        attempts: card.practice_stats.repeat_aloud.attempts,
+        avgPronunciationScore: card.practice_stats.repeat_aloud.avgPronunciationScore,
+        lastAttempt: card.practice_stats.repeat_aloud.lastAttempt
+          ? new Date(card.practice_stats.repeat_aloud.lastAttempt)
+          : undefined,
+      },
+      oral_translation: {
+        attempts: card.practice_stats.oral_translation.attempts,
+        correct: card.practice_stats.oral_translation.correct,
+        avgPronunciationScore: card.practice_stats.oral_translation.avgPronunciationScore,
+        lastAttempt: card.practice_stats.oral_translation.lastAttempt
+          ? new Date(card.practice_stats.oral_translation.lastAttempt)
+          : undefined,
+      },
+      grammar_dialog: {
+        sessions: card.practice_stats.grammar_dialog.sessions,
+        totalMessages: card.practice_stats.grammar_dialog.totalMessages,
+        grammarUsageRate: card.practice_stats.grammar_dialog.grammarUsageRate,
+        lastSession: card.practice_stats.grammar_dialog.lastSession
+          ? new Date(card.practice_stats.grammar_dialog.lastSession)
+          : undefined,
+      },
+    },
+  }
+}
 
 /**
  * SM-2 Spaced Repetition Algorithm
@@ -54,51 +114,43 @@ export async function scheduleCard(
   cardId: string,
   quality: SRSQuality
 ): Promise<GrammarCard | null> {
-  const card = await db.grammarCards.get(cardId)
-  if (!card) return null
+  const supabaseCard = await userDataService.getGrammarCard(cardId)
+  if (!supabaseCard) return null
 
+  const card = toLocalGrammarCard(supabaseCard)
   const { interval, easeFactor, nextReview } = calculateNextReview(card, quality)
 
-  const updatedCard: GrammarCard = {
-    ...card,
+  const updatedSupabaseCard = await userDataService.updateGrammarCard(cardId, {
     interval,
-    easeFactor,
-    nextReview,
+    ease_factor: easeFactor,
+    next_review: nextReview.toISOString(),
     repetitions: quality < 3 ? 0 : card.repetitions + 1,
-    lastReviewed: new Date(),
-  }
+    last_reviewed: new Date().toISOString(),
+  })
 
-  await saveCard(updatedCard)
-  return updatedCard
+  return toLocalGrammarCard(updatedSupabaseCard)
 }
 
 export async function resetCard(cardId: string): Promise<GrammarCard | null> {
-  const card = await db.grammarCards.get(cardId)
-  if (!card) return null
+  const supabaseCard = await userDataService.getGrammarCard(cardId)
+  if (!supabaseCard) return null
 
-  const updatedCard: GrammarCard = {
-    ...card,
+  const now = new Date()
+  const updatedSupabaseCard = await userDataService.updateGrammarCard(cardId, {
     interval: 0,
-    easeFactor: DEFAULT_EASE_FACTOR,
-    nextReview: new Date(),
+    ease_factor: DEFAULT_EASE_FACTOR,
+    next_review: now.toISOString(),
     repetitions: 0,
-    lastReviewed: new Date(),
-  }
+    last_reviewed: now.toISOString(),
+  })
 
-  await saveCard(updatedCard)
-  return updatedCard
+  return toLocalGrammarCard(updatedSupabaseCard)
 }
 
 export async function getReviewQueue(userId: string): Promise<GrammarCard[]> {
-  const now = new Date()
-  const cards = await db.grammarCards
-    .where('userId')
-    .equals(userId)
-    .toArray()
-
-  return cards
-    .filter((card) => new Date(card.nextReview) <= now)
-    .sort((a, b) => new Date(a.nextReview).getTime() - new Date(b.nextReview).getTime())
+  // userDataService.getGrammarCardsDue already filters by due date and sorts by next_review
+  const supabaseCards = await userDataService.getGrammarCardsDue(userId)
+  return supabaseCards.map(toLocalGrammarCard)
 }
 
 export function getQualityLabel(quality: SRSQuality): {

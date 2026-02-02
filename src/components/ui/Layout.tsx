@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useAppStore } from '@/store/useAppStore'
 
 interface LayoutProps {
@@ -8,7 +9,8 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const { user, progress, settings } = useAppStore()
+  const { profile, progress } = useAuthContext()
+  const { settings } = useAppStore()
 
   const navItems = [
     { path: '/', label: 'Главная', icon: '🏠' },
@@ -29,24 +31,24 @@ export default function Layout({ children }: LayoutProps) {
             </span>
           </Link>
 
-          {user && (
+          {profile && (
             <div className="flex items-center gap-4">
               {/* Streak */}
-              {progress && progress.currentStreak > 0 && (
+              {progress && progress.current_streak > 0 && (
                 <div className="flex items-center gap-1 text-orange-500">
-                  <span>🔥</span>
-                  <span className="font-medium">{progress.currentStreak}</span>
+                  <span></span>
+                  <span className="font-medium">{progress.current_streak}</span>
                 </div>
               )}
 
               {/* Level badge */}
               <span className="px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 rounded-full">
-                {user.frenchLevel}
+                {profile.french_level || 'A1'}
               </span>
 
               {/* User name */}
               <span className="text-sm text-gray-600 dark:text-gray-400">
-                {user.name}
+                {profile.name}
               </span>
             </div>
           )}

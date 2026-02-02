@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllCards, saveCard } from '@/db'
 import {
@@ -19,7 +19,7 @@ const LEVEL_ORDER: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 export default function TopicDetail() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
-  const { user } = useAppStore()
+  const { user, profile } = useAuthContext()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -39,21 +39,22 @@ export default function TopicDetail() {
 
   // Get all topics at user's level for "next rule" feature
   const availableTopics = useMemo(() => {
-    if (!user) return []
+    if (!profile) return []
     const allTopics = getAllGrammarTopics() as GrammarTopic[]
-    const userLevelIndex = LEVEL_ORDER.indexOf(user.frenchLevel)
+    const frenchLevel = profile.french_level || 'A1'
+    const userLevelIndex = LEVEL_ORDER.indexOf(frenchLevel)
     const allowedLevels = LEVEL_ORDER.slice(0, userLevelIndex + 1)
     return allTopics.filter((t) =>
       allowedLevels.includes(t.level as FrenchLevel)
     )
-  }, [user])
+  }, [profile])
 
   useEffect(() => {
     loadCard()
-  }, [topicId, user])
+  }, [topicId, user, profile])
 
   const loadCard = async () => {
-    if (!user || !topicId || !topic) {
+    if (!user || !profile || !topicId || !topic) {
       setIsLoading(false)
       return
     }
@@ -108,8 +109,8 @@ export default function TopicDetail() {
   }
 
   const handleSpeak = (text: string) => {
-    if (user) {
-      speakWithPauses(text, user.speechSettings)
+    if (profile) {
+      speakWithPauses(text, profile.speech_settings)
     }
   }
 

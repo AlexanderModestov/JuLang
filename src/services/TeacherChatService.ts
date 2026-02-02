@@ -1,8 +1,12 @@
-import { db } from '@/db'
+import { userDataService } from '@/services/userDataService'
+import type { Database } from '@/types/supabase'
 import type { FrenchLevel, TeacherLanguage, TeacherMessage } from '@/types'
 
 // API base URL - empty for same-origin requests on Vercel
 const API_BASE = ''
+
+// Type alias for Supabase teacher message
+type SupabaseTeacherMessage = Database['public']['Tables']['teacher_messages']['Row']
 
 /**
  * Context for teacher chat messages
@@ -21,6 +25,20 @@ export interface SendMessageParams {
   context: TeacherChatContext
   userLevel: FrenchLevel
   teacherLanguage: TeacherLanguage
+  userId: string
+}
+
+/**
+ * Convert Supabase teacher message to local TeacherMessage type
+ */
+function toLocalMessage(msg: SupabaseTeacherMessage): TeacherMessage {
+  return {
+    id: msg.id,
+    role: msg.role,
+    content: msg.content,
+    timestamp: new Date(msg.timestamp),
+    context: msg.context,
+  }
 }
 
 /**
@@ -109,10 +127,10 @@ function getContextInfo(context: TeacherChatContext): string {
  * Send a message to the AI teacher and get a response
  */
 export async function sendMessage(params: SendMessageParams): Promise<string> {
-  const { content, context, userLevel, teacherLanguage } = params
+  const { content, context, userLevel, teacherLanguage, userId } = params
 
   // Get recent message history for context
-  const history = await getHistory(10, 0)
+  const history = await getHistory(userId, 10, 0)
 
   // Build messages array for API
   const systemPrompt = buildSystemPrompt(userLevel, teacherLanguage, context)
@@ -125,13 +143,12 @@ export async function sendMessage(params: SendMessageParams): Promise<string> {
   messages.push({ role: 'user' as const, content })
 
   // Save user message to database
-  const userMessage: Omit<TeacherMessage, 'id'> = {
+  await userDataService.createTeacherMessage({
+    user_id: userId,
     role: 'user',
     content,
-    timestamp: new Date(),
     context,
-  }
-  await db.teacherMessages.add(userMessage as TeacherMessage)
+  })
 
   // Call the API
   const response = await fetch(`${API_BASE}/api/teacher-chat`, {
@@ -152,13 +169,12 @@ export async function sendMessage(params: SendMessageParams): Promise<string> {
   const assistantContent = data.content as string
 
   // Save assistant message to database
-  const assistantMessage: Omit<TeacherMessage, 'id'> = {
+  await userDataService.createTeacherMessage({
+    user_id: userId,
     role: 'assistant',
     content: assistantContent,
-    timestamp: new Date(),
     context,
-  }
-  await db.teacherMessages.add(assistantMessage as TeacherMessage)
+  })
 
   return assistantContent
 }
@@ -167,30 +183,24 @@ export async function sendMessage(params: SendMessageParams): Promise<string> {
  * Get message history from the database
  */
 export async function getHistory(
+  userId: string,
   limit: number = 50,
   offset: number = 0
 ): Promise<TeacherMessage[]> {
-  const messages = await db.teacherMessages
-    .orderBy('timestamp')
-    .reverse()
-    .offset(offset)
-    .limit(limit)
-    .toArray()
-
-  // Return in chronological order
-  return messages.reverse()
+  const messages = await userDataService.getTeacherMessages(userId, limit, offset)
+  return messages.map(toLocalMessage)
 }
 
 /**
  * Clear all teacher chat history
  */
-export async function clearHistory(): Promise<void> {
-  await db.teacherMessages.clear()
+export async function clearHistory(userId: string): Promise<void> {
+  await userDataService.clearTeacherMessages(userId)
 }
 
 /**
  * Get the total count of messages
  */
-export async function getMessageCount(): Promise<number> {
-  return db.teacherMessages.count()
+export async function getMessageCount(userId: string): Promise<number> {
+  return userDataService.getTeacherMessageCount(userId)
 }

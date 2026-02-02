@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { usePracticeStore } from '@/store/usePracticeStore'
 import { getCardById } from '@/modules/GrammarEngine'
 import { createExercise, checkWrittenAnswer, checkSpokenAnswer, updatePracticeStats } from '@/modules/PracticeEngine'
@@ -26,7 +26,7 @@ const PRACTICE_TYPES: { id: PracticeType; label: string; icon: string }[] = [
 export default function PracticeScreen() {
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
-  const { user } = useAppStore()
+  const { profile } = useAuthContext()
   const {
     currentType,
     setCurrentType,
@@ -83,11 +83,11 @@ export default function PracticeScreen() {
   }
 
   const handleSubmitWritten = async () => {
-    if (!exercise || !userAnswer.trim() || !user) return
+    if (!exercise || !userAnswer.trim() || !profile) return
 
     setIsLoading(true)
     try {
-      const checkResult = await checkWrittenAnswer(exercise, userAnswer, user.frenchLevel)
+      const checkResult = await checkWrittenAnswer(exercise, userAnswer, profile.french_level || 'A1')
       setResult(checkResult)
       addResult(checkResult)
       await updatePracticeStats(cardId!, currentType, checkResult)
@@ -114,14 +114,14 @@ export default function PracticeScreen() {
     startListening(
       async (recognitionResult) => {
         setUserAnswer(recognitionResult.transcript)
-        if (recognitionResult.isFinal && exercise && user) {
+        if (recognitionResult.isFinal && exercise && profile) {
           setIsListening(false)
           setIsLoading(true)
           try {
             const checkResult = await checkSpokenAnswer(
               exercise,
               recognitionResult.transcript,
-              user.frenchLevel
+              profile.french_level || 'A1'
             )
             setResult(checkResult)
             addResult(checkResult)

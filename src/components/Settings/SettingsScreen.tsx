@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useAuthContext } from '@/contexts/AuthContext'
 import { useAppStore } from '@/store/useAppStore'
 import { getAvailableVoices, selectBestFrenchVoice, speakWithPauses } from '@/modules/SpeechService'
 import type { FrenchLevel } from '@/types'
@@ -9,7 +10,8 @@ import Input from '@/components/ui/Input'
 const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function SettingsScreen() {
-  const { user, settings, updateUser, updateSettings } = useAppStore()
+  const { user, profile, signOut, updateProfile } = useAuthContext()
+  const { settings, updateSettings } = useAppStore()
 
   const [frenchVoices, setFrenchVoices] = useState<SpeechSynthesisVoice[]>([])
   const [bestVoice, setBestVoice] = useState<SpeechSynthesisVoice | null>(null)
@@ -46,7 +48,7 @@ export default function SettingsScreen() {
     }
   }
 
-  if (!user) return null
+  if (!profile) return null
 
   return (
     <div className="space-y-6">
@@ -63,8 +65,8 @@ export default function SettingsScreen() {
         <div className="space-y-4">
           <Input
             label="Имя"
-            value={user.name}
-            onChange={(e) => updateUser({ name: e.target.value })}
+            value={profile.name || ''}
+            onChange={(e) => updateProfile({ name: e.target.value })}
           />
 
           <div>
@@ -75,11 +77,11 @@ export default function SettingsScreen() {
               {LEVELS.map((level) => (
                 <button
                   key={level}
-                  onClick={() => updateUser({ frenchLevel: level })}
+                  onClick={() => updateProfile({ french_level: level })}
                   className={`
                     px-4 py-2 rounded-lg font-medium transition-colors
                     ${
-                      user.frenchLevel === level
+                      profile.french_level === level
                         ? 'bg-primary-600 text-white'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                     }
@@ -106,9 +108,9 @@ export default function SettingsScreen() {
               Голос
             </label>
             <select
-              value={user.speechSettings.voiceName || ''}
-              onChange={(e) => updateUser({
-                speechSettings: { ...user.speechSettings, voiceName: e.target.value || null }
+              value={profile.speech_settings.voiceName || ''}
+              onChange={(e) => updateProfile({
+                speech_settings: { ...profile.speech_settings, voiceName: e.target.value || null }
               })}
               className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
@@ -126,16 +128,16 @@ export default function SettingsScreen() {
           {/* Speech rate slider */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Скорость речи: {user.speechSettings.rate.toFixed(1)}x
+              Скорость речи: {profile.speech_settings.rate.toFixed(1)}x
             </label>
             <input
               type="range"
               min="0.5"
               max="1.5"
               step="0.1"
-              value={user.speechSettings.rate}
-              onChange={(e) => updateUser({
-                speechSettings: { ...user.speechSettings, rate: parseFloat(e.target.value) }
+              value={profile.speech_settings.rate}
+              onChange={(e) => updateProfile({
+                speech_settings: { ...profile.speech_settings, rate: parseFloat(e.target.value) }
               })}
               className="w-full"
             />
@@ -148,16 +150,16 @@ export default function SettingsScreen() {
           {/* Pitch slider */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Высота голоса: {user.speechSettings.pitch.toFixed(1)}x
+              Высота голоса: {profile.speech_settings.pitch.toFixed(1)}x
             </label>
             <input
               type="range"
               min="0.5"
               max="1.5"
               step="0.1"
-              value={user.speechSettings.pitch}
-              onChange={(e) => updateUser({
-                speechSettings: { ...user.speechSettings, pitch: parseFloat(e.target.value) }
+              value={profile.speech_settings.pitch}
+              onChange={(e) => updateProfile({
+                speech_settings: { ...profile.speech_settings, pitch: parseFloat(e.target.value) }
               })}
               className="w-full"
             />
@@ -172,7 +174,7 @@ export default function SettingsScreen() {
             variant="secondary"
             onClick={() => speakWithPauses(
               "Bonjour! Comment allez-vous aujourd'hui? J'espère que vous passez une bonne journée.",
-              user.speechSettings
+              profile.speech_settings
             )}
           >
             Прослушать пример
@@ -189,15 +191,15 @@ export default function SettingsScreen() {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Пауза для завершения записи: {user.speechPauseTimeout} сек
+              Пауза для завершения записи: {profile.speech_pause_timeout} сек
             </label>
             <input
               type="range"
               min="1"
               max="15"
               step="1"
-              value={user.speechPauseTimeout}
-              onChange={(e) => updateUser({ speechPauseTimeout: parseInt(e.target.value) })}
+              value={profile.speech_pause_timeout}
+              onChange={(e) => updateProfile({ speech_pause_timeout: parseInt(e.target.value) })}
               className="w-full"
             />
             <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -257,6 +259,19 @@ export default function SettingsScreen() {
           </Button>
         </div>
       </Card>
+
+      {/* Sign out */}
+      <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          Вы вошли как {user?.email}
+        </p>
+        <button
+          onClick={signOut}
+          className="w-full px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+        >
+          Выйти из аккаунта
+        </button>
+      </div>
 
       {/* Version */}
       <div className="text-center text-sm text-gray-500 dark:text-gray-400">

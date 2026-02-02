@@ -1,6 +1,40 @@
 import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality } from '@/types'
-import { db } from '@/db'
+import type { Database } from '@/types/supabase'
+import { userDataService } from '@/services/userDataService'
+import { supabase } from '@/lib/supabase'
 import vocabularyData from '@/data/vocabulary.json'
+
+type SupabaseVocabularyProgress = Database['public']['Tables']['vocabulary_progress']['Row']
+type SupabaseVocabularyProgressInsert = Database['public']['Tables']['vocabulary_progress']['Insert']
+
+// Convert Supabase vocabulary progress to local VocabularyProgress type
+function toLocalVocabularyProgress(progress: SupabaseVocabularyProgress): VocabularyProgress {
+  return {
+    id: progress.id,
+    userId: progress.user_id,
+    cardId: progress.card_id,
+    nextReview: new Date(progress.next_review),
+    easeFactor: progress.ease_factor,
+    interval: progress.interval,
+    repetitions: progress.repetitions,
+    createdAt: new Date(progress.created_at),
+    lastReviewed: progress.last_reviewed ? new Date(progress.last_reviewed) : undefined,
+  }
+}
+
+// Convert local VocabularyProgress to Supabase insert format
+function toSupabaseVocabularyProgressInsert(progress: VocabularyProgress): SupabaseVocabularyProgressInsert {
+  return {
+    id: progress.id,
+    user_id: progress.userId,
+    card_id: progress.cardId,
+    next_review: progress.nextReview.toISOString(),
+    ease_factor: progress.easeFactor,
+    interval: progress.interval,
+    repetitions: progress.repetitions,
+    last_reviewed: progress.lastReviewed?.toISOString() || null,
+  }
+}
 
 const DEFAULT_EASE_FACTOR = 2.5
 const MIN_EASE_FACTOR = 1.3
@@ -30,25 +64,16 @@ export async function getNewCards(
   userId: string,
   level: FrenchLevel
 ): Promise<VocabularyCard[]> {
-  const progress = await db.vocabularyProgress
-    .where('userId')
-    .equals(userId)
-    .toArray()
-  const knownIds = new Set(progress.map((p) => p.cardId))
+  const supabaseProgress = await userDataService.getVocabularyProgress(userId)
+  const knownIds = new Set(supabaseProgress.map((p) => p.card_id))
   const available = getCardsUpToLevel(level)
   return available.filter((c) => !knownIds.has(c.id)).slice(0, NEW_CARDS_PER_SESSION)
 }
 
 /** Get cards due for review */
 export async function getReviewQueue(userId: string): Promise<VocabularyProgress[]> {
-  const now = new Date()
-  const all = await db.vocabularyProgress
-    .where('userId')
-    .equals(userId)
-    .toArray()
-  return all
-    .filter((p) => new Date(p.nextReview) <= now)
-    .sort((a, b) => new Date(a.nextReview).getTime() - new Date(b.nextReview).getTime())
+  const supabaseProgress = await userDataService.getVocabularyDue(userId)
+  return supabaseProgress.map(toLocalVocabularyProgress)
 }
 
 /** Add a card to user's SRS progress */
@@ -56,12 +81,8 @@ export async function addCardToProgress(
   userId: string,
   cardId: string
 ): Promise<VocabularyProgress> {
-  const existing = await db.vocabularyProgress
-    .where('userId')
-    .equals(userId)
-    .filter((p) => p.cardId === cardId)
-    .first()
-  if (existing) return existing
+  const existing = await userDataService.getVocabularyProgressByCardId(userId, cardId)
+  if (existing) return toLocalVocabularyProgress(existing)
 
   const entry: VocabularyProgress = {
     id: crypto.randomUUID(),
@@ -73,8 +94,9 @@ export async function addCardToProgress(
     repetitions: 0,
     createdAt: new Date(),
   }
-  await db.vocabularyProgress.put(entry)
-  return entry
+  const supabaseInsert = toSupabaseVocabularyProgressInsert(entry)
+  const savedProgress = await userDataService.createVocabularyProgress(supabaseInsert)
+  return toLocalVocabularyProgress(savedProgress)
 }
 
 /** Schedule card after review using SM-2 */
@@ -82,10 +104,18 @@ export async function scheduleVocabularyCard(
   progressId: string,
   quality: SRSQuality
 ): Promise<VocabularyProgress | null> {
-  const entry = await db.vocabularyProgress.get(progressId)
-  if (!entry) return null
+  // Get the current progress entry by ID
+  const { data: entry, error } = await supabase
+    .from('vocabulary_progress')
+    .select('*')
+    .eq('id', progressId)
+    .single()
 
-  let { interval, easeFactor, repetitions } = entry
+  if (error || !entry) return null
+
+  let interval = entry.interval
+  let easeFactor = entry.ease_factor
+  let repetitions = entry.repetitions
 
   if (quality < 3) {
     interval = 0
@@ -103,16 +133,14 @@ export async function scheduleVocabularyCard(
   const nextReview = new Date()
   nextReview.setDate(nextReview.getDate() + interval)
 
-  const updated: VocabularyProgress = {
-    ...entry,
+  const updatedProgress = await userDataService.updateVocabularyProgress(progressId, {
     interval,
-    easeFactor,
+    ease_factor: easeFactor,
     repetitions,
-    nextReview,
-    lastReviewed: new Date(),
-  }
-  await db.vocabularyProgress.put(updated)
-  return updated
+    next_review: nextReview.toISOString(),
+    last_reviewed: new Date().toISOString(),
+  })
+  return toLocalVocabularyProgress(updatedProgress)
 }
 
 /** Generate multiple choice options: correct + 3 distractors from same level */
@@ -137,11 +165,7 @@ export async function isCardInProgress(
   userId: string,
   cardId: string
 ): Promise<boolean> {
-  const entry = await db.vocabularyProgress
-    .where('userId')
-    .equals(userId)
-    .filter((p) => p.cardId === cardId)
-    .first()
+  const entry = await userDataService.getVocabularyProgressByCardId(userId, cardId)
   return !!entry
 }
 
@@ -158,11 +182,8 @@ export async function isLemmaInProgress(
     return isCardInProgress(userId, match.id)
   }
   // Check custom cards by iterating progress
-  const progress = await db.vocabularyProgress
-    .where('userId')
-    .equals(userId)
-    .toArray()
-  return progress.some((p) => p.cardId.startsWith('v-custom-') && p.cardId.includes(lemma.toLowerCase()))
+  const supabaseProgress = await userDataService.getVocabularyProgress(userId)
+  return supabaseProgress.some((p) => p.card_id.startsWith('v-custom-') && p.card_id.includes(lemma.toLowerCase()))
 }
 
 /** Add a vocabulary card from a conversation word tap */
