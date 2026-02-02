@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useTeacherChatStore } from '@/store/teacherChatStore'
 import { useAppStore } from '@/store/useAppStore'
+import { useAuthContext } from '@/contexts/AuthContext'
 import * as TeacherChatService from '@/services/TeacherChatService'
 import type { TeacherMessage as TeacherMessageType } from '@/types'
 import { getDefaultTeacherLanguage } from '@/types'
@@ -21,6 +22,7 @@ export default function TeacherChatWidget() {
     clearUnread,
   } = useTeacherChatStore()
   const { user, settings } = useAppStore()
+  const { user: authUser } = useAuthContext()
 
   const [messages, setMessages] = useState<TeacherMessageType[]>([])
   const [input, setInput] = useState('')
@@ -72,10 +74,11 @@ export default function TeacherChatWidget() {
   }, [isOpen, isMinimized, minimizeChat])
 
   const loadHistory = useCallback(async () => {
+    if (!authUser) return
     setIsLoading(true)
     setError(null)
     try {
-      const history = await TeacherChatService.getHistory(50, 0)
+      const history = await TeacherChatService.getHistory(authUser.id, 50, 0)
       setMessages(history)
     } catch (err) {
       console.error('Failed to load chat history:', err)
@@ -83,10 +86,10 @@ export default function TeacherChatWidget() {
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [authUser])
 
   const handleSend = async () => {
-    if (!input.trim() || isSending || !user) return
+    if (!input.trim() || isSending || !user || !authUser) return
 
     const messageContent = input.trim()
     setInput('')
@@ -112,10 +115,11 @@ export default function TeacherChatWidget() {
         context: currentContext,
         userLevel: user.frenchLevel,
         teacherLanguage,
+        userId: authUser.id,
       })
 
       // Reload messages to get proper IDs from database
-      const updatedHistory = await TeacherChatService.getHistory(50, 0)
+      const updatedHistory = await TeacherChatService.getHistory(authUser.id, 50, 0)
       setMessages(updatedHistory)
 
       // Scroll to bottom after response
