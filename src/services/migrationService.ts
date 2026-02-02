@@ -3,7 +3,6 @@
 
 import { db } from '../db'
 import { userDataService } from './userDataService'
-import { useAppStore } from '../store/useAppStore'
 import type { Database } from '../types/supabase'
 import type {
   GrammarCard as LocalGrammarCard,
@@ -11,7 +10,45 @@ import type {
   Conversation as LocalConversation,
   PracticeSession as LocalPracticeSession,
   TeacherMessage as LocalTeacherMessage,
+  User as LocalUser,
+  UserProgress as LocalUserProgress,
 } from '../types'
+
+/**
+ * Legacy app state structure from old Zustand store.
+ * Used only for migration purposes - the current store no longer has user data.
+ */
+interface LegacyAppState {
+  user: LocalUser | null
+  progress: LocalUserProgress | null
+  isOnboarded: boolean
+}
+
+/**
+ * Get legacy user data from localStorage (old Zustand persisted state).
+ * The current useAppStore no longer has user/progress fields, but the
+ * localStorage may still contain them from before the migration.
+ */
+function getLegacyAppState(): LegacyAppState | null {
+  try {
+    const raw = localStorage.getItem('julang-app-storage')
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw)
+    // Zustand persist wraps state in { state: {...}, version: number }
+    const state = parsed?.state
+    if (!state) return null
+
+    return {
+      user: state.user ?? null,
+      progress: state.progress ?? null,
+      isOnboarded: state.isOnboarded ?? false,
+    }
+  } catch (error) {
+    console.warn('[Migration] Failed to read legacy app state:', error)
+    return null
+  }
+}
 
 export interface MigrationResult {
   success: boolean
@@ -31,10 +68,9 @@ export interface MigrationResult {
  * Check if there is any local data that could be migrated
  */
 export async function checkForLocalData(): Promise<boolean> {
-  const appState = useAppStore.getState()
-
-  // Check if Zustand has user data
-  if (appState.isOnboarded && appState.user) {
+  // Check if legacy localStorage has user data
+  const legacyState = getLegacyAppState()
+  if (legacyState?.isOnboarded && legacyState?.user) {
     return true
   }
 
@@ -63,19 +99,20 @@ export async function migrateLocalDataToSupabase(userId: string): Promise<Migrat
   }
 
   try {
-    const appState = useAppStore.getState()
+    // Read legacy user data from localStorage (not current store)
+    const legacyState = getLegacyAppState()
 
     // 1. Migrate user profile
-    if (appState.user && appState.isOnboarded) {
+    if (legacyState?.user && legacyState?.isOnboarded) {
       const existingProfile = await userDataService.getProfile(userId)
       if (!existingProfile) {
         await userDataService.createProfile(userId, {
-          name: appState.user.name,
-          native_language: appState.user.nativeLanguage,
-          french_level: appState.user.frenchLevel,
-          preferred_ai_provider: appState.user.preferredAiProvider,
-          speech_pause_timeout: appState.user.speechPauseTimeout,
-          speech_settings: appState.user.speechSettings,
+          name: legacyState.user.name,
+          native_language: legacyState.user.nativeLanguage,
+          french_level: legacyState.user.frenchLevel,
+          preferred_ai_provider: legacyState.user.preferredAiProvider,
+          speech_pause_timeout: legacyState.user.speechPauseTimeout,
+          speech_settings: legacyState.user.speechSettings,
           is_onboarded: true,
         })
         stats.profile = true
@@ -85,19 +122,19 @@ export async function migrateLocalDataToSupabase(userId: string): Promise<Migrat
     }
 
     // 2. Migrate user progress
-    if (appState.progress && appState.isOnboarded) {
+    if (legacyState?.progress && legacyState?.isOnboarded) {
       const existingProgress = await userDataService.getProgress(userId)
       if (!existingProgress) {
         await userDataService.createProgress(userId)
         await userDataService.updateProgress(userId, {
-          total_conversations: appState.progress.totalConversations,
-          total_messages_sent: appState.progress.totalMessagesSent,
-          topics_covered: appState.progress.topicsCovered,
-          grammar_cards_mastered: appState.progress.grammarCardsMastered,
-          current_streak: appState.progress.currentStreak,
-          last_activity_date: appState.progress.lastActivityDate instanceof Date
-            ? appState.progress.lastActivityDate.toISOString()
-            : appState.progress.lastActivityDate,
+          total_conversations: legacyState.progress.totalConversations,
+          total_messages_sent: legacyState.progress.totalMessagesSent,
+          topics_covered: legacyState.progress.topicsCovered,
+          grammar_cards_mastered: legacyState.progress.grammarCardsMastered,
+          current_streak: legacyState.progress.currentStreak,
+          last_activity_date: legacyState.progress.lastActivityDate instanceof Date
+            ? legacyState.progress.lastActivityDate.toISOString()
+            : legacyState.progress.lastActivityDate,
         })
         stats.progress = true
       } else {
