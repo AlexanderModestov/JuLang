@@ -1,5 +1,5 @@
 // src/contexts/AuthContext.tsx
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useRef, ReactNode } from 'react'
 import { User } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { userDataService } from '../services/userDataService'
@@ -33,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [migrating, setMigrating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const currentUserIdRef = useRef<string | null>(null)
 
   // Load user data from Supabase
   const loadUserData = async (userId: string) => {
@@ -52,6 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Handle new user sign-in (check for migration)
   const handleSignIn = async (authUser: User) => {
+    currentUserIdRef.current = authUser.id
     setUser(authUser)
     setError(null)
 
@@ -90,42 +92,65 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(async ({ data: { session }, error: sessionError }) => {
-      if (sessionError) {
-        setError(sessionError.message)
-        setLoading(false)
-        return
-      }
+    let initialized = false
 
-      try {
-        if (session?.user) {
-          await handleSignIn(session.user)
-        }
-      } catch (err) {
-        console.error('Initial session handling failed:', err)
-      } finally {
-        setLoading(false)
-      }
-    })
-
-    // Listen for auth changes
+    // Listen for auth changes - this handles both initial session and subsequent changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('[Auth] onAuthStateChange:', event, { hasUser: !!session?.user, initialized })
+
+        // Handle initial session load
+        if (event === 'INITIAL_SESSION') {
+          initialized = true
+          if (session?.user) {
+            console.log('[Auth] INITIAL_SESSION with user, handling sign in...')
+            try {
+              await handleSignIn(session.user)
+              console.log('[Auth] handleSignIn completed')
+            } catch (err) {
+              console.error('[Auth] Initial session handling failed:', err)
+            }
+          }
+          console.log('[Auth] Setting loading=false after INITIAL_SESSION')
+          setLoading(false)
+          return
+        }
+
+        // Handle new sign-in (OAuth redirect, etc.) - only if not from initial load
         if (event === 'SIGNED_IN' && session?.user) {
+          // Skip if this is a duplicate event right after initialization
+          if (!initialized) {
+            console.log('[Auth] SIGNED_IN before INITIAL_SESSION, waiting...')
+            return
+          }
+
+          // Check if user already set (avoid re-processing same session)
+          if (currentUserIdRef.current === session.user.id) {
+            console.log('[Auth] SIGNED_IN for same user, skipping')
+            return
+          }
+
+          console.log('[Auth] SIGNED_IN event for new session')
           setLoading(true)
           try {
             await handleSignIn(session.user)
+            console.log('[Auth] handleSignIn completed')
           } catch (err) {
-            console.error('Auth state change handling failed:', err)
+            console.error('[Auth] Auth state change handling failed:', err)
           } finally {
+            console.log('[Auth] Setting loading=false after SIGNED_IN')
             setLoading(false)
           }
         } else if (event === 'SIGNED_OUT') {
+          console.log('[Auth] SIGNED_OUT event, clearing user data')
+          currentUserIdRef.current = null
           setUser(null)
           setProfile(null)
           setProgress(null)
           setError(null)
+        } else if (event === 'TOKEN_REFRESHED') {
+          console.log('[Auth] TOKEN_REFRESHED event')
+          // Token refreshed, no action needed
         }
       }
     )
