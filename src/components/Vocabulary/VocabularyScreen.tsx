@@ -8,9 +8,10 @@ import {
   getReviewQueue,
   addCardToProgress,
   getCardsUpToLevel,
-  scheduleVocabularyCard,
+  scheduleVocabularyCardAuto,
+  pickRandomExerciseType,
 } from '@/modules/VocabularyEngine'
-import { getQualityLabel } from '@/modules/SRSEngine'
+// Auto-SRS: no manual quality rating needed
 import { db } from '@/db'
 import { useVocabularyFilters } from '@/hooks/useVocabularyFilters'
 import NewCardView from './NewCardView'
@@ -21,20 +22,14 @@ import WordCard from './WordCard'
 import ExerciseCard from './ExerciseCard'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
-import type { SRSQuality } from '@/types'
 
-type Mode = 'menu' | 'new' | 'review' | 'list' | 'detail' | 'practice'
-
-const EXERCISE_TYPES: VocabularyExerciseType[] = ['fr_to_ru', 'ru_to_fr', 'multiple_choice']
-
-function pickExerciseType(): VocabularyExerciseType {
-  return EXERCISE_TYPES[Math.floor(Math.random() * EXERCISE_TYPES.length)]
-}
+// Removed 'menu' mode - list is shown by default
+type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
   const { user, profile } = useAuthContext()
-  const [mode, setMode] = useState<Mode>('menu')
+  const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
   const [allCards, setAllCards] = useState<VocabularyCard[]>([])
@@ -44,7 +39,7 @@ export default function VocabularyScreen() {
   // Detail/practice mode state
   const [selectedWord, setSelectedWord] = useState<VocabularyCard | null>(null)
   const [filteredWordsIndex, setFilteredWordsIndex] = useState(0)
-  const [exerciseType, setExerciseType] = useState<VocabularyExerciseType>(pickExerciseType)
+  const [exerciseType, setExerciseType] = useState<VocabularyExerciseType>(pickRandomExerciseType)
   const [showPracticeRating, setShowPracticeRating] = useState(false)
   const [lastPracticeCorrect, setLastPracticeCorrect] = useState(false)
 
@@ -90,7 +85,7 @@ export default function VocabularyScreen() {
   }
 
   const handleComplete = () => {
-    setMode('menu')
+    setMode('list')
     loadData()
   }
 
@@ -114,17 +109,13 @@ export default function VocabularyScreen() {
   }
 
   const handlePractice = () => {
-    setExerciseType(pickExerciseType())
+    setExerciseType(pickRandomExerciseType())
     setShowPracticeRating(false)
     setMode('practice')
   }
 
-  const handlePracticeResult = (correct: boolean) => {
-    setLastPracticeCorrect(correct)
-    setShowPracticeRating(true)
-  }
-
-  const handlePracticeRate = async (quality: SRSQuality) => {
+  // Auto-SRS: schedule card based on correct/incorrect, then auto-transition
+  const handlePracticeResult = async (correct: boolean) => {
     if (!user || !selectedWord) return
 
     // Find or create progress entry
@@ -135,8 +126,8 @@ export default function VocabularyScreen() {
       progressEntry = await addCardToProgress(user.id, selectedWord.id)
     }
 
-    // Schedule the card
-    await scheduleVocabularyCard(progressEntry.id, quality)
+    // Schedule the card automatically (correct=4, incorrect=0)
+    await scheduleVocabularyCardAuto(progressEntry.id, correct)
 
     // Reload progress data
     const updatedProgress = await db.vocabularyProgress
@@ -145,9 +136,15 @@ export default function VocabularyScreen() {
       .toArray()
     setAllProgress(updatedProgress)
 
-    // Go back to detail view
-    setShowPracticeRating(false)
-    setMode('detail')
+    // Show result briefly, then auto-transition
+    setLastPracticeCorrect(correct)
+    setShowPracticeRating(true)
+
+    // Auto-transition after delay
+    setTimeout(() => {
+      setShowPracticeRating(false)
+      setMode('detail')
+    }, 1500)
   }
 
   const handleBackToList = () => {
@@ -155,9 +152,8 @@ export default function VocabularyScreen() {
     setSelectedWord(null)
   }
 
-  const handleBackToMenu = () => {
-    setMode('menu')
-    loadData()
+  const handleBackToMain = () => {
+    navigate('/')
   }
 
   if (!user || !profile || loading) {
@@ -173,7 +169,7 @@ export default function VocabularyScreen() {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={handleBackToMenu}>
+          <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -194,7 +190,7 @@ export default function VocabularyScreen() {
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={handleBackToMenu}>
+          <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -206,15 +202,8 @@ export default function VocabularyScreen() {
     )
   }
 
-  // Practice mode (single word exercise)
+  // Practice mode (single word exercise with auto-SRS)
   if (mode === 'practice' && selectedWord) {
-    const ratingButtons: { quality: SRSQuality; label: string; color: string }[] = [
-      { quality: 0, ...getQualityLabel(0) },
-      { quality: 3, ...getQualityLabel(3) },
-      { quality: 4, ...getQualityLabel(4) },
-      { quality: 5, ...getQualityLabel(5) },
-    ]
-
     return (
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -235,33 +224,19 @@ export default function VocabularyScreen() {
           />
         ) : (
           <Card>
-            <div className="space-y-4 text-center">
+            <div className="space-y-4 text-center py-8">
               <p
-                className={`text-lg font-medium ${
+                className={`text-2xl font-bold ${
                   lastPracticeCorrect
                     ? 'text-green-600 dark:text-green-400'
                     : 'text-red-600 dark:text-red-400'
                 }`}
               >
-                {lastPracticeCorrect ? 'Правильно!' : 'Неправильно'}
+                {lastPracticeCorrect ? '✓ Правильно!' : '✗ Неправильно'}
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Оцените, насколько легко было вспомнить:
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Переход к карточке...
               </p>
-              <div className="grid grid-cols-4 gap-2">
-                {ratingButtons.map(({ quality, label }) => (
-                  <Button
-                    key={quality}
-                    variant={
-                      quality === 0 ? 'danger' : quality >= 4 ? 'primary' : 'secondary'
-                    }
-                    size="sm"
-                    onClick={() => handlePracticeRate(quality)}
-                  >
-                    {label}
-                  </Button>
-                ))}
-              </div>
             </div>
           </Card>
         )}
@@ -297,116 +272,62 @@ export default function VocabularyScreen() {
     )
   }
 
-  // List mode (browsable catalog)
-  if (mode === 'list') {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" onClick={handleBackToMenu}>
-            ← Назад
-          </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-            Каталог слов
-          </h1>
-        </div>
-
-        {/* Action buttons */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button
-            onClick={() => newCards.length > 0 && setMode('new')}
-            disabled={newCards.length === 0}
-            className="justify-center"
-          >
-            🆕 Новые ({newCards.length})
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => reviewQueue.length > 0 && setMode('review')}
-            disabled={reviewQueue.length === 0}
-            className="justify-center"
-          >
-            🔄 Повторить ({reviewQueue.length})
-          </Button>
-        </div>
-
-        {/* Filters */}
-        <VocabularyFilters
-          filters={filters}
-          onFilterChange={setFilter}
-          onClearFilters={clearFilters}
-          activeFilterCount={activeFilterCount}
-        />
-
-        {/* Word count */}
-        <p className="text-sm text-gray-500 dark:text-gray-400">
-          Показано: {filteredWords.length} из {allCards.length} слов
-        </p>
-
-        {/* Word list */}
-        <VocabularyList
-          words={filteredWords}
-          progress={allProgress}
-          onWordClick={handleWordClick}
-        />
-      </div>
-    )
-  }
-
-  // Menu mode (default)
+  // List mode (default - shown immediately on entering Vocabulary)
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Словарь
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Уровень: {profile.french_level || 'A1'}
-        </p>
+    <div className="space-y-4">
+      {/* Header with title and level */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            Словарь
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Уровень: {profile.french_level || 'A1'}
+          </p>
+        </div>
+        <Button variant="ghost" size="sm" onClick={handleBackToMain}>
+          На главную
+        </Button>
       </div>
 
-      {/* Action buttons at top */}
+      {/* Compact action buttons at top */}
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={() => newCards.length > 0 && setMode('new')}
           disabled={newCards.length === 0}
-          size="lg"
-          className="justify-center py-4"
+          className="justify-center"
         >
-          🆕 Новые ({newCards.length})
+          Новые ({newCards.length})
         </Button>
         <Button
           variant="secondary"
           onClick={() => reviewQueue.length > 0 && setMode('review')}
           disabled={reviewQueue.length === 0}
-          size="lg"
-          className="justify-center py-4"
+          className="justify-center"
         >
-          🔄 Повторить ({reviewQueue.length})
+          Повторить ({reviewQueue.length})
         </Button>
       </div>
 
-      {/* Browse catalog card */}
-      <Card
-        variant="elevated"
-        className="cursor-pointer hover:scale-[1.02] transition-transform"
-        onClick={() => setMode('list')}
-      >
-        <div className="flex items-center gap-4">
-          <span className="text-4xl">📖</span>
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">
-              Каталог слов
-            </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {allCards.length} слов с фильтрами и поиском
-            </p>
-          </div>
-        </div>
-      </Card>
+      {/* Filters */}
+      <VocabularyFilters
+        filters={filters}
+        onFilterChange={setFilter}
+        onClearFilters={clearFilters}
+        activeFilterCount={activeFilterCount}
+      />
 
-      <Button variant="ghost" onClick={() => navigate('/')} className="w-full">
-        ← На главную
-      </Button>
+      {/* Word count */}
+      <p className="text-sm text-gray-500 dark:text-gray-400">
+        Показано: {filteredWords.length} из {allCards.length} слов
+      </p>
+
+      {/* Word list */}
+      <VocabularyList
+        words={filteredWords}
+        progress={allProgress}
+        onWordClick={handleWordClick}
+      />
     </div>
   )
 }

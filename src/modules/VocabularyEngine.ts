@@ -1,4 +1,4 @@
-import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality } from '@/types'
+import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality, VocabularyExerciseType } from '@/types'
 import type { Database } from '@/types/supabase'
 import { userDataService } from '@/services/userDataService'
 import { supabase } from '@/lib/supabase'
@@ -191,7 +191,7 @@ export async function addCardFromConversation(
   userId: string,
   lemma: string,
   russian: string,
-  gender: 'masculine' | 'feminine' | null,
+  article: 'le' | 'la' | "l'" | null,
   type: 'word' | 'expression',
   example: string,
   exampleTranslation: string
@@ -215,11 +215,10 @@ export async function addCardFromConversation(
     id: cardId,
     french: lemma,
     russian,
-    example,
-    exampleTranslation,
+    examples: [{ fr: example, ru: exampleTranslation }],
     level: 'A1' as const,
     type,
-    ...(gender ? { gender } : {}),
+    ...(article ? { article } : {}),
     topic: 'daily' as const,
     difficulty: 2 as const,
     frequency: 3 as const,
@@ -228,4 +227,261 @@ export async function addCardFromConversation(
   localStorage.setItem('customVocabularyCards', JSON.stringify(customCards))
 
   return addCardToProgress(userId, cardId)
+}
+
+// ============================================
+// Exercise Types
+// ============================================
+
+/** All available exercise types */
+export const ALL_EXERCISE_TYPES: VocabularyExerciseType[] = [
+  'fr_to_ru',
+  'ru_to_fr',
+  'multiple_choice',
+  'listening',
+  'fill_blank',
+  'write_word',
+]
+
+/** Easy exercise types (for first round in mini-session) */
+export const EASY_EXERCISE_TYPES: VocabularyExerciseType[] = [
+  'fr_to_ru',
+  'multiple_choice',
+  'listening',
+]
+
+/** Hard exercise types (for second round in mini-session) */
+export const HARD_EXERCISE_TYPES: VocabularyExerciseType[] = [
+  'write_word',
+  'fill_blank',
+  'ru_to_fr',
+]
+
+/** Pick a random exercise type from all types */
+export function pickRandomExerciseType(): VocabularyExerciseType {
+  return ALL_EXERCISE_TYPES[Math.floor(Math.random() * ALL_EXERCISE_TYPES.length)]
+}
+
+/** Pick a random easy exercise type */
+export function pickEasyExerciseType(): VocabularyExerciseType {
+  return EASY_EXERCISE_TYPES[Math.floor(Math.random() * EASY_EXERCISE_TYPES.length)]
+}
+
+/** Pick a random hard exercise type */
+export function pickHardExerciseType(): VocabularyExerciseType {
+  return HARD_EXERCISE_TYPES[Math.floor(Math.random() * HARD_EXERCISE_TYPES.length)]
+}
+
+/** Get word with article for display/TTS */
+export function getWordWithArticle(card: VocabularyCard): string {
+  if (!card.article) return card.french
+  if (card.article === "l'") return `l'${card.french}`
+  return `${card.article} ${card.french}`
+}
+
+/**
+ * Generate fill-in-the-blank exercise data
+ * Returns sentence with blank and the correct word
+ */
+export function generateFillBlankExercise(card: VocabularyCard): {
+  sentence: string
+  blankWord: string
+  options: string[]
+} | null {
+  // Need at least one example
+  if (!card.examples || card.examples.length === 0) return null
+
+  const example = card.examples[0]
+  const frenchWord = card.french.toLowerCase()
+
+  // Try to find the word in the example sentence
+  const regex = new RegExp(`\\b${frenchWord}\\b`, 'i')
+  if (!regex.test(example.fr)) {
+    // Word not found in example, use a simple format
+    return {
+      sentence: `___ signifie "${card.russian}"`,
+      blankWord: card.french,
+      options: getMultipleChoiceOptions(card, 'french'),
+    }
+  }
+
+  // Replace the word with blank
+  const sentence = example.fr.replace(regex, '___')
+
+  return {
+    sentence,
+    blankWord: card.french,
+    options: getMultipleChoiceOptions(card, 'french'),
+  }
+}
+
+/**
+ * Generate listening exercise data
+ * Returns the word to speak and options for user to choose
+ */
+export function generateListeningExercise(card: VocabularyCard): {
+  wordToSpeak: string
+  correctAnswer: string
+  options: string[]
+} {
+  return {
+    wordToSpeak: getWordWithArticle(card),
+    correctAnswer: card.russian,
+    options: getMultipleChoiceOptions(card, 'russian'),
+  }
+}
+
+/**
+ * Check if user's written answer is correct
+ * Handles common variations and accents
+ */
+export function checkWrittenAnswer(
+  userAnswer: string,
+  card: VocabularyCard
+): boolean {
+  const normalize = (s: string) => s
+    .toLowerCase()
+    .trim()
+    // Normalize common accent variations
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+
+  const normalizedAnswer = normalize(userAnswer)
+  const normalizedCorrect = normalize(card.french)
+
+  // Exact match (ignoring accents)
+  if (normalizedAnswer === normalizedCorrect) return true
+
+  // Check with article if present
+  if (card.article) {
+    const withArticle = normalize(getWordWithArticle(card))
+    if (normalizedAnswer === withArticle) return true
+  }
+
+  return false
+}
+
+// ============================================
+// Auto-SRS (without manual quality rating)
+// ============================================
+
+/**
+ * Schedule card automatically based on correct/incorrect answer
+ * Correct → quality 4 (good recall)
+ * Incorrect → quality 0 (complete failure)
+ */
+export async function scheduleVocabularyCardAuto(
+  progressId: string,
+  correct: boolean
+): Promise<VocabularyProgress | null> {
+  const quality: SRSQuality = correct ? 4 : 0
+  return scheduleVocabularyCard(progressId, quality)
+}
+
+/**
+ * Add card to progress and schedule with auto quality
+ */
+export async function addAndScheduleCard(
+  userId: string,
+  cardId: string,
+  correct: boolean
+): Promise<VocabularyProgress> {
+  const progress = await addCardToProgress(userId, cardId)
+  await scheduleVocabularyCardAuto(progress.id, correct)
+  return progress
+}
+
+// ============================================
+// Mini-Session (reinforcement after new words)
+// ============================================
+
+export interface MiniSessionExercise {
+  card: VocabularyCard
+  exerciseType: VocabularyExerciseType
+  isEasy: boolean // true for first round, false for second
+}
+
+/**
+ * Generate mini-session exercises for newly learned words
+ * Creates 2 exercises per word (1 easy, 1 hard) in shuffled order
+ *
+ * @param cards - Array of cards just learned (typically 5)
+ * @returns Array of 10 exercises (2 per card, shuffled)
+ */
+export function generateMiniSessionExercises(cards: VocabularyCard[]): MiniSessionExercise[] {
+  const exercises: MiniSessionExercise[] = []
+
+  // Generate 2 exercises per card
+  for (const card of cards) {
+    // First exercise: easy type
+    exercises.push({
+      card,
+      exerciseType: pickEasyExerciseType(),
+      isEasy: true,
+    })
+
+    // Second exercise: hard type
+    exercises.push({
+      card,
+      exerciseType: pickHardExerciseType(),
+      isEasy: false,
+    })
+  }
+
+  // Shuffle exercises but ensure same card doesn't appear consecutively
+  return shuffleWithConstraint(exercises)
+}
+
+/**
+ * Shuffle exercises ensuring no two consecutive exercises are for the same card
+ */
+function shuffleWithConstraint(exercises: MiniSessionExercise[]): MiniSessionExercise[] {
+  const result: MiniSessionExercise[] = []
+  const remaining = [...exercises]
+
+  while (remaining.length > 0) {
+    // Find valid candidates (not the same card as the last one)
+    const lastCard = result.length > 0 ? result[result.length - 1].card.id : null
+    const validIndices = remaining
+      .map((ex, i) => (ex.card.id !== lastCard ? i : -1))
+      .filter((i) => i !== -1)
+
+    if (validIndices.length === 0) {
+      // No valid options, just add remaining (shouldn't happen with 5+ cards)
+      result.push(...remaining)
+      break
+    }
+
+    // Pick random valid index
+    const pickIndex = validIndices[Math.floor(Math.random() * validIndices.length)]
+    result.push(remaining[pickIndex])
+    remaining.splice(pickIndex, 1)
+  }
+
+  return result
+}
+
+/**
+ * Calculate mini-session results
+ */
+export interface MiniSessionResult {
+  totalExercises: number
+  correctCount: number
+  incorrectCount: number
+  wordsLearned: number
+  accuracy: number // 0-100
+}
+
+export function calculateMiniSessionResult(
+  results: boolean[],
+  wordCount: number
+): MiniSessionResult {
+  const correctCount = results.filter(Boolean).length
+  return {
+    totalExercises: results.length,
+    correctCount,
+    incorrectCount: results.length - correctCount,
+    wordsLearned: wordCount,
+    accuracy: Math.round((correctCount / results.length) * 100),
+  }
 }

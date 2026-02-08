@@ -47,7 +47,7 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
       user.id,
       translation.lemma,
       translation.russian,
-      translation.gender,
+      translation.article,
       translation.type,
       sentence,
       '' // exampleTranslation not available without extra AI call
@@ -77,13 +77,14 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
           <>
             <div className="text-center">
               <p className="text-2xl font-bold text-gray-900 dark:text-white">
+                {translation.article && (
+                  <span className="text-primary-600 dark:text-primary-400">
+                    {translation.article}
+                    {translation.article !== "l'" && ' '}
+                  </span>
+                )}
                 {translation.lemma}
               </p>
-              {translation.gender && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {translation.gender === 'masculine' ? '(m)' : '(f)'}
-                </p>
-              )}
               <p className="text-lg text-gray-700 dark:text-gray-300 mt-2">
                 {translation.russian}
               </p>

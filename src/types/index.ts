@@ -214,7 +214,10 @@ export interface PronunciationAnalysis {
 }
 
 // Vocabulary types
-export type VocabularyTopic = 'daily' | 'food' | 'travel' | 'work' | 'home' | 'nature' | 'emotions' | 'communication'
+export type VocabularyTopic =
+  | 'daily' | 'food' | 'travel' | 'work'
+  | 'home' | 'nature' | 'emotions' | 'communication'
+  | 'health' | 'education' | 'shopping' | 'culture'
 
 export const vocabularyTopicLabels: Record<VocabularyTopic, string> = {
   daily: 'Повседневное',
@@ -225,17 +228,25 @@ export const vocabularyTopicLabels: Record<VocabularyTopic, string> = {
   nature: 'Природа',
   emotions: 'Эмоции',
   communication: 'Общение',
+  health: 'Здоровье',
+  education: 'Образование',
+  shopping: 'Покупки',
+  culture: 'Культура',
+}
+
+export interface VocabularyExample {
+  fr: string
+  ru: string
 }
 
 export interface VocabularyCard {
   id: string
   french: string
   russian: string
-  example: string
-  exampleTranslation: string
+  examples: VocabularyExample[]  // up to 3 examples per word
   level: FrenchLevel
   type: 'word' | 'expression'
-  gender?: 'masculine' | 'feminine'
+  article?: 'le' | 'la' | "l'" | null  // noun article (null for verbs, adjectives, expressions)
   topic: VocabularyTopic
   difficulty: 1 | 2 | 3
   frequency: 1 | 2 | 3 | 4 | 5
@@ -254,7 +265,13 @@ export interface VocabularyProgress {
   lastReviewed?: Date
 }
 
-export type VocabularyExerciseType = 'fr_to_ru' | 'ru_to_fr' | 'multiple_choice'
+export type VocabularyExerciseType =
+  | 'fr_to_ru'        // French word → select Russian translation
+  | 'ru_to_fr'        // Russian word → select French translation
+  | 'multiple_choice' // French word → select correct translation from 4 options
+  | 'listening'       // TTS pronounces word → select what was said
+  | 'fill_blank'      // Sentence with blank → select missing word
+  | 'write_word'      // Russian shown → type French word
 
 // SRS types
 export type SRSQuality = 0 | 1 | 2 | 3 | 4 | 5

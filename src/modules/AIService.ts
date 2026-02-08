@@ -186,7 +186,7 @@ export async function enhanceCardExplanation(
 export interface WordTranslation {
   lemma: string
   russian: string
-  gender: 'masculine' | 'feminine' | null
+  article: 'le' | 'la' | "l'" | null
   type: 'word' | 'expression'
 }
 

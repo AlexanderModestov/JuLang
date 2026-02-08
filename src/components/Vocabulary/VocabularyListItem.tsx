@@ -24,8 +24,14 @@ export default function VocabularyListItem({
         {statusInfo.icon}
       </span>
 
-      {/* Word and translation */}
+      {/* Word with article and translation */}
       <div className="flex-1 min-w-0">
+        {word.article && (
+          <span className="font-medium text-primary-600 dark:text-primary-400">
+            {word.article}
+            {word.article !== "l'" && ' '}
+          </span>
+        )}
         <span className="font-medium text-gray-900 dark:text-white">
           {word.french}
         </span>

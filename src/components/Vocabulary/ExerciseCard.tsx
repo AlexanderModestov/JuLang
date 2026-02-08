@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { VocabularyCard, VocabularyExerciseType } from '@/types'
-import { getMultipleChoiceOptions } from '@/modules/VocabularyEngine'
-import { isEquivalent } from '@/utils/text'
+import {
+  getMultipleChoiceOptions,
+  generateFillBlankExercise,
+  generateListeningExercise,
+  checkWrittenAnswer,
+  getWordWithArticle,
+} from '@/modules/VocabularyEngine'
+import { speak } from '@/modules/SpeechService'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
@@ -17,27 +23,84 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [showResult, setShowResult] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
-  const [options] = useState(() =>
-    exerciseType === 'multiple_choice'
-      ? getMultipleChoiceOptions(card, 'russian')
-      : []
-  )
 
-  const prompt = exerciseType === 'fr_to_ru'
-    ? card.french
-    : exerciseType === 'ru_to_fr'
-      ? card.russian
-      : card.french
+  // Generate options based on exercise type
+  const [exerciseData] = useState(() => {
+    switch (exerciseType) {
+      case 'multiple_choice':
+        return { options: getMultipleChoiceOptions(card, 'russian') }
+      case 'fr_to_ru':
+        return { options: getMultipleChoiceOptions(card, 'russian') }
+      case 'ru_to_fr':
+        return { options: getMultipleChoiceOptions(card, 'french') }
+      case 'listening':
+        return generateListeningExercise(card)
+      case 'fill_blank':
+        return generateFillBlankExercise(card) || { sentence: `___ = ${card.russian}`, blankWord: card.french, options: getMultipleChoiceOptions(card, 'french') }
+      case 'write_word':
+        return { correctAnswer: card.french }
+      default:
+        return { options: [] }
+    }
+  })
 
-  const correctAnswer = exerciseType === 'fr_to_ru'
-    ? card.russian
-    : exerciseType === 'ru_to_fr'
-      ? card.french
-      : card.russian
+  // Auto-play audio for listening exercises
+  useEffect(() => {
+    if (exerciseType === 'listening' && 'wordToSpeak' in exerciseData) {
+      const timer = setTimeout(() => {
+        speak(exerciseData.wordToSpeak)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [exerciseType, exerciseData])
+
+  const getPromptText = () => {
+    switch (exerciseType) {
+      case 'fr_to_ru':
+        return 'Выберите перевод:'
+      case 'ru_to_fr':
+        return 'Выберите французское слово:'
+      case 'multiple_choice':
+        return 'Выберите перевод:'
+      case 'listening':
+        return 'Что вы услышали?'
+      case 'fill_blank':
+        return 'Вставьте слово:'
+      case 'write_word':
+        return 'Напишите по-французски:'
+      default:
+        return 'Переведите:'
+    }
+  }
+
+  const getPromptWord = () => {
+    switch (exerciseType) {
+      case 'fr_to_ru':
+      case 'multiple_choice':
+        return getWordWithArticle(card)
+      case 'ru_to_fr':
+      case 'write_word':
+        return card.russian
+      case 'listening':
+        return null // Hidden - user must listen
+      case 'fill_blank':
+        return 'sentence' in exerciseData ? exerciseData.sentence : ''
+      default:
+        return card.french
+    }
+  }
+
+  const handlePlayAudio = () => {
+    if ('wordToSpeak' in exerciseData) {
+      speak(exerciseData.wordToSpeak)
+    } else {
+      speak(getWordWithArticle(card))
+    }
+  }
 
   const handleSubmitText = () => {
     if (!userAnswer.trim()) return
-    const correct = isEquivalent(userAnswer.trim(), correctAnswer)
+    const correct = checkWrittenAnswer(userAnswer, card)
     setIsCorrect(correct)
     setShowResult(true)
   }
@@ -45,7 +108,20 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
   const handleSelectOption = (option: string) => {
     if (showResult) return
     setSelectedOption(option)
-    const correct = option === card.russian
+
+    let correct = false
+    switch (exerciseType) {
+      case 'fr_to_ru':
+      case 'multiple_choice':
+      case 'listening':
+        correct = option === card.russian
+        break
+      case 'ru_to_fr':
+      case 'fill_blank':
+        correct = option === card.french
+        break
+    }
+
     setIsCorrect(correct)
     setShowResult(true)
   }
@@ -54,62 +130,87 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
     onResult(isCorrect)
   }
 
+  const getOptions = (): string[] => {
+    if ('options' in exerciseData && Array.isArray(exerciseData.options)) {
+      return exerciseData.options
+    }
+    return []
+  }
+
+  const isTextInput = exerciseType === 'write_word'
+  const isOptionBased = ['fr_to_ru', 'ru_to_fr', 'multiple_choice', 'listening', 'fill_blank'].includes(exerciseType)
+  const options = getOptions()
+
   return (
     <Card>
       <div className="space-y-4">
         {/* Prompt */}
         <div className="text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-            {exerciseType === 'fr_to_ru' ? 'Переведите на русский:' :
-             exerciseType === 'ru_to_fr' ? 'Переведите на французский:' :
-             'Выберите перевод:'}
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            {getPromptText()}
           </p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">
-            {prompt}
-          </p>
-          {card.gender && exerciseType !== 'ru_to_fr' && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {card.gender === 'masculine' ? '(m)' : '(f)'}
+
+          {/* Listening: show play button instead of word */}
+          {exerciseType === 'listening' ? (
+            <button
+              onClick={handlePlayAudio}
+              className="mx-auto flex items-center justify-center gap-2 px-6 py-4 bg-primary-100 dark:bg-primary-900/30 rounded-xl hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+            >
+              <span className="text-4xl">🔊</span>
+              <span className="text-lg text-primary-700 dark:text-primary-300">Прослушать</span>
+            </button>
+          ) : (
+            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              {getPromptWord()}
             </p>
           )}
         </div>
 
-        {/* Input or options */}
-        {exerciseType === 'multiple_choice' ? (
+        {/* Options for choice-based exercises */}
+        {isOptionBased && options.length > 0 && (
           <div className="space-y-2">
-            {options.map((option) => (
-              <button
-                key={option}
-                onClick={() => handleSelectOption(option)}
-                disabled={showResult}
-                className={`w-full text-left p-3 rounded-lg border transition-colors ${
-                  showResult
-                    ? option === card.russian
-                      ? 'bg-green-100 dark:bg-green-900/30 border-green-500'
-                      : option === selectedOption && !isCorrect
-                        ? 'bg-red-100 dark:bg-red-900/30 border-red-500'
-                        : 'border-gray-200 dark:border-gray-700'
-                    : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                }`}
-              >
-                {option}
-              </button>
-            ))}
+            {options.map((option) => {
+              const correctAnswer = exerciseType === 'fill_blank' || exerciseType === 'ru_to_fr'
+                ? card.french
+                : card.russian
+
+              return (
+                <button
+                  key={option}
+                  onClick={() => handleSelectOption(option)}
+                  disabled={showResult}
+                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                    showResult
+                      ? option === correctAnswer
+                        ? 'bg-green-100 dark:bg-green-900/30 border-green-500'
+                        : option === selectedOption && !isCorrect
+                          ? 'bg-red-100 dark:bg-red-900/30 border-red-500'
+                          : 'border-gray-200 dark:border-gray-700'
+                      : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                  }`}
+                >
+                  {option}
+                </button>
+              )
+            })}
           </div>
-        ) : (
-          <div className="flex gap-2">
+        )}
+
+        {/* Text input for write_word */}
+        {isTextInput && (
+          <div className="space-y-3">
             <Input
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmitText()}
-              placeholder={exerciseType === 'fr_to_ru' ? 'Ваш перевод...' : 'Votre traduction...'}
+              placeholder="Напишите слово..."
               disabled={showResult}
-              disableAutoCorrect={exerciseType === 'ru_to_fr'}
-              className="flex-1"
+              disableAutoCorrect
+              className="text-center text-lg"
             />
             {!showResult && (
-              <Button onClick={handleSubmitText} disabled={!userAnswer.trim()}>
-                OK
+              <Button onClick={handleSubmitText} disabled={!userAnswer.trim()} className="w-full">
+                Проверить
               </Button>
             )}
           </div>
@@ -119,19 +220,24 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
         {showResult && (
           <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
             <p className={`font-medium ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
-              {isCorrect ? 'Правильно!' : 'Неправильно'}
+              {isCorrect ? '✓ Правильно!' : '✗ Неправильно'}
             </p>
             {!isCorrect && (
               <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
-                Правильный ответ: <strong>{correctAnswer}</strong>
+                Правильный ответ: <strong>{getWordWithArticle(card)}</strong> — {card.russian}
               </p>
             )}
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">
-              {card.example}
-            </p>
-            <p className="text-sm text-gray-400 dark:text-gray-500 italic">
-              {card.exampleTranslation}
-            </p>
+            {/* Show first example */}
+            {card.examples.length > 0 && (
+              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+                  {card.examples[0].fr}
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-500 italic">
+                  {card.examples[0].ru}
+                </p>
+              </div>
+            )}
           </div>
         )}
 

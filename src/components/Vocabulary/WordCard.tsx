@@ -85,20 +85,21 @@ export default function WordCard({
           )}
         </div>
 
-        {/* Word with TTS button */}
+        {/* Word with article and TTS button */}
         <div className="text-center">
           <button
-            onClick={() => handleSpeak(word.french)}
+            onClick={() => handleSpeak(word.article ? `${word.article}${word.article === "l'" ? '' : ' '}${word.french}` : word.french)}
             className="text-3xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2"
           >
+            {word.article && (
+              <span className="text-primary-600 dark:text-primary-400">
+                {word.article}
+                {word.article !== "l'" && ' '}
+              </span>
+            )}
             {word.french}
             <span className="text-2xl">🔊</span>
           </button>
-          {word.gender && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {word.gender === 'masculine' ? '(masculin)' : '(féminin)'}
-            </p>
-          )}
         </div>
 
         {/* Translation */}
@@ -126,20 +127,25 @@ export default function WordCard({
           <FrequencyScale frequency={word.frequency} />
         </div>
 
-        {/* Example with TTS */}
-        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-          <button
-            onClick={() => handleSpeak(word.example)}
-            className="text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left w-full"
-          >
-            <span className="inline-flex items-center gap-2">
-              <span className="text-lg">🔊</span>
-              <span className="italic">{word.example}</span>
-            </span>
-          </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 ml-7">
-            {word.exampleTranslation}
-          </p>
+        {/* Examples with TTS (up to 3) */}
+        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Примеры:</p>
+          {word.examples.map((example, index) => (
+            <div key={index} className="border-l-2 border-primary-300 dark:border-primary-600 pl-3">
+              <button
+                onClick={() => handleSpeak(example.fr)}
+                className="text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left w-full"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <span className="text-lg">🔊</span>
+                  <span className="italic">{example.fr}</span>
+                </span>
+              </button>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-7">
+                {example.ru}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Action buttons */}
