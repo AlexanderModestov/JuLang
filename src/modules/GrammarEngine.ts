@@ -1,4 +1,4 @@
-import type { GrammarCard, FrenchLevel, GrammarExample, GrammarTopicContent } from '@/types'
+import type { GrammarCard, FrenchLevel, GrammarExample, GrammarTopicContent, Language } from '@/types'
 import type { Database } from '@/types/supabase'
 import { userDataService } from '@/services/userDataService'
 import { generateGrammarExplanation } from './AIService'
@@ -15,6 +15,7 @@ function toLocalGrammarCard(card: SupabaseGrammarCard): GrammarCard {
   return {
     id: card.id,
     userId: card.user_id,
+    language: (card as any).language || 'fr', // Default to French until DB migrated
     topicId: card.topic_id,
     topic: card.topic,
     level: card.level as FrenchLevel,
@@ -147,13 +148,15 @@ export function getGrammarTopicById(topicId: string): GrammarTopic | undefined {
 // Create a grammar card from static JSON content (no AI needed)
 export async function createCardFromStatic(
   userId: string,
-  topic: GrammarTopic
+  topic: GrammarTopic,
+  language: Language = 'fr'
 ): Promise<GrammarCard> {
   const content = topic.content
 
   const card: GrammarCard = {
     id: generateId(),
     userId,
+    language,
     topicId: topic.id,
     topic: topic.title,
     level: topic.level,
@@ -180,26 +183,31 @@ export async function createCardFromStatic(
 // Ensure cards exist for user's level and all previous levels
 export async function ensureCardsForLevel(
   userId: string,
-  level: FrenchLevel
+  level: FrenchLevel,
+  language: Language = 'fr'
 ): Promise<void> {
-  const existingCards = await getUserCards(userId)
+  const existingCards = await getUserCards(userId, language)
   const existingTopicIds = new Set(existingCards.map((c) => c.topicId))
 
   const levelOrder: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
   const targetLevels = levelOrder.slice(0, levelOrder.indexOf(level) + 1)
+
+  // For now, grammar topics are French only
+  if (language !== 'fr') return
 
   const topicsToCreate = (grammarTopics.topics as GrammarTopic[])
     .filter((t) => targetLevels.includes(t.level as FrenchLevel))
     .filter((t) => !existingTopicIds.has(t.id))
 
   for (const topic of topicsToCreate) {
-    await createCardFromStatic(userId, topic)
+    await createCardFromStatic(userId, topic, language)
   }
 }
 
 export async function createGrammarCard(
   userId: string,
-  topicId: string
+  topicId: string,
+  language: Language = 'fr'
 ): Promise<GrammarCard> {
   const topic = grammarTopics.topics.find((t) => t.id === topicId) as GrammarTopic | undefined
   if (!topic) {
@@ -208,18 +216,20 @@ export async function createGrammarCard(
 
   // If topic has static content, use it
   if (topic.content) {
-    return createCardFromStatic(userId, topic)
+    return createCardFromStatic(userId, topic, language)
   }
 
   // Otherwise, generate explanation using AI (fallback)
   const { explanation, examples } = await generateGrammarExplanation(
     topic.title,
-    topic.level as FrenchLevel
+    topic.level as FrenchLevel,
+    language
   )
 
   const card: GrammarCard = {
     id: generateId(),
     userId,
+    language,
     topicId: topic.id,
     topic: topic.title,
     level: topic.level as FrenchLevel,
@@ -246,14 +256,18 @@ export async function createGrammarCard(
 export async function createInitialCards(
   userId: string,
   level: FrenchLevel,
-  count: number = 5
+  count: number = 5,
+  language: Language = 'fr'
 ): Promise<GrammarCard[]> {
+  // For now, grammar topics are French only
+  if (language !== 'fr') return []
+
   const topics = getGrammarTopicsByLevel(level).slice(0, count)
   const cards: GrammarCard[] = []
 
   for (const topic of topics) {
     try {
-      const card = await createGrammarCard(userId, topic.id)
+      const card = await createGrammarCard(userId, topic.id, language)
       cards.push(card)
     } catch (error) {
       console.error(`Failed to create card for ${topic.title}:`, error)
@@ -263,9 +277,9 @@ export async function createInitialCards(
   return cards
 }
 
-export async function getUserCards(userId: string): Promise<GrammarCard[]> {
+export async function getUserCards(userId: string, language: Language = 'fr'): Promise<GrammarCard[]> {
   const cards = await userDataService.getGrammarCards(userId)
-  return cards.map(toLocalGrammarCard)
+  return cards.map(toLocalGrammarCard).filter((c) => c.language === language)
 }
 
 export async function getCardById(cardId: string): Promise<GrammarCard | undefined> {
@@ -291,10 +305,13 @@ export async function deleteGrammarCard(cardId: string): Promise<void> {
 // Get cards that haven't been practiced with a specific type
 export async function getCardsForPractice(
   userId: string,
-  practiceType: keyof GrammarCard['practiceStats']
+  practiceType: keyof GrammarCard['practiceStats'],
+  language: Language = 'fr'
 ): Promise<GrammarCard[]> {
   const supabaseCards = await userDataService.getGrammarCards(userId)
-  const cards = supabaseCards.map(toLocalGrammarCard)
+  const cards = supabaseCards
+    .map(toLocalGrammarCard)
+    .filter((c) => c.language === language)
 
   return cards.sort((a, b) => {
     const aStats = a.practiceStats[practiceType]

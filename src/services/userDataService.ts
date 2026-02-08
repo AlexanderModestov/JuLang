@@ -1,6 +1,7 @@
 // src/services/userDataService.ts
 import { supabase } from '../lib/supabase'
 import type { Database } from '../types/supabase'
+import type { Language } from '../types'
 
 type UserProfile = Database['public']['Tables']['user_profiles']['Row']
 type UserProgress = Database['public']['Tables']['user_progress']['Row']
@@ -82,13 +83,18 @@ export const userDataService = {
   },
 
   // ============ Grammar Cards ============
-  async getGrammarCards(userId: string): Promise<GrammarCard[]> {
-    const { data, error } = await supabase
+  async getGrammarCards(userId: string, language?: Language): Promise<GrammarCard[]> {
+    let query = supabase
       .from('grammar_cards')
       .select('*')
       .eq('user_id', userId)
       .order('next_review', { ascending: true })
 
+    if (language) {
+      query = query.eq('language', language)
+    }
+
+    const { data, error } = await query
     if (error) throw error
     return data || []
   },
@@ -104,14 +110,19 @@ export const userDataService = {
     return data
   },
 
-  async getGrammarCardsDue(userId: string): Promise<GrammarCard[]> {
-    const { data, error } = await supabase
+  async getGrammarCardsDue(userId: string, language?: Language): Promise<GrammarCard[]> {
+    let query = supabase
       .from('grammar_cards')
       .select('*')
       .eq('user_id', userId)
       .lte('next_review', new Date().toISOString())
       .order('next_review', { ascending: true })
 
+    if (language) {
+      query = query.eq('language', language)
+    }
+
+    const { data, error } = await query
     if (error) throw error
     return data || []
   },
@@ -149,12 +160,17 @@ export const userDataService = {
   },
 
   // ============ Vocabulary Progress ============
-  async getVocabularyProgress(userId: string): Promise<VocabularyProgress[]> {
-    const { data, error } = await supabase
+  async getVocabularyProgress(userId: string, language?: Language): Promise<VocabularyProgress[]> {
+    let query = supabase
       .from('vocabulary_progress')
       .select('*')
       .eq('user_id', userId)
 
+    if (language) {
+      query = query.eq('language', language)
+    }
+
+    const { data, error } = await query
     if (error) throw error
     return data || []
   },
@@ -171,14 +187,19 @@ export const userDataService = {
     return data
   },
 
-  async getVocabularyDue(userId: string): Promise<VocabularyProgress[]> {
-    const { data, error } = await supabase
+  async getVocabularyDue(userId: string, language?: Language): Promise<VocabularyProgress[]> {
+    let query = supabase
       .from('vocabulary_progress')
       .select('*')
       .eq('user_id', userId)
       .lte('next_review', new Date().toISOString())
       .order('next_review', { ascending: true })
 
+    if (language) {
+      query = query.eq('language', language)
+    }
+
+    const { data, error } = await query
     if (error) throw error
     return data || []
   },
@@ -207,13 +228,18 @@ export const userDataService = {
   },
 
   // ============ Conversations ============
-  async getConversations(userId: string): Promise<Conversation[]> {
-    const { data, error } = await supabase
+  async getConversations(userId: string, language?: Language): Promise<Conversation[]> {
+    let query = supabase
       .from('conversations')
       .select('*')
       .eq('user_id', userId)
       .order('started_at', { ascending: false })
 
+    if (language) {
+      query = query.eq('language', language)
+    }
+
+    const { data, error } = await query
     if (error) throw error
     return data || []
   },

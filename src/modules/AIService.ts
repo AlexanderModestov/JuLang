@@ -1,17 +1,27 @@
-import type { FrenchLevel, Message, PracticeType } from '@/types'
+import type { FrenchLevel, Message, PracticeType, Language } from '@/types'
 
 // API base URL - empty for same-origin requests on Vercel
 const API_BASE = ''
 
+// Language display names for AI prompts
+const languageNames: Record<Language, string> = {
+  fr: 'French',
+  en: 'English',
+  es: 'Spanish',
+  de: 'German',
+  pt: 'Portuguese',
+}
+
 // Conversation functions
 export async function startConversation(
   topic: string,
-  level: FrenchLevel
+  level: FrenchLevel,
+  language: Language = 'fr'
 ): Promise<string> {
   const response = await fetch(`${API_BASE}/api/conversation`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'start', topic, level }),
+    body: JSON.stringify({ action: 'start', topic, level, language, languageName: languageNames[language] }),
   })
 
   if (!response.ok) {
@@ -26,7 +36,8 @@ export async function startConversation(
 export async function continueConversation(
   messages: Message[],
   level: FrenchLevel,
-  topic: string
+  topic: string,
+  language: Language = 'fr'
 ): Promise<string> {
   const response = await fetch(`${API_BASE}/api/conversation`, {
     method: 'POST',
@@ -35,6 +46,8 @@ export async function continueConversation(
       action: 'continue',
       topic,
       level,
+      language,
+      languageName: languageNames[language],
       messages: messages.map((m) => ({ role: m.role, content: m.content })),
     }),
   })
@@ -52,7 +65,8 @@ export async function continueConversation(
 export async function generateExercise(
   grammarTopic: string,
   level: FrenchLevel,
-  practiceType: PracticeType
+  practiceType: PracticeType,
+  language: Language = 'fr'
 ): Promise<{
   sourceText?: string
   targetText: string
@@ -67,6 +81,8 @@ export async function generateExercise(
       grammarTopic,
       level,
       practiceType,
+      language,
+      languageName: languageNames[language],
     }),
   })
 
@@ -82,7 +98,8 @@ export async function checkTranslation(
   userAnswer: string,
   correctAnswer: string,
   grammarTopic: string,
-  level: FrenchLevel
+  level: FrenchLevel,
+  language: Language = 'fr'
 ): Promise<{
   isCorrect: boolean
   feedback: string
@@ -97,6 +114,8 @@ export async function checkTranslation(
       level,
       userAnswer,
       correctAnswer,
+      language,
+      languageName: languageNames[language],
     }),
   })
 
@@ -110,7 +129,8 @@ export async function checkTranslation(
 
 export async function analyzeGrammarUsage(
   userMessage: string,
-  grammarTopic: string
+  grammarTopic: string,
+  language: Language = 'fr'
 ): Promise<{
   usedCorrectly: boolean
   feedback: string
@@ -122,6 +142,8 @@ export async function analyzeGrammarUsage(
       action: 'analyze',
       grammarTopic,
       userAnswer: userMessage,
+      language,
+      languageName: languageNames[language],
     }),
   })
 
@@ -136,7 +158,8 @@ export async function analyzeGrammarUsage(
 // Grammar explanation generation
 export async function generateGrammarExplanation(
   topic: string,
-  level: FrenchLevel
+  level: FrenchLevel,
+  language: Language = 'fr'
 ): Promise<{
   explanation: string
   examples: { french: string; russian: string }[]
@@ -144,7 +167,7 @@ export async function generateGrammarExplanation(
   const response = await fetch(`${API_BASE}/api/grammar`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ topic, level }),
+    body: JSON.stringify({ topic, level, language, languageName: languageNames[language] }),
   })
 
   if (!response.ok) {
@@ -160,7 +183,8 @@ export async function enhanceCardExplanation(
   topic: string,
   level: FrenchLevel,
   currentExplanation: string,
-  commonMistakes: string[]
+  commonMistakes: string[],
+  language: Language = 'fr'
 ): Promise<string> {
   const response = await fetch(`${API_BASE}/api/grammar`, {
     method: 'POST',
@@ -171,6 +195,8 @@ export async function enhanceCardExplanation(
       level,
       currentExplanation,
       commonMistakes,
+      language,
+      languageName: languageNames[language],
     }),
   })
 
@@ -192,12 +218,13 @@ export interface WordTranslation {
 
 export async function translateWord(
   word: string,
-  sentence: string
+  sentence: string,
+  language: Language = 'fr'
 ): Promise<WordTranslation> {
   const response = await fetch(`${API_BASE}/api/translate-word`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ word, sentence }),
+    body: JSON.stringify({ word, sentence, language, languageName: languageNames[language] }),
   })
 
   if (!response.ok) {

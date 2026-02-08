@@ -73,23 +73,21 @@ export default function HomeScreen() {
         </div>
       )}
 
-      {/* Quick actions */}
-      <div className="grid gap-4">
+      {/* Quick actions - 2x2 grid */}
+      <div className="grid grid-cols-2 gap-3">
         <Link to="/topics">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
           >
-            <div className="flex items-center gap-4">
-              <span className="text-4xl">💬</span>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Начать разговор
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Практикуйте французский с AI учителем
-                </p>
-              </div>
+            <div className="flex flex-col items-center text-center py-2">
+              <span className="text-4xl mb-2">💬</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                Разговор
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Практика с AI
+              </p>
             </div>
           </Card>
         </Link>
@@ -97,18 +95,16 @@ export default function HomeScreen() {
         <Link to="/vocabulary">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
           >
-            <div className="flex items-center gap-4">
-              <span className="text-4xl">🔤</span>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Словарь
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Изучайте новые слова и выражения
-                </p>
-              </div>
+            <div className="flex flex-col items-center text-center py-2">
+              <span className="text-4xl mb-2">🔤</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                Словарь
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Новые слова
+              </p>
             </div>
           </Card>
         </Link>
@@ -116,18 +112,16 @@ export default function HomeScreen() {
         <Link to="/grammar">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
           >
-            <div className="flex items-center gap-4">
-              <span className="text-4xl">📖</span>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Грамматика
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Справочник по грамматике французского
-                </p>
-              </div>
+            <div className="flex flex-col items-center text-center py-2">
+              <span className="text-4xl mb-2">📖</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                Грамматика
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Справочник
+              </p>
             </div>
           </Card>
         </Link>
@@ -135,18 +129,16 @@ export default function HomeScreen() {
         <Link to="/exercises">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
           >
-            <div className="flex items-center gap-4">
-              <span className="text-4xl">✏️</span>
-              <div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Упражнения
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Практикуйте грамматику с упражнениями
-                </p>
-              </div>
+            <div className="flex flex-col items-center text-center py-2">
+              <span className="text-4xl mb-2">✏️</span>
+              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+                Упражнения
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                Повторение
+              </p>
             </div>
           </Card>
         </Link>

@@ -1,5 +1,40 @@
+// Language types
+export type Language = 'fr' | 'en' | 'es' | 'de' | 'pt'
+
+export const languageLabels: Record<Language, string> = {
+  fr: 'Французский',
+  en: 'Английский',
+  es: 'Испанский',
+  de: 'Немецкий',
+  pt: 'Португальский',
+}
+
+export const languageFlags: Record<Language, string> = {
+  fr: '🇫🇷',
+  en: '🇬🇧',
+  es: '🇪🇸',
+  de: '🇩🇪',
+  pt: '🇧🇷',
+}
+
+export const languageTTSCodes: Record<Language, string> = {
+  fr: 'fr-FR',
+  en: 'en-US',
+  es: 'es-ES',
+  de: 'de-DE',
+  pt: 'pt-BR',
+}
+
+// Article types per language
+export type FrenchArticle = 'le' | 'la' | "l'" | null
+export type GermanArticle = 'der' | 'die' | 'das' | null
+export type SpanishArticle = 'el' | 'la' | null
+export type PortugueseArticle = 'o' | 'a' | null
+export type Article = FrenchArticle | GermanArticle | SpanishArticle | PortugueseArticle
+
 // User types
 export type FrenchLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+export type LanguageLevel = FrenchLevel // Alias for multilingual support
 export type AIProvider = 'openai' | 'claude' | 'random'
 
 // Speech synthesis settings
@@ -24,8 +59,16 @@ export interface User {
   preferredAiProvider: AIProvider
   speechPauseTimeout: number  // seconds (1-15), silence duration before auto-stop
   speechSettings: SpeechSettings  // TTS voice settings
+  activeLanguage: Language      // Currently selected learning language
+  languages: Language[]         // All languages user is learning
   createdAt: Date
   updatedAt: Date
+}
+
+// Level per language
+export interface UserLanguageLevel {
+  language: Language
+  level: LanguageLevel
 }
 
 export interface UserProgress {
@@ -72,6 +115,7 @@ export interface Message {
 export interface Conversation {
   id: string
   userId: string
+  language: Language    // Language of this conversation
   topicId: string
   aiProvider: AIProvider
   mode: ConversationMode
@@ -86,6 +130,7 @@ export interface Conversation {
 export interface GrammarCard {
   id: string
   userId: string
+  language: Language           // Language this card belongs to
   topicId: string              // reference to topic in grammar-topics.json
   topic: string
   level: FrenchLevel
@@ -257,6 +302,7 @@ export interface VocabularyProgress {
   id: string          // same as VocabularyCard.id
   userId: string
   cardId: string
+  language: Language  // Language this progress belongs to
   nextReview: Date
   easeFactor: number
   interval: number
