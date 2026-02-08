@@ -1,5 +1,7 @@
 // Web Speech API wrapper for speech recognition and synthesis
 
+import { languageTTSCodes, type Language } from '@/types'
+
 // Type declarations for Web Speech API
 interface SpeechRecognitionEvent extends Event {
   results: SpeechRecognitionResultList
@@ -146,22 +148,28 @@ export function getAvailableVoices(language: string = 'fr'): SpeechSynthesisVoic
   )
 }
 
-// Get French voices with async loading support (voices load async in some browsers)
-export function getAvailableFrenchVoices(): Promise<SpeechSynthesisVoice[]> {
+// Get voices for a specific language with async loading support (voices load async in some browsers)
+export function getVoicesForLanguage(language: Language = 'fr'): Promise<SpeechSynthesisVoice[]> {
   return new Promise((resolve) => {
     const voices = speechSynthesis.getVoices()
+    const langCode = languageTTSCodes[language].split('-')[0] // 'fr-FR' -> 'fr'
 
     if (voices.length > 0) {
-      resolve(voices.filter(v => v.lang.startsWith('fr')))
+      resolve(voices.filter(v => v.lang.startsWith(langCode)))
       return
     }
 
     // Voices may load asynchronously
     speechSynthesis.onvoiceschanged = () => {
       const loadedVoices = speechSynthesis.getVoices()
-      resolve(loadedVoices.filter(v => v.lang.startsWith('fr')))
+      resolve(loadedVoices.filter(v => v.lang.startsWith(langCode)))
     }
   })
+}
+
+// Legacy alias for backward compatibility
+export function getAvailableFrenchVoices(): Promise<SpeechSynthesisVoice[]> {
+  return getVoicesForLanguage('fr')
 }
 
 // Voice quality scoring for auto-selection
@@ -170,16 +178,28 @@ interface VoiceQualityScore {
   score: number
 }
 
-// Select the best French voice based on quality indicators
-export function selectBestFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
-  const frenchVoices = voices.filter(v =>
-    v.lang.startsWith('fr-FR') || v.lang.startsWith('fr')
+// Known good voices by language
+const knownGoodVoicesByLanguage: Record<Language, string[]> = {
+  fr: ['amélie', 'thomas', 'hortense', 'paul', 'google français', 'audrey'],
+  en: ['samantha', 'daniel', 'alex', 'google us english', 'google uk english'],
+  es: ['mónica', 'jorge', 'paulina', 'google español'],
+  de: ['anna', 'markus', 'petra', 'google deutsch'],
+  pt: ['luciana', 'felipe', 'google português'],
+}
+
+// Select the best voice for a language based on quality indicators
+export function selectBestVoice(voices: SpeechSynthesisVoice[], language: Language = 'fr'): SpeechSynthesisVoice | null {
+  const ttsCode = languageTTSCodes[language]
+  const langCode = ttsCode.split('-')[0]
+
+  const languageVoices = voices.filter(v =>
+    v.lang.startsWith(ttsCode) || v.lang.startsWith(langCode)
   )
 
-  if (frenchVoices.length === 0) return null
+  if (languageVoices.length === 0) return null
 
   // Score each voice
-  const scored: VoiceQualityScore[] = frenchVoices.map(voice => {
+  const scored: VoiceQualityScore[] = languageVoices.map(voice => {
     let score = 0
     const name = voice.name.toLowerCase()
 
@@ -193,8 +213,8 @@ export function selectBestFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSyn
       score += 80
     }
 
-    // Known good voices by platform
-    const knownGoodVoices = ['amélie', 'thomas', 'hortense', 'paul', 'google français', 'audrey']
+    // Known good voices by language
+    const knownGoodVoices = knownGoodVoicesByLanguage[language] || []
     if (knownGoodVoices.some(good => name.includes(good))) {
       score += 50
     }
@@ -204,8 +224,8 @@ export function selectBestFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSyn
       score += 20
     }
 
-    // fr-FR preferred over fr-CA and others
-    if (voice.lang === 'fr-FR') {
+    // Prefer exact TTS code match (e.g., fr-FR over fr-CA)
+    if (voice.lang === ttsCode) {
       score += 10
     }
 
@@ -215,6 +235,11 @@ export function selectBestFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSyn
   // Sort by score and return best
   scored.sort((a, b) => b.score - a.score)
   return scored[0].voice
+}
+
+// Legacy alias for backward compatibility
+export function selectBestFrenchVoice(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice | null {
+  return selectBestVoice(voices, 'fr')
 }
 
 // Get voice by name
@@ -234,7 +259,8 @@ function pause(ms: number): Promise<void> {
 // Speak a single sentence
 function speakSentence(
   text: string,
-  settings: { voiceName: string | null; rate: number; pitch: number }
+  settings: { voiceName: string | null; rate: number; pitch: number },
+  language: Language = 'fr'
 ): Promise<void> {
   return new Promise((resolve) => {
     const utterance = new SpeechSynthesisUtterance(text)
@@ -242,7 +268,7 @@ function speakSentence(
     // Select voice
     const voice = settings.voiceName
       ? getVoiceByName(settings.voiceName)
-      : selectBestFrenchVoice(speechSynthesis.getVoices())
+      : selectBestVoice(speechSynthesis.getVoices(), language)
 
     if (voice) {
       utterance.voice = voice
@@ -250,7 +276,7 @@ function speakSentence(
 
     utterance.rate = settings.rate
     utterance.pitch = settings.pitch
-    utterance.lang = 'fr-FR'
+    utterance.lang = languageTTSCodes[language]
 
     utterance.onend = () => resolve()
     utterance.onerror = () => resolve() // Don't block on error
@@ -262,7 +288,8 @@ function speakSentence(
 // Speak text with pauses between sentences for natural rhythm
 export async function speakWithPauses(
   text: string,
-  settings: { voiceName: string | null; rate: number; pitch: number }
+  settings: { voiceName: string | null; rate: number; pitch: number },
+  language: Language = 'fr'
 ): Promise<void> {
   // Cancel any ongoing speech
   speechSynthesis.cancel()
@@ -274,7 +301,7 @@ export async function speakWithPauses(
     const sentence = sentences[i].trim()
     if (!sentence) continue
 
-    await speakSentence(sentence, settings)
+    await speakSentence(sentence, settings, language)
 
     // Pause between sentences (except after last)
     if (i < sentences.length - 1) {
@@ -289,6 +316,7 @@ export function speak(
     voice?: SpeechSynthesisVoice
     rate?: number
     pitch?: number
+    language?: Language
     onEnd?: () => void
     onError?: (error: string) => void
   } = {}
@@ -301,13 +329,14 @@ export function speak(
   // Cancel any ongoing speech
   speechSynthesis.cancel()
 
+  const language = options.language ?? 'fr'
   const utterance = new SpeechSynthesisUtterance(text)
 
-  // Set voice: use provided, or select best French voice
+  // Set voice: use provided, or select best voice for the language
   if (options.voice) {
     utterance.voice = options.voice
   } else {
-    const bestVoice = selectBestFrenchVoice(speechSynthesis.getVoices())
+    const bestVoice = selectBestVoice(speechSynthesis.getVoices(), language)
     if (bestVoice) {
       utterance.voice = bestVoice
     }
@@ -315,7 +344,7 @@ export function speak(
 
   utterance.rate = options.rate ?? 0.9
   utterance.pitch = options.pitch ?? 1.0
-  utterance.lang = 'fr-FR'
+  utterance.lang = languageTTSCodes[language]
 
   utterance.onend = () => {
     options.onEnd?.()

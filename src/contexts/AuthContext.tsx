@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase'
 import { userDataService } from '../services/userDataService'
 import { checkForLocalData, migrateLocalDataToSupabase, clearLocalData } from '../services/migrationService'
 import type { Database } from '../types/supabase'
+import type { Language } from '../types'
 
 type UserProfile = Database['public']['Tables']['user_profiles']['Row']
 type UserProgress = Database['public']['Tables']['user_progress']['Row']
@@ -13,6 +14,7 @@ interface AuthContextType {
   user: User | null
   profile: UserProfile | null
   progress: UserProgress | null
+  currentLanguage: Language
   loading: boolean
   migrating: boolean
   error: string | null
@@ -22,6 +24,7 @@ interface AuthContextType {
   refreshProfile: () => Promise<void>
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>
   updateProgress: (updates: Partial<UserProgress>) => Promise<void>
+  setCurrentLanguage: (language: Language) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -30,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [progress, setProgress] = useState<UserProgress | null>(null)
+  const [currentLanguage, setCurrentLanguageState] = useState<Language>('fr')
   const [loading, setLoading] = useState(true)
   const [migrating, setMigrating] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -44,6 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ])
       setProfile(profileData)
       setProgress(progressData)
+      // Set current language from profile (default to 'fr' if not set)
+      if (profileData?.active_language) {
+        setCurrentLanguageState(profileData.active_language as Language)
+      }
     } catch (err) {
       console.error('Failed to load user data:', err)
       setError('Не удалось загрузить данные пользователя')
@@ -204,12 +212,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProgress(updated)
   }
 
+  const setCurrentLanguage = async (language: Language) => {
+    setCurrentLanguageState(language)
+    if (user) {
+      // Persist to profile
+      await userDataService.updateProfile(user.id, { active_language: language })
+      setProfile((prev) => prev ? { ...prev, active_language: language } : null)
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
         profile,
         progress,
+        currentLanguage,
         loading,
         migrating,
         error,
@@ -219,6 +237,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         refreshProfile,
         updateProfile,
         updateProgress,
+        setCurrentLanguage,
       }}
     >
       {children}

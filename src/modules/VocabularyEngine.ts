@@ -1,4 +1,4 @@
-import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality, VocabularyExerciseType } from '@/types'
+import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality, VocabularyExerciseType, Language } from '@/types'
 import type { Database } from '@/types/supabase'
 import { userDataService } from '@/services/userDataService'
 import { supabase } from '@/lib/supabase'
@@ -13,6 +13,7 @@ function toLocalVocabularyProgress(progress: SupabaseVocabularyProgress): Vocabu
     id: progress.id,
     userId: progress.user_id,
     cardId: progress.card_id,
+    language: (progress as any).language || 'fr', // Default to French until DB migrated
     nextReview: new Date(progress.next_review),
     easeFactor: progress.ease_factor,
     interval: progress.interval,
@@ -62,8 +63,14 @@ export function getVocabularyCardById(cardId: string): VocabularyCard | undefine
 /** Get cards not yet in user's progress (new cards to learn) */
 export async function getNewCards(
   userId: string,
-  level: FrenchLevel
+  level: FrenchLevel,
+  language: Language = 'fr'
 ): Promise<VocabularyCard[]> {
+  // For now, vocabulary data is French only - when we add other languages,
+  // we'll need to load language-specific vocabulary files
+  if (language !== 'fr') {
+    return [] // No vocabulary data for other languages yet
+  }
   const supabaseProgress = await userDataService.getVocabularyProgress(userId)
   const knownIds = new Set(supabaseProgress.map((p) => p.card_id))
   const available = getCardsUpToLevel(level)
@@ -71,15 +78,19 @@ export async function getNewCards(
 }
 
 /** Get cards due for review */
-export async function getReviewQueue(userId: string): Promise<VocabularyProgress[]> {
+export async function getReviewQueue(userId: string, language: Language = 'fr'): Promise<VocabularyProgress[]> {
   const supabaseProgress = await userDataService.getVocabularyDue(userId)
-  return supabaseProgress.map(toLocalVocabularyProgress)
+  // Filter by language (until userDataService supports language filtering)
+  return supabaseProgress
+    .map(toLocalVocabularyProgress)
+    .filter((p) => p.language === language)
 }
 
 /** Add a card to user's SRS progress */
 export async function addCardToProgress(
   userId: string,
-  cardId: string
+  cardId: string,
+  language: Language = 'fr'
 ): Promise<VocabularyProgress> {
   const existing = await userDataService.getVocabularyProgressByCardId(userId, cardId)
   if (existing) return toLocalVocabularyProgress(existing)
@@ -88,6 +99,7 @@ export async function addCardToProgress(
     id: crypto.randomUUID(),
     userId,
     cardId,
+    language,
     nextReview: new Date(),
     easeFactor: DEFAULT_EASE_FACTOR,
     interval: 0,
@@ -194,7 +206,8 @@ export async function addCardFromConversation(
   article: 'le' | 'la' | "l'" | null,
   type: 'word' | 'expression',
   example: string,
-  exampleTranslation: string
+  exampleTranslation: string,
+  language: Language = 'fr'
 ): Promise<VocabularyProgress> {
   // Check if static card exists
   const allCards = getAllVocabularyCards()
@@ -202,7 +215,7 @@ export async function addCardFromConversation(
     (c) => c.french.toLowerCase() === lemma.toLowerCase()
   )
   if (existing) {
-    return addCardToProgress(userId, existing.id)
+    return addCardToProgress(userId, existing.id, language)
   }
 
   // For custom words, we store a custom card in the DB
@@ -226,7 +239,7 @@ export async function addCardFromConversation(
   }
   localStorage.setItem('customVocabularyCards', JSON.stringify(customCards))
 
-  return addCardToProgress(userId, cardId)
+  return addCardToProgress(userId, cardId, language)
 }
 
 // ============================================
@@ -384,9 +397,10 @@ export async function scheduleVocabularyCardAuto(
 export async function addAndScheduleCard(
   userId: string,
   cardId: string,
-  correct: boolean
+  correct: boolean,
+  language: Language = 'fr'
 ): Promise<VocabularyProgress> {
-  const progress = await addCardToProgress(userId, cardId)
+  const progress = await addCardToProgress(userId, cardId, language)
   await scheduleVocabularyCardAuto(progress.id, correct)
   return progress
 }

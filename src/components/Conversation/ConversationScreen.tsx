@@ -159,6 +159,7 @@ export default function ConversationScreen() {
     const conversation: Conversation = {
       id: conversationId,
       userId: user.id,
+      language: 'fr', // Default to French until multi-language is fully implemented
       topicId: topic,
       aiProvider: 'openai',
       mode: mode,

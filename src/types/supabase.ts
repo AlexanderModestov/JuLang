@@ -46,6 +46,8 @@ export interface Database {
           speech_settings: SpeechSettings
           topics_of_interest: string[]
           is_onboarded: boolean
+          active_language: string | null
+          languages: string[]
           created_at: string
           updated_at: string
         }
@@ -59,6 +61,8 @@ export interface Database {
           speech_settings?: SpeechSettings
           topics_of_interest?: string[]
           is_onboarded?: boolean
+          active_language?: string | null
+          languages?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -72,6 +76,8 @@ export interface Database {
           speech_settings?: SpeechSettings
           topics_of_interest?: string[]
           is_onboarded?: boolean
+          active_language?: string | null
+          languages?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -120,6 +126,7 @@ export interface Database {
         Row: {
           id: string
           user_id: string
+          language: string
           topic_id: string
           topic: string
           level: string
@@ -140,6 +147,7 @@ export interface Database {
         Insert: {
           id?: string
           user_id: string
+          language?: string
           topic_id: string
           topic: string
           level: string
@@ -160,6 +168,7 @@ export interface Database {
         Update: {
           id?: string
           user_id?: string
+          language?: string
           topic_id?: string
           topic?: string
           level?: string
@@ -184,6 +193,7 @@ export interface Database {
           id: string
           user_id: string
           card_id: string
+          language: string
           next_review: string
           ease_factor: number
           interval: number
@@ -196,6 +206,7 @@ export interface Database {
           id?: string
           user_id: string
           card_id: string
+          language?: string
           next_review?: string
           ease_factor?: number
           interval?: number
@@ -208,6 +219,7 @@ export interface Database {
           id?: string
           user_id?: string
           card_id?: string
+          language?: string
           next_review?: string
           ease_factor?: number
           interval?: number
@@ -222,6 +234,7 @@ export interface Database {
         Row: {
           id: string
           user_id: string
+          language: string
           topic_id: string | null
           ai_provider: string | null
           mode: string
@@ -236,6 +249,7 @@ export interface Database {
         Insert: {
           id?: string
           user_id: string
+          language?: string
           topic_id?: string | null
           ai_provider?: string | null
           mode?: string
@@ -250,6 +264,7 @@ export interface Database {
         Update: {
           id?: string
           user_id?: string
+          language?: string
           topic_id?: string | null
           ai_provider?: string | null
           mode?: string

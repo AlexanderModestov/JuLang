@@ -9,6 +9,7 @@ function toLocalGrammarCard(card: SupabaseGrammarCard): GrammarCard {
   return {
     id: card.id,
     userId: card.user_id,
+    language: (card as any).language || 'fr', // Default to French until DB migrated
     topicId: card.topic_id,
     topic: card.topic,
     level: card.level as FrenchLevel,
