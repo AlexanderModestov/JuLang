@@ -6,6 +6,7 @@ import {
   generateListeningExercise,
   checkWrittenAnswer,
   getWordWithArticle,
+  getCardWord,
 } from '@/modules/VocabularyEngine'
 import { speak } from '@/modules/SpeechService'
 import Button from '@/components/ui/Button'
@@ -26,19 +27,20 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
 
   // Generate options based on exercise type
   const [exerciseData] = useState(() => {
+    const word = getCardWord(card)
     switch (exerciseType) {
       case 'multiple_choice':
         return { options: getMultipleChoiceOptions(card, 'russian') }
       case 'fr_to_ru':
         return { options: getMultipleChoiceOptions(card, 'russian') }
       case 'ru_to_fr':
-        return { options: getMultipleChoiceOptions(card, 'french') }
+        return { options: getMultipleChoiceOptions(card, 'word') }
       case 'listening':
         return generateListeningExercise(card)
       case 'fill_blank':
-        return generateFillBlankExercise(card) || { sentence: `___ = ${card.russian}`, blankWord: card.french, options: getMultipleChoiceOptions(card, 'french') }
+        return generateFillBlankExercise(card) || { sentence: `___ = ${card.russian}`, blankWord: word, options: getMultipleChoiceOptions(card, 'word') }
       case 'write_word':
-        return { correctAnswer: card.french }
+        return { correctAnswer: word }
       default:
         return { options: [] }
     }
@@ -86,7 +88,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
       case 'fill_blank':
         return 'sentence' in exerciseData ? exerciseData.sentence : ''
       default:
-        return card.french
+        return getCardWord(card)
     }
   }
 
@@ -110,6 +112,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
     setSelectedOption(option)
 
     let correct = false
+    const word = getCardWord(card)
     switch (exerciseType) {
       case 'fr_to_ru':
       case 'multiple_choice':
@@ -118,7 +121,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
         break
       case 'ru_to_fr':
       case 'fill_blank':
-        correct = option === card.french
+        correct = option === word
         break
     }
 
@@ -171,7 +174,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
           <div className="space-y-2">
             {options.map((option) => {
               const correctAnswer = exerciseType === 'fill_blank' || exerciseType === 'ru_to_fr'
-                ? card.french
+                ? getCardWord(card)
                 : card.russian
 
               return (

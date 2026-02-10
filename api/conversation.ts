@@ -6,13 +6,14 @@ const openai = new OpenAI({
 })
 
 type FrenchLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+type Language = 'fr' | 'en' | 'es' | 'de' | 'pt'
 
 interface Message {
   role: 'user' | 'assistant'
   content: string
 }
 
-const getTeacherSystemPrompt = (level: FrenchLevel, topic: string) => `
+const getFrenchTeacherPrompt = (level: FrenchLevel, topic: string) => `
 Tu es un professeur de français patient et encourageant. Tu parles UNIQUEMENT en français.
 
 Niveau de l'élève: ${level}
@@ -35,6 +36,38 @@ IMPORTANT concernant l'orthographe:
 Commence la conversation sur le sujet donné.
 `
 
+const getEnglishTeacherPrompt = (level: FrenchLevel, topic: string) => `
+You are a patient and encouraging English teacher. You speak ONLY in English.
+
+Student's level: ${level}
+Conversation topic: ${topic}
+
+Rules:
+1. Adapt your vocabulary and grammar to level ${level}
+2. If the student makes a GRAMMAR or VOCABULARY error, correct it gently
+3. Ask questions to keep the conversation going
+4. Gradually introduce new vocabulary appropriate to the level
+5. Never translate to Russian - always stay in English
+6. Be encouraging and positive
+
+IMPORTANT about spelling:
+- DO NOT correct minor spelling mistakes or typos
+- DO NOT mention that the student made spelling errors
+- Focus on grammar, vocabulary and meaning, not on spelling
+
+Start the conversation on the given topic.
+`
+
+const getTeacherSystemPrompt = (level: FrenchLevel, topic: string, language: Language = 'fr') => {
+  switch (language) {
+    case 'en':
+      return getEnglishTeacherPrompt(level, topic)
+    case 'fr':
+    default:
+      return getFrenchTeacherPrompt(level, topic)
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -50,29 +83,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { action, topic, level, messages } = req.body as {
+    const { action, topic, level, messages, language } = req.body as {
       action: 'start' | 'continue'
       topic: string
       level: FrenchLevel
       messages?: Message[]
+      language?: Language
     }
 
     if (!topic || !level) {
       return res.status(400).json({ error: 'Missing topic or level' })
     }
 
+    const lang = language || 'fr'
+    const defaultGreeting = lang === 'en' ? 'Hello!' : 'Bonjour!'
+
     if (action === 'start') {
       const response = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: getTeacherSystemPrompt(level, topic) },
+          { role: 'system', content: getTeacherSystemPrompt(level, topic, lang) },
         ],
         max_tokens: 300,
         temperature: 0.7,
       })
 
       return res.json({
-        content: response.choices[0].message.content || 'Bonjour!',
+        content: response.choices[0].message.content || defaultGreeting,
       })
     }
 
@@ -82,7 +119,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const chatMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-        { role: 'system', content: getTeacherSystemPrompt(level, topic) },
+        { role: 'system', content: getTeacherSystemPrompt(level, topic, lang) },
         ...messages.map((m) => ({
           role: m.role as 'user' | 'assistant',
           content: m.content,

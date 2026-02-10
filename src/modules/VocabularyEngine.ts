@@ -2,7 +2,17 @@ import type { VocabularyCard, VocabularyProgress, FrenchLevel, SRSQuality, Vocab
 import type { Database } from '@/types/supabase'
 import { userDataService } from '@/services/userDataService'
 import { supabase } from '@/lib/supabase'
-import vocabularyData from '@/data/vocabulary.json'
+import vocabularyDataFr from '@/data/vocabulary.json'
+import vocabularyDataEn from '@/data/vocabulary-en.json'
+
+// Vocabulary data by language
+const vocabularyByLanguage: Record<Language, { cards: any[] }> = {
+  fr: vocabularyDataFr,
+  en: vocabularyDataEn,
+  es: { cards: [] }, // Not implemented yet
+  de: { cards: [] }, // Not implemented yet
+  pt: { cards: [] }, // Not implemented yet
+}
 
 type SupabaseVocabularyProgress = Database['public']['Tables']['vocabulary_progress']['Row']
 type SupabaseVocabularyProgressInsert = Database['public']['Tables']['vocabulary_progress']['Insert']
@@ -41,23 +51,41 @@ const DEFAULT_EASE_FACTOR = 2.5
 const MIN_EASE_FACTOR = 1.3
 const NEW_CARDS_PER_SESSION = 5
 
-export function getAllVocabularyCards(): VocabularyCard[] {
-  return vocabularyData.cards as VocabularyCard[]
+export function getAllVocabularyCards(language: Language = 'fr'): VocabularyCard[] {
+  const data = vocabularyByLanguage[language]
+  if (!data || !data.cards || data.cards.length === 0) {
+    return []
+  }
+  // Map language-specific field to generic 'word' field for consistency
+  return data.cards.map((card: any) => ({
+    ...card,
+    // Keep 'french' field for French cards, 'english' for English, etc.
+    // The card structure varies by language (french vs english field)
+  })) as VocabularyCard[]
 }
 
-export function getCardsByLevel(level: FrenchLevel): VocabularyCard[] {
-  return getAllVocabularyCards().filter((c) => c.level === level)
+export function getCardsByLevel(level: FrenchLevel, language: Language = 'fr'): VocabularyCard[] {
+  return getAllVocabularyCards(language).filter((c) => c.level === level)
 }
 
-export function getCardsUpToLevel(level: FrenchLevel): VocabularyCard[] {
+export function getCardsUpToLevel(level: FrenchLevel, language: Language = 'fr'): VocabularyCard[] {
   const levelOrder: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
   const maxIndex = levelOrder.indexOf(level)
   const levels = levelOrder.slice(0, maxIndex + 1)
-  return getAllVocabularyCards().filter((c) => levels.includes(c.level as FrenchLevel))
+  return getAllVocabularyCards(language).filter((c) => levels.includes(c.level as FrenchLevel))
 }
 
-export function getVocabularyCardById(cardId: string): VocabularyCard | undefined {
-  return getAllVocabularyCards().find((c) => c.id === cardId)
+export function getVocabularyCardById(cardId: string, language?: Language): VocabularyCard | undefined {
+  // If language is specified, search in that language's cards
+  if (language) {
+    return getAllVocabularyCards(language).find((c) => c.id === cardId)
+  }
+  // Otherwise, search all languages
+  for (const lang of ['fr', 'en', 'es', 'de', 'pt'] as Language[]) {
+    const card = getAllVocabularyCards(lang).find((c) => c.id === cardId)
+    if (card) return card
+  }
+  return undefined
 }
 
 /** Get cards not yet in user's progress (new cards to learn) */
@@ -66,14 +94,13 @@ export async function getNewCards(
   level: FrenchLevel,
   language: Language = 'fr'
 ): Promise<VocabularyCard[]> {
-  // For now, vocabulary data is French only - when we add other languages,
-  // we'll need to load language-specific vocabulary files
-  if (language !== 'fr') {
-    return [] // No vocabulary data for other languages yet
+  // Check if vocabulary data exists for this language
+  const available = getCardsUpToLevel(level, language)
+  if (available.length === 0) {
+    return [] // No vocabulary data for this language yet
   }
   const supabaseProgress = await userDataService.getVocabularyProgress(userId)
   const knownIds = new Set(supabaseProgress.map((p) => p.card_id))
-  const available = getCardsUpToLevel(level)
   return available.filter((c) => !knownIds.has(c.id)).slice(0, NEW_CARDS_PER_SESSION)
 }
 
@@ -155,20 +182,30 @@ export async function scheduleVocabularyCard(
   return toLocalVocabularyProgress(updatedProgress)
 }
 
+/** Get the target language word from a card (french, english, etc.) */
+export function getCardWord(card: VocabularyCard | any): string {
+  // Support both legacy 'french' field and new 'english' field
+  return card.french || card.english || ''
+}
+
 /** Generate multiple choice options: correct + 3 distractors from same level */
 export function getMultipleChoiceOptions(
   card: VocabularyCard,
-  field: 'french' | 'russian'
+  field: 'word' | 'russian',
+  language: Language = 'fr'
 ): string[] {
-  const sameLevel = getCardsByLevel(card.level as FrenchLevel)
+  const sameLevel = getCardsByLevel(card.level as FrenchLevel, language)
     .filter((c) => c.id !== card.id)
 
   // Shuffle and pick 3
   const shuffled = sameLevel.sort(() => Math.random() - 0.5)
-  const distractors = shuffled.slice(0, 3).map((c) => c[field])
+  const distractors = shuffled.slice(0, 3).map((c) =>
+    field === 'russian' ? c.russian : getCardWord(c)
+  )
 
   // Add correct answer and shuffle
-  const options = [card[field], ...distractors]
+  const correctAnswer = field === 'russian' ? card.russian : getCardWord(card)
+  const options = [correctAnswer, ...distractors]
   return options.sort(() => Math.random() - 0.5)
 }
 
@@ -181,14 +218,15 @@ export async function isCardInProgress(
   return !!entry
 }
 
-/** Check if a lemma already exists in vocabulary by French word */
+/** Check if a lemma already exists in vocabulary by word */
 export async function isLemmaInProgress(
   userId: string,
-  lemma: string
+  lemma: string,
+  language: Language = 'fr'
 ): Promise<boolean> {
-  const allCards = getAllVocabularyCards()
+  const allCards = getAllVocabularyCards(language)
   const match = allCards.find(
-    (c) => c.french.toLowerCase() === lemma.toLowerCase()
+    (c) => getCardWord(c).toLowerCase() === lemma.toLowerCase()
   )
   if (match) {
     return isCardInProgress(userId, match.id)
@@ -210,9 +248,9 @@ export async function addCardFromConversation(
   language: Language = 'fr'
 ): Promise<VocabularyProgress> {
   // Check if static card exists
-  const allCards = getAllVocabularyCards()
+  const allCards = getAllVocabularyCards(language)
   const existing = allCards.find(
-    (c) => c.french.toLowerCase() === lemma.toLowerCase()
+    (c) => getCardWord(c).toLowerCase() === lemma.toLowerCase()
   )
   if (existing) {
     return addCardToProgress(userId, existing.id, language)
@@ -223,12 +261,15 @@ export async function addCardFromConversation(
   const cardId = `v-custom-${crypto.randomUUID()}`
 
   // Store custom card data in localStorage for lookup
+  // Use language-specific field name
   const customCards = JSON.parse(localStorage.getItem('customVocabularyCards') || '{}')
+  const exampleKey = language === 'en' ? 'en' : language === 'fr' ? 'fr' : language
   customCards[cardId] = {
     id: cardId,
-    french: lemma,
+    // Store with language-specific field
+    ...(language === 'fr' ? { french: lemma } : { english: lemma }),
     russian,
-    examples: [{ fr: example, ru: exampleTranslation }],
+    examples: [{ [exampleKey]: example, ru: exampleTranslation }],
     level: 'A1' as const,
     type,
     ...(article ? { article } : {}),
@@ -286,17 +327,18 @@ export function pickHardExerciseType(): VocabularyExerciseType {
 }
 
 /** Get word with article for display/TTS */
-export function getWordWithArticle(card: VocabularyCard): string {
-  if (!card.article) return card.french
-  if (card.article === "l'") return `l'${card.french}`
-  return `${card.article} ${card.french}`
+export function getWordWithArticle(card: VocabularyCard | any): string {
+  const word = getCardWord(card)
+  if (!card.article) return word
+  if (card.article === "l'") return `l'${word}`
+  return `${card.article} ${word}`
 }
 
 /**
  * Generate fill-in-the-blank exercise data
  * Returns sentence with blank and the correct word
  */
-export function generateFillBlankExercise(card: VocabularyCard): {
+export function generateFillBlankExercise(card: VocabularyCard | any, language: Language = 'fr'): {
   sentence: string
   blankWord: string
   options: string[]
@@ -305,26 +347,30 @@ export function generateFillBlankExercise(card: VocabularyCard): {
   if (!card.examples || card.examples.length === 0) return null
 
   const example = card.examples[0]
-  const frenchWord = card.french.toLowerCase()
+  const word = getCardWord(card).toLowerCase()
+
+  // Get the example sentence in the target language
+  const exampleSentence = example.fr || example.en || ''
 
   // Try to find the word in the example sentence
-  const regex = new RegExp(`\\b${frenchWord}\\b`, 'i')
-  if (!regex.test(example.fr)) {
+  const regex = new RegExp(`\\b${word}\\b`, 'i')
+  if (!regex.test(exampleSentence)) {
     // Word not found in example, use a simple format
+    const prompt = language === 'en' ? `___ means "${card.russian}"` : `___ signifie "${card.russian}"`
     return {
-      sentence: `___ signifie "${card.russian}"`,
-      blankWord: card.french,
-      options: getMultipleChoiceOptions(card, 'french'),
+      sentence: prompt,
+      blankWord: getCardWord(card),
+      options: getMultipleChoiceOptions(card, 'word', language),
     }
   }
 
   // Replace the word with blank
-  const sentence = example.fr.replace(regex, '___')
+  const sentence = exampleSentence.replace(regex, '___')
 
   return {
     sentence,
-    blankWord: card.french,
-    options: getMultipleChoiceOptions(card, 'french'),
+    blankWord: getCardWord(card),
+    options: getMultipleChoiceOptions(card, 'word', language),
   }
 }
 
@@ -332,7 +378,7 @@ export function generateFillBlankExercise(card: VocabularyCard): {
  * Generate listening exercise data
  * Returns the word to speak and options for user to choose
  */
-export function generateListeningExercise(card: VocabularyCard): {
+export function generateListeningExercise(card: VocabularyCard | any, language: Language = 'fr'): {
   wordToSpeak: string
   correctAnswer: string
   options: string[]
@@ -340,7 +386,7 @@ export function generateListeningExercise(card: VocabularyCard): {
   return {
     wordToSpeak: getWordWithArticle(card),
     correctAnswer: card.russian,
-    options: getMultipleChoiceOptions(card, 'russian'),
+    options: getMultipleChoiceOptions(card, 'russian', language),
   }
 }
 
@@ -350,7 +396,7 @@ export function generateListeningExercise(card: VocabularyCard): {
  */
 export function checkWrittenAnswer(
   userAnswer: string,
-  card: VocabularyCard
+  card: VocabularyCard | any
 ): boolean {
   const normalize = (s: string) => s
     .toLowerCase()
@@ -360,7 +406,7 @@ export function checkWrittenAnswer(
     .replace(/[\u0300-\u036f]/g, '')
 
   const normalizedAnswer = normalize(userAnswer)
-  const normalizedCorrect = normalize(card.french)
+  const normalizedCorrect = normalize(getCardWord(card))
 
   // Exact match (ignoring accents)
   if (normalizedAnswer === normalizedCorrect) return true

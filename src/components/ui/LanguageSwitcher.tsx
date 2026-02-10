@@ -4,6 +4,9 @@ import { languageFlags, languageLabels, type Language } from '@/types'
 
 const AVAILABLE_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 
+// Languages with full implementation (vocabulary + grammar data)
+const IMPLEMENTED_LANGUAGES: Language[] = ['fr', 'en']
+
 export default function LanguageSwitcher() {
   const { currentLanguage, setCurrentLanguage, profile } = useAuthContext()
   const [isOpen, setIsOpen] = useState(false)
@@ -59,19 +62,22 @@ export default function LanguageSwitcher() {
           {AVAILABLE_LANGUAGES.map((language) => {
             const isCurrentLanguage = language === currentLanguage
             const isUserLanguage = userLanguages.includes(language)
+            const isImplemented = IMPLEMENTED_LANGUAGES.includes(language)
+            // Allow selection if language is implemented OR user has it in their profile
+            const isEnabled = isImplemented || isUserLanguage
 
             return (
               <button
                 key={language}
                 onClick={() => handleSelect(language)}
-                disabled={!isUserLanguage && language !== 'fr'}
+                disabled={!isEnabled}
                 className={`
                   w-full flex items-center gap-3 px-3 py-2 text-left transition-colors
                   ${isCurrentLanguage
                     ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
                     : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                   }
-                  ${!isUserLanguage && language !== 'fr'
+                  ${!isEnabled
                     ? 'opacity-50 cursor-not-allowed'
                     : 'cursor-pointer'
                   }
@@ -88,7 +94,7 @@ export default function LanguageSwitcher() {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}
-                {!isUserLanguage && language !== 'fr' && (
+                {!isEnabled && (
                   <span className="text-xs text-gray-400">Скоро</span>
                 )}
               </button>

@@ -11,13 +11,14 @@ import {
 } from '@/modules/SpeechService'
 import { saveConversation } from '@/db'
 import type { Message, Conversation } from '@/types'
+import { languageTTSCodes } from '@/types'
 import Button from '@/components/ui/Button'
 import WordPopup from './WordPopup'
 
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { user, profile, progress, updateProgress } = useAuthContext()
+  const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
 
   const topic = searchParams.get('topic') || 'conversation libre'
   const [messages, setMessages] = useState<Message[]>([])
@@ -52,7 +53,7 @@ export default function ConversationScreen() {
 
     setIsLoading(true)
     try {
-      const greeting = await startConversation(topic, profile.french_level || 'A1')
+      const greeting = await startConversation(topic, profile.french_level || 'A1', currentLanguage)
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
@@ -63,7 +64,7 @@ export default function ConversationScreen() {
 
       // Speak the greeting
       if (mode === 'voice') {
-        speak(greeting)
+        speak(greeting, { language: currentLanguage })
       }
     } catch (error) {
       console.error('Failed to start conversation:', error)
@@ -88,7 +89,7 @@ export default function ConversationScreen() {
 
     try {
       const allMessages = [...messages, userMessage]
-      const response = await continueConversation(allMessages, profile.french_level || 'A1', topic)
+      const response = await continueConversation(allMessages, profile.french_level || 'A1', topic, currentLanguage)
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
@@ -108,7 +109,7 @@ export default function ConversationScreen() {
 
       // Speak the response
       if (mode === 'voice') {
-        speak(response)
+        speak(response, { language: currentLanguage })
       }
     } catch (error) {
       console.error('Failed to get response:', error)
@@ -130,6 +131,7 @@ export default function ConversationScreen() {
     }
 
     setIsListening(true)
+    const ttsCode = languageTTSCodes[currentLanguage] || 'en-US'
     startListening(
       (result) => {
         setInput(result.transcript)
@@ -142,7 +144,7 @@ export default function ConversationScreen() {
         console.error('Speech recognition error:', error)
         setIsListening(false)
       },
-      'fr-FR'
+      ttsCode
     )
   }
 
@@ -159,7 +161,7 @@ export default function ConversationScreen() {
     const conversation: Conversation = {
       id: conversationId,
       userId: user.id,
-      language: 'fr', // Default to French until multi-language is fully implemented
+      language: currentLanguage,
       topicId: topic,
       aiProvider: 'openai',
       mode: mode,
@@ -246,7 +248,7 @@ export default function ConversationScreen() {
               </p>
               {message.role === 'assistant' && (
                 <button
-                  onClick={() => speak(message.content)}
+                  onClick={() => speak(message.content, { language: currentLanguage })}
                   className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
                 >
                   Прослушать
@@ -282,7 +284,7 @@ export default function ConversationScreen() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
-                placeholder="Écrivez en français..."
+                placeholder={currentLanguage === 'en' ? 'Write in English...' : 'Écrivez en français...'}
                 className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 disabled={isLoading}
                 autoComplete="off"

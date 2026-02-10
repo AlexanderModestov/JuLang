@@ -3,7 +3,17 @@ import type { Database } from '@/types/supabase'
 import { userDataService } from '@/services/userDataService'
 import { generateGrammarExplanation } from './AIService'
 import { getDefaultPracticeStats } from './PracticeEngine'
-import grammarTopics from '@/data/grammar-topics.json'
+import grammarTopicsFr from '@/data/grammar-topics.json'
+import grammarTopicsEn from '@/data/grammar-topics-en.json'
+
+// Grammar topics by language
+const grammarTopicsByLanguage: Record<Language, { categories: string[]; topics: any[] }> = {
+  fr: grammarTopicsFr,
+  en: grammarTopicsEn,
+  es: { categories: [], topics: [] }, // Not implemented yet
+  de: { categories: [], topics: [] }, // Not implemented yet
+  pt: { categories: [], topics: [] }, // Not implemented yet
+}
 
 type SupabaseGrammarCard = Database['public']['Tables']['grammar_cards']['Row']
 type SupabaseGrammarCardInsert = Database['public']['Tables']['grammar_cards']['Insert']
@@ -125,24 +135,46 @@ export interface GrammarTopic {
   content?: GrammarTopicContent
 }
 
-export function getGrammarTopicsByLevel(level: FrenchLevel): GrammarTopic[] {
-  return grammarTopics.topics.filter((t) => t.level === level) as GrammarTopic[]
+export function getGrammarTopicsByLevel(level: FrenchLevel, language: Language = 'fr'): GrammarTopic[] {
+  const data = grammarTopicsByLanguage[language]
+  if (!data || !data.topics) return []
+  return data.topics.filter((t) => t.level === level) as GrammarTopic[]
 }
 
-export function getAllGrammarTopics(): GrammarTopic[] {
-  return grammarTopics.topics as GrammarTopic[]
+export function getAllGrammarTopics(language: Language = 'fr'): GrammarTopic[] {
+  const data = grammarTopicsByLanguage[language]
+  if (!data || !data.topics) return []
+  return data.topics as GrammarTopic[]
 }
 
-export function getGrammarTopicsByCategory(category: string): GrammarTopic[] {
-  return grammarTopics.topics.filter((t) => t.category === category) as GrammarTopic[]
+export function getGrammarTopicsByCategory(category: string, language: Language = 'fr'): GrammarTopic[] {
+  const data = grammarTopicsByLanguage[language]
+  if (!data || !data.topics) return []
+  return data.topics.filter((t) => t.category === category) as GrammarTopic[]
 }
 
-export function getGrammarCategories(): string[] {
-  return grammarTopics.categories
+export function getGrammarCategories(language: Language = 'fr'): string[] {
+  const data = grammarTopicsByLanguage[language]
+  if (!data || !data.categories) return []
+  return data.categories
 }
 
-export function getGrammarTopicById(topicId: string): GrammarTopic | undefined {
-  return grammarTopics.topics.find((t) => t.id === topicId) as GrammarTopic | undefined
+export function getGrammarTopicById(topicId: string, language?: Language): GrammarTopic | undefined {
+  // If language is specified, search only in that language
+  if (language) {
+    const data = grammarTopicsByLanguage[language]
+    if (!data || !data.topics) return undefined
+    return data.topics.find((t) => t.id === topicId) as GrammarTopic | undefined
+  }
+  // Otherwise, search all languages
+  for (const lang of ['fr', 'en', 'es', 'de', 'pt'] as Language[]) {
+    const data = grammarTopicsByLanguage[lang]
+    if (data && data.topics) {
+      const topic = data.topics.find((t) => t.id === topicId)
+      if (topic) return topic as GrammarTopic
+    }
+  }
+  return undefined
 }
 
 // Create a grammar card from static JSON content (no AI needed)
@@ -153,6 +185,12 @@ export async function createCardFromStatic(
 ): Promise<GrammarCard> {
   const content = topic.content
 
+  // Handle both French (fr) and English (en) example formats
+  const examples = content?.examples.map((e: any) => ({
+    french: e.fr || e.en || '', // Use fr for French, en for English
+    russian: e.ru,
+  })) || []
+
   const card: GrammarCard = {
     id: generateId(),
     userId,
@@ -161,10 +199,7 @@ export async function createCardFromStatic(
     topic: topic.title,
     level: topic.level,
     explanation: content?.rule || '',
-    examples: content?.examples.map((e) => ({
-      french: e.fr,
-      russian: e.ru,
-    })) || [],
+    examples,
     commonMistakes: content?.commonMistakes || [],
     isEnhanced: false,
     nextReview: new Date(),
@@ -192,10 +227,11 @@ export async function ensureCardsForLevel(
   const levelOrder: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
   const targetLevels = levelOrder.slice(0, levelOrder.indexOf(level) + 1)
 
-  // For now, grammar topics are French only
-  if (language !== 'fr') return
+  // Get grammar topics for the specified language
+  const data = grammarTopicsByLanguage[language]
+  if (!data || !data.topics || data.topics.length === 0) return
 
-  const topicsToCreate = (grammarTopics.topics as GrammarTopic[])
+  const topicsToCreate = (data.topics as GrammarTopic[])
     .filter((t) => targetLevels.includes(t.level as FrenchLevel))
     .filter((t) => !existingTopicIds.has(t.id))
 
@@ -209,7 +245,7 @@ export async function createGrammarCard(
   topicId: string,
   language: Language = 'fr'
 ): Promise<GrammarCard> {
-  const topic = grammarTopics.topics.find((t) => t.id === topicId) as GrammarTopic | undefined
+  const topic = getGrammarTopicById(topicId, language)
   if (!topic) {
     throw new Error(`Grammar topic not found: ${topicId}`)
   }
@@ -259,10 +295,10 @@ export async function createInitialCards(
   count: number = 5,
   language: Language = 'fr'
 ): Promise<GrammarCard[]> {
-  // For now, grammar topics are French only
-  if (language !== 'fr') return []
+  // Get topics for the specified language
+  const topics = getGrammarTopicsByLevel(level, language).slice(0, count)
+  if (topics.length === 0) return []
 
-  const topics = getGrammarTopicsByLevel(level).slice(0, count)
   const cards: GrammarCard[] = []
 
   for (const topic of topics) {
