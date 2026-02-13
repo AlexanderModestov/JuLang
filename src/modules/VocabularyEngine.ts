@@ -51,17 +51,34 @@ const DEFAULT_EASE_FACTOR = 2.5
 const MIN_EASE_FACTOR = 1.3
 const NEW_CARDS_PER_SESSION = 5
 
-export function getAllVocabularyCards(language: Language = 'fr'): VocabularyCard[] {
-  const data = vocabularyByLanguage[language]
-  if (!data || !data.cards || data.cards.length === 0) {
+/** Read custom vocabulary cards from localStorage, filtered by language */
+function getCustomVocabularyCards(language: Language): VocabularyCard[] {
+  try {
+    const raw = localStorage.getItem('customVocabularyCards')
+    if (!raw) return []
+    const customCards = JSON.parse(raw) as Record<string, any>
+    return Object.values(customCards).filter((card) => {
+      if (language === 'fr') return !!card.french
+      if (language === 'en') return !!card.english
+      return false
+    }) as VocabularyCard[]
+  } catch {
     return []
   }
-  // Map language-specific field to generic 'word' field for consistency
-  return data.cards.map((card: any) => ({
-    ...card,
-    // Keep 'french' field for French cards, 'english' for English, etc.
-    // The card structure varies by language (french vs english field)
-  })) as VocabularyCard[]
+}
+
+export function getAllVocabularyCards(language: Language = 'fr'): VocabularyCard[] {
+  const data = vocabularyByLanguage[language]
+  const staticCards = (!data || !data.cards || data.cards.length === 0)
+    ? []
+    : data.cards.map((card: any) => ({
+        ...card,
+        // Keep 'french' field for French cards, 'english' for English, etc.
+        // The card structure varies by language (french vs english field)
+      })) as VocabularyCard[]
+
+  const customCards = getCustomVocabularyCards(language)
+  return [...staticCards, ...customCards]
 }
 
 export function getCardsByLevel(level: FrenchLevel, language: Language = 'fr'): VocabularyCard[] {
@@ -84,6 +101,16 @@ export function getVocabularyCardById(cardId: string, language?: Language): Voca
   for (const lang of ['fr', 'en', 'es', 'de', 'pt'] as Language[]) {
     const card = getAllVocabularyCards(lang).find((c) => c.id === cardId)
     if (card) return card
+  }
+  // Direct lookup for custom cards not matched above
+  if (cardId.startsWith('v-custom-')) {
+    try {
+      const raw = localStorage.getItem('customVocabularyCards')
+      if (raw) {
+        const customCards = JSON.parse(raw) as Record<string, any>
+        if (customCards[cardId]) return customCards[cardId] as VocabularyCard
+      }
+    } catch { /* ignore parse errors */ }
   }
   return undefined
 }
