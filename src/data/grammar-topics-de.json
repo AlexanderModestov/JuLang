@@ -1,0 +1,643 @@
+{
+  "categories": [
+    "articles",
+    "verbs",
+    "pronouns",
+    "tenses",
+    "adjectives",
+    "prepositions",
+    "syntax"
+  ],
+  "topics": [
+    {
+      "id": "de-definite-articles",
+      "title": "Bestimmte Artikel (der, die, das)",
+      "titleRu": "Определённые артикли",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Определённые артикли в немецком зависят от рода: der (муж.), die (жен.), das (средн.). Множественное число для всех родов — die. Род существительного часто нельзя определить по форме слова, его нужно запоминать вместе с артиклем.",
+        "examples": [
+          { "de": "Der Mann liest ein Buch.", "ru": "Мужчина читает книгу." },
+          { "de": "Die Frau ist Ärztin.", "ru": "Женщина — врач." },
+          { "de": "Das Kind spielt im Garten.", "ru": "Ребёнок играет в саду." }
+        ],
+        "commonMistakes": [
+          "Неправильный род: das Tisch → der Tisch (мужской род)",
+          "Забывают средний род: der Mädchen → das Mädchen (средний род!)",
+          "Die во всех случаях: die Buch → das Buch"
+        ]
+      }
+    },
+    {
+      "id": "de-indefinite-articles",
+      "title": "Unbestimmte Artikel (ein, eine) und kein",
+      "titleRu": "Неопределённые артикли и отрицание kein",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Неопределённые артикли: ein (муж./средн.), eine (жен.). Множественного числа нет (Ich habe Bücher). Отрицание kein/keine — «не/ни одного»: Ich habe kein Buch. Kein склоняется как ein.",
+        "examples": [
+          { "de": "Ich habe einen Hund.", "ru": "У меня есть собака." },
+          { "de": "Das ist eine gute Idee.", "ru": "Это хорошая идея." },
+          { "de": "Ich habe kein Geld.", "ru": "У меня нет денег." }
+        ],
+        "commonMistakes": [
+          "Nicht вместо kein перед существительным: Ich habe nicht Buch → Ich habe kein Buch",
+          "Ein для женского рода: ein Frau → eine Frau",
+          "Артикль во множественном числе: Ich habe einen Bücher → Ich habe Bücher"
+        ]
+      }
+    },
+    {
+      "id": "de-present-tense",
+      "title": "Präsens (Gegenwart)",
+      "titleRu": "Настоящее время",
+      "level": "A1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Настоящее время образуется от основы глагола + окончания: -e, -st, -t, -en, -t, -en. При основе на -t/-d добавляется -e- перед -st/-t: du arbeitest, er arbeitet. Некоторые глаголы меняют корневую гласную: fahren → du fährst, lesen → du liest.",
+        "examples": [
+          { "de": "Ich lerne Deutsch.", "ru": "Я учу немецкий." },
+          { "de": "Er fährt nach Berlin.", "ru": "Он едет в Берлин." },
+          { "de": "Wir arbeiten jeden Tag.", "ru": "Мы работаем каждый день." }
+        ],
+        "commonMistakes": [
+          "Забывают смену гласной: du fahrst → du fährst",
+          "Нет -e- в основе на -t: du arbeitt → du arbeitest",
+          "Окончание -s вместо -st: du lerns → du lernst"
+        ]
+      }
+    },
+    {
+      "id": "de-sein-haben",
+      "title": "Sein und Haben im Präsens",
+      "titleRu": "Sein и Haben в настоящем времени",
+      "level": "A1",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Sein (быть): ich bin, du bist, er/sie/es ist, wir sind, ihr seid, sie/Sie sind. Haben (иметь): ich habe, du hast, er/sie/es hat, wir haben, ihr habt, sie/Sie haben. Оба глагола неправильные и используются как вспомогательные.",
+        "examples": [
+          { "de": "Ich bin Student.", "ru": "Я студент." },
+          { "de": "Sie hat zwei Kinder.", "ru": "У неё двое детей." },
+          { "de": "Wir sind aus Russland.", "ru": "Мы из России." }
+        ],
+        "commonMistakes": [
+          "Haben для возраста: Ich habe 20 Jahre → Ich bin 20 Jahre alt",
+          "Неправильная форма: du ist → du bist",
+          "Sie sind (Вы) vs sie sind (они) — различаются контекстом"
+        ]
+      }
+    },
+    {
+      "id": "de-personal-pronouns",
+      "title": "Personalpronomen",
+      "titleRu": "Личные местоимения",
+      "level": "A1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Личные местоимения: ich (я), du (ты), er (он), sie (она), es (оно), wir (мы), ihr (вы), sie (они), Sie (Вы — вежливая форма). Sie (вежливое) всегда с заглавной буквы и спрягается как 3-е лицо мн.ч.",
+        "examples": [
+          { "de": "Ich komme aus Moskau.", "ru": "Я из Москвы." },
+          { "de": "Woher kommen Sie?", "ru": "Откуда Вы?" },
+          { "de": "Sie lernen Deutsch. (они/Вы)", "ru": "Они/Вы учат(е) немецкий." }
+        ],
+        "commonMistakes": [
+          "Du для формального общения: Du kommen → Sie kommen (вежливая форма)",
+          "Строчная Sie (вежливое): sie kommen (они) vs Sie kommen (Вы)",
+          "Er/sie для неодушевлённых: Der Tisch — er ist groß (не es)"
+        ]
+      }
+    },
+    {
+      "id": "de-negation",
+      "title": "Verneinung (nicht, kein)",
+      "titleRu": "Отрицание",
+      "level": "A1",
+      "category": "syntax",
+      "group": "negation",
+      "content": {
+        "rule": "Nicht отрицает глаголы, прилагательные, наречия и существительные с определённым артиклем. Kein отрицает существительные с неопределённым артиклем или без артикля. Nicht обычно стоит в конце предложения или перед отрицаемым элементом.",
+        "examples": [
+          { "de": "Ich verstehe das nicht.", "ru": "Я этого не понимаю." },
+          { "de": "Ich habe keine Zeit.", "ru": "У меня нет времени." },
+          { "de": "Er ist nicht müde.", "ru": "Он не устал." }
+        ],
+        "commonMistakes": [
+          "Nicht вместо kein: Ich habe nicht Buch → Ich habe kein Buch",
+          "Nicht в начале: Nicht ich verstehe → Ich verstehe nicht",
+          "Kein с определённым артиклем: kein das Buch → nicht das Buch"
+        ]
+      }
+    },
+    {
+      "id": "de-word-order",
+      "title": "Wortstellung (V2-Regel)",
+      "titleRu": "Порядок слов (правило V2)",
+      "level": "A1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "В немецком повествовательном предложении глагол ВСЕГДА на втором месте (V2-Regel). Если предложение начинается не с подлежащего, подлежащее перемещается после глагола: Heute gehe ICH ins Kino. В вопросах с вопросительным словом — глагол на втором месте, без вопросительного слова — глагол на первом.",
+        "examples": [
+          { "de": "Ich gehe heute ins Kino.", "ru": "Я иду сегодня в кино." },
+          { "de": "Heute gehe ich ins Kino.", "ru": "Сегодня я иду в кино." },
+          { "de": "Gehst du ins Kino?", "ru": "Ты идёшь в кино?" }
+        ],
+        "commonMistakes": [
+          "Глагол на третьем месте: Heute ich gehe → Heute gehe ich",
+          "Подлежащее не инвертируется: Morgen ich arbeite → Morgen arbeite ich",
+          "В вопросе глагол не на первом месте: Du gehst? → Gehst du?"
+        ]
+      }
+    },
+    {
+      "id": "de-accusative",
+      "title": "Akkusativ (4. Fall)",
+      "titleRu": "Винительный падеж (аккузатив)",
+      "level": "A2",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Аккузатив — падеж прямого дополнения (кого? что?). Меняется только мужской род: der → den, ein → einen. Женский (die/eine), средний (das/ein) и множественное число (die) не меняются. Местоимения: mich, dich, ihn, sie, es, uns, euch, sie/Sie.",
+        "examples": [
+          { "de": "Ich sehe den Mann.", "ru": "Я вижу мужчину." },
+          { "de": "Hast du einen Bruder?", "ru": "У тебя есть брат?" },
+          { "de": "Ich liebe dich.", "ru": "Я тебя люблю." }
+        ],
+        "commonMistakes": [
+          "Нет изменения в мужском: Ich sehe der Mann → den Mann",
+          "Изменение в женском: Ich sehe die → die Frau (без изменений)",
+          "Местоимение: Ich sehe er → Ich sehe ihn"
+        ]
+      }
+    },
+    {
+      "id": "de-dative",
+      "title": "Dativ (3. Fall)",
+      "titleRu": "Дательный падеж (датив)",
+      "level": "A2",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Датив — падеж косвенного дополнения (кому? чему?). der → dem, die → der, das → dem, die (мн.) → den + -n. Ein → einem (муж./средн.), eine → einer. Местоимения: mir, dir, ihm, ihr, ihm, uns, euch, ihnen/Ihnen.",
+        "examples": [
+          { "de": "Ich gebe dem Kind ein Buch.", "ru": "Я даю ребёнку книгу." },
+          { "de": "Kannst du mir helfen?", "ru": "Ты можешь мне помочь?" },
+          { "de": "Ich danke Ihnen.", "ru": "Я благодарю Вас." }
+        ],
+        "commonMistakes": [
+          "Аккузатив вместо датива: Ich helfe dich → Ich helfe dir (helfen + Dativ)",
+          "Забывают -n во мн.ч.: mit den Kinder → mit den Kindern",
+          "Путают dem/den: Ich gebe den Kind → dem Kind"
+        ]
+      }
+    },
+    {
+      "id": "de-perfect-tense",
+      "title": "Perfekt (vollendete Gegenwart)",
+      "titleRu": "Перфект (прошедшее разговорное)",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Перфект = haben/sein + Partizip II. Haben — большинство глаголов. Sein — глаголы движения (gehen, fahren) и изменения состояния (werden, sterben), а также sein и bleiben. Partizip II: ge-...-t (правильные), ge-...-en (неправильные). Без ge-: глаголы на -ieren и с неотделяемой приставкой.",
+        "examples": [
+          { "de": "Ich habe Deutsch gelernt.", "ru": "Я учил немецкий." },
+          { "de": "Er ist nach Berlin gefahren.", "ru": "Он поехал в Берлин." },
+          { "de": "Wir haben den Film gesehen.", "ru": "Мы посмотрели фильм." }
+        ],
+        "commonMistakes": [
+          "Haben вместо sein: Ich habe gegangen → Ich bin gegangen",
+          "Забывают ge-: Ich habe lernt → Ich habe gelernt",
+          "Ge- с -ieren: Ich habe gestudiert → Ich habe studiert"
+        ]
+      }
+    },
+    {
+      "id": "de-modal-verbs",
+      "title": "Modalverben (können, müssen, wollen...)",
+      "titleRu": "Модальные глаголы",
+      "level": "A2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Модальные глаголы: können (мочь), müssen (быть должным), wollen (хотеть), sollen (следует), dürfen (иметь разрешение), mögen/möchten (нравиться/хотеть бы). Модальный глагол спрягается, основной стоит в инфинитиве в конце предложения.",
+        "examples": [
+          { "de": "Ich kann Deutsch sprechen.", "ru": "Я могу говорить по-немецки." },
+          { "de": "Du musst jetzt gehen.", "ru": "Тебе нужно сейчас идти." },
+          { "de": "Darf ich hier rauchen?", "ru": "Можно здесь курить?" }
+        ],
+        "commonMistakes": [
+          "Инфинитив не в конце: Ich kann sprechen Deutsch → Ich kann Deutsch sprechen",
+          "Путают müssen/sollen: Du musst (обязан) vs Du sollst (тебе следует)",
+          "Zu перед инфинитивом: Ich kann zu sprechen → Ich kann sprechen"
+        ]
+      }
+    },
+    {
+      "id": "de-prepositions-cases",
+      "title": "Präpositionen mit Akkusativ/Dativ",
+      "titleRu": "Предлоги с аккузативом и дативом",
+      "level": "A2",
+      "category": "prepositions",
+      "group": "prepositions",
+      "content": {
+        "rule": "Аккузатив: durch, für, gegen, ohne, um (мнемоника: DOGFU). Датив: aus, bei, mit, nach, seit, von, zu (мнемоника: ab-mv-snz). Wechselpräpositionen (in, an, auf, über, unter, vor, hinter, neben, zwischen): аккузатив при движении (wohin?), датив при местоположении (wo?).",
+        "examples": [
+          { "de": "Ich gehe in die Schule. (Akk. — куда?)", "ru": "Я иду в школу." },
+          { "de": "Ich bin in der Schule. (Dat. — где?)", "ru": "Я в школе." },
+          { "de": "Das Geschenk ist für dich.", "ru": "Подарок для тебя." }
+        ],
+        "commonMistakes": [
+          "Датив при движении: Ich gehe in der Schule → in die Schule",
+          "Аккузатив при местоположении: Ich bin in die Schule → in der Schule",
+          "Für + Dativ: für mir → für mich (Akkusativ)"
+        ]
+      }
+    },
+    {
+      "id": "de-separable-verbs",
+      "title": "Trennbare Verben",
+      "titleRu": "Глаголы с отделяемой приставкой",
+      "level": "A2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Глаголы с отделяемой приставкой (an-, auf-, aus-, ein-, mit-, vor-, zu-, zurück-) разделяются в Präsens и Präteritum: приставка уходит в конец предложения. В Perfekt: ge- вставляется между приставкой и основой: aufgestanden. В придаточных предложениях приставка не отделяется.",
+        "examples": [
+          { "de": "Ich stehe um 7 Uhr auf.", "ru": "Я встаю в 7 часов." },
+          { "de": "Der Film fängt um 8 an.", "ru": "Фильм начинается в 8." },
+          { "de": "Ich bin gestern aufgestanden.", "ru": "Я встал вчера." }
+        ],
+        "commonMistakes": [
+          "Не отделяют приставку: Ich aufstehe → Ich stehe auf",
+          "Partizip II без ge-: aufgestanden — верно, но vergessen (неотделяемая) — без ge-",
+          "В придаточном отделяют: ..., weil ich stehe auf → ..., weil ich aufstehe"
+        ]
+      }
+    },
+    {
+      "id": "de-preterite",
+      "title": "Präteritum (Imperfekt)",
+      "titleRu": "Простое прошедшее время (претеритум)",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Präteritum используется в письменной речи и повествовании. Правильные глаголы: основа + -te, -test, -te, -ten, -tet, -ten. Неправильные (сильные) глаголы меняют корневую гласную: gehen → ging, sehen → sah, kommen → kam. War (sein) и hatte (haben) используются в разговорной речи.",
+        "examples": [
+          { "de": "Ich ging gestern ins Kino.", "ru": "Я ходил вчера в кино." },
+          { "de": "Er war sehr müde.", "ru": "Он был очень уставшим." },
+          { "de": "Sie hatte keine Zeit.", "ru": "У неё не было времени." }
+        ],
+        "commonMistakes": [
+          "Правильное окончание для неправильных: ich gehte → ich ging",
+          "Präteritum вместо Perfekt в разговоре: Ich ging (письменно) vs Ich bin gegangen (устно)",
+          "War/hatte — допустимы в устной речи, другие Präteritum-формы — книжные"
+        ]
+      }
+    },
+    {
+      "id": "de-genitive",
+      "title": "Genitiv (2. Fall)",
+      "titleRu": "Родительный падеж (генитив)",
+      "level": "B1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Генитив выражает принадлежность (чей?). der/das → des (+s/-es), die → der, die (мн.) → der. Существительные мужского и среднего рода получают окончание -s или -es: des Mannes, des Kindes. В разговорной речи часто заменяется конструкцией von + Dativ.",
+        "examples": [
+          { "de": "Das ist das Auto des Vaters.", "ru": "Это машина отца." },
+          { "de": "Am Ende des Tages.", "ru": "В конце дня." },
+          { "de": "Trotz des Regens gingen wir spazieren.", "ru": "Несмотря на дождь, мы пошли гулять." }
+        ],
+        "commonMistakes": [
+          "Без -s/-es: des Vater → des Vaters",
+          "Von + Dativ вместо генитива в формальных текстах: das Auto von dem Vater → des Vaters",
+          "Предлоги с генитивом: wegen dem Regen → wegen des Regens (формально)"
+        ]
+      }
+    },
+    {
+      "id": "de-relative-clauses",
+      "title": "Relativsätze",
+      "titleRu": "Относительные придаточные предложения",
+      "level": "B1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Относительные местоимения совпадают с определёнными артиклями: der, die, das (+ склоняются по падежам). Глагол в придаточном стоит в конце. Род и число — от антецедента, падеж — от роли в придаточном предложении.",
+        "examples": [
+          { "de": "Der Mann, der hier wohnt, ist nett.", "ru": "Мужчина, который здесь живёт, приятный." },
+          { "de": "Das Buch, das ich gelesen habe, war gut.", "ru": "Книга, которую я прочитал, была хорошей." },
+          { "de": "Die Frau, mit der ich gesprochen habe.", "ru": "Женщина, с которой я разговаривал." }
+        ],
+        "commonMistakes": [
+          "Глагол не в конце: Der Mann, der wohnt hier → der hier wohnt",
+          "Неправильный падеж: Das Buch, der ich gelesen habe → das ich gelesen habe",
+          "Was вместо das: Alles, was ich weiß — верно (после alles, etwas, nichts → was)"
+        ]
+      }
+    },
+    {
+      "id": "de-passive-voice",
+      "title": "Passiv (werden + Partizip II)",
+      "titleRu": "Страдательный залог",
+      "level": "B1",
+      "category": "syntax",
+      "group": "tenses",
+      "content": {
+        "rule": "Пассив действия: werden + Partizip II (Das Buch wird gelesen — Книга читается). Пассив состояния: sein + Partizip II (Die Tür ist geöffnet — Дверь открыта). Агент вводится через von + Dativ. Пассив очень распространён в немецком, особенно в формальном стиле.",
+        "examples": [
+          { "de": "Das Haus wurde 1990 gebaut.", "ru": "Дом был построен в 1990 году." },
+          { "de": "Hier wird Deutsch gesprochen.", "ru": "Здесь говорят по-немецки." },
+          { "de": "Der Brief wurde von Maria geschrieben.", "ru": "Письмо было написано Марией." }
+        ],
+        "commonMistakes": [
+          "Sein вместо werden для действия: Das Haus ist gebaut → Das Haus wird/wurde gebaut",
+          "Активное причастие: Das Buch wird lesend → wird gelesen",
+          "Von + Akkusativ: von den Mann → von dem Mann"
+        ]
+      }
+    },
+    {
+      "id": "de-konjunktiv-ii",
+      "title": "Konjunktiv II (würde + Infinitiv)",
+      "titleRu": "Конъюнктив II (сослагательное наклонение)",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Konjunktiv II выражает нереальные условия и вежливые просьбы. Чаще используется würde + инфинитив (Ich würde gehen). Для haben, sein, модальных и частоупотребительных глаголов используются собственные формы: wäre, hätte, könnte, müsste, käme, ginge.",
+        "examples": [
+          { "de": "Wenn ich reich wäre, würde ich reisen.", "ru": "Если бы я был богатым, я бы путешествовал." },
+          { "de": "Könnten Sie mir helfen?", "ru": "Не могли бы Вы мне помочь?" },
+          { "de": "Ich hätte gern einen Kaffee.", "ru": "Я бы хотел кофе." }
+        ],
+        "commonMistakes": [
+          "Würde + wäre/hätte: Ich würde sein → Ich wäre",
+          "Indicativ в условиях: Wenn ich bin reich → Wenn ich reich wäre",
+          "Würde с модальными: Ich würde können → Ich könnte"
+        ]
+      }
+    },
+    {
+      "id": "de-comparatives",
+      "title": "Komparativ und Superlativ",
+      "titleRu": "Сравнительная и превосходная степень",
+      "level": "B1",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Сравнительная: прилагательное + -er (schneller, größer). Превосходная: am + -sten или der/die/das + -ste (am schnellsten, der schnellste). Многие односложные с a/o/u получают умлаут: alt → älter, groß → größer. Неправильные: gut → besser → am besten, viel → mehr → am meisten.",
+        "examples": [
+          { "de": "Er ist größer als ich.", "ru": "Он выше меня." },
+          { "de": "Das ist das beste Buch.", "ru": "Это лучшая книга." },
+          { "de": "Sie läuft am schnellsten.", "ru": "Она бегает быстрее всех." }
+        ],
+        "commonMistakes": [
+          "Mehr + -er: mehr größer → größer",
+          "Wie вместо als: größer wie ich → größer als ich",
+          "Без умлаута: alter → älter, grosser → größer"
+        ]
+      }
+    },
+    {
+      "id": "de-konjunktiv-i",
+      "title": "Konjunktiv I (indirekte Rede)",
+      "titleRu": "Конъюнктив I (косвенная речь)",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Konjunktiv I используется для передачи чужих слов (косвенная речь), особенно в СМИ и формальных текстах. Образуется от основы инфинитива + -e, -est, -e, -en, -et, -en. Er sagte, er sei müde. Если формы Konj. I совпадают с индикативом, используется Konj. II: sie hätten (вместо sie haben).",
+        "examples": [
+          { "de": "Er sagte, er sei krank.", "ru": "Он сказал, что болен." },
+          { "de": "Sie meinte, sie habe keine Zeit.", "ru": "Она сказала, что у неё нет времени." },
+          { "de": "Der Minister erklärte, man müsse handeln.", "ru": "Министр заявил, что нужно действовать." }
+        ],
+        "commonMistakes": [
+          "Indikativ в газетном стиле: Er sagte, er ist krank → er sei krank",
+          "Когда Konj. I = Indikativ: sie sagen, sie haben → sie hätten (Konj. II)",
+          "В разговорной речи Konj. I необязателен: Er hat gesagt, dass er müde ist"
+        ]
+      }
+    },
+    {
+      "id": "de-future-ii",
+      "title": "Futur II",
+      "titleRu": "Будущее совершенное время (футур II)",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Futur II (werden + Partizip II + haben/sein) описывает действие, которое будет завершено к определённому моменту в будущем. Также используется для предположений о прошлом: Er wird es vergessen haben (Он, наверное, забыл).",
+        "examples": [
+          { "de": "Bis morgen werde ich es geschafft haben.", "ru": "К завтрашнему дню я это сделаю." },
+          { "de": "Er wird schon gegangen sein.", "ru": "Он, наверное, уже ушёл." },
+          { "de": "In einem Jahr werden wir es geschafft haben.", "ru": "Через год мы это завершим." }
+        ],
+        "commonMistakes": [
+          "Порядок слов: werde geschafft ich haben → werde ich geschafft haben",
+          "Haben/sein в конце: werde haben geschafft → werde geschafft haben",
+          "Путают с Futur I: Er wird gehen (будущее) vs Er wird gegangen sein (предположение о прошлом)"
+        ]
+      }
+    },
+    {
+      "id": "de-adjective-declension",
+      "title": "Adjektivdeklination",
+      "titleRu": "Склонение прилагательных",
+      "level": "B2",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Три типа склонения: 1) Слабое (после der/die/das): -e или -en. 2) Сильное (без артикля): прилагательное берёт окончания артикля. 3) Смешанное (после ein/kein): сочетание обоих. Правило: если артикль не показывает род/падеж, это делает прилагательное.",
+        "examples": [
+          { "de": "Der große Mann. (слабое: der → -e)", "ru": "Высокий мужчина." },
+          { "de": "Ein großer Mann. (смешанное: ein не показывает род → -er)", "ru": "Высокий мужчина." },
+          { "de": "Großer Mann! (сильное: без артикля → -er)", "ru": "Высокий мужчина!" }
+        ],
+        "commonMistakes": [
+          "После der: der großer Mann → der große Mann (-e)",
+          "После ein (муж.): ein große Mann → ein großer Mann (-er)",
+          "Забывают окончание: das schön Wetter → das schöne Wetter"
+        ]
+      }
+    },
+    {
+      "id": "de-past-perfect",
+      "title": "Plusquamperfekt",
+      "titleRu": "Давнопрошедшее время (плюсквамперфект)",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Plusquamperfekt = hatte/war + Partizip II. Описывает действие, произошедшее ДО другого прошедшего действия. Hatte для большинства глаголов, war для глаголов движения и изменения состояния (как в Perfekt).",
+        "examples": [
+          { "de": "Als ich ankam, war sie schon gegangen.", "ru": "Когда я пришёл, она уже ушла." },
+          { "de": "Ich hatte das Buch schon gelesen.", "ru": "Я уже прочитал эту книгу." },
+          { "de": "Nachdem er gegessen hatte, ging er spazieren.", "ru": "После того как он поел, он пошёл гулять." }
+        ],
+        "commonMistakes": [
+          "Perfekt вместо Plusquamperfekt: Als ich ankam, ist sie gegangen → war gegangen",
+          "Hatte с глаголами движения: Ich hatte gegangen → Ich war gegangen",
+          "Nachdem + Perfekt: Nachdem er isst → Nachdem er gegessen hatte"
+        ]
+      }
+    },
+    {
+      "id": "de-double-infinitive",
+      "title": "Doppelter Infinitiv",
+      "titleRu": "Двойной инфинитив",
+      "level": "B2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "При использовании модальных глаголов в Perfekt и Plusquamperfekt причастие II заменяется инфинитивом: Ich habe gehen müssen (не gemusst). Это называется Ersatzinfinitiv. В придаточном предложении вспомогательный глагол ставится перед двойным инфинитивом.",
+        "examples": [
+          { "de": "Ich habe nicht kommen können.", "ru": "Я не мог прийти." },
+          { "de": "Er hat es machen müssen.", "ru": "Он был вынужден это сделать." },
+          { "de": "..., weil ich habe kommen müssen.", "ru": "...потому что я был вынужден прийти." }
+        ],
+        "commonMistakes": [
+          "Partizip II с модальными: Ich habe gekonnt kommen → Ich habe kommen können",
+          "Порядок слов в придаточном: weil ich kommen müssen habe → weil ich habe kommen müssen",
+          "Gemusst вместо инфинитива: Ich habe gemusst → допустимо только без основного глагола"
+        ]
+      }
+    },
+    {
+      "id": "de-extended-attributes",
+      "title": "Erweiterte Partizipialattribute",
+      "titleRu": "Расширенные причастные обороты",
+      "level": "C1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Расширенное причастное определение — конструкция, в которой перед существительным вставляется целый оборот: der gestern von meinem Vater geschriebene Brief (письмо, написанное вчера моим отцом). Типично для научных и юридических текстов. В разговорной речи заменяется придаточным.",
+        "examples": [
+          { "de": "Der gestern gelesene Artikel war interessant.", "ru": "Прочитанная вчера статья была интересной." },
+          { "de": "Die von der Regierung beschlossene Maßnahme.", "ru": "Принятая правительством мера." },
+          { "de": "Das seit Jahren laufende Projekt.", "ru": "Проект, идущий уже много лет." }
+        ],
+        "commonMistakes": [
+          "Прилагательное не склоняется: der gelesene → верно (слабое склонение)",
+          "Слишком длинные обороты: трудночитаемы — лучше придаточное предложение",
+          "В разговорной речи: звучит неестественно, используйте Relativsatz"
+        ]
+      }
+    },
+    {
+      "id": "de-nominalization",
+      "title": "Nominalisierung",
+      "titleRu": "Номинализация (субстантивация)",
+      "level": "C1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Любой глагол или прилагательное в немецком можно превратить в существительное: lesen → das Lesen (чтение), gut → das Gute (хорошее), studieren → das Studieren. Номинализированные слова пишутся с заглавной буквы и получают род (обычно das для глаголов, der/die/das для прилагательных в зависимости от контекста).",
+        "examples": [
+          { "de": "Das Lesen macht mir Spaß.", "ru": "Чтение доставляет мне удовольствие." },
+          { "de": "Das Gute an der Sache ist...", "ru": "Хорошее в этом деле — это..." },
+          { "de": "Beim Essen sollte man nicht reden.", "ru": "За едой не следует разговаривать." }
+        ],
+        "commonMistakes": [
+          "Строчная буква: das lesen → das Lesen",
+          "Неправильный артикль: die Lesen → das Lesen (всегда das для глаголов)",
+          "Путают с инфинитивом: Lesen macht Spaß (без артикля — тоже возможно)"
+        ]
+      }
+    },
+    {
+      "id": "de-advanced-word-order",
+      "title": "Erweiterte Satzstellung",
+      "titleRu": "Продвинутый порядок слов",
+      "level": "C1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "В сложных предложениях: Hauptsatz (V2) + Nebensatz (глагол в конце). После Nebensatz в начале — инверсия: Weil er müde war, ging er ins Bett. Выделение через Mittelfeld: позиция между глаголами для эмфазы. Ausklammerung — вынесение за скобку для ясности.",
+        "examples": [
+          { "de": "Obwohl er müde war, arbeitete er weiter.", "ru": "Хотя он устал, он продолжил работать." },
+          { "de": "Er hat gestern in Berlin seinen Freund besucht.", "ru": "Он вчера в Берлине навестил друга." },
+          { "de": "Er ging nach Hause, müde und hungrig.", "ru": "Он пошёл домой, уставший и голодный." }
+        ],
+        "commonMistakes": [
+          "После Nebensatz нет инверсии: Weil er müde war, er ging → ging er",
+          "Глагол не в конце Nebensatz: ..., weil er war müde → weil er müde war",
+          "Путают Haupt- и Nebensatz порядок"
+        ]
+      }
+    },
+    {
+      "id": "de-literary-konjunktiv",
+      "title": "Literarische Konjunktivformen",
+      "titleRu": "Литературные формы конъюнктива",
+      "level": "C2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "В литературном немецком встречаются архаичные формы Konjunktiv II: hülfe (вместо würde helfen), stürbe (sterben), büke (backen). Также Konjunktiv I для торжественных контекстов: Es lebe der König! Man nehme 200g Mehl (рецепты). Эти формы придают тексту формальность.",
+        "examples": [
+          { "de": "Es lebe die Freiheit!", "ru": "Да здравствует свобода!" },
+          { "de": "Man nehme zwei Eier und 200g Mehl.", "ru": "Возьмите два яйца и 200г муки." },
+          { "de": "Wenn er käme, hülfe er uns.", "ru": "Если бы он пришёл, он бы нам помог." }
+        ],
+        "commonMistakes": [
+          "Использование в разговорной речи: звучит архаично",
+          "Путают с Indikativ: hülfe (Konj. II) vs hilft (Indikativ)",
+          "В рецептах Man nehme — стандартная форма, не ошибка"
+        ]
+      }
+    },
+    {
+      "id": "de-stylistic-variation",
+      "title": "Stilistische Variation und Register",
+      "titleRu": "Стилистические вариации и регистр",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Немецкий различает формальный (Schriftsprache) и разговорный (Umgangssprache) регистры. Книжный: Plusquamperfekt, Konjunktiv I, генитив, пассив. Разговорный: Perfekt, würde-Form, von + Dativ, weil + V2. Региональные особенности: tun-Periphrase (Ich tu lesen) в южном немецком.",
+        "examples": [
+          { "de": "Wegen des Regens (формально) vs Wegen dem Regen (разг.).", "ru": "Из-за дождя (формально vs разговорно)." },
+          { "de": "Er sagte, er sei müde (книжно) vs Er hat gesagt, er ist müde (разг.).", "ru": "Он сказал, что устал (книжно vs разговорно)." },
+          { "de": "Nachdem er gegessen hatte (книжно) vs Nachdem er gegessen hat (разг.).", "ru": "После того как он поел (книжно vs разговорно)." }
+        ],
+        "commonMistakes": [
+          "Разговорный стиль в научном тексте: weil + V2 в диссертации",
+          "Книжный стиль в повседневном общении: звучит неестественно",
+          "Weil + V2 (разг.): Weil ich bin müde → допустимо в устной речи"
+        ]
+      }
+    },
+    {
+      "id": "de-complex-sentences",
+      "title": "Komplexe Satzstrukturen (Satzgefüge)",
+      "titleRu": "Сложные предложения",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Сложные предложения включают: Je...desto/umso (Чем...тем), Nicht nur...sondern auch (Не только...но и), Sowohl...als auch (Как...так и), Weder...noch (Ни...ни). В конструкции Je + Komparativ, desto/umso + Komparativ используется инверсия после desto.",
+        "examples": [
+          { "de": "Je mehr ich lerne, desto besser verstehe ich.", "ru": "Чем больше я учу, тем лучше я понимаю." },
+          { "de": "Er ist nicht nur klug, sondern auch fleißig.", "ru": "Он не только умный, но и трудолюбивый." },
+          { "de": "Weder er noch sie kam zur Party.", "ru": "Ни он, ни она не пришли на вечеринку." }
+        ],
+        "commonMistakes": [
+          "Без инверсии после desto: desto ich verstehe besser → desto besser verstehe ich",
+          "Je без desto: Je mehr ich lerne, mehr verstehe ich → desto mehr",
+          "Weder...oder: weder...oder → weder...noch"
+        ]
+      }
+    }
+  ]
+}

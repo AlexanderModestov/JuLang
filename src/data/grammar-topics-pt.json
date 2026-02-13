@@ -1,0 +1,643 @@
+{
+  "categories": [
+    "articles",
+    "verbs",
+    "pronouns",
+    "tenses",
+    "adjectives",
+    "prepositions",
+    "syntax"
+  ],
+  "topics": [
+    {
+      "id": "pt-definite-articles",
+      "title": "Artigos definidos (o, a, os, as)",
+      "titleRu": "Определённые артикли",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Определённые артикли в португальском: o (муж. ед.), a (жен. ед.), os (муж. мн.), as (жен. мн.). Используются чаще, чем в русском — в том числе с именами собственными (O João, a Maria) и притяжательными (o meu livro). Артикли сливаются с предлогами: em + o = no, de + a = da.",
+        "examples": [
+          { "pt": "O livro está na mesa.", "ru": "Книга на столе." },
+          { "pt": "As crianças estão brincando.", "ru": "Дети играют." },
+          { "pt": "Eu gosto do café.", "ru": "Мне нравится кофе." }
+        ],
+        "commonMistakes": [
+          "Пропуск артикля с именами (бразильский вариант): Falei com João → Falei com o João",
+          "Неправильное слияние с предлогом: em + o → no (не em o)",
+          "Путают род: a livro → o livro (мужской род)"
+        ]
+      }
+    },
+    {
+      "id": "pt-indefinite-articles",
+      "title": "Artigos indefinidos (um, uma, uns, umas)",
+      "titleRu": "Неопределённые артикли",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Неопределённые артикли: um (муж. ед.), uma (жен. ед.), uns (муж. мн.), umas (жен. мн.). Множественное число означает «несколько, некоторые». Не используются с профессиями после ser: Sou professor.",
+        "examples": [
+          { "pt": "Eu tenho um gato.", "ru": "У меня есть кот." },
+          { "pt": "Ela é uma boa amiga.", "ru": "Она хороший друг." },
+          { "pt": "Comprei uns livros.", "ru": "Я купил несколько книг." }
+        ],
+        "commonMistakes": [
+          "Артикль с профессиями: Sou um professor → Sou professor",
+          "Путают род: uma problema → um problema (мужской род)",
+          "Uma с мужским: uma livro → um livro"
+        ]
+      }
+    },
+    {
+      "id": "pt-ser-estar",
+      "title": "Ser e Estar no presente",
+      "titleRu": "Ser и Estar в настоящем времени",
+      "level": "A1",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Оба глагола означают «быть». Ser — постоянные качества, происхождение, профессия, время. Estar — местоположение, временные состояния, эмоции. Формы ser: sou, é, é, somos, são. Формы estar: estou, está, está, estamos, estão. В бразильском português «você» используется вместо «tu» с формой 3-го лица.",
+        "examples": [
+          { "pt": "Eu sou russo. Estou em São Paulo.", "ru": "Я русский. Я в Сан-Паулу." },
+          { "pt": "Ela é alta. Ela está cansada.", "ru": "Она высокая. Она устала." },
+          { "pt": "A festa é na minha casa.", "ru": "Вечеринка у меня дома." }
+        ],
+        "commonMistakes": [
+          "Местоположение с ser: Sou no Brasil → Estou no Brasil",
+          "Временное состояние с ser: Sou cansado → Estou cansado",
+          "Профессия с estar: Estou professor → Sou professor"
+        ]
+      }
+    },
+    {
+      "id": "pt-present-regular",
+      "title": "Presente do indicativo (verbos regulares)",
+      "titleRu": "Настоящее время (правильные глаголы)",
+      "level": "A1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Три группы спряжения: -ar (falar), -er (comer), -ir (partir). Окончания -ar: -o, -a, -a, -amos, -am. Окончания -er: -o, -e, -e, -emos, -em. Окончания -ir: -o, -e, -e, -imos, -em. В бразильском português используется você (3-е лицо) вместо tu.",
+        "examples": [
+          { "pt": "Eu falo português.", "ru": "Я говорю по-португальски." },
+          { "pt": "Ela come muita fruta.", "ru": "Она ест много фруктов." },
+          { "pt": "Nós moramos em Moscou.", "ru": "Мы живём в Москве." }
+        ],
+        "commonMistakes": [
+          "Неправильное окончание: Eu falas → Eu falo",
+          "Tu вместо você в бразильском: Tu fala → Você fala (или tu falas — в некоторых регионах)",
+          "Забывают менять окончания: Eu comer → Eu como"
+        ]
+      }
+    },
+    {
+      "id": "pt-subject-pronouns",
+      "title": "Pronomes pessoais do caso reto",
+      "titleRu": "Личные местоимения (подлежащие)",
+      "level": "A1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Личные местоимения: eu (я), tu/você (ты), ele/ela (он/она), nós/a gente (мы), vocês (вы), eles/elas (они). В бразильском português: você (ты), a gente (мы, разговорное — спрягается как 3-е лицо ед.ч.). Местоимения часто опускаются.",
+        "examples": [
+          { "pt": "Eu sou estudante.", "ru": "Я студент." },
+          { "pt": "Você fala inglês?", "ru": "Ты говоришь по-английски?" },
+          { "pt": "A gente vai ao cinema.", "ru": "Мы идём в кино." }
+        ],
+        "commonMistakes": [
+          "A gente с множественным числом: A gente vamos → A gente vai (3-е лицо ед.ч.)",
+          "Tu с формой você: Tu fala → Tu falas (если используете tu)",
+          "Nós vs A gente: A gente é mais informal"
+        ]
+      }
+    },
+    {
+      "id": "pt-negation",
+      "title": "Negação (não)",
+      "titleRu": "Отрицание",
+      "level": "A1",
+      "category": "syntax",
+      "group": "negation",
+      "content": {
+        "rule": "Отрицание образуется с помощью частицы 'não' перед глаголом. Двойное отрицание допустимо: Não quero nada (Я ничего не хочу). Отрицательные слова: nada (ничего), ninguém (никто), nunca/jamais (никогда), nem (ни), tampouco (тоже не).",
+        "examples": [
+          { "pt": "Não falo francês.", "ru": "Я не говорю по-французски." },
+          { "pt": "Não quero nada.", "ru": "Я ничего не хочу." },
+          { "pt": "Nunca estive no Brasil.", "ru": "Я никогда не был в Бразилии." }
+        ],
+        "commonMistakes": [
+          "Não после глагола: Falo não → Não falo",
+          "Без двойного отрицания: Não quero algo → Não quero nada",
+          "Nem вместо não: Nem falo → Não falo (nem = ни/даже не)"
+        ]
+      }
+    },
+    {
+      "id": "pt-adjective-agreement",
+      "title": "Concordância dos adjetivos",
+      "titleRu": "Согласование прилагательных",
+      "level": "A1",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Прилагательные согласуются с существительным в роде и числе. Обычно стоят ПОСЛЕ существительного. Окончания: -o/-a (муж./жен.), -os/-as (мн.). Прилагательные на -e и согласную не меняются по роду: grande, feliz, difícil.",
+        "examples": [
+          { "pt": "Uma casa bonita.", "ru": "Красивый дом." },
+          { "pt": "Os livros interessantes.", "ru": "Интересные книги." },
+          { "pt": "Um problema difícil.", "ru": "Сложная проблема." }
+        ],
+        "commonMistakes": [
+          "Нет согласования: casa bonito → casa bonita",
+          "Прилагательное перед существительным: bonita casa → casa bonita (обычно после)",
+          "Изменение рода у invariável: problema difícila → problema difícil"
+        ]
+      }
+    },
+    {
+      "id": "pt-preterite-perfect",
+      "title": "Pretérito perfeito",
+      "titleRu": "Простое прошедшее время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Pretérito perfeito описывает завершённые действия в прошлом. Окончания -ar: -ei, -ou, -ou, -amos, -aram. Окончания -er: -i, -eu, -eu, -emos, -eram. Окончания -ir: -i, -iu, -iu, -imos, -iram. Неправильные: fui (ir/ser), fiz (fazer), tive (ter), estive (estar).",
+        "examples": [
+          { "pt": "Ontem eu falei com minha mãe.", "ru": "Вчера я поговорил с мамой." },
+          { "pt": "Ela comeu no restaurante.", "ru": "Она поела в ресторане." },
+          { "pt": "Fui ao cinema no sábado.", "ru": "Я ходил в кино в субботу." }
+        ],
+        "commonMistakes": [
+          "Неправильные формы: eu fazi → eu fiz",
+          "Путают с imperfeito: Ontem chovia → Ontem choveu (завершённое)",
+          "Eu foi → Eu fui (fui для eu, foi для ele/ela/você)"
+        ]
+      }
+    },
+    {
+      "id": "pt-imperfect",
+      "title": "Pretérito imperfeito",
+      "titleRu": "Прошедшее незавершённое время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Imperfeito описывает привычные действия в прошлом, фон и незавершённые процессы. Окончания -ar: -ava, -ava, -ava, -ávamos, -avam. Окончания -er: -ia, -ia, -ia, -íamos, -iam. Окончания -ir: -ia, -ia, -ia, -íamos, -iam. Неправильные: ser (era), ter (tinha), vir (vinha), pôr (punha).",
+        "examples": [
+          { "pt": "Quando eu era criança, brincava muito.", "ru": "Когда я был ребёнком, я много играл." },
+          { "pt": "Ela sempre comia às duas.", "ru": "Она всегда ела в два часа." },
+          { "pt": "Chovia quando saí de casa.", "ru": "Шёл дождь, когда я вышел из дома." }
+        ],
+        "commonMistakes": [
+          "Для однократных действий: Ontem comia no restaurante → comi (perfeito)",
+          "Неправильные формы: eu sera → eu era (ser — неправильный)",
+          "Путают с perfeito: quando era criança ia ao parque (привычка) — верно"
+        ]
+      }
+    },
+    {
+      "id": "pt-present-progressive",
+      "title": "Presente progressivo (estar + gerúndio)",
+      "titleRu": "Настоящее продолженное время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Estar + герундий (-ando для -ar, -endo для -er, -indo для -ir) описывает действие, происходящее прямо сейчас. В бразильском português это основная форма для «прямо сейчас». В португальском из Португалии используют estar a + инфинитив.",
+        "examples": [
+          { "pt": "Estou lendo um livro.", "ru": "Я сейчас читаю книгу." },
+          { "pt": "Ela está trabalhando de casa.", "ru": "Она работает из дома." },
+          { "pt": "O que você está fazendo?", "ru": "Что ты делаешь?" }
+        ],
+        "commonMistakes": [
+          "Без estar: Lendo um livro → Estou lendo um livro",
+          "Неправильный герундий: fazando → fazendo (fazer → fazendo)",
+          "Для привычек: Estou trabalhando aqui (сейчас) vs Trabalho aqui (вообще)"
+        ]
+      }
+    },
+    {
+      "id": "pt-reflexive-verbs",
+      "title": "Verbos reflexivos",
+      "titleRu": "Возвратные глаголы",
+      "level": "A2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Возвратные глаголы имеют окончание -se в инфинитиве (levantar-se, vestir-se). Возвратные местоимения: me, te/se, se, nos, se. В бразильском português местоимение обычно ставится перед глаголом: Eu me levanto. В отрицании и после некоторых слов — всегда перед: Não me levanto.",
+        "examples": [
+          { "pt": "Eu me levanto às sete.", "ru": "Я встаю в семь часов." },
+          { "pt": "Ela se veste rápido.", "ru": "Она одевается быстро." },
+          { "pt": "Vou me deitar.", "ru": "Я собираюсь лечь спать." }
+        ],
+        "commonMistakes": [
+          "Пропуск местоимения: Levanto às sete → Me levanto às sete",
+          "Порядок: в бразильском Me levanto (до глагола) — норма",
+          "Неправильное местоимение: Eu se levanto → Eu me levanto"
+        ]
+      }
+    },
+    {
+      "id": "pt-object-pronouns",
+      "title": "Pronomes oblíquos (me, te, o, a, lhe)",
+      "titleRu": "Объектные местоимения",
+      "level": "A2",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Прямое дополнение: me, te/o/a, o/a, nos, os/as. Косвенное: me, te/lhe, lhe, nos, lhes. В бразильском разговорном часто используют «ele/ela» вместо «o/a»: Eu vi ele (вместо Eu o vi). Местоимение обычно перед глаголом в бразильском.",
+        "examples": [
+          { "pt": "Eu te amo.", "ru": "Я тебя люблю." },
+          { "pt": "Ela me deu um presente.", "ru": "Она мне дала подарок." },
+          { "pt": "Eu o vi ontem. (или: Eu vi ele.)", "ru": "Я его видел вчера." }
+        ],
+        "commonMistakes": [
+          "Формальный o/a в разговорной речи: Eu o vi — книжно, Eu vi ele — разговорно",
+          "Lhe для прямого: Eu lhe vi → Eu o vi (lhe — только косвенное)",
+          "Порядок: Дeu-me (книжный) vs Me deu (бразильский разговорный)"
+        ]
+      }
+    },
+    {
+      "id": "pt-possessive-adjectives",
+      "title": "Adjetivos possessivos (meu, seu, nosso)",
+      "titleRu": "Притяжательные прилагательные",
+      "level": "A2",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Притяжательные: meu/minha (мой/моя), teu/tua или seu/sua (твой/твоя), seu/sua (его/её), nosso/nossa (наш/наша), seus/suas (их). В бразильском для ясности часто используют dele/dela вместо seu/sua: O livro dele (его книга). Артикль перед притяжательным необязателен в бразильском.",
+        "examples": [
+          { "pt": "Meu livro está aqui.", "ru": "Моя книга здесь." },
+          { "pt": "Onde está sua casa? / A casa dele?", "ru": "Где твой/его дом?" },
+          { "pt": "Nossa família é grande.", "ru": "Наша семья большая." }
+        ],
+        "commonMistakes": [
+          "Seu/sua — неоднозначно: Seu livro (твой? его? её?) → O livro dele (ясно — его)",
+          "Нет согласования: meu casa → minha casa (casa — женский род)",
+          "В бразильском артикль необязателен: O meu livro = Meu livro"
+        ]
+      }
+    },
+    {
+      "id": "pt-subjunctive-present",
+      "title": "Presente do subjuntivo",
+      "titleRu": "Настоящее сослагательное наклонение",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Subjuntivo используется после выражений желания, сомнения, эмоций и после конструкций с que (quero que, espero que, é necessário que). Образуется: -ar → -e, -e, -e, -emos, -em. -er/-ir → -a, -a, -a, -amos, -am. Неправильные: seja (ser), tenha (ter), faça (fazer), vá (ir).",
+        "examples": [
+          { "pt": "Quero que você venha à festa.", "ru": "Я хочу, чтобы ты пришёл на вечеринку." },
+          { "pt": "Espero que esteja tudo bem.", "ru": "Надеюсь, всё хорошо." },
+          { "pt": "É importante que você estude.", "ru": "Важно, чтобы ты учился." }
+        ],
+        "commonMistakes": [
+          "Indicativo вместо subjuntivo: Quero que você vem → venha",
+          "Один субъект — sem que: Quero que eu vá → Quero ir",
+          "Неправильные формы: Quero que ele seje → seja"
+        ]
+      }
+    },
+    {
+      "id": "pt-future-simple",
+      "title": "Futuro do presente",
+      "titleRu": "Простое будущее время",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Будущее время образуется добавлением окончаний к инфинитиву: -ei, -á, -á, -emos, -ão. Неправильные основы: farei (fazer), direi (dizer), trarei (trazer). В бразильском разговорном чаще используют ir + инфинитив: Vou falar (скажу).",
+        "examples": [
+          { "pt": "Amanhã irei ao cinema.", "ru": "Завтра я пойду в кино." },
+          { "pt": "Ela fará o trabalho.", "ru": "Она сделает работу." },
+          { "pt": "Vou falar com ele. (разговорное)", "ru": "Я поговорю с ним." }
+        ],
+        "commonMistakes": [
+          "Неправильная основа: fazerei → farei",
+          "Futuro вместо ir + infinitivo в разговоре: Amanhã farei (книжное) → Vou fazer (разг.)",
+          "Путают с условным: farei (будущее) vs faria (условное)"
+        ]
+      }
+    },
+    {
+      "id": "pt-conditional",
+      "title": "Futuro do pretérito (Condicional)",
+      "titleRu": "Условное наклонение",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Условное наклонение (futuro do pretérito) образуется добавлением к инфинитиву: -ia, -ia, -ia, -íamos, -iam. Те же неправильные основы: faria (fazer), diria (dizer), traria (trazer). Используется для вежливых просьб и нереальных условий.",
+        "examples": [
+          { "pt": "Eu gostaria de um café.", "ru": "Я бы хотел кофе." },
+          { "pt": "Você poderia me ajudar?", "ru": "Вы не могли бы мне помочь?" },
+          { "pt": "Se tivesse dinheiro, viajaria.", "ru": "Если бы у меня были деньги, я бы путешествовал." }
+        ],
+        "commonMistakes": [
+          "Неправильная основа: fazeria → faria",
+          "Condicional после se: Se teria → Se tivesse (subjuntivo после se)",
+          "Путают с imperfeito: Queria um café (хотел) vs Quereria → Queria (в бразильском — одна форма)"
+        ]
+      }
+    },
+    {
+      "id": "pt-comparatives",
+      "title": "Comparativos e superlativos",
+      "titleRu": "Сравнительная и превосходная степень",
+      "level": "B1",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Сравнительная: mais/menos + прилагательное + do que (или que). Превосходная: o/a mais + прилагательное + de. Неправильные: melhor (лучше), pior (хуже), maior (больше), menor (меньше). Равенство: tão + adj + como/quanto.",
+        "examples": [
+          { "pt": "Ela é mais alta do que eu.", "ru": "Она выше меня." },
+          { "pt": "Este livro é o melhor de todos.", "ru": "Эта книга лучшая из всех." },
+          { "pt": "Sou tão alto quanto você.", "ru": "Я такой же высокий, как ты." }
+        ],
+        "commonMistakes": [
+          "Mais melhor: É mais melhor → É melhor (уже сравнительная)",
+          "Que вместо do que: Mais alto que eu — допустимо, mais alto do que eu — полная форма",
+          "Tão...que вместо tão...quanto: Tão alto que você → Tão alto quanto você"
+        ]
+      }
+    },
+    {
+      "id": "pt-relative-clauses",
+      "title": "Orações relativas (que, quem, o qual)",
+      "titleRu": "Относительные придаточные предложения",
+      "level": "B1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Que — самое распространённое (для людей и предметов). Quem — только для людей (после предлогов). O qual / a qual / os quais / as quais — формальный стиль. Onde — для мест. Cujo/a — притяжательное (чей). В бразильском разговорном часто используют que + предлог в конце.",
+        "examples": [
+          { "pt": "O homem que mora aqui é simpático.", "ru": "Мужчина, который живёт здесь, приятный." },
+          { "pt": "A pessoa com quem falei.", "ru": "Человек, с которым я разговаривал." },
+          { "pt": "A cidade onde nasci.", "ru": "Город, где я родился." }
+        ],
+        "commonMistakes": [
+          "Quem для предметов: O livro quem → O livro que",
+          "Лишнее местоимение: O homem que eu vi ele → que eu vi",
+          "Cujo с артиклем: cujo o filho → cujo filho (без артикля)"
+        ]
+      }
+    },
+    {
+      "id": "pt-por-para",
+      "title": "Por vs Para",
+      "titleRu": "Por и Para",
+      "level": "B1",
+      "category": "prepositions",
+      "group": "prepositions",
+      "content": {
+        "rule": "Para — цель, назначение, получатель, направление (para você, para aprender, para São Paulo). Por — причина, обмен, движение через, средство (por isso, por telefone, pela manhã). Мнемоника: Para = цель/направление, Por = причина/средство.",
+        "examples": [
+          { "pt": "Este presente é para você.", "ru": "Этот подарок для тебя." },
+          { "pt": "Obrigado por sua ajuda.", "ru": "Спасибо за вашу помощь." },
+          { "pt": "Estudo para aprender. Estudo por necessidade.", "ru": "Я учусь, чтобы узнать. Я учусь по необходимости." }
+        ],
+        "commonMistakes": [
+          "Причина с para: Cheguei tarde para o trânsito → por causa do trânsito",
+          "Получатель с por: Comprei um livro por você → para você",
+          "Pela manhã (утром) vs para a manhã (к утру)"
+        ]
+      }
+    },
+    {
+      "id": "pt-subjunctive-imperfect",
+      "title": "Pretérito imperfeito do subjuntivo",
+      "titleRu": "Прошедшее сослагательное наклонение",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Образуется от основы 3-го лица мн.ч. pretérito perfeito: falaram → falasse. Окончания: -sse, -sse, -sse, -ssemos, -ssem. Используется после se для нереальных условий, после queria que, para que в прошлом. Неправильные: fosse (ser/ir), tivesse (ter), fizesse (fazer).",
+        "examples": [
+          { "pt": "Se eu tivesse tempo, iria ao cinema.", "ru": "Если бы у меня было время, я бы пошёл в кино." },
+          { "pt": "Queria que você viesse.", "ru": "Я хотел, чтобы ты пришёл." },
+          { "pt": "Se fosse rico, viajaria pelo mundo.", "ru": "Если бы я был богатым, я бы путешествовал по миру." }
+        ],
+        "commonMistakes": [
+          "Condicional после se: Se teria → Se tivesse",
+          "Indicativo после queria que: Queria que vem → Queria que viesse",
+          "Неправильная основа: Se fazesse → Se fizesse (от fizeram)"
+        ]
+      }
+    },
+    {
+      "id": "pt-past-perfect",
+      "title": "Mais-que-perfeito (composto)",
+      "titleRu": "Давнопрошедшее время",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Mais-que-perfeito composto (tinha + particípio) описывает действие, произошедшее ДО другого действия в прошлом. Tinha falado, tinha comido, tinha ido. Неправильные причастия: feito (fazer), dito (dizer), escrito (escrever), visto (ver), aberto (abrir).",
+        "examples": [
+          { "pt": "Quando cheguei, ela já tinha saído.", "ru": "Когда я пришёл, она уже ушла." },
+          { "pt": "Nunca tinha visto algo assim.", "ru": "Я никогда раньше не видел такого." },
+          { "pt": "Ele tinha esquecido as chaves.", "ru": "Он забыл ключи." }
+        ],
+        "commonMistakes": [
+          "Perfeito вместо mais-que-perfeito: Quando cheguei, ela saiu → tinha saído",
+          "Неправильное причастие: tinha fazido → tinha feito",
+          "Haver вместо ter: Eu havia feito — книжное, Eu tinha feito — разговорное"
+        ]
+      }
+    },
+    {
+      "id": "pt-passive-voice",
+      "title": "Voz passiva",
+      "titleRu": "Страдательный залог",
+      "level": "B2",
+      "category": "syntax",
+      "group": "tenses",
+      "content": {
+        "rule": "Два вида пассива: 1) Ser + particípio (A carta foi escrita por Maria) — аналитический пассив. 2) Se + глагол (Fala-se português) — местоименный пассив. Причастие согласуется с подлежащим в роде и числе.",
+        "examples": [
+          { "pt": "A carta foi escrita por Maria.", "ru": "Письмо было написано Марией." },
+          { "pt": "Aqui se fala português.", "ru": "Здесь говорят по-португальски." },
+          { "pt": "Os livros foram publicados em 2020.", "ru": "Книги были опубликованы в 2020 году." }
+        ],
+        "commonMistakes": [
+          "Без согласования: A carta foi escrito → foi escrita",
+          "Ser вместо estar для результата: A porta é aberta → A porta está aberta (состояние)",
+          "Se + мн.ч.: Se vende apartamentos → Se vendem apartamentos"
+        ]
+      }
+    },
+    {
+      "id": "pt-reported-speech",
+      "title": "Discurso indireto",
+      "titleRu": "Косвенная речь",
+      "level": "B2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "При передаче слов: presente → imperfeito, perfeito → mais-que-perfeito, futuro → condicional. Меняются местоимения и указатели (hoje → naquele dia, aqui → ali, amanhã → no dia seguinte). Disse que + indicativo, perguntou se/o que.",
+        "examples": [
+          { "pt": "Disse: «Estou cansado» → Disse que estava cansado.", "ru": "Он сказал: «Я устал» → Он сказал, что устал." },
+          { "pt": "Disse: «Virei amanhã» → Disse que viria no dia seguinte.", "ru": "Он сказал: «Приду завтра» → Он сказал, что придёт на следующий день." },
+          { "pt": "Perguntou: «Está bem?» → Perguntou se estava bem.", "ru": "Он спросил: «Всё хорошо?» → Он спросил, всё ли хорошо." }
+        ],
+        "commonMistakes": [
+          "Без сдвига времени: Disse que está cansado → estava cansado",
+          "Que вместо se в вопросах: Perguntou que estava bem → se estava bem",
+          "Сохранение aqui/hoje: Disse que hoje... → naquele dia..."
+        ]
+      }
+    },
+    {
+      "id": "pt-personal-infinitive",
+      "title": "Infinitivo pessoal",
+      "titleRu": "Личный инфинитив",
+      "level": "B2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Уникальная особенность португальского — личный (спрягаемый) инфинитив. Окончания: -, -es, -, -mos, -em (добавляются к инфинитиву). Используется когда субъект инфинитива отличается от субъекта главного предложения, или для ясности: É importante fazermos isso (Важно, чтобы мы это сделали).",
+        "examples": [
+          { "pt": "É importante estudarmos todos os dias.", "ru": "Важно, чтобы мы учились каждый день." },
+          { "pt": "Apesar de estarmos cansados, continuamos.", "ru": "Несмотря на то что мы устали, мы продолжили." },
+          { "pt": "Antes de vocês saírem, me avisem.", "ru": "Прежде чем вы уйдёте, предупредите меня." }
+        ],
+        "commonMistakes": [
+          "Инфинитив без спряжения: É importante estudar (без указания кто) vs estudarmos (мы)",
+          "С одним субъектом: Eu quero fazermos → Eu quero fazer (один субъект — обычный инфинитив)",
+          "Путают с subjuntivo: É importante que estudemos = É importante estudarmos (оба верны)"
+        ]
+      }
+    },
+    {
+      "id": "pt-future-subjunctive",
+      "title": "Futuro do subjuntivo",
+      "titleRu": "Будущее сослагательное наклонение",
+      "level": "C1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Уникальное для португальского время. Образуется от основы 3-го лица мн.ч. pretérito perfeito: fizeram → fizer. Окончания: -r, -res, -r, -rmos, -rem. Используется после quando, se, assim que, enquanto для будущих действий: Quando eu puder, irei.",
+        "examples": [
+          { "pt": "Quando você chegar, me avise.", "ru": "Когда ты приедешь, сообщи мне." },
+          { "pt": "Se eu puder, irei à festa.", "ru": "Если я смогу, пойду на вечеринку." },
+          { "pt": "Enquanto estivermos juntos, tudo ficará bem.", "ru": "Пока мы вместе, всё будет хорошо." }
+        ],
+        "commonMistakes": [
+          "Presente вместо futuro do subjuntivo: Quando você chega → Quando você chegar",
+          "Неправильная основа: Quando eu fazir → Quando eu fizer (от fizeram)",
+          "Subjuntivo presente: Se eu possa → Se eu puder (futuro do subjuntivo после se)"
+        ]
+      }
+    },
+    {
+      "id": "pt-compound-tenses",
+      "title": "Tempos compostos com ter",
+      "titleRu": "Сложные времена с ter",
+      "level": "C1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Сложные времена образуются с ter + particípio: tenho falado (Present Perfect — повторяющееся действие), tinha falado (Pluperfect), terei falado (Future Perfect), teria falado (Conditional Perfect), tenha falado (Present Perfect Subjunctive), tivesse falado (Pluperfect Subjunctive).",
+        "examples": [
+          { "pt": "Eu tenho estudado muito ultimamente.", "ru": "Я в последнее время много учусь." },
+          { "pt": "Se eu tivesse estudado, teria passado.", "ru": "Если бы я учился, я бы сдал." },
+          { "pt": "Espero que ele tenha chegado.", "ru": "Надеюсь, он уже приехал." }
+        ],
+        "commonMistakes": [
+          "Tenho feito ≠ Fiz: Tenho feito (повторяющееся) vs Fiz (однократное)",
+          "Haver вместо ter: Hei de fazer — другое значение (намерение)",
+          "Причастие меняется: tenho feito, tenho feitas → Причастие НЕ меняется с ter"
+        ]
+      }
+    },
+    {
+      "id": "pt-advanced-pronouns",
+      "title": "Colocação pronominal (ênclise, próclise, mesóclise)",
+      "titleRu": "Размещение местоимений",
+      "level": "C1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Три позиции местоимения: 1) Próclise — перед глаголом (после não, que, quem, nunca и в бразильском разговорном): Não me diga. 2) Ênclise — после глагола (начало предложения, императив): Diga-me. 3) Mesóclise — внутри глагола (только futuro и condicional): Dir-lhe-ei (Я ему скажу). Mesóclise крайне редка в бразильском.",
+        "examples": [
+          { "pt": "Diga-me a verdade. (ênclise)", "ru": "Скажите мне правду." },
+          { "pt": "Não me diga! (próclise)", "ru": "Не говорите мне!" },
+          { "pt": "Dir-lhe-ei amanhã. (mesóclise — книжн.)", "ru": "Я скажу ему завтра." }
+        ],
+        "commonMistakes": [
+          "Ênclise после não: Não diga-me → Não me diga (próclise обязательна)",
+          "Próclise в начале предложения (формально): Me diga → Diga-me (книжное)",
+          "Mesóclise в разговорной речи: Dir-lhe-ei → Vou dizer para ele"
+        ]
+      }
+    },
+    {
+      "id": "pt-literary-tenses",
+      "title": "Tempos literários",
+      "titleRu": "Литературные времена",
+      "level": "C2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Pretérito mais-que-perfeito simples (falara, comera, partira) — литературная замена tinha falado. Встречается в книгах и формальных текстах. Futuro do subjuntivo composto (tiver falado) — для завершённых будущих действий. Pretérito perfeito composto do indicativo (tenho falado) — отличается от европейского значения.",
+        "examples": [
+          { "pt": "Ele chegara antes de todos. (= tinha chegado)", "ru": "Он пришёл раньше всех." },
+          { "pt": "Quando tiver terminado, me avise.", "ru": "Когда закончите, сообщите мне." },
+          { "pt": "Fizera tudo o que podia. (= tinha feito)", "ru": "Он сделал всё, что мог." }
+        ],
+        "commonMistakes": [
+          "В разговорной речи: falara звучит архаично → tinha falado",
+          "Путают -ra (mais-que-perfeito) с -ria (condicional): falara vs falaria",
+          "Mais-que-perfeito simples для условных: Se eu pudera → Se eu pudesse (subjuntivo)"
+        ]
+      }
+    },
+    {
+      "id": "pt-stylistic-register",
+      "title": "Registro e variação estilística",
+      "titleRu": "Регистр и стилистические вариации",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Бразильский и европейский португальский значительно различаются. Бразильский: você, a gente, estar + gerúndio, próclise. Европейский: tu, nós, estar a + infinitivo, ênclise. Формальный vs разговорный: cujo (книжн.) vs que...dele (разг.), o qual (книжн.) vs que (разг.).",
+        "examples": [
+          { "pt": "Você está fazendo (BR) vs Tu estás a fazer (PT).", "ru": "Ты делаешь (Бразилия vs Португалия)." },
+          { "pt": "A gente vai (BR) vs Nós vamos (PT/формальн.).", "ru": "Мы идём (разговорный vs формальный)." },
+          { "pt": "Me diz (BR) vs Diz-me (PT).", "ru": "Скажи мне (Бразилия vs Португалия)." }
+        ],
+        "commonMistakes": [
+          "Смешение BR и PT стилей в одном тексте",
+          "Ênclise в бразильском разговорном: Diga-me → Me diga (норма в BR)",
+          "Tu с формой você: Tu vai (ошибка) → Tu vais (PT) или Você vai (BR)"
+        ]
+      }
+    },
+    {
+      "id": "pt-complex-structures",
+      "title": "Estruturas complexas e ênfase",
+      "titleRu": "Сложные конструкции и эмфаза",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Эмфатические конструкции: É...que/quem (Foi João que fez isso — Именно Жуан это сделал), O que...é (O que preciso é descansar). Конструкции с estar + por + infinitivo (ещё не сделано). Quanto mais...mais (Чем больше...тем больше).",
+        "examples": [
+          { "pt": "Foi Maria quem me contou.", "ru": "Именно Мария мне рассказала." },
+          { "pt": "O que preciso é de férias.", "ru": "Что мне нужно — это отпуск." },
+          { "pt": "Quanto mais estudo, mais aprendo.", "ru": "Чем больше я учусь, тем больше узнаю." }
+        ],
+        "commonMistakes": [
+          "Que вместо quem для людей: Foi ela que → Foi ela quem (для людей — quem)",
+          "Без de: O que preciso é férias → O que preciso é de férias",
+          "Quanto mais...quanto mais: → Quanto mais...mais (без повтора quanto)"
+        ]
+      }
+    }
+  ]
+}

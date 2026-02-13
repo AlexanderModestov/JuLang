@@ -163,7 +163,7 @@ export default function TopicDetail() {
   // Display from static topic data if card is not available
   const explanation = card?.explanation || topic.content?.rule || ''
   const examples = card?.examples || topic.content?.examples.map((e: any) => ({
-    french: e.fr || e.en || '',
+    french: e.fr || e.en || e.es || e.de || e.pt || '',
     russian: e.ru,
   })) || []
   const commonMistakes = card?.commonMistakes || topic.content?.commonMistakes || []

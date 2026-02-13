@@ -5,7 +5,7 @@ import { languageFlags, languageLabels, type Language } from '@/types'
 const AVAILABLE_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 
 // Languages with full implementation (vocabulary + grammar data)
-const IMPLEMENTED_LANGUAGES: Language[] = ['fr', 'en']
+const IMPLEMENTED_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 
 export default function LanguageSwitcher() {
   const { currentLanguage, setCurrentLanguage, profile } = useAuthContext()

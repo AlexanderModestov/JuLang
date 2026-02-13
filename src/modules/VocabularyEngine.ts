@@ -4,14 +4,17 @@ import { userDataService } from '@/services/userDataService'
 import { supabase } from '@/lib/supabase'
 import vocabularyDataFr from '@/data/vocabulary.json'
 import vocabularyDataEn from '@/data/vocabulary-en.json'
+import vocabularyDataEs from '@/data/vocabulary-es.json'
+import vocabularyDataDe from '@/data/vocabulary-de.json'
+import vocabularyDataPt from '@/data/vocabulary-pt.json'
 
 // Vocabulary data by language
 const vocabularyByLanguage: Record<Language, { cards: any[] }> = {
   fr: vocabularyDataFr,
   en: vocabularyDataEn,
-  es: { cards: [] }, // Not implemented yet
-  de: { cards: [] }, // Not implemented yet
-  pt: { cards: [] }, // Not implemented yet
+  es: vocabularyDataEs,
+  de: vocabularyDataDe,
+  pt: vocabularyDataPt,
 }
 
 type SupabaseVocabularyProgress = Database['public']['Tables']['vocabulary_progress']['Row']
@@ -51,17 +54,23 @@ const DEFAULT_EASE_FACTOR = 2.5
 const MIN_EASE_FACTOR = 1.3
 const NEW_CARDS_PER_SESSION = 5
 
+/** Language-specific word field names */
+const languageWordFields: Record<Language, string> = {
+  fr: 'french',
+  en: 'english',
+  es: 'spanish',
+  de: 'german',
+  pt: 'portuguese',
+}
+
 /** Read custom vocabulary cards from localStorage, filtered by language */
 function getCustomVocabularyCards(language: Language): VocabularyCard[] {
   try {
     const raw = localStorage.getItem('customVocabularyCards')
     if (!raw) return []
     const customCards = JSON.parse(raw) as Record<string, any>
-    return Object.values(customCards).filter((card) => {
-      if (language === 'fr') return !!card.french
-      if (language === 'en') return !!card.english
-      return false
-    }) as VocabularyCard[]
+    const field = languageWordFields[language]
+    return Object.values(customCards).filter((card) => !!card[field]) as VocabularyCard[]
   } catch {
     return []
   }
@@ -209,15 +218,14 @@ export async function scheduleVocabularyCard(
   return toLocalVocabularyProgress(updatedProgress)
 }
 
-/** Get the target language word from a card (french, english, etc.) */
+/** Get the target language word from a card (french, english, spanish, german, portuguese) */
 export function getCardWord(card: VocabularyCard | any): string {
-  // Support both legacy 'french' field and new 'english' field
-  return card.french || card.english || ''
+  return card.french || card.english || card.spanish || card.german || card.portuguese || ''
 }
 
-/** Get example sentence text in the target language (fr, en, etc.) */
+/** Get example sentence text in the target language (fr, en, es, de, pt) */
 export function getExampleText(example: any): string {
-  return example?.fr || example?.en || ''
+  return example?.fr || example?.en || example?.es || example?.de || example?.pt || ''
 }
 
 /** Generate multiple choice options: correct + 3 distractors from same level */
@@ -295,11 +303,12 @@ export async function addCardFromConversation(
   // Store custom card data in localStorage for lookup
   // Use language-specific field name
   const customCards = JSON.parse(localStorage.getItem('customVocabularyCards') || '{}')
-  const exampleKey = language === 'en' ? 'en' : language === 'fr' ? 'fr' : language
+  const exampleKey = language
+  const wordField = languageWordFields[language]
   customCards[cardId] = {
     id: cardId,
     // Store with language-specific field
-    ...(language === 'fr' ? { french: lemma } : { english: lemma }),
+    [wordField]: lemma,
     russian,
     examples: [{ [exampleKey]: example, ru: exampleTranslation }],
     level: 'A1' as const,
@@ -382,7 +391,7 @@ export function generateFillBlankExercise(card: VocabularyCard | any, language: 
   const word = getCardWord(card).toLowerCase()
 
   // Get the example sentence in the target language
-  const exampleSentence = example.fr || example.en || ''
+  const exampleSentence = example.fr || example.en || example.es || example.de || example.pt || ''
 
   // Try to find the word in the example sentence
   const regex = new RegExp(`\\b${word}\\b`, 'i')
