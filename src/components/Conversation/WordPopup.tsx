@@ -43,16 +43,20 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
 
   const handleAdd = async () => {
     if (!user || !translation) return
-    await addCardFromConversation(
-      user.id,
-      translation.lemma,
-      translation.russian,
-      translation.article,
-      translation.type,
-      sentence,
-      '' // exampleTranslation not available without extra AI call
-    )
-    setJustAdded(true)
+    try {
+      await addCardFromConversation(
+        user.id,
+        translation.lemma,
+        translation.russian,
+        translation.article,
+        translation.type,
+        sentence,
+        '' // exampleTranslation not available without extra AI call
+      )
+      setJustAdded(true)
+    } catch {
+      setError(true)
+    }
   }
 
   return (
