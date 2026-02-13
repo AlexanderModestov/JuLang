@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
+import type { Language } from '@/types'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import Card from '@/components/ui/Card'
 import MainProgressCard from './MainProgressCard'
@@ -15,8 +16,16 @@ function formatTotalTime(minutes: number): string {
   return mins > 0 ? `${hours}ч ${mins}м` : `${hours}ч`
 }
 
+const greetings: Record<Language, string> = {
+  fr: 'Bonjour',
+  en: 'Hello',
+  es: 'Hola',
+  de: 'Hallo',
+  pt: 'Olá',
+}
+
 export default function HomeScreen() {
-  const { profile, progress } = useAuthContext()
+  const { profile, progress, currentLanguage } = useAuthContext()
   const { stats, loading: statsLoading } = useHomeStats()
 
   // Set teacher chat context for home screen
@@ -29,7 +38,7 @@ export default function HomeScreen() {
       {/* Greeting */}
       <div className="text-center py-4">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Priviet, {profile.name}!
+          {greetings[currentLanguage]}, {profile.name}!
         </h1>
       </div>
 
