@@ -10,7 +10,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { word, sentence } = req.body
+  const { word, sentence, languageName } = req.body
+  const lang = languageName || 'French'
 
   if (!word || !sentence) {
     return res.status(400).json({ error: 'word and sentence are required' })
@@ -22,18 +23,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       messages: [
         {
           role: 'system',
-          content: 'You are a French-Russian dictionary assistant. Always respond with valid JSON only.',
+          content: `You are a ${lang}-Russian dictionary assistant. Always respond with valid JSON only.`,
         },
         {
           role: 'user',
-          content: `Word: "${word}", context: "${sentence}". Return JSON: { "lemma": "...", "russian": "...", "gender": "masculine" | "feminine" | null, "type": "word" | "expression" }. Give the dictionary form (lemma), Russian translation fitting the context, and gender if noun.`,
+          content: `Word: "${word}", context: "${sentence}". Return JSON: { "lemma": "...", "russian": "...", "gender": "masculine" | "feminine" | null, "type": "word" | "expression" }. Give the dictionary form (lemma) in ${lang}, Russian translation fitting the context, and gender if noun.`,
         },
       ],
       temperature: 0.3,
       max_tokens: 200,
     })
 
-    const content = response.choices[0]?.message?.content || '{}'
+    const raw = response.choices[0]?.message?.content || '{}'
+    // Strip markdown code fences if present (e.g. ```json ... ```)
+    const content = raw.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim()
     const parsed = JSON.parse(content)
 
     return res.status(200).json(parsed)
