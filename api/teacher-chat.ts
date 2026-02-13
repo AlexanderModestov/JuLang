@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import OpenAI from 'openai'
-import { verifyAuth } from './_lib/auth'
-import { handleCors } from './_lib/cors'
-import { checkRateLimit } from './_lib/rateLimit'
+import { verifyAuth } from './_lib/auth.js'
+import { handleCors } from './_lib/cors.js'
+import { checkRateLimit } from './_lib/rateLimit.js'
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
