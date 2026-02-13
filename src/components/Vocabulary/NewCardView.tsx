@@ -3,6 +3,8 @@ import type { VocabularyCard } from '@/types'
 import { speak } from '@/modules/SpeechService'
 import {
   getWordWithArticle,
+  getCardWord,
+  getExampleText,
   generateMiniSessionExercises,
   calculateMiniSessionResult,
   type MiniSessionExercise,
@@ -183,7 +185,7 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
                   {card.article !== "l'" && ' '}
                 </span>
               )}
-              {card.french} 🔊
+              {getCardWord(card)} 🔊
             </button>
           </div>
 
@@ -206,10 +208,10 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
                   {card.examples.map((example, idx) => (
                     <div key={idx} className="border-l-2 border-primary-300 dark:border-primary-600 pl-2">
                       <button
-                        onClick={() => handleSpeak(example.fr)}
+                        onClick={() => handleSpeak(getExampleText(example))}
                         className="text-sm text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400"
                       >
-                        🔊 {example.fr}
+                        🔊 {getExampleText(example)}
                       </button>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         {example.ru}

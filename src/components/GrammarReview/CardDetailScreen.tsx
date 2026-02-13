@@ -12,13 +12,13 @@ import Card from '@/components/ui/Card'
 export default function CardDetailScreen() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
-  const { user, profile } = useAuthContext()
+  const { user, profile, currentLanguage } = useAuthContext()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
   const [isEnhancing, setIsEnhancing] = useState(false)
   const [error, setError] = useState('')
 
-  const topic = topicId ? getGrammarTopicById(topicId) : undefined
+  const topic = topicId ? getGrammarTopicById(topicId, currentLanguage) : undefined
 
   useEffect(() => {
     loadCard()

@@ -1,6 +1,7 @@
 // Web Speech API wrapper for speech recognition and synthesis
 
 import { languageTTSCodes, type Language } from '@/types'
+import { apiFetch } from '@/lib/apiClient'
 
 // Type declarations for Web Speech API
 interface SpeechRecognitionEvent extends Event {
@@ -589,7 +590,7 @@ export async function transcribeAudio(audioBlob: Blob): Promise<string> {
   const formData = new FormData()
   formData.append('audio', audioBlob)
 
-  const response = await fetch('/api/whisper', {
+  const response = await apiFetch('/api/whisper', {
     method: 'POST',
     body: formData,
   })

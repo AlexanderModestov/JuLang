@@ -215,6 +215,11 @@ export function getCardWord(card: VocabularyCard | any): string {
   return card.french || card.english || ''
 }
 
+/** Get example sentence text in the target language (fr, en, etc.) */
+export function getExampleText(example: any): string {
+  return example?.fr || example?.en || ''
+}
+
 /** Generate multiple choice options: correct + 3 distractors from same level */
 export function getMultipleChoiceOptions(
   card: VocabularyCard,

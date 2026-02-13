@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import type { VocabularyCard, VocabularyExerciseType } from '@/types'
+import { useAuthContext } from '@/contexts/AuthContext'
+import { languageLabels } from '@/types'
 import {
   getMultipleChoiceOptions,
   generateFillBlankExercise,
@@ -7,6 +9,7 @@ import {
   checkWrittenAnswer,
   getWordWithArticle,
   getCardWord,
+  getExampleText,
 } from '@/modules/VocabularyEngine'
 import { speak } from '@/modules/SpeechService'
 import Button from '@/components/ui/Button'
@@ -20,6 +23,7 @@ interface ExerciseCardProps {
 }
 
 export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseCardProps) {
+  const { currentLanguage } = useAuthContext()
   const [userAnswer, setUserAnswer] = useState('')
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [showResult, setShowResult] = useState(false)
@@ -56,12 +60,14 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
     }
   }, [exerciseType, exerciseData])
 
+  const langLabel = languageLabels[currentLanguage]
+
   const getPromptText = () => {
     switch (exerciseType) {
       case 'fr_to_ru':
         return 'Выберите перевод:'
       case 'ru_to_fr':
-        return 'Выберите французское слово:'
+        return `Выберите слово (${langLabel}):`
       case 'multiple_choice':
         return 'Выберите перевод:'
       case 'listening':
@@ -69,7 +75,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
       case 'fill_blank':
         return 'Вставьте слово:'
       case 'write_word':
-        return 'Напишите по-французски:'
+        return `Напишите (${langLabel}):`
       default:
         return 'Переведите:'
     }
@@ -234,7 +240,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
             {card.examples.length > 0 && (
               <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
                 <p className="text-sm text-gray-600 dark:text-gray-400 italic">
-                  {card.examples[0].fr}
+                  {getExampleText(card.examples[0])}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-500 italic">
                   {card.examples[0].ru}

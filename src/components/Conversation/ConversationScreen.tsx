@@ -284,7 +284,13 @@ export default function ConversationScreen() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
-                placeholder={currentLanguage === 'en' ? 'Write in English...' : 'Écrivez en français...'}
+                placeholder={{
+                  fr: 'Écrivez en français...',
+                  en: 'Write in English...',
+                  es: 'Escribe en español...',
+                  de: 'Schreiben Sie auf Deutsch...',
+                  pt: 'Escreva em português...',
+                }[currentLanguage] || 'Write here...'}
                 className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 disabled={isLoading}
                 autoComplete="off"

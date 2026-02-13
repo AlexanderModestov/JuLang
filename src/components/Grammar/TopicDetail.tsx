@@ -26,8 +26,10 @@ export default function TopicDetail() {
   const [isEnhancing, setIsEnhancing] = useState(false)
   const [error, setError] = useState('')
 
+  const { currentLanguage } = useAuthContext()
+
   const topic = topicId
-    ? (getGrammarTopicById(topicId) as GrammarTopic | undefined)
+    ? (getGrammarTopicById(topicId, currentLanguage) as GrammarTopic | undefined)
     : undefined
 
   // Set teacher chat context with topic information
@@ -40,14 +42,14 @@ export default function TopicDetail() {
   // Get all topics at user's level for "next rule" feature
   const availableTopics = useMemo(() => {
     if (!profile) return []
-    const allTopics = getAllGrammarTopics() as GrammarTopic[]
+    const allTopics = getAllGrammarTopics(currentLanguage) as GrammarTopic[]
     const frenchLevel = profile.french_level || 'A1'
     const userLevelIndex = LEVEL_ORDER.indexOf(frenchLevel)
     const allowedLevels = LEVEL_ORDER.slice(0, userLevelIndex + 1)
     return allTopics.filter((t) =>
       allowedLevels.includes(t.level as FrenchLevel)
     )
-  }, [profile])
+  }, [profile, currentLanguage])
 
   useEffect(() => {
     loadCard()
@@ -66,7 +68,7 @@ export default function TopicDetail() {
 
       // If no card exists, create one from static data
       if (!foundCard && topic) {
-        foundCard = await createCardFromStatic(user.id, topic)
+        foundCard = await createCardFromStatic(user.id, topic, currentLanguage)
       }
 
       setCard(foundCard || null)
@@ -160,8 +162,8 @@ export default function TopicDetail() {
 
   // Display from static topic data if card is not available
   const explanation = card?.explanation || topic.content?.rule || ''
-  const examples = card?.examples || topic.content?.examples.map((e) => ({
-    french: e.fr,
+  const examples = card?.examples || topic.content?.examples.map((e: any) => ({
+    french: e.fr || e.en || '',
     russian: e.ru,
   })) || []
   const commonMistakes = card?.commonMistakes || topic.content?.commonMistakes || []

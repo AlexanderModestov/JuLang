@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useAppStore } from '@/store/useAppStore'
-import { getAvailableVoices, selectBestFrenchVoice, speakWithPauses } from '@/modules/SpeechService'
+import { getAvailableVoices, selectBestVoice, speakWithPauses } from '@/modules/SpeechService'
 import type { FrenchLevel } from '@/types'
+import { languageLabels } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Input from '@/components/ui/Input'
@@ -10,18 +11,18 @@ import Input from '@/components/ui/Input'
 const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function SettingsScreen() {
-  const { user, profile, signOut, updateProfile } = useAuthContext()
+  const { user, profile, signOut, updateProfile, currentLanguage } = useAuthContext()
   const { settings, updateSettings } = useAppStore()
 
-  const [frenchVoices, setFrenchVoices] = useState<SpeechSynthesisVoice[]>([])
+  const [languageVoices, setLanguageVoices] = useState<SpeechSynthesisVoice[]>([])
   const [bestVoice, setBestVoice] = useState<SpeechSynthesisVoice | null>(null)
 
   useEffect(() => {
-    // Load voices (may be async in some browsers)
+    // Load voices for current language (may be async in some browsers)
     const loadVoices = () => {
-      const voices = getAvailableVoices('fr')
-      setFrenchVoices(voices)
-      setBestVoice(selectBestFrenchVoice(voices))
+      const voices = getAvailableVoices(currentLanguage)
+      setLanguageVoices(voices)
+      setBestVoice(selectBestVoice(voices, currentLanguage))
     }
 
     loadVoices()
@@ -30,7 +31,7 @@ export default function SettingsScreen() {
     if (typeof speechSynthesis !== 'undefined') {
       speechSynthesis.onvoiceschanged = loadVoices
     }
-  }, [])
+  }, [currentLanguage])
 
   const handleThemeChange = (theme: 'light' | 'dark' | 'system') => {
     updateSettings({ theme })
@@ -71,7 +72,7 @@ export default function SettingsScreen() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Уровень французского
+              Уровень ({languageLabels[currentLanguage]})
             </label>
             <div className="flex flex-wrap gap-2">
               {LEVELS.map((level) => (
@@ -117,7 +118,7 @@ export default function SettingsScreen() {
               <option value="">
                 Автовыбор{bestVoice ? ` (${bestVoice.name})` : ''}
               </option>
-              {frenchVoices.map((voice) => (
+              {languageVoices.map((voice) => (
                 <option key={voice.name} value={voice.name}>
                   {voice.name} ({voice.lang})
                 </option>
@@ -172,10 +173,20 @@ export default function SettingsScreen() {
           {/* Listen to example button */}
           <Button
             variant="secondary"
-            onClick={() => speakWithPauses(
-              "Bonjour! Comment allez-vous aujourd'hui? J'espère que vous passez une bonne journée.",
-              profile.speech_settings
-            )}
+            onClick={() => {
+              const examples: Record<string, string> = {
+                fr: "Bonjour! Comment allez-vous aujourd'hui? J'espère que vous passez une bonne journée.",
+                en: "Hello! How are you doing today? I hope you are having a wonderful day.",
+                es: "¡Hola! ¿Cómo estás hoy? Espero que estés teniendo un buen día.",
+                de: "Hallo! Wie geht es Ihnen heute? Ich hoffe, Sie haben einen schönen Tag.",
+                pt: "Olá! Como você está hoje? Espero que esteja tendo um bom dia.",
+              }
+              speakWithPauses(
+                examples[currentLanguage] || examples.en,
+                profile.speech_settings,
+                currentLanguage
+              )
+            }}
           >
             Прослушать пример
           </Button>

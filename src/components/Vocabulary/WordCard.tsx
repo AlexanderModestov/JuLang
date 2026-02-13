@@ -1,5 +1,6 @@
 import type { VocabularyCard } from '@/types'
 import { speak } from '@/modules/SpeechService'
+import { getCardWord, getWordWithArticle, getExampleText } from '@/modules/VocabularyEngine'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
@@ -77,7 +78,7 @@ export default function WordCard({
           {word.imageUrl ? (
             <img
               src={word.imageUrl}
-              alt={word.french}
+              alt={getCardWord(word)}
               className="w-full h-full object-cover"
             />
           ) : (
@@ -88,7 +89,7 @@ export default function WordCard({
         {/* Word with article and TTS button */}
         <div className="text-center">
           <button
-            onClick={() => handleSpeak(word.article ? `${word.article}${word.article === "l'" ? '' : ' '}${word.french}` : word.french)}
+            onClick={() => handleSpeak(getWordWithArticle(word))}
             className="text-3xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2"
           >
             {word.article && (
@@ -97,7 +98,7 @@ export default function WordCard({
                 {word.article !== "l'" && ' '}
               </span>
             )}
-            {word.french}
+            {getCardWord(word)}
             <span className="text-2xl">🔊</span>
           </button>
         </div>
@@ -133,12 +134,12 @@ export default function WordCard({
           {word.examples.map((example, index) => (
             <div key={index} className="border-l-2 border-primary-300 dark:border-primary-600 pl-3">
               <button
-                onClick={() => handleSpeak(example.fr)}
+                onClick={() => handleSpeak(getExampleText(example))}
                 className="text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left w-full"
               >
                 <span className="inline-flex items-center gap-2">
                   <span className="text-lg">🔊</span>
-                  <span className="italic">{example.fr}</span>
+                  <span className="italic">{getExampleText(example)}</span>
                 </span>
               </button>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-7">

@@ -10,6 +10,7 @@ import {
   getCardsUpToLevel,
   scheduleVocabularyCardAuto,
   pickRandomExerciseType,
+  getCardWord,
 } from '@/modules/VocabularyEngine'
 // Auto-SRS: no manual quality rating needed
 import { db } from '@/db'
@@ -28,7 +29,7 @@ type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
-  const { user, profile } = useAuthContext()
+  const { user, profile, currentLanguage } = useAuthContext()
   const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
@@ -51,25 +52,25 @@ export default function VocabularyScreen() {
   useTeacherContext({
     screen: 'vocabulary',
     itemId: selectedWord?.id,
-    itemPreview: selectedWord ? `${selectedWord.french} - ${selectedWord.russian}` : undefined,
+    itemPreview: selectedWord ? `${getCardWord(selectedWord)} - ${selectedWord.russian}` : undefined,
   })
 
   useEffect(() => {
     if (user && profile) loadData()
-  }, [user, profile])
+  }, [user, profile, currentLanguage])
 
   const loadData = async () => {
     if (!user || !profile) return
     setLoading(true)
     const frenchLevel = profile.french_level || 'A1'
     const [nc, rq, progress] = await Promise.all([
-      getNewCards(user.id, frenchLevel),
-      getReviewQueue(user.id),
+      getNewCards(user.id, frenchLevel, currentLanguage),
+      getReviewQueue(user.id, currentLanguage),
       db.vocabularyProgress.where('userId').equals(user.id).toArray(),
     ])
     setNewCards(nc)
     setReviewQueue(rq)
-    setAllCards(getCardsUpToLevel(frenchLevel))
+    setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
     setAllProgress(progress)
     setLoading(false)
   }
@@ -255,7 +256,7 @@ export default function VocabularyScreen() {
             ← Назад
           </Button>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-            {selectedWord.french}
+            {getCardWord(selectedWord)}
           </h1>
           <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
             {filteredWordsIndex + 1} / {filteredWords.length}
