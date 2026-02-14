@@ -5,6 +5,7 @@ import { useTeacherContext } from '@/store/teacherChatStore'
 import Card from '@/components/ui/Card'
 import MainProgressCard from './MainProgressCard'
 import StatsCard from './StatsCard'
+import LanguageProgressCard from './LanguageProgressCard'
 import { useHomeStats } from '@/hooks/useHomeStats'
 
 function formatTotalTime(minutes: number): string {
@@ -25,13 +26,16 @@ const greetings: Record<Language, string> = {
 }
 
 export default function HomeScreen() {
-  const { profile, progress, currentLanguage } = useAuthContext()
-  const { stats, loading: statsLoading } = useHomeStats()
+  const { profile, progress, currentLanguage, setCurrentLanguage } = useAuthContext()
+  const { stats, languageStats, loading: statsLoading } = useHomeStats()
 
   // Set teacher chat context for home screen
   useTeacherContext({ screen: 'home' })
 
   if (!profile || !progress) return null
+
+  const userLanguages: Language[] = (profile.languages as Language[]) || [currentLanguage]
+  const hasMultipleLanguages = userLanguages.length > 1
 
   return (
     <div className="space-y-6">
@@ -72,6 +76,25 @@ export default function HomeScreen() {
             label="Средняя длина"
             iconColor="#F59E0B"
           />
+        </div>
+      )}
+
+      {/* Per-language progress */}
+      {hasMultipleLanguages && languageStats.length > 0 && (
+        <div className="space-y-2">
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">
+            Мои языки
+          </h2>
+          <div className="space-y-2">
+            {languageStats.map((ls) => (
+              <LanguageProgressCard
+                key={ls.language}
+                stats={ls}
+                isActive={ls.language === currentLanguage}
+                onSelect={setCurrentLanguage}
+              />
+            ))}
+          </div>
         </div>
       )}
 
