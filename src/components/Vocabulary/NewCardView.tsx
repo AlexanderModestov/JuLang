@@ -1,10 +1,13 @@
 import { useState, useCallback } from 'react'
-import type { VocabularyCard } from '@/types'
-import { speak } from '@/modules/SpeechService'
+import type { VocabularyCard, VocabularyProgress } from '@/types'
+import { useSpeech } from '@/hooks/useSpeech'
 import {
   getWordWithArticle,
+  getCardWord,
+  getExampleText,
   generateMiniSessionExercises,
   calculateMiniSessionResult,
+  scheduleVocabularyCardAuto,
   type MiniSessionExercise,
   type MiniSessionResult,
 } from '@/modules/VocabularyEngine'
@@ -14,16 +17,20 @@ import Card from '@/components/ui/Card'
 
 interface NewCardViewProps {
   cards: VocabularyCard[]
-  onCardLearned: (cardId: string) => void
+  onCardLearned: (cardId: string) => Promise<VocabularyProgress | undefined> | void
   onComplete: () => void
 }
 
 type ViewMode = 'learning' | 'mini-session' | 'result'
 
 export default function NewCardView({ cards, onCardLearned, onComplete }: NewCardViewProps) {
+  const { speak } = useSpeech()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [learnedCards, setLearnedCards] = useState<VocabularyCard[]>([])
+
+  // Progress IDs for mini-session SRS updates
+  const [progressMap, setProgressMap] = useState<Map<string, string>>(new Map())
 
   // Mini-session state
   const [viewMode, setViewMode] = useState<ViewMode>('learning')
@@ -51,8 +58,11 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
     speak(text)
   }
 
-  const handleNext = () => {
-    onCardLearned(card.id)
+  const handleNext = async () => {
+    const progress = await onCardLearned(card.id)
+    if (progress) {
+      setProgressMap((prev) => new Map(prev).set(card.id, progress.id))
+    }
     const newLearnedCards = [...learnedCards, card]
     setLearnedCards(newLearnedCards)
 
@@ -73,9 +83,22 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
     setViewMode('mini-session')
   }
 
-  const handleMiniExerciseResult = useCallback((correct: boolean) => {
+  const handleMiniExerciseResult = useCallback(async (correct: boolean) => {
     const newResults = [...miniResults, correct]
     setMiniResults(newResults)
+
+    // Update SRS for this exercise's card
+    const exerciseCard = miniExercises[miniExerciseIndex]?.card
+    if (exerciseCard) {
+      const progressId = progressMap.get(exerciseCard.id)
+      if (progressId) {
+        try {
+          await scheduleVocabularyCardAuto(progressId, correct)
+        } catch (err) {
+          console.error('Failed to schedule vocabulary card:', err)
+        }
+      }
+    }
 
     // Brief delay then advance
     setTimeout(() => {
@@ -88,7 +111,7 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
         setMiniExerciseIndex((i) => i + 1)
       }
     }, 1000)
-  }, [miniResults, miniExerciseIndex, miniExercises.length, learnedCards.length])
+  }, [miniResults, miniExerciseIndex, miniExercises, learnedCards.length, progressMap])
 
   const handleFinish = () => {
     onComplete()
@@ -183,7 +206,7 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
                   {card.article !== "l'" && ' '}
                 </span>
               )}
-              {card.french} 🔊
+              {getCardWord(card)} 🔊
             </button>
           </div>
 
@@ -206,10 +229,10 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
                   {card.examples.map((example, idx) => (
                     <div key={idx} className="border-l-2 border-primary-300 dark:border-primary-600 pl-2">
                       <button
-                        onClick={() => handleSpeak(example.fr)}
+                        onClick={() => handleSpeak(getExampleText(example))}
                         className="text-sm text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400"
                       >
-                        🔊 {example.fr}
+                        🔊 {getExampleText(example)}
                       </button>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         {example.ru}

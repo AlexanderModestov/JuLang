@@ -8,9 +8,9 @@ import { scheduleCard } from '@/modules/SRSEngine'
 import {
   startListening,
   stopListening,
-  speak,
   isSpeechRecognitionSupported,
 } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import type { GrammarCard, PracticeType, PracticeExercise, PracticeResult } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -27,6 +27,7 @@ export default function PracticeScreen() {
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
   const { profile } = useAuthContext()
+  const { speak } = useSpeech()
   const {
     currentType,
     setCurrentType,

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { userDataService } from '@/services/userDataService'
 import { ensureCardsForLevel } from '@/modules/GrammarEngine'
-import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS } from '@/types'
+import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS, languageLabels, languageFlags } from '@/types'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -20,7 +20,7 @@ const LEVELS: { value: FrenchLevel; label: string; description: string }[] = [
 ]
 
 export default function OnboardingFlow() {
-  const { user, refreshProfile } = useAuthContext()
+  const { user, refreshProfile, currentLanguage } = useAuthContext()
   const [step, setStep] = useState<Step>('welcome')
   const [name, setName] = useState('')
   const [level, setLevel] = useState<FrenchLevel>('A1')
@@ -63,12 +63,12 @@ export default function OnboardingFlow() {
       <Card className="w-full max-w-md">
         {step === 'welcome' && (
           <div className="text-center">
-            <span className="text-6xl mb-4 block">🇫🇷</span>
+            <span className="text-6xl mb-4 block">{languageFlags[currentLanguage]}</span>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               Добро пожаловать в JuLang!
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Ваш персональный помощник для изучения французского языка
+              Ваш персональный помощник для изучения языков
             </p>
             <Button onClick={() => setStep('name')} size="lg" className="w-full">
               Начать
@@ -101,7 +101,7 @@ export default function OnboardingFlow() {
         {step === 'level' && (
           <div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Ваш уровень французского
+              Ваш уровень ({languageLabels[currentLanguage]})
             </h2>
             <div className="space-y-2 mb-6">
               {LEVELS.map((l) => (

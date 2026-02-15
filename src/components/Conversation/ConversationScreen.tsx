@@ -6,10 +6,11 @@ import { startConversation, continueConversation } from '@/modules/AIService'
 import {
   startListening,
   stopListening,
-  speak,
   isSpeechRecognitionSupported,
 } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import { saveConversation } from '@/db'
+import { userDataService } from '@/services/userDataService'
 import type { Message, Conversation } from '@/types'
 import { languageTTSCodes } from '@/types'
 import Button from '@/components/ui/Button'
@@ -19,6 +20,7 @@ export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
+  const { speak } = useSpeech()
 
   const topic = searchParams.get('topic') || 'conversation libre'
   const [messages, setMessages] = useState<Message[]>([])
@@ -173,11 +175,54 @@ export default function ConversationScreen() {
 
     await saveConversation(conversation)
 
-    // Update progress
+    // Save conversation to Supabase so dashboard stats work
+    try {
+      await userDataService.createConversation({
+        id: conversationId,
+        user_id: user.id,
+        language: currentLanguage,
+        topic_id: topic,
+        ai_provider: 'openai',
+        mode,
+        started_at: conversationStartedAt.toISOString(),
+        ended_at: endedAt.toISOString(),
+        duration_ms: durationMs,
+        messages: messages.map((m) => ({
+          id: m.id,
+          role: m.role,
+          content: m.content,
+          timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
+        })),
+      })
+    } catch (err) {
+      console.error('Failed to save conversation to Supabase:', err)
+    }
+
+    // Update progress and streak
     if (progress) {
+      const today = new Date().toISOString().split('T')[0]
+      const lastActivity = progress.last_activity_date
+        ? progress.last_activity_date.split('T')[0]
+        : null
+
+      let newStreak = progress.current_streak
+      if (lastActivity !== today) {
+        // Check if last activity was yesterday (continue streak) or earlier (reset)
+        if (lastActivity) {
+          const yesterday = new Date()
+          yesterday.setDate(yesterday.getDate() - 1)
+          const yesterdayStr = yesterday.toISOString().split('T')[0]
+          newStreak = lastActivity === yesterdayStr ? newStreak + 1 : 1
+        } else {
+          newStreak = 1
+        }
+      }
+
       updateProgress({
         total_conversations: progress.total_conversations + 1,
         topics_covered: [...new Set([...progress.topics_covered, topic])],
+        current_streak: newStreak,
+        last_activity_date: today,
       })
     }
 
@@ -284,7 +329,13 @@ export default function ConversationScreen() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
-                placeholder={currentLanguage === 'en' ? 'Write in English...' : 'Écrivez en français...'}
+                placeholder={{
+                  fr: 'Écrivez en français...',
+                  en: 'Write in English...',
+                  es: 'Escribe en español...',
+                  de: 'Schreiben Sie auf Deutsch...',
+                  pt: 'Escreva em português...',
+                }[currentLanguage] || 'Write here...'}
                 className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
                 disabled={isLoading}
                 autoComplete="off"

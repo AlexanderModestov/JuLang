@@ -25,7 +25,7 @@ interface MixedExercise {
 
 export default function ExercisesScreen() {
   const navigate = useNavigate()
-  const { user } = useAuthContext()
+  const { user, currentLanguage } = useAuthContext()
   const [loading, setLoading] = useState(true)
   const [exercises, setExercises] = useState<MixedExercise[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -45,7 +45,7 @@ export default function ExercisesScreen() {
     try {
       // Get vocabulary and grammar review queues
       const [vocabQueue, grammarQueue] = await Promise.all([
-        getVocabReviewQueue(user.id),
+        getVocabReviewQueue(user.id, currentLanguage),
         getGrammarReviewQueue(user.id),
       ])
 

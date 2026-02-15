@@ -12,7 +12,7 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function ReviewScreen() {
   const navigate = useNavigate()
-  const { user, profile, progress, updateProgress } = useAuthContext()
+  const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
 
   const [cards, setCards] = useState<GrammarCard[]>([])
   const [allCards, setAllCards] = useState<GrammarCard[]>([])
@@ -31,7 +31,7 @@ export default function ReviewScreen() {
 
     // Ensure cards exist for user's level
     const frenchLevel = profile.french_level || 'A1'
-    await ensureCardsForLevel(user.id, frenchLevel)
+    await ensureCardsForLevel(user.id, frenchLevel, currentLanguage)
 
     const dueCards = await getCardsDueToday(user.id)
     const all = await getAllCards(user.id)

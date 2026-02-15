@@ -3,6 +3,7 @@ import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllGrammarTopics } from '@/modules/GrammarEngine'
 import type { GrammarTopic, GrammarGroup, FrenchLevel } from '@/types'
+import { languageLabels } from '@/types'
 import Card from '@/components/ui/Card'
 import TopicGroup from './TopicGroup'
 import { groupLabels, groupOrder } from './constants'
@@ -10,14 +11,14 @@ import { groupLabels, groupOrder } from './constants'
 const LEVEL_ORDER: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function GrammarScreen() {
-  const { profile } = useAuthContext()
+  const { profile, currentLanguage } = useAuthContext()
 
   // Set teacher chat context for grammar screen
   useTeacherContext({ screen: 'grammar' })
 
   // Get topics filtered by user's level and below
   const topics = useMemo(() => {
-    const allTopics = getAllGrammarTopics() as GrammarTopic[]
+    const allTopics = getAllGrammarTopics(currentLanguage) as GrammarTopic[]
     const userLevel = profile?.french_level || 'A1'
     const userLevelIndex = LEVEL_ORDER.indexOf(userLevel)
     const allowedLevels = LEVEL_ORDER.slice(0, userLevelIndex + 1)
@@ -25,7 +26,7 @@ export default function GrammarScreen() {
     return allTopics.filter((topic) =>
       allowedLevels.includes(topic.level as FrenchLevel)
     )
-  }, [profile?.french_level])
+  }, [profile?.french_level, currentLanguage])
 
   // Group topics by their group field
   const groupedTopics = useMemo(() => {
@@ -80,7 +81,7 @@ export default function GrammarScreen() {
 
       <Card padding="md">
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Справочник грамматических правил французского языка. Выберите тему для
+          Справочник грамматических правил. {languageLabels[currentLanguage]}. Выберите тему для
           изучения.
         </p>
       </Card>

@@ -10,9 +10,10 @@ import {
   getCardsUpToLevel,
   scheduleVocabularyCardAuto,
   pickRandomExerciseType,
+  getCardWord,
+  toLocalVocabularyProgress,
 } from '@/modules/VocabularyEngine'
-// Auto-SRS: no manual quality rating needed
-import { db } from '@/db'
+import { userDataService } from '@/services/userDataService'
 import { useVocabularyFilters } from '@/hooks/useVocabularyFilters'
 import NewCardView from './NewCardView'
 import ReviewSession from './ReviewSession'
@@ -28,7 +29,7 @@ type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
-  const { user, profile } = useAuthContext()
+  const { user, profile, currentLanguage } = useAuthContext()
   const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
@@ -51,27 +52,36 @@ export default function VocabularyScreen() {
   useTeacherContext({
     screen: 'vocabulary',
     itemId: selectedWord?.id,
-    itemPreview: selectedWord ? `${selectedWord.french} - ${selectedWord.russian}` : undefined,
+    itemPreview: selectedWord ? `${getCardWord(selectedWord)} - ${selectedWord.russian}` : undefined,
   })
 
   useEffect(() => {
     if (user && profile) loadData()
-  }, [user, profile])
+  }, [user, profile, currentLanguage])
 
   const loadData = async () => {
     if (!user || !profile) return
     setLoading(true)
-    const frenchLevel = profile.french_level || 'A1'
-    const [nc, rq, progress] = await Promise.all([
-      getNewCards(user.id, frenchLevel),
-      getReviewQueue(user.id),
-      db.vocabularyProgress.where('userId').equals(user.id).toArray(),
-    ])
-    setNewCards(nc)
-    setReviewQueue(rq)
-    setAllCards(getCardsUpToLevel(frenchLevel))
-    setAllProgress(progress)
-    setLoading(false)
+    try {
+      const frenchLevel = profile.french_level || 'A1'
+      const [nc, rq, supabaseProgress] = await Promise.all([
+        getNewCards(user.id, frenchLevel, currentLanguage),
+        getReviewQueue(user.id, currentLanguage),
+        userDataService.getVocabularyProgress(user.id),
+      ])
+      // Filter by language in JS (matching pattern used by useHomeStats and getNewCards)
+      const progress = supabaseProgress
+        .filter((p) => (p as any).language === currentLanguage)
+        .map(toLocalVocabularyProgress)
+      setNewCards(nc)
+      setReviewQueue(rq)
+      setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
+      setAllProgress(progress)
+    } catch (error) {
+      console.error('Failed to load vocabulary data:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   // Apply filters to get the filtered list
@@ -80,8 +90,8 @@ export default function VocabularyScreen() {
   }, [allCards, allProgress, applyFilters])
 
   const handleCardLearned = async (cardId: string) => {
-    if (!user) return
-    await addCardToProgress(user.id, cardId)
+    if (!user) return undefined
+    return await addCardToProgress(user.id, cardId, currentLanguage)
   }
 
   const handleComplete = () => {
@@ -129,12 +139,13 @@ export default function VocabularyScreen() {
     // Schedule the card automatically (correct=4, incorrect=0)
     await scheduleVocabularyCardAuto(progressEntry.id, correct)
 
-    // Reload progress data
-    const updatedProgress = await db.vocabularyProgress
-      .where('userId')
-      .equals(user.id)
-      .toArray()
-    setAllProgress(updatedProgress)
+    // Reload progress data from Supabase
+    const updatedSupabase = await userDataService.getVocabularyProgress(user.id)
+    setAllProgress(
+      updatedSupabase
+        .filter((p) => (p as any).language === currentLanguage)
+        .map(toLocalVocabularyProgress)
+    )
 
     // Show result briefly, then auto-transition
     setLastPracticeCorrect(correct)
@@ -255,7 +266,7 @@ export default function VocabularyScreen() {
             ← Назад
           </Button>
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-            {selectedWord.french}
+            {getCardWord(selectedWord)}
           </h1>
           <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
             {filteredWordsIndex + 1} / {filteredWords.length}

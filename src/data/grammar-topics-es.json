@@ -1,0 +1,643 @@
+{
+  "categories": [
+    "articles",
+    "verbs",
+    "pronouns",
+    "tenses",
+    "adjectives",
+    "prepositions",
+    "syntax"
+  ],
+  "topics": [
+    {
+      "id": "es-definite-articles",
+      "title": "Artículos definidos (el, la, los, las)",
+      "titleRu": "Определённые артикли",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Определённые артикли в испанском: el (муж. ед.), la (жен. ед.), los (муж. мн.), las (жен. мн.). Используются, когда речь идёт о конкретном предмете. Артикль el используется перед существительными женского рода, начинающимися с ударного а/ha: el agua, el águila.",
+        "examples": [
+          { "es": "El libro está en la mesa.", "ru": "Книга на столе." },
+          { "es": "Las casas son grandes.", "ru": "Дома большие." },
+          { "es": "Me gusta el café.", "ru": "Мне нравится кофе." }
+        ],
+        "commonMistakes": [
+          "Путают род: la libro → el libro (libro — мужской род)",
+          "Забывают множественное число артикля: el casas → las casas",
+          "El agua (жен. род с el): la agua → el agua, но las aguas"
+        ]
+      }
+    },
+    {
+      "id": "es-indefinite-articles",
+      "title": "Artículos indefinidos (un, una, unos, unas)",
+      "titleRu": "Неопределённые артикли",
+      "level": "A1",
+      "category": "articles",
+      "group": "articles",
+      "content": {
+        "rule": "Неопределённые артикли: un (муж. ед.), una (жен. ед.), unos (муж. мн.), unas (жен. мн.). Используются при первом упоминании предмета или когда речь идёт о неконкретном представителе класса. Не используются с профессиями после ser: Soy profesor.",
+        "examples": [
+          { "es": "Tengo un gato.", "ru": "У меня есть кот." },
+          { "es": "Ella es una buena amiga.", "ru": "Она хороший друг." },
+          { "es": "Hay unos libros en la mesa.", "ru": "На столе есть несколько книг." }
+        ],
+        "commonMistakes": [
+          "Артикль с профессиями: Soy un profesor → Soy profesor",
+          "Путают род: una problema → un problema (problema — мужской род)",
+          "Пропуск во множественном числе: Tengo libros vs Tengo unos libros (разный смысл)"
+        ]
+      }
+    },
+    {
+      "id": "es-ser-estar-present",
+      "title": "Ser y Estar en presente",
+      "titleRu": "Ser и Estar в настоящем времени",
+      "level": "A1",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Оба глагола означают «быть», но используются по-разному. Ser — для постоянных свойств, происхождения, профессии, времени. Estar — для местоположения, временных состояний, эмоций, результата действия. Формы ser: soy, eres, es, somos, sois, son. Формы estar: estoy, estás, está, estamos, estáis, están.",
+        "examples": [
+          { "es": "Soy ruso. Estoy en Madrid.", "ru": "Я русский. Я в Мадриде." },
+          { "es": "Ella es alta. Ella está cansada.", "ru": "Она высокая. Она устала." },
+          { "es": "La fiesta es en mi casa. Mi casa está lejos.", "ru": "Вечеринка у меня дома. Мой дом далеко." }
+        ],
+        "commonMistakes": [
+          "Местоположение с ser: Soy en Madrid → Estoy en Madrid",
+          "Временное состояние с ser: Soy cansado → Estoy cansado",
+          "Профессия с estar: Estoy profesor → Soy profesor"
+        ]
+      }
+    },
+    {
+      "id": "es-present-regular",
+      "title": "Presente de indicativo (verbos regulares)",
+      "titleRu": "Настоящее время (правильные глаголы)",
+      "level": "A1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Три группы спряжения: -ar (hablar), -er (comer), -ir (vivir). Окончания -ar: -o, -as, -a, -amos, -áis, -an. Окончания -er: -o, -es, -e, -emos, -éis, -en. Окончания -ir: -o, -es, -e, -imos, -ís, -en.",
+        "examples": [
+          { "es": "Yo hablo español.", "ru": "Я говорю по-испански." },
+          { "es": "Ella come mucho.", "ru": "Она много ест." },
+          { "es": "Nosotros vivimos en Moscú.", "ru": "Мы живём в Москве." }
+        ],
+        "commonMistakes": [
+          "Неправильное окончание: Yo hablas → Yo hablo",
+          "Путают -er и -ir окончания: Él vive → верно (не vive → vive)",
+          "Забывают менять окончания: Yo comer → Yo como"
+        ]
+      }
+    },
+    {
+      "id": "es-subject-pronouns",
+      "title": "Pronombres personales de sujeto",
+      "titleRu": "Личные местоимения (подлежащие)",
+      "level": "A1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Личные местоимения: yo (я), tú (ты), él/ella/usted (он/она/Вы), nosotros/nosotras (мы), vosotros/vosotras (вы), ellos/ellas/ustedes (они/Вы мн.). В испанском местоимения часто опускаются, так как форма глагола уже указывает на лицо.",
+        "examples": [
+          { "es": "Yo soy estudiante.", "ru": "Я студент." },
+          { "es": "¿Tú hablas inglés?", "ru": "Ты говоришь по-английски?" },
+          { "es": "Hablamos ruso. (= Nosotros hablamos)", "ru": "Мы говорим по-русски." }
+        ],
+        "commonMistakes": [
+          "Избыточное использование местоимений: Yo hablo, yo como, yo vivo → Hablo, como, vivo",
+          "Путают usted/tú: Tú habla → Tú hablas (или Usted habla)",
+          "Забывают женскую форму: Nosotros somos (о группе женщин) → Nosotras somos"
+        ]
+      }
+    },
+    {
+      "id": "es-negation",
+      "title": "La negación (no)",
+      "titleRu": "Отрицание",
+      "level": "A1",
+      "category": "syntax",
+      "group": "negation",
+      "content": {
+        "rule": "Отрицание образуется с помощью частицы 'no' перед глаголом. В испанском допускается двойное отрицание: No quiero nada (Я ничего не хочу). Отрицательные слова: nada (ничто), nadie (никто), nunca (никогда), tampoco (тоже не).",
+        "examples": [
+          { "es": "No hablo francés.", "ru": "Я не говорю по-французски." },
+          { "es": "No quiero nada.", "ru": "Я ничего не хочу." },
+          { "es": "Nunca he estado en España.", "ru": "Я никогда не был в Испании." }
+        ],
+        "commonMistakes": [
+          "No после глагола: Hablo no → No hablo",
+          "Одиночное отрицание по аналогии с английским: No quiero algo → No quiero nada",
+          "Пропуск no перед глаголом: Nada quiero → No quiero nada (или Nada quiero — литературный стиль)"
+        ]
+      }
+    },
+    {
+      "id": "es-adjective-agreement",
+      "title": "Concordancia de adjetivos",
+      "titleRu": "Согласование прилагательных",
+      "level": "A1",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Прилагательные в испанском согласуются с существительным в роде и числе. Обычно стоят ПОСЛЕ существительного. Окончания: -o/-a (муж./жен.), -os/-as (мн.). Прилагательные на -e и согласную не меняются по роду: grande, difícil.",
+        "examples": [
+          { "es": "Una casa bonita.", "ru": "Красивый дом." },
+          { "es": "Los libros interesantes.", "ru": "Интересные книги." },
+          { "es": "Un problema difícil.", "ru": "Сложная проблема." }
+        ],
+        "commonMistakes": [
+          "Нет согласования: casa bonito → casa bonita",
+          "Прилагательное перед существительным: bonita casa → casa bonita (обычно после)",
+          "Неправильный род: la problema difícila → el problema difícil"
+        ]
+      }
+    },
+    {
+      "id": "es-preterite",
+      "title": "Pretérito indefinido",
+      "titleRu": "Простое прошедшее время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Pretérito indefinido описывает завершённые действия в прошлом. Окончания -ar: -é, -aste, -ó, -amos, -asteis, -aron. Окончания -er/-ir: -í, -iste, -ió, -imos, -isteis, -ieron. Неправильные: fui (ir/ser), hice (hacer), tuve (tener), estuve (estar).",
+        "examples": [
+          { "es": "Ayer hablé con mi madre.", "ru": "Вчера я поговорил с мамой." },
+          { "es": "Ella comió en un restaurante.", "ru": "Она поела в ресторане." },
+          { "es": "Fui al cine el sábado.", "ru": "Я ходил в кино в субботу." }
+        ],
+        "commonMistakes": [
+          "Забывают ударение: hablo (наст.) vs habló (прош.)",
+          "Неправильные формы: yo hací → yo hice",
+          "Путают с imperfecto: Ayer llovía → Ayer llovió (завершённое действие)"
+        ]
+      }
+    },
+    {
+      "id": "es-imperfect",
+      "title": "Pretérito imperfecto",
+      "titleRu": "Прошедшее незавершённое время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Imperfecto описывает привычные, повторяющиеся действия в прошлом и фон для других событий. Окончания -ar: -aba, -abas, -aba, -ábamos, -abais, -aban. Окончания -er/-ir: -ía, -ías, -ía, -íamos, -íais, -ían. Неправильные: ser (era), ir (iba), ver (veía).",
+        "examples": [
+          { "es": "Cuando era niño, jugaba mucho.", "ru": "Когда я был ребёнком, я много играл." },
+          { "es": "Ella siempre comía a las dos.", "ru": "Она всегда ела в два часа." },
+          { "es": "Llovía cuando salí de casa.", "ru": "Шёл дождь, когда я вышел из дома." }
+        ],
+        "commonMistakes": [
+          "Для однократных действий: Ayer comía en el restaurante → Ayer comí (indefinido)",
+          "Неправильные формы: yo sería → yo era (imperfecto ser)",
+          "Путают с indefinido: De niño fui al parque cada día → De niño iba al parque (привычка)"
+        ]
+      }
+    },
+    {
+      "id": "es-present-progressive",
+      "title": "Presente progresivo (estar + gerundio)",
+      "titleRu": "Настоящее продолженное время",
+      "level": "A2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Estar + герундий (-ando для -ar, -iendo для -er/-ir) описывает действие, происходящее прямо сейчас. Герундий не изменяется. Неправильные формы: leyendo (leer), durmiendo (dormir), pidiendo (pedir).",
+        "examples": [
+          { "es": "Estoy leyendo un libro.", "ru": "Я сейчас читаю книгу." },
+          { "es": "Ella está trabajando desde casa.", "ru": "Она работает из дома." },
+          { "es": "¿Qué estás haciendo?", "ru": "Что ты делаешь?" }
+        ],
+        "commonMistakes": [
+          "Без estar: Leyendo un libro → Estoy leyendo un libro",
+          "Неправильный герундий: comiendo → верно, но leendo → leyendo",
+          "Для привычек: Estoy trabajando aquí (= сейчас) vs Trabajo aquí (= вообще)"
+        ]
+      }
+    },
+    {
+      "id": "es-reflexive-verbs",
+      "title": "Verbos reflexivos",
+      "titleRu": "Возвратные глаголы",
+      "level": "A2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Возвратные глаголы имеют окончание -se в инфинитиве (lavarse, vestirse). Возвратные местоимения: me, te, se, nos, os, se. Местоимение ставится перед спрягаемым глаголом или присоединяется к инфинитиву/герундию.",
+        "examples": [
+          { "es": "Me levanto a las siete.", "ru": "Я встаю в семь часов." },
+          { "es": "Ella se viste rápido.", "ru": "Она одевается быстро." },
+          { "es": "Voy a ducharme.", "ru": "Я собираюсь принять душ." }
+        ],
+        "commonMistakes": [
+          "Пропуск местоимения: Levanto a las siete → Me levanto a las siete",
+          "Неправильное местоимение: Yo se lavo → Yo me lavo",
+          "Порядок с инфинитивом: Me voy a duchar = Voy a ducharme (оба верны)"
+        ]
+      }
+    },
+    {
+      "id": "es-object-pronouns",
+      "title": "Pronombres de objeto directo e indirecto",
+      "titleRu": "Местоимения прямого и косвенного дополнения",
+      "level": "A2",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Прямое дополнение: me, te, lo/la, nos, os, los/las. Косвенное: me, te, le, nos, os, les. Местоимения ставятся перед глаголом. Когда оба вместе, косвенное идёт первым. Le/les перед lo/la/los/las меняется на se.",
+        "examples": [
+          { "es": "¿El libro? Lo tengo aquí.", "ru": "Книга? Она у меня здесь." },
+          { "es": "Le di el regalo.", "ru": "Я дал ему подарок." },
+          { "es": "Se lo dije ayer.", "ru": "Я сказал ему это вчера." }
+        ],
+        "commonMistakes": [
+          "Местоимение после глагола: Tengo lo → Lo tengo",
+          "Le lo вместо se lo: Le lo dije → Se lo dije",
+          "Путают lo/le: Lo dije (ему сказал) → Le dije (верно для косвенного)"
+        ]
+      }
+    },
+    {
+      "id": "es-gustar",
+      "title": "Gustar y verbos similares",
+      "titleRu": "Gustar и подобные глаголы",
+      "level": "A2",
+      "category": "verbs",
+      "group": "tenses",
+      "content": {
+        "rule": "Gustar буквально значит «нравиться» и имеет обратную конструкцию: Me gusta el café (Мне нравится кофе). Используется с косвенными местоимениями: me, te, le, nos, os, les. Gusta (ед.ч.) / gustan (мн.ч.) в зависимости от того, что нравится. Аналогично: encantar, interesar, doler, parecer.",
+        "examples": [
+          { "es": "Me gusta la música.", "ru": "Мне нравится музыка." },
+          { "es": "¿Te gustan los gatos?", "ru": "Тебе нравятся коты?" },
+          { "es": "Nos encanta viajar.", "ru": "Мы обожаем путешествовать." }
+        ],
+        "commonMistakes": [
+          "Прямой порядок: Yo gusto café → Me gusta el café",
+          "Gusta с множественным: Me gusta los libros → Me gustan los libros",
+          "Пропуск артикля: Me gusta música → Me gusta la música"
+        ]
+      }
+    },
+    {
+      "id": "es-subjunctive-present",
+      "title": "Presente de subjuntivo",
+      "titleRu": "Настоящее сослагательное наклонение",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Subjuntivo используется для выражения желаний, сомнений, эмоций и после определённых конструкций (quiero que, espero que, es necesario que). Образуется: -ar → -e, -es, -e, -emos, -éis, -en. -er/-ir → -a, -as, -a, -amos, -áis, -an. Неправильные: sea (ser), tenga (tener), haga (hacer).",
+        "examples": [
+          { "es": "Quiero que vengas a la fiesta.", "ru": "Я хочу, чтобы ты пришёл на вечеринку." },
+          { "es": "Espero que estés bien.", "ru": "Надеюсь, у тебя всё хорошо." },
+          { "es": "Es importante que estudies.", "ru": "Важно, чтобы ты учился." }
+        ],
+        "commonMistakes": [
+          "Indicativo вместо subjuntivo: Quiero que vienes → Quiero que vengas",
+          "Один субъект — нет que: Quiero que yo vaya → Quiero ir",
+          "Неправильные формы: Quiero que sé → Quiero que sea"
+        ]
+      }
+    },
+    {
+      "id": "es-future-simple",
+      "title": "Futuro simple",
+      "titleRu": "Простое будущее время",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Будущее время образуется добавлением окончаний к инфинитиву: -é, -ás, -á, -emos, -éis, -án. Неправильные основы: tendré (tener), vendré (venir), diré (decir), haré (hacer), sabré (saber), podré (poder). Также используется для предположений о настоящем.",
+        "examples": [
+          { "es": "Mañana iré al cine.", "ru": "Завтра я пойду в кино." },
+          { "es": "¿Vendrás a la fiesta?", "ru": "Ты придёшь на вечеринку?" },
+          { "es": "Serán las tres. (предположение)", "ru": "Сейчас, наверное, три часа." }
+        ],
+        "commonMistakes": [
+          "Неправильная основа: teneré → tendré",
+          "Ir a + infinitivo для ближайшего будущего: Voy a comer (скоро) vs Comeré (вообще)",
+          "Путают с условными: Si vendré → Si vengo (в условных — настоящее время)"
+        ]
+      }
+    },
+    {
+      "id": "es-conditional",
+      "title": "Condicional simple",
+      "titleRu": "Условное наклонение",
+      "level": "B1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Условное наклонение образуется добавлением к инфинитиву окончаний: -ía, -ías, -ía, -íamos, -íais, -ían. Те же неправильные основы, что у будущего: tendría, vendría, diría. Используется для вежливых просьб, советов и нереальных условий.",
+        "examples": [
+          { "es": "Me gustaría un café.", "ru": "Я бы хотел кофе." },
+          { "es": "¿Podrías ayudarme?", "ru": "Не мог бы ты мне помочь?" },
+          { "es": "Si tuviera dinero, viajaría.", "ru": "Если бы у меня были деньги, я бы путешествовал." }
+        ],
+        "commonMistakes": [
+          "Неправильная основа: hacería → haría",
+          "Condicional после si: Si tendría → Si tuviera (subjuntivo после si)",
+          "Путают с imperfecto: Quería un café (хотел) vs Querría un café (хотел бы)"
+        ]
+      }
+    },
+    {
+      "id": "es-comparatives",
+      "title": "Comparativos y superlativos",
+      "titleRu": "Сравнительная и превосходная степень",
+      "level": "B1",
+      "category": "adjectives",
+      "group": "adjectives",
+      "content": {
+        "rule": "Сравнительная степень: más/menos + прилагательное + que. Превосходная: el/la más + прилагательное + de. Неправильные: mejor (лучше), peor (хуже), mayor (старше/больше), menor (младше/меньше). Равенство: tan + adj + como.",
+        "examples": [
+          { "es": "Ella es más alta que yo.", "ru": "Она выше меня." },
+          { "es": "Este libro es el mejor de todos.", "ru": "Эта книга лучшая из всех." },
+          { "es": "Soy tan alto como tú.", "ru": "Я такой же высокий, как ты." }
+        ],
+        "commonMistakes": [
+          "Más mejor: Es más mejor → Es mejor (уже сравнительная)",
+          "De вместо que: Más alto de mí → Más alto que yo",
+          "Tan...que вместо tan...como: Tan alto que tú → Tan alto como tú"
+        ]
+      }
+    },
+    {
+      "id": "es-relative-clauses",
+      "title": "Oraciones de relativo (que, quien, cual)",
+      "titleRu": "Относительные придаточные предложения",
+      "level": "B1",
+      "category": "pronouns",
+      "group": "pronouns",
+      "content": {
+        "rule": "Que — самое распространённое относительное местоимение (для людей и предметов). Quien/quienes — только для людей (после предлогов). El/la cual, los/las cuales — формальный стиль. Donde — для мест. Cuyo/a — притяжательное (чей).",
+        "examples": [
+          { "es": "El hombre que vive aquí es simpático.", "ru": "Мужчина, который живёт здесь, приятный." },
+          { "es": "La persona con quien hablé.", "ru": "Человек, с которым я разговаривал." },
+          { "es": "La ciudad donde nací.", "ru": "Город, где я родился." }
+        ],
+        "commonMistakes": [
+          "Quien для предметов: El libro quien → El libro que",
+          "Лишнее местоимение: El hombre que lo vi → El hombre que vi",
+          "Cuyo не согласован: La mujer cuyo hijo → La mujer cuyo hijo (согласуется с обладаемым)"
+        ]
+      }
+    },
+    {
+      "id": "es-por-para",
+      "title": "Por vs Para",
+      "titleRu": "Por и Para",
+      "level": "B1",
+      "category": "prepositions",
+      "group": "prepositions",
+      "content": {
+        "rule": "Para — цель, назначение, получатель, срок (para ti, para mañana, para aprender). Por — причина, обмен, движение через, средство, период (por eso, por la mañana, por teléfono). Мнемоника: Para = destination/purpose, Por = reason/exchange.",
+        "examples": [
+          { "es": "Este regalo es para ti.", "ru": "Этот подарок для тебя." },
+          { "es": "Gracias por tu ayuda.", "ru": "Спасибо за твою помощь." },
+          { "es": "Estudio para aprender. Estudio por necesidad.", "ru": "Я учусь, чтобы узнать. Я учусь по необходимости." }
+        ],
+        "commonMistakes": [
+          "Причина с para: Llegué tarde para el tráfico → por el tráfico",
+          "Получатель с por: Compré un libro por ti → para ti",
+          "Por la mañana (утром) vs para la mañana (к утру)"
+        ]
+      }
+    },
+    {
+      "id": "es-subjunctive-imperfect",
+      "title": "Pretérito imperfecto de subjuntivo",
+      "titleRu": "Прошедшее сослагательное наклонение",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Образуется от основы 3-го лица мн.ч. pretérito indefinido: hablaron → hablara/hablase. Две формы: -ra/-se (обе верны, -ra более распространена). Используется после si для нереальных условий, после quería que, para que в прошлом.",
+        "examples": [
+          { "es": "Si tuviera tiempo, iría al cine.", "ru": "Если бы у меня было время, я бы пошёл в кино." },
+          { "es": "Quería que vinieras.", "ru": "Я хотел, чтобы ты пришёл." },
+          { "es": "Si fuera rico, viajaría por el mundo.", "ru": "Если бы я был богатым, я бы путешествовал по миру." }
+        ],
+        "commonMistakes": [
+          "Condicional после si: Si tendría → Si tuviera",
+          "Indicativo после quería que: Quería que vienes → Quería que vinieras",
+          "Неправильная основа: Si haría → Si hiciera (от hicieron)"
+        ]
+      }
+    },
+    {
+      "id": "es-conditional-perfect",
+      "title": "Condicional compuesto",
+      "titleRu": "Сложное условное наклонение",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Condicional compuesto (habría + participio) описывает нереальные действия в прошлом (что бы произошло). Используется в условных третьего типа: Si hubiera sabido, habría venido.",
+        "examples": [
+          { "es": "Si hubiera sabido, habría ayudado.", "ru": "Если бы я знал, я бы помог." },
+          { "es": "Habría venido, pero estaba ocupado.", "ru": "Я бы пришёл, но был занят." },
+          { "es": "¿Qué habrías hecho tú?", "ru": "Что бы ты сделал?" }
+        ],
+        "commonMistakes": [
+          "Habría после si: Si habría sabido → Si hubiera sabido",
+          "Condicional simple вместо compuesto: Habría ido ayer (о прошлом) — верно",
+          "Путают habría с hubiera: Si hubiera sabido, hubiera ayudado (разговорное) vs habría ayudado (литературное)"
+        ]
+      }
+    },
+    {
+      "id": "es-passive-voice",
+      "title": "Voz pasiva",
+      "titleRu": "Страдательный залог",
+      "level": "B2",
+      "category": "syntax",
+      "group": "tenses",
+      "content": {
+        "rule": "Два вида пассива: 1) ser + participio (La carta fue escrita por María) — для действий с агентом. 2) Se pasiva (Se habla español) — безличный пассив, более распространённый в разговорной речи. Причастие согласуется в роде и числе с подлежащим.",
+        "examples": [
+          { "es": "La carta fue escrita por María.", "ru": "Письмо было написано Марией." },
+          { "es": "Aquí se habla español.", "ru": "Здесь говорят по-испански." },
+          { "es": "Los libros fueron publicados en 2020.", "ru": "Книги были опубликованы в 2020 году." }
+        ],
+        "commonMistakes": [
+          "Без согласования: La carta fue escrito → fue escrita",
+          "Ser вместо estar для результата: La puerta es abierta → La puerta está abierta (состояние)",
+          "Se pasiva с множественным: Se vende pisos → Se venden pisos"
+        ]
+      }
+    },
+    {
+      "id": "es-reported-speech",
+      "title": "Estilo indirecto",
+      "titleRu": "Косвенная речь",
+      "level": "B2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "При передаче слов: presente → imperfecto, indefinido → pluscuamperfecto, futuro → condicional. Меняются местоимения и указатели времени (hoy → ese día, aquí → allí, mañana → al día siguiente). Dijo que + indicativo, preguntó si/qué + indicativo.",
+        "examples": [
+          { "es": "Dijo: «Estoy cansado» → Dijo que estaba cansado.", "ru": "Он сказал: «Я устал» → Он сказал, что устал." },
+          { "es": "Dijo: «Vendré mañana» → Dijo que vendría al día siguiente.", "ru": "Он сказал: «Приду завтра» → Он сказал, что придёт на следующий день." },
+          { "es": "Preguntó: «¿Estás bien?» → Preguntó si estaba bien.", "ru": "Он спросил: «Ты в порядке?» → Он спросил, в порядке ли я." }
+        ],
+        "commonMistakes": [
+          "Без сдвига времени: Dijo que está cansado → estaba cansado",
+          "Que вместо si в вопросах: Preguntó que estaba bien → Preguntó si estaba bien",
+          "Неправильный порядок в вопросах: Preguntó si estaba yo bien → si yo estaba bien"
+        ]
+      }
+    },
+    {
+      "id": "es-past-perfect",
+      "title": "Pretérito pluscuamperfecto",
+      "titleRu": "Давнопрошедшее время",
+      "level": "B2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Pluscuamperfecto (había + participio) описывает действие, произошедшее ДО другого действия в прошлом. Había hablado, había comido, había vivido. Неправильные причастия: hecho (hacer), dicho (decir), escrito (escribir), visto (ver).",
+        "examples": [
+          { "es": "Cuando llegué, ella ya había salido.", "ru": "Когда я пришёл, она уже ушла." },
+          { "es": "Nunca había visto algo así.", "ru": "Я никогда раньше не видел такого." },
+          { "es": "Había olvidado las llaves.", "ru": "Он забыл ключи." }
+        ],
+        "commonMistakes": [
+          "Indefinido вместо pluscuamperfecto: Cuando llegué, ella salió → había salido",
+          "Неправильное причастие: había hacido → había hecho",
+          "В простых предложениях: Había terminado ayer → Terminé ayer"
+        ]
+      }
+    },
+    {
+      "id": "es-subjunctive-pluperfect",
+      "title": "Pretérito pluscuamperfecto de subjuntivo",
+      "titleRu": "Давнопрошедшее сослагательное",
+      "level": "C1",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Hubiera/hubiese + participio описывает нереальные ситуации в прошлом. Используется в условных третьего типа (Si hubiera sabido...) и для выражения сожаления (Ojalá hubiera ido). Обе формы (-ra/-se) равноправны.",
+        "examples": [
+          { "es": "Si hubiera estudiado más, habría aprobado.", "ru": "Если бы я больше учился, я бы сдал." },
+          { "es": "Ojalá hubiéramos ido a la fiesta.", "ru": "Жаль, что мы не пошли на вечеринку." },
+          { "es": "No creía que lo hubiera hecho.", "ru": "Я не верил, что он это сделал." }
+        ],
+        "commonMistakes": [
+          "Indicativo вместо subjuntivo: Si había sabido → Si hubiera sabido",
+          "Habría после si: Si habría estudiado → Si hubiera estudiado",
+          "Путают с pluscuamperfecto indicativo: No sabía que había ido (факт) vs No creía que hubiera ido (сомнение)"
+        ]
+      }
+    },
+    {
+      "id": "es-si-clauses",
+      "title": "Oraciones condicionales con si",
+      "titleRu": "Условные предложения с si",
+      "level": "C1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Три типа: 1) Si + presente, futuro/presente (реальное условие). 2) Si + imperfecto subjuntivo, condicional (нереальное настоящее). 3) Si + pluscuamperfecto subjuntivo, condicional compuesto (нереальное прошлое). Смешанные условия также возможны.",
+        "examples": [
+          { "es": "Si llueve, me quedo en casa.", "ru": "Если пойдёт дождь, я останусь дома." },
+          { "es": "Si tuviera dinero, compraría un coche.", "ru": "Если бы у меня были деньги, я бы купил машину." },
+          { "es": "Si hubiera sabido, no habría venido.", "ru": "Если бы я знал, я бы не пришёл." }
+        ],
+        "commonMistakes": [
+          "Futuro/condicional после si: Si vendré → Si vengo / Si viniera",
+          "Смешение типов: Si tengo dinero, compraría → Si tuviera dinero, compraría",
+          "Indicativo в нереальных: Si tenía dinero → Si tuviera dinero"
+        ]
+      }
+    },
+    {
+      "id": "es-advanced-subjunctive",
+      "title": "Usos avanzados del subjuntivo",
+      "titleRu": "Продвинутое использование сослагательного",
+      "level": "C1",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Subjuntivo используется после: aunque (уступительные), para que (цель), antes de que (до того как), sin que (без того чтобы), a menos que (если не), con tal de que (при условии). Также в относительных с неопределённым антецедентом: Busco a alguien que hable ruso.",
+        "examples": [
+          { "es": "Aunque llueva, iré a la playa.", "ru": "Даже если пойдёт дождь, я пойду на пляж." },
+          { "es": "Busco a alguien que hable ruso.", "ru": "Ищу кого-то, кто говорит по-русски." },
+          { "es": "Salió sin que nadie lo viera.", "ru": "Он вышел так, что никто его не видел." }
+        ],
+        "commonMistakes": [
+          "Indicativo после aunque (гипотетическое): Aunque llueve → Aunque llueva (если ещё не идёт)",
+          "Indicativo с неизвестным антецедентом: Busco a alguien que habla → que hable",
+          "Indicativo после para que: Para que viene → Para que venga"
+        ]
+      }
+    },
+    {
+      "id": "es-literary-tenses",
+      "title": "Tiempos literarios",
+      "titleRu": "Литературные времена",
+      "level": "C2",
+      "category": "tenses",
+      "group": "tenses",
+      "content": {
+        "rule": "Pretérito anterior (hube hablado) — используется в литературном стиле вместо pluscuamperfecto после cuando, apenas, en cuanto. Futuro de subjuntivo (hablare) — встречается в юридических текстах и пословицах. Практически не используются в разговорной речи.",
+        "examples": [
+          { "es": "Apenas hubo terminado, se marchó.", "ru": "Едва закончив, он ушёл." },
+          { "es": "Donde fueres, haz lo que vieres.", "ru": "В чужой монастырь со своим уставом не ходят." },
+          { "es": "Si así lo hiciere, Dios se lo premie.", "ru": "Если он так поступит, Бог его наградит." }
+        ],
+        "commonMistakes": [
+          "Использование в разговорной речи: звучит архаично",
+          "Путают pretérito anterior с pluscuamperfecto: оба описывают предшествование",
+          "Futuro de subjuntivo в повседневной речи: Si pudiere → Si pudiera (современная форма)"
+        ]
+      }
+    },
+    {
+      "id": "es-nuanced-register",
+      "title": "Registro y variación estilística",
+      "titleRu": "Регистр и стилистические вариации",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Испанский имеет множество региональных и стилистических вариантов. Voseo (vos hablás) в Аргентине. Ustedes вместо vosotros в Латинской Америке. Leísmo (le вместо lo для людей). Стилистическая инверсия: Bien lo sé yo. Формальный/неформальный регистр.",
+        "examples": [
+          { "es": "Tú hablas vs Vos hablás (Argentina).", "ru": "Ты говоришь (Испания) vs Ты говоришь (Аргентина)." },
+          { "es": "Ustedes hablan (L.A.) vs Vosotros habláis (España).", "ru": "Вы говорите (Лат. Америка) vs Вы говорите (Испания)." },
+          { "es": "Bien lo sé yo. (инверсия для эмфазы)", "ru": "Уж я-то это знаю." }
+        ],
+        "commonMistakes": [
+          "Смешение регистров: vosotros в латиноамериканском контексте",
+          "Leísmo/loísmo: Le vi (допустимо в Испании) vs Lo vi (стандарт)",
+          "Voseo с испанскими формами: Vos hablas → Vos hablás"
+        ]
+      }
+    },
+    {
+      "id": "es-cleft-sentences",
+      "title": "Construcciones enfáticas y hendidas",
+      "titleRu": "Эмфатические конструкции",
+      "level": "C2",
+      "category": "syntax",
+      "group": "questions",
+      "content": {
+        "rule": "Конструкции для выделения: 'Es...quien/que' (Fue Juan quien lo hizo), 'Lo que...es' (Lo que necesito es descansar), 'El que' (El que llegó primero fui yo). Также: ¡Si será tonto! (восклицание), инверсия (Difícil es la tarea).",
+        "examples": [
+          { "es": "Fue María quien me lo dijo.", "ru": "Именно Мария мне это сказала." },
+          { "es": "Lo que necesito es vacaciones.", "ru": "Что мне нужно — это отпуск." },
+          { "es": "Difícil es esta tarea, pero la haré.", "ru": "Сложна эта задача, но я её выполню." }
+        ],
+        "commonMistakes": [
+          "Неправильное относительное: Fue ella que → Fue ella quien/la que",
+          "Нет согласования: Lo que necesito son vacaciones (мн.ч. → son)",
+          "Избыточное использование: не всегда нужна эмфаза"
+        ]
+      }
+    }
+  ]
+}

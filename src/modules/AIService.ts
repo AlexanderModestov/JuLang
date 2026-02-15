@@ -1,7 +1,5 @@
 import type { FrenchLevel, Message, PracticeType, Language } from '@/types'
-
-// API base URL - empty for same-origin requests on Vercel
-const API_BASE = ''
+import { apiFetch } from '@/lib/apiClient'
 
 // Language display names for AI prompts
 const languageNames: Record<Language, string> = {
@@ -18,9 +16,8 @@ export async function startConversation(
   level: FrenchLevel,
   language: Language = 'fr'
 ): Promise<string> {
-  const response = await fetch(`${API_BASE}/api/conversation`, {
+  const response = await apiFetch('/api/conversation', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ action: 'start', topic, level, language, languageName: languageNames[language] }),
   })
 
@@ -39,9 +36,8 @@ export async function continueConversation(
   topic: string,
   language: Language = 'fr'
 ): Promise<string> {
-  const response = await fetch(`${API_BASE}/api/conversation`, {
+  const response = await apiFetch('/api/conversation', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       action: 'continue',
       topic,
@@ -73,9 +69,8 @@ export async function generateExercise(
   hint?: string
   translation?: string
 }> {
-  const response = await fetch(`${API_BASE}/api/exercise`, {
+  const response = await apiFetch('/api/exercise', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       action: 'generate',
       grammarTopic,
@@ -105,9 +100,8 @@ export async function checkTranslation(
   feedback: string
   grammarNotes?: string
 }> {
-  const response = await fetch(`${API_BASE}/api/exercise`, {
+  const response = await apiFetch('/api/exercise', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       action: 'check',
       grammarTopic,
@@ -135,9 +129,8 @@ export async function analyzeGrammarUsage(
   usedCorrectly: boolean
   feedback: string
 }> {
-  const response = await fetch(`${API_BASE}/api/exercise`, {
+  const response = await apiFetch('/api/exercise', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       action: 'analyze',
       grammarTopic,
@@ -164,9 +157,8 @@ export async function generateGrammarExplanation(
   explanation: string
   examples: { french: string; russian: string }[]
 }> {
-  const response = await fetch(`${API_BASE}/api/grammar`, {
+  const response = await apiFetch('/api/grammar', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ topic, level, language, languageName: languageNames[language] }),
   })
 
@@ -186,9 +178,8 @@ export async function enhanceCardExplanation(
   commonMistakes: string[],
   language: Language = 'fr'
 ): Promise<string> {
-  const response = await fetch(`${API_BASE}/api/grammar`, {
+  const response = await apiFetch('/api/grammar', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       action: 'enhance',
       topic,
@@ -221,9 +212,8 @@ export async function translateWord(
   sentence: string,
   language: Language = 'fr'
 ): Promise<WordTranslation> {
-  const response = await fetch(`${API_BASE}/api/translate-word`, {
+  const response = await apiFetch('/api/translate-word', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ word, sentence, language, languageName: languageNames[language] }),
   })
 

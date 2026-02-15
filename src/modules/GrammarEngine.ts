@@ -5,14 +5,17 @@ import { generateGrammarExplanation } from './AIService'
 import { getDefaultPracticeStats } from './PracticeEngine'
 import grammarTopicsFr from '@/data/grammar-topics.json'
 import grammarTopicsEn from '@/data/grammar-topics-en.json'
+import grammarTopicsEs from '@/data/grammar-topics-es.json'
+import grammarTopicsDe from '@/data/grammar-topics-de.json'
+import grammarTopicsPt from '@/data/grammar-topics-pt.json'
 
 // Grammar topics by language
 const grammarTopicsByLanguage: Record<Language, { categories: string[]; topics: any[] }> = {
   fr: grammarTopicsFr,
   en: grammarTopicsEn,
-  es: { categories: [], topics: [] }, // Not implemented yet
-  de: { categories: [], topics: [] }, // Not implemented yet
-  pt: { categories: [], topics: [] }, // Not implemented yet
+  es: grammarTopicsEs,
+  de: grammarTopicsDe,
+  pt: grammarTopicsPt,
 }
 
 type SupabaseGrammarCard = Database['public']['Tables']['grammar_cards']['Row']
@@ -185,9 +188,9 @@ export async function createCardFromStatic(
 ): Promise<GrammarCard> {
   const content = topic.content
 
-  // Handle both French (fr) and English (en) example formats
+  // Handle example formats for all languages (fr, en, es, de, pt)
   const examples = content?.examples.map((e: any) => ({
-    french: e.fr || e.en || '', // Use fr for French, en for English
+    french: e.fr || e.en || e.es || e.de || e.pt || '',
     russian: e.ru,
   })) || []
 

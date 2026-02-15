@@ -1,4 +1,5 @@
 import type { VocabularyCard } from '@/types'
+import { getCardWord } from '@/modules/VocabularyEngine'
 import { DifficultyStars, statusConfig, type LearningStatus } from './WordCard'
 
 interface VocabularyListItemProps {
@@ -33,7 +34,7 @@ export default function VocabularyListItem({
           </span>
         )}
         <span className="font-medium text-gray-900 dark:text-white">
-          {word.french}
+          {getCardWord(word)}
         </span>
         <span className="text-gray-400 dark:text-gray-500 mx-2">—</span>
         <span className="text-gray-600 dark:text-gray-400 truncate">
