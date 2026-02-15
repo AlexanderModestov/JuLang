@@ -3,8 +3,8 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { getCardsDueToday, getAllCards } from '@/db'
 import { scheduleCard, getQualityLabel, formatInterval } from '@/modules/SRSEngine'
-import { ensureCardsForLevel } from '@/modules/GrammarEngine'
-import type { GrammarCard, SRSQuality, FrenchLevel } from '@/types'
+import { ensureCardsForLevel, getGrammarTopicById } from '@/modules/GrammarEngine'
+import type { GrammarCard, GrammarTopic, SRSQuality, FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
@@ -275,39 +275,56 @@ export default function ReviewScreen() {
         </div>
 
         {/* Back (answer) */}
-        {showAnswer && (
-          <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
-              {currentCard.explanation}
-            </p>
-            {currentCard.examples.length > 0 && (
-              <div className="space-y-2 mb-4">
-                {currentCard.examples.map((ex, i) => (
-                  <div key={i} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                    <p className="font-medium text-gray-900 dark:text-white">
-                      {ex.french}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {ex.russian}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-            {currentCard.commonMistakes.length > 0 && (
-              <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
-                <p className="text-sm font-medium text-red-800 dark:text-red-300 mb-1">
-                  Частые ошибки:
-                </p>
-                <ul className="text-sm text-red-700 dark:text-red-400 list-disc list-inside">
-                  {currentCard.commonMistakes.map((mistake, i) => (
-                    <li key={i}>{mistake}</li>
+        {showAnswer && (() => {
+          const staticTopic = getGrammarTopicById(currentCard.topicId, currentLanguage) as GrammarTopic | undefined
+          const formation = staticTopic?.content?.formation
+          return (
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                {currentCard.explanation}
+              </p>
+
+              {/* Formation (brief) */}
+              {formation && (
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+                    Образование:
+                  </p>
+                  <code className="text-sm font-mono text-gray-900 dark:text-white">
+                    {formation.formula}
+                  </code>
+                </div>
+              )}
+
+              {currentCard.examples.length > 0 && (
+                <div className="space-y-2 mb-4">
+                  {currentCard.examples.slice(0, 3).map((ex, i) => (
+                    <div key={i} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {ex.french}
+                      </p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        {ex.russian}
+                      </p>
+                    </div>
                   ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
+                </div>
+              )}
+              {currentCard.commonMistakes.length > 0 && (
+                <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+                  <p className="text-sm font-medium text-red-800 dark:text-red-300 mb-1">
+                    Частые ошибки:
+                  </p>
+                  <ul className="text-sm text-red-700 dark:text-red-400 list-disc list-inside">
+                    {currentCard.commonMistakes.map((mistake, i) => (
+                      <li key={i}>{mistake}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )
+        })()}
       </Card>
 
       {/* Actions */}
