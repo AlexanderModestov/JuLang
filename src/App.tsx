@@ -10,6 +10,8 @@ import PracticeScreen from './components/GrammarPractice/PracticeScreen'
 import TopicScreen from './components/TopicSelection/TopicScreen'
 import SettingsScreen from './components/Settings/SettingsScreen'
 import VocabularyScreen from './components/Vocabulary/VocabularyScreen'
+import ExercisesScreen from './components/Exercises/ExercisesScreen'
+import ExerciseSession from './components/Exercises/ExerciseSession'
 import OnboardingFlow from './components/Onboarding/OnboardingFlow'
 import TeacherChatButton from './components/TeacherChat/TeacherChatButton'
 import TeacherChatWidget from './components/TeacherChat/TeacherChatWidget'
@@ -56,7 +58,8 @@ function App() {
         {/* Redirect old /review routes to new /grammar routes */}
         <Route path="/review" element={<Navigate to="/grammar" replace />} />
         <Route path="/review/:topicId" element={<ReviewTopicRedirect />} />
-        <Route path="/exercises" element={<PracticeScreen />} />
+        <Route path="/exercises" element={<ExercisesScreen />} />
+        <Route path="/exercises/session" element={<ExerciseSession />} />
         <Route path="/practice/:cardId" element={<PracticeScreen />} />
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="*" element={<Navigate to="/" replace />} />

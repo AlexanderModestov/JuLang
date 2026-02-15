@@ -352,6 +352,93 @@ export function getDefaultTeacherLanguage(level: FrenchLevel): TeacherLanguage {
   }
 }
 
+// Exercise types
+export type ExerciseType = 'multiple_choice' | 'fill_blank' | 'translate' | 'matching'
+
+export interface ExerciseBase {
+  id: string
+  topicId: string
+  level: FrenchLevel
+  type: ExerciseType
+  explanation: string
+}
+
+export interface ExerciseMultipleChoice extends ExerciseBase {
+  type: 'multiple_choice'
+  question: string
+  options: string[]
+  correctAnswer: string
+}
+
+export interface ExerciseFillBlank extends ExerciseBase {
+  type: 'fill_blank'
+  question: string
+  correctAnswer: string
+}
+
+export interface ExerciseTranslate extends ExerciseBase {
+  type: 'translate'
+  question: string
+  correctAnswer: string
+  acceptableAnswers?: string[]
+}
+
+export interface ExerciseMatchingPair {
+  left: string
+  right: string
+}
+
+export interface ExerciseMatching extends ExerciseBase {
+  type: 'matching'
+  instruction: string
+  pairs: ExerciseMatchingPair[]
+}
+
+export type Exercise = ExerciseMultipleChoice | ExerciseFillBlank | ExerciseTranslate | ExerciseMatching
+
+export interface ExerciseProgress {
+  id: string
+  odIndex: string          // compositeKey: userId_exerciseId
+  odUserId: string
+  exerciseId: string       // "a1-def-articles-mc-01"
+  topicId: string          // "definite-articles"
+  level: string            // "A1"
+  solved: boolean          // solved correctly at least once
+  attempts: number         // total attempts
+  correctCount: number     // times answered correctly
+  lastAttempt: Date
+  lastCorrect: boolean     // last attempt result
+}
+
+export interface ExerciseTopicMeta {
+  id: string
+  name: string
+  level: FrenchLevel
+}
+
+export interface ExercisesData {
+  topics: ExerciseTopicMeta[]
+  exercises: Exercise[]
+}
+
+export interface TopicStats {
+  topicId: string
+  topicName: string
+  level: FrenchLevel
+  total: number
+  solved: number
+  attempts: number
+  correctCount: number
+}
+
+export interface LevelStats {
+  level: FrenchLevel
+  totalExercises: number
+  solved: number
+  attempts: number
+  correctCount: number
+}
+
 // Settings
 export interface AppSettings {
   theme: 'light' | 'dark' | 'system'

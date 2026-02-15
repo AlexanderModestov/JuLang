@@ -1,270 +1,222 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
-import type { VocabularyCard, VocabularyProgress, GrammarCard, VocabularyExerciseType } from '@/types'
-import {
-  getReviewQueue as getVocabReviewQueue,
-  getVocabularyCardById,
-  scheduleVocabularyCardAuto,
-  pickRandomExerciseType,
-} from '@/modules/VocabularyEngine'
-import { getReviewQueue as getGrammarReviewQueue } from '@/modules/SRSEngine'
-import ExerciseCard from '@/components/Vocabulary/ExerciseCard'
+import type { FrenchLevel, TopicStats } from '@/types'
+import { getLevelStats, getTopicStats } from '@/modules/ExercisesEngine'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
-type ExerciseSource = 'vocabulary' | 'grammar'
-
-interface MixedExercise {
-  source: ExerciseSource
-  vocabProgress?: VocabularyProgress
-  vocabCard?: VocabularyCard
-  grammarCard?: GrammarCard
-  exerciseType: VocabularyExerciseType
-}
+const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function ExercisesScreen() {
   const navigate = useNavigate()
-  const { user, currentLanguage } = useAuthContext()
+  const { user, profile, currentLanguage } = useAuthContext()
+
+  const userLevel = (profile?.french_level as FrenchLevel) || 'A1'
+
+  const [selectedLevel, setSelectedLevel] = useState<FrenchLevel>(userLevel)
+  const [topics, setTopics] = useState<TopicStats[]>([])
+  const [selectedTopics, setSelectedTopics] = useState<Set<string>>(new Set())
+  const [levelSolved, setLevelSolved] = useState(0)
+  const [levelTotal, setLevelTotal] = useState(0)
+  const [levelAttempts, setLevelAttempts] = useState(0)
+  const [levelCorrect, setLevelCorrect] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [exercises, setExercises] = useState<MixedExercise[]>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [showResult, setShowResult] = useState(false)
-  const [lastCorrect, setLastCorrect] = useState(false)
-  const [stats, setStats] = useState({ correct: 0, total: 0 })
-  const [sessionComplete, setSessionComplete] = useState(false)
 
   useEffect(() => {
-    if (user) loadExercises()
-  }, [user])
+    loadData()
+  }, [user, selectedLevel, currentLanguage])
 
-  const loadExercises = async () => {
+  const loadData = async () => {
     if (!user) return
     setLoading(true)
 
     try {
-      // Get vocabulary and grammar review queues
-      const [vocabQueue, grammarQueue] = await Promise.all([
-        getVocabReviewQueue(user.id, currentLanguage),
-        getGrammarReviewQueue(user.id),
+      const [stats, topicData] = await Promise.all([
+        getLevelStats(user.id, currentLanguage, selectedLevel),
+        getTopicStats(user.id, currentLanguage, selectedLevel),
       ])
 
-      // Build mixed exercises
-      const mixed: MixedExercise[] = []
-
-      // Add vocabulary exercises
-      for (const progress of vocabQueue.slice(0, 10)) {
-        const card = getVocabularyCardById(progress.cardId)
-        if (card) {
-          mixed.push({
-            source: 'vocabulary',
-            vocabProgress: progress,
-            vocabCard: card,
-            exerciseType: pickRandomExerciseType(),
-          })
-        }
-      }
-
-      // Add grammar exercises (as vocabulary-style for now)
-      // Grammar exercises will use simplified format
-      for (const grammarCard of grammarQueue.slice(0, 5)) {
-        mixed.push({
-          source: 'grammar',
-          grammarCard,
-          exerciseType: 'multiple_choice', // Grammar uses simpler format
-        })
-      }
-
-      // Shuffle exercises
-      const shuffled = mixed.sort(() => Math.random() - 0.5)
-      setExercises(shuffled)
+      setLevelSolved(stats.solved)
+      setLevelTotal(stats.totalExercises)
+      setLevelAttempts(stats.attempts)
+      setLevelCorrect(stats.correctCount)
+      setTopics(topicData)
     } catch (error) {
-      console.error('Failed to load exercises:', error)
+      console.error('Failed to load exercises data:', error)
     } finally {
       setLoading(false)
     }
   }
 
-  const handleResult = useCallback(async (correct: boolean) => {
-    setLastCorrect(correct)
-    setShowResult(true)
-    setStats((s) => ({ correct: s.correct + (correct ? 1 : 0), total: s.total + 1 }))
-
-    const current = exercises[currentIndex]
-
-    // Schedule based on result
-    if (current.source === 'vocabulary' && current.vocabProgress) {
-      await scheduleVocabularyCardAuto(current.vocabProgress.id, correct)
-    }
-    // Grammar scheduling would go here
-
-    // Auto-advance after delay
-    setTimeout(() => {
-      setShowResult(false)
-      if (currentIndex >= exercises.length - 1) {
-        setSessionComplete(true)
+  const toggleTopic = (topicId: string) => {
+    setSelectedTopics((prev) => {
+      const next = new Set(prev)
+      if (next.has(topicId)) {
+        next.delete(topicId)
       } else {
-        setCurrentIndex((i) => i + 1)
+        next.add(topicId)
       }
-    }, 1200)
-  }, [currentIndex, exercises])
-
-  const handleBack = () => {
-    navigate('/')
+      return next
+    })
   }
 
-  if (loading) {
-    return (
-      <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка упражнений...</p>
-      </div>
-    )
+  const handleQuickStart = () => {
+    navigate(`/exercises/session?level=${selectedLevel}`)
   }
 
-  if (exercises.length === 0) {
-    return (
+  const handleStartSelected = () => {
+    const topicIds = Array.from(selectedTopics).join(',')
+    navigate(`/exercises/session?level=${selectedLevel}&topics=${topicIds}`)
+  }
+
+  const accuracyPercent = levelAttempts > 0
+    ? Math.round((levelCorrect / levelAttempts) * 100)
+    : 0
+
+  return (
+    <div className="space-y-6">
+      {/* Quick start section */}
       <Card>
-        <div className="text-center py-8 space-y-4">
-          <div className="text-5xl">✨</div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-            Всё выполнено!
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400">
-            Нет упражнений для повторения. Изучите новые слова или грамматику.
-          </p>
-          <Button onClick={handleBack}>
-            На главную
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+              Упражнения
+            </h1>
+            <span className="px-2 py-1 text-sm font-medium bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 rounded-full">
+              {userLevel}
+            </span>
+          </div>
+
+          <Button onClick={handleQuickStart} size="lg" className="w-full">
+            Начать сессию
           </Button>
-        </div>
-      </Card>
-    )
-  }
 
-  if (sessionComplete) {
-    const accuracy = Math.round((stats.correct / stats.total) * 100)
-    return (
-      <Card>
-        <div className="text-center py-8 space-y-6">
-          <div className="text-6xl">
-            {accuracy >= 80 ? '🎉' : accuracy >= 60 ? '👍' : '💪'}
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Сессия завершена!
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
-              {stats.correct}/{stats.total} правильно ({accuracy}%)
+          {levelAttempts > 0 && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+              Решено {levelSolved}/{levelTotal} заданий · {accuracyPercent}% правильно
             </p>
-          </div>
-          <div className="flex gap-3">
-            <Button variant="secondary" onClick={handleBack} className="flex-1">
-              На главную
-            </Button>
-            <Button onClick={loadExercises} className="flex-1">
-              Ещё раз
-            </Button>
-          </div>
+          )}
         </div>
       </Card>
-    )
-  }
 
-  const current = exercises[currentIndex]
+      {/* Topic selection section */}
+      <div className="space-y-3">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+          Выбрать тему
+        </h2>
 
-  // For vocabulary exercises, use ExerciseCard
-  if (current.source === 'vocabulary' && current.vocabCard) {
-    return (
-      <div className="space-y-4">
-        {/* Progress */}
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-          <span>{currentIndex + 1} / {exercises.length}</span>
-          <span>{stats.correct}/{stats.total} правильно</span>
+        {/* Level filter chips */}
+        <div className="flex gap-2 flex-wrap">
+          {LEVELS.map((level) => (
+            <button
+              key={level}
+              onClick={() => {
+                setSelectedLevel(level)
+                setSelectedTopics(new Set())
+              }}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                selectedLevel === level
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+              }`}
+            >
+              {level}
+            </button>
+          ))}
         </div>
 
-        {/* Progress bar */}
-        <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary-500 transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / exercises.length) * 100}%` }}
-          />
-        </div>
-
-        {!showResult ? (
-          <ExerciseCard
-            key={`${current.vocabProgress?.id}-${currentIndex}`}
-            card={current.vocabCard}
-            exerciseType={current.exerciseType}
-            onResult={handleResult}
-          />
-        ) : (
+        {/* Topic list */}
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <p className="text-gray-500 dark:text-gray-400">Загрузка тем...</p>
+          </div>
+        ) : topics.length === 0 ? (
           <Card>
-            <div className="text-center py-8">
-              <p className={`text-2xl font-bold ${lastCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                {lastCorrect ? '✓ Правильно!' : '✗ Неправильно'}
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                Следующее упражнение...
-              </p>
-            </div>
+            <p className="text-center text-gray-500 dark:text-gray-400 py-4">
+              Нет тем для уровня {selectedLevel}
+            </p>
           </Card>
+        ) : (
+          <div className="space-y-2">
+            {topics.map((topic) => {
+              const isSelected = selectedTopics.has(topic.topicId)
+              const progressPercent = topic.total > 0
+                ? Math.round((topic.solved / topic.total) * 100)
+                : 0
+              const topicAccuracy = topic.attempts > 0
+                ? Math.round((topic.correctCount / topic.attempts) * 100)
+                : 0
+
+              return (
+                <button
+                  key={topic.topicId}
+                  onClick={() => toggleTopic(topic.topicId)}
+                  className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
+                    isSelected
+                      ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    {/* Checkbox */}
+                    <div className={`w-5 h-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${
+                      isSelected
+                        ? 'bg-primary-600 border-primary-600'
+                        : 'border-gray-300 dark:border-gray-600'
+                    }`}>
+                      {isSelected && (
+                        <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                          {topic.topicName}
+                        </span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                          {topic.solved}/{topic.total}
+                        </span>
+                      </div>
+
+                      {/* Progress bar */}
+                      <div className="mt-1.5 flex items-center gap-2">
+                        <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all ${
+                              progressPercent === 100
+                                ? 'bg-green-500'
+                                : 'bg-primary-500'
+                            }`}
+                            style={{ width: `${progressPercent}%` }}
+                          />
+                        </div>
+                        {topic.attempts > 0 && (
+                          <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
+                            {topicAccuracy}%
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        )}
+
+        {/* Start by selected topics */}
+        {selectedTopics.size > 0 && (
+          <div className="sticky bottom-4 pt-2">
+            <Button onClick={handleStartSelected} size="lg" className="w-full">
+              Начать по выбранным темам ({selectedTopics.size})
+            </Button>
+          </div>
         )}
       </div>
-    )
-  }
-
-  // For grammar exercises, show simplified format
-  if (current.source === 'grammar' && current.grammarCard) {
-    return (
-      <div className="space-y-4">
-        {/* Progress */}
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-          <span>{currentIndex + 1} / {exercises.length}</span>
-          <span>{stats.correct}/{stats.total} правильно</span>
-        </div>
-
-        {/* Progress bar */}
-        <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary-500 transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / exercises.length) * 100}%` }}
-          />
-        </div>
-
-        <Card>
-          <div className="space-y-4">
-            <div className="text-center">
-              <span className="inline-block px-2 py-1 text-xs bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 rounded-full mb-2">
-                Грамматика
-              </span>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                {current.grammarCard.topic}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                {current.grammarCard.explanation.slice(0, 150)}...
-              </p>
-            </div>
-
-            {/* Simple yes/no for now */}
-            <div className="flex gap-3">
-              <Button
-                variant="secondary"
-                onClick={() => handleResult(false)}
-                className="flex-1"
-              >
-                Не помню
-              </Button>
-              <Button
-                onClick={() => handleResult(true)}
-                className="flex-1"
-              >
-                Помню!
-              </Button>
-            </div>
-          </div>
-        </Card>
-      </div>
-    )
-  }
-
-  return null
+    </div>
+  )
 }
