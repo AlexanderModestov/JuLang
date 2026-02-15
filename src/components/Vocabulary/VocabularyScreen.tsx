@@ -11,9 +11,9 @@ import {
   scheduleVocabularyCardAuto,
   pickRandomExerciseType,
   getCardWord,
+  toLocalVocabularyProgress,
 } from '@/modules/VocabularyEngine'
-// Auto-SRS: no manual quality rating needed
-import { db } from '@/db'
+import { userDataService } from '@/services/userDataService'
 import { useVocabularyFilters } from '@/hooks/useVocabularyFilters'
 import NewCardView from './NewCardView'
 import ReviewSession from './ReviewSession'
@@ -63,11 +63,12 @@ export default function VocabularyScreen() {
     if (!user || !profile) return
     setLoading(true)
     const frenchLevel = profile.french_level || 'A1'
-    const [nc, rq, progress] = await Promise.all([
+    const [nc, rq, supabaseProgress] = await Promise.all([
       getNewCards(user.id, frenchLevel, currentLanguage),
       getReviewQueue(user.id, currentLanguage),
-      db.vocabularyProgress.where('userId').equals(user.id).toArray(),
+      userDataService.getVocabularyProgress(user.id, currentLanguage),
     ])
+    const progress = supabaseProgress.map(toLocalVocabularyProgress)
     setNewCards(nc)
     setReviewQueue(rq)
     setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
@@ -81,8 +82,8 @@ export default function VocabularyScreen() {
   }, [allCards, allProgress, applyFilters])
 
   const handleCardLearned = async (cardId: string) => {
-    if (!user) return
-    await addCardToProgress(user.id, cardId)
+    if (!user) return undefined
+    return await addCardToProgress(user.id, cardId, currentLanguage)
   }
 
   const handleComplete = () => {
@@ -130,12 +131,9 @@ export default function VocabularyScreen() {
     // Schedule the card automatically (correct=4, incorrect=0)
     await scheduleVocabularyCardAuto(progressEntry.id, correct)
 
-    // Reload progress data
-    const updatedProgress = await db.vocabularyProgress
-      .where('userId')
-      .equals(user.id)
-      .toArray()
-    setAllProgress(updatedProgress)
+    // Reload progress data from Supabase
+    const updatedSupabase = await userDataService.getVocabularyProgress(user.id, currentLanguage)
+    setAllProgress(updatedSupabase.map(toLocalVocabularyProgress))
 
     // Show result briefly, then auto-transition
     setLastPracticeCorrect(correct)

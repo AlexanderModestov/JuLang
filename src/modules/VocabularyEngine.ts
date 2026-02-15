@@ -21,7 +21,7 @@ type SupabaseVocabularyProgress = Database['public']['Tables']['vocabulary_progr
 type SupabaseVocabularyProgressInsert = Database['public']['Tables']['vocabulary_progress']['Insert']
 
 // Convert Supabase vocabulary progress to local VocabularyProgress type
-function toLocalVocabularyProgress(progress: SupabaseVocabularyProgress): VocabularyProgress {
+export function toLocalVocabularyProgress(progress: SupabaseVocabularyProgress): VocabularyProgress {
   return {
     id: progress.id,
     userId: progress.user_id,
