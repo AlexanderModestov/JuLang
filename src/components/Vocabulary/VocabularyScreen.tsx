@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import type { VocabularyCard, VocabularyProgress, VocabularyExerciseType } from '@/types'
@@ -26,7 +25,6 @@ import Card from '@/components/ui/Card'
 type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
-  const navigate = useNavigate()
   const { user, profile, currentLanguage } = useAuthContext()
   const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
@@ -137,10 +135,6 @@ export default function VocabularyScreen() {
   const handleBackToList = () => {
     setMode('list')
     setSelectedWord(null)
-  }
-
-  const handleBackToMain = () => {
-    navigate('/')
   }
 
   if (!user || !profile || loading) {
