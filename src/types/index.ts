@@ -71,6 +71,27 @@ export interface UserLanguageLevel {
   level: LanguageLevel
 }
 
+// Per-language settings with stats
+export interface UserLanguageSetting {
+  id: string
+  userId: string
+  language: Language
+  level: LanguageLevel
+  wordsLearned: number
+  grammarTopicsCompleted: number
+  conversationsCount: number
+  exercisesSolved: number
+  updatedAt: Date
+}
+
+// Stats for the current language from user_language_settings
+export interface LanguageSettingStats {
+  wordsLearned: number
+  grammarTopicsCompleted: number
+  conversationsCount: number
+  exercisesSolved: number
+}
+
 export interface UserProgress {
   userId: string
   totalConversations: number

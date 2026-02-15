@@ -22,7 +22,7 @@ export default function TeacherChatWidget() {
     clearUnread,
   } = useTeacherChatStore()
   const { settings } = useAppStore()
-  const { user, profile } = useAuthContext()
+  const { user, profile, currentLevel } = useAuthContext()
 
   const [messages, setMessages] = useState<TeacherMessageType[]>([])
   const [input, setInput] = useState('')
@@ -107,14 +107,13 @@ export default function TeacherChatWidget() {
     setMessages((prev) => [...prev, tempUserMessage])
 
     try {
-      const frenchLevel = profile.french_level || 'A1'
       const teacherLanguage =
-        settings.teacherLanguage || getDefaultTeacherLanguage(frenchLevel)
+        settings.teacherLanguage || getDefaultTeacherLanguage(currentLevel)
 
       await TeacherChatService.sendMessage({
         content: messageContent,
         context: currentContext,
-        userLevel: frenchLevel,
+        userLevel: currentLevel,
         teacherLanguage,
         userId: user.id,
       })

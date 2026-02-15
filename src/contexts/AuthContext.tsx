@@ -5,16 +5,21 @@ import { supabase } from '../lib/supabase'
 import { userDataService } from '../services/userDataService'
 import { checkForLocalData, migrateLocalDataToSupabase, clearLocalData } from '../services/migrationService'
 import type { Database } from '../types/supabase'
-import type { Language } from '../types'
+import type { Language, LanguageLevel, LanguageSettingStats } from '../types'
 
 type UserProfile = Database['public']['Tables']['user_profiles']['Row']
 type UserProgress = Database['public']['Tables']['user_progress']['Row']
+
+type UserLanguageSettingRow = Database['public']['Tables']['user_language_settings']['Row']
 
 interface AuthContextType {
   user: User | null
   profile: UserProfile | null
   progress: UserProgress | null
   currentLanguage: Language
+  currentLevel: LanguageLevel
+  currentLanguageStats: LanguageSettingStats
+  languageSettings: UserLanguageSettingRow[]
   loading: boolean
   migrating: boolean
   error: string | null
@@ -25,6 +30,7 @@ interface AuthContextType {
   updateProfile: (updates: Partial<UserProfile>) => Promise<void>
   updateProgress: (updates: Partial<UserProgress>) => Promise<void>
   setCurrentLanguage: (language: Language) => Promise<void>
+  refreshLanguageSettings: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -34,10 +40,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [progress, setProgress] = useState<UserProgress | null>(null)
   const [currentLanguage, setCurrentLanguageState] = useState<Language>('fr')
+  const [currentLevel, setCurrentLevel] = useState<LanguageLevel>('A1')
+  const [currentLanguageStats, setCurrentLanguageStats] = useState<LanguageSettingStats>({
+    wordsLearned: 0,
+    grammarTopicsCompleted: 0,
+    conversationsCount: 0,
+    exercisesSolved: 0,
+  })
+  const [languageSettings, setLanguageSettings] = useState<UserLanguageSettingRow[]>([])
   const [loading, setLoading] = useState(true)
   const [migrating, setMigrating] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const currentUserIdRef = useRef<string | null>(null)
+
+  // Load language settings and update current level/stats
+  const loadLanguageSettings = async (userId: string, language: Language) => {
+    try {
+      const settings = await userDataService.getLanguageSettings(userId)
+      setLanguageSettings(settings)
+
+      const current = settings.find((s) => s.language === language)
+      if (current) {
+        setCurrentLevel(current.level as LanguageLevel)
+        setCurrentLanguageStats({
+          wordsLearned: current.words_learned,
+          grammarTopicsCompleted: current.grammar_topics_completed,
+          conversationsCount: current.conversations_count,
+          exercisesSolved: current.exercises_solved,
+        })
+      } else {
+        setCurrentLevel('A1')
+        setCurrentLanguageStats({
+          wordsLearned: 0,
+          grammarTopicsCompleted: 0,
+          conversationsCount: 0,
+          exercisesSolved: 0,
+        })
+      }
+    } catch (err) {
+      console.error('Failed to load language settings:', err)
+    }
+  }
 
   // Load user data from Supabase
   const loadUserData = async (userId: string) => {
@@ -49,9 +92,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setProfile(profileData)
       setProgress(progressData)
       // Set current language from profile (default to 'fr' if not set)
-      if (profileData?.active_language) {
-        setCurrentLanguageState(profileData.active_language as Language)
-      }
+      const activeLanguage = (profileData?.active_language as Language) || 'fr'
+      setCurrentLanguageState(activeLanguage)
+
+      // Load language settings
+      await loadLanguageSettings(userId, activeLanguage)
     } catch (err) {
       console.error('Failed to load user data:', err)
       setError('Не удалось загрузить данные пользователя')
@@ -155,6 +200,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(null)
           setProfile(null)
           setProgress(null)
+          setLanguageSettings([])
+          setCurrentLevel('A1')
+          setCurrentLanguageStats({
+            wordsLearned: 0,
+            grammarTopicsCompleted: 0,
+            conversationsCount: 0,
+            exercisesSolved: 0,
+          })
           setError(null)
         } else if (event === 'TOKEN_REFRESHED') {
           console.log('[Auth] TOKEN_REFRESHED event')
@@ -218,6 +271,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Persist to profile
       await userDataService.updateProfile(user.id, { active_language: language })
       setProfile((prev) => prev ? { ...prev, active_language: language } : null)
+      // Load level and stats for the new language
+      await loadLanguageSettings(user.id, language)
+    }
+  }
+
+  const refreshLanguageSettings = async () => {
+    if (user) {
+      await loadLanguageSettings(user.id, currentLanguage)
     }
   }
 
@@ -228,6 +289,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         profile,
         progress,
         currentLanguage,
+        currentLevel,
+        currentLanguageStats,
+        languageSettings,
         loading,
         migrating,
         error,
@@ -238,6 +302,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         updateProfile,
         updateProgress,
         setCurrentLanguage,
+        refreshLanguageSettings,
       }}
     >
       {children}

@@ -320,6 +320,45 @@ export interface Database {
         }
         Relationships: []
       }
+      user_language_settings: {
+        Row: {
+          id: string
+          user_id: string
+          language: string
+          level: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+          words_learned: number
+          grammar_topics_completed: number
+          conversations_count: number
+          exercises_solved: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          language: string
+          level?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+          words_learned?: number
+          grammar_topics_completed?: number
+          conversations_count?: number
+          exercises_solved?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          language?: string
+          level?: 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+          words_learned?: number
+          grammar_topics_completed?: number
+          conversations_count?: number
+          exercises_solved?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       teacher_messages: {
         Row: {
           id: string

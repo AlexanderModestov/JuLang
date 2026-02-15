@@ -12,7 +12,7 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function ReviewScreen() {
   const navigate = useNavigate()
-  const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
+  const { user, profile, progress, updateProgress, currentLanguage, currentLevel } = useAuthContext()
 
   const [cards, setCards] = useState<GrammarCard[]>([])
   const [allCards, setAllCards] = useState<GrammarCard[]>([])
@@ -30,8 +30,7 @@ export default function ReviewScreen() {
     if (!user || !profile) return
 
     // Ensure cards exist for user's level
-    const frenchLevel = profile.french_level || 'A1'
-    await ensureCardsForLevel(user.id, frenchLevel, currentLanguage)
+    await ensureCardsForLevel(user.id, currentLevel, currentLanguage)
 
     const dueCards = await getCardsDueToday(user.id)
     const all = await getAllCards(user.id)
@@ -79,7 +78,7 @@ export default function ReviewScreen() {
   }, {} as Record<FrenchLevel, GrammarCard[]>)
 
   // Get levels up to user's level
-  const userLevelIndex = LEVELS.indexOf(profile?.french_level || 'A1')
+  const userLevelIndex = LEVELS.indexOf(currentLevel)
   const visibleLevels = LEVELS.slice(0, userLevelIndex + 1)
 
   // Browse mode - show all cards by level

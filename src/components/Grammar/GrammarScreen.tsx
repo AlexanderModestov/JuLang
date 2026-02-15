@@ -11,7 +11,7 @@ import { groupLabels, groupOrder } from './constants'
 const LEVEL_ORDER: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function GrammarScreen() {
-  const { profile, currentLanguage } = useAuthContext()
+  const { currentLanguage, currentLevel } = useAuthContext()
 
   // Set teacher chat context for grammar screen
   useTeacherContext({ screen: 'grammar' })
@@ -19,14 +19,13 @@ export default function GrammarScreen() {
   // Get topics filtered by user's level and below
   const topics = useMemo(() => {
     const allTopics = getAllGrammarTopics(currentLanguage) as GrammarTopic[]
-    const userLevel = profile?.french_level || 'A1'
-    const userLevelIndex = LEVEL_ORDER.indexOf(userLevel)
+    const userLevelIndex = LEVEL_ORDER.indexOf(currentLevel)
     const allowedLevels = LEVEL_ORDER.slice(0, userLevelIndex + 1)
 
     return allTopics.filter((topic) =>
       allowedLevels.includes(topic.level as FrenchLevel)
     )
-  }, [profile?.french_level, currentLanguage])
+  }, [currentLevel, currentLanguage])
 
   // Group topics by their group field
   const groupedTopics = useMemo(() => {
@@ -75,7 +74,7 @@ export default function GrammarScreen() {
           Грамматика
         </h1>
         <span className="text-sm text-gray-500 dark:text-gray-400">
-          {topics.length} тем для уровня {profile?.french_level || 'A1'}
+          {topics.length} тем для уровня {currentLevel}
         </span>
       </div>
 

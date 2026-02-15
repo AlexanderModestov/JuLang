@@ -26,7 +26,7 @@ const PRACTICE_TYPES: { id: PracticeType; label: string; icon: string }[] = [
 export default function PracticeScreen() {
   const { cardId } = useParams<{ cardId: string }>()
   const navigate = useNavigate()
-  const { profile } = useAuthContext()
+  const { profile, currentLevel } = useAuthContext()
   const { speak } = useSpeech()
   const {
     currentType,
@@ -88,7 +88,7 @@ export default function PracticeScreen() {
 
     setIsLoading(true)
     try {
-      const checkResult = await checkWrittenAnswer(exercise, userAnswer, profile.french_level || 'A1')
+      const checkResult = await checkWrittenAnswer(exercise, userAnswer, currentLevel)
       setResult(checkResult)
       addResult(checkResult)
       await updatePracticeStats(cardId!, currentType, checkResult)
@@ -122,7 +122,7 @@ export default function PracticeScreen() {
             const checkResult = await checkSpokenAnswer(
               exercise,
               recognitionResult.transcript,
-              profile.french_level || 'A1'
+              currentLevel
             )
             setResult(checkResult)
             addResult(checkResult)

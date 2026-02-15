@@ -40,11 +40,16 @@ export default function OnboardingFlow() {
         preferred_ai_provider: 'openai',
         speech_pause_timeout: getDefaultPauseTimeout(level),
         speech_settings: DEFAULT_SPEECH_SETTINGS,
+        active_language: currentLanguage,
+        languages: [currentLanguage],
         is_onboarded: true,
       })
 
       // Create user progress
       await userDataService.createProgress(user.id)
+
+      // Create language settings entry
+      await userDataService.addLanguage(user.id, currentLanguage, level)
 
       // Create initial grammar cards (still uses Dexie, will be updated in Task 12)
       await ensureCardsForLevel(user.id, level)

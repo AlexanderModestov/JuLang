@@ -53,7 +53,7 @@ const CATEGORIES: TopicCategory[] = [
 
 export default function TopicScreen() {
   const navigate = useNavigate()
-  const { profile } = useAuthContext()
+  const { currentLevel } = useAuthContext()
   const [selectedCategory, setSelectedCategory] = useState<TopicCategory | null>(null)
   const [customTopic, setCustomTopic] = useState('')
   const [randomTopic, setRandomTopic] = useState<string | null>(null)
@@ -84,7 +84,7 @@ export default function TopicScreen() {
           Выберите тему для разговора
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Уровень: {profile?.french_level || 'A1'}
+          Уровень: {currentLevel}
         </p>
       </div>
 
