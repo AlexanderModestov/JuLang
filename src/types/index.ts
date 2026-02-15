@@ -178,8 +178,16 @@ export interface GrammarTopic {
 // Static content for a grammar topic
 export interface GrammarTopicContent {
   rule: string
+  formation: {
+    description: string
+    formula: string
+    details: string[]
+  }
+  usage: string[]
+  exceptions?: string[]
   examples: { fr: string; ru: string }[]
   commonMistakes: string[]
+  tips?: string[]
 }
 
 // Practice types
