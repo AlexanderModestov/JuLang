@@ -6,7 +6,6 @@ import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS, languageLabels, langua
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import Card from '@/components/ui/Card'
 
 type Step = 'welcome' | 'name' | 'level' | 'creating'
 
@@ -32,7 +31,6 @@ export default function OnboardingFlow() {
     setStep('creating')
 
     try {
-      // Create user profile in Supabase
       await userDataService.createProfile(user.id, {
         name: name.trim() || 'Пользователь',
         native_language: 'ru',
@@ -43,13 +41,8 @@ export default function OnboardingFlow() {
         is_onboarded: true,
       })
 
-      // Create user progress
       await userDataService.createProgress(user.id)
-
-      // Create initial grammar cards (still uses Dexie, will be updated in Task 12)
       await ensureCardsForLevel(user.id, level)
-
-      // Refresh the auth context to pick up the new profile
       await refreshProfile()
     } catch (err) {
       console.error('Onboarding error:', err)
@@ -58,97 +51,125 @@ export default function OnboardingFlow() {
     }
   }
 
+  // Progress indicator
+  const stepIndex = step === 'welcome' ? 0 : step === 'name' ? 1 : step === 'level' ? 2 : 3
+  const totalSteps = 3
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        {step === 'welcome' && (
-          <div className="text-center">
-            <span className="text-6xl mb-4 block">{languageFlags[currentLanguage]}</span>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Добро пожаловать в JuLang!
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Ваш персональный помощник для изучения языков
-            </p>
-            <Button onClick={() => setStep('name')} size="lg" className="w-full">
-              Начать
-            </Button>
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-950 flex items-center justify-center p-5">
+      <div className="w-full max-w-sm">
+        {/* Step indicator */}
+        {step !== 'creating' && (
+          <div className="flex gap-1.5 mb-8 px-1 animate-fade-in">
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-0.5 flex-1 rounded-full transition-all duration-500 ${
+                  i <= stepIndex
+                    ? 'bg-stone-900 dark:bg-stone-50'
+                    : 'bg-stone-200 dark:bg-stone-800'
+                }`}
+              />
+            ))}
           </div>
         )}
 
-        {step === 'name' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Как вас зовут?
-            </h2>
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Введите ваше имя"
-              className="mb-4"
-            />
-            <div className="flex gap-3">
-              <Button variant="secondary" onClick={() => setStep('welcome')}>
-                Назад
-              </Button>
-              <Button onClick={() => setStep('level')} className="flex-1">
-                Далее
+        <div className="bg-white dark:bg-stone-900 border border-stone-200/60 dark:border-stone-800/60 rounded-2xl p-6 shadow-soft-md">
+          {step === 'welcome' && (
+            <div className="text-center animate-fade-in-up">
+              <div className="text-4xl mb-5">{languageFlags[currentLanguage]}</div>
+              <h1 className="font-display text-display-sm font-semibold text-stone-900 dark:text-stone-50 mb-2">
+                Добро пожаловать
+              </h1>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mb-8 leading-relaxed">
+                Ваш персональный помощник для изучения языков
+              </p>
+              <Button onClick={() => setStep('name')} size="lg" className="w-full">
+                Начать
               </Button>
             </div>
-          </div>
-        )}
+          )}
 
-        {step === 'level' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Ваш уровень ({languageLabels[currentLanguage]})
-            </h2>
-            <div className="space-y-2 mb-6">
-              {LEVELS.map((l) => (
-                <button
-                  key={l.value}
-                  onClick={() => setLevel(l.value)}
-                  className={`
-                    w-full text-left p-3 rounded-lg border-2 transition-colors
-                    ${
-                      level === l.value
-                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
-                    }
-                  `}
-                >
-                  <div className="font-medium text-gray-900 dark:text-white">
-                    {l.label}
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {l.description}
-                  </div>
-                </button>
-              ))}
+          {step === 'name' && (
+            <div className="animate-fade-in-up">
+              <h2 className="font-display text-display-sm font-semibold text-stone-900 dark:text-stone-50 mb-1">
+                Как вас зовут?
+              </h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mb-6">
+                Мы будем обращаться к вам по имени
+              </p>
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Введите ваше имя"
+                className="mb-6"
+              />
+              <div className="flex gap-3">
+                <Button variant="ghost" onClick={() => setStep('welcome')}>
+                  Назад
+                </Button>
+                <Button onClick={() => setStep('level')} className="flex-1">
+                  Далее
+                </Button>
+              </div>
             </div>
-            {error && (
-              <p className="text-red-500 text-sm mb-4">{error}</p>
-            )}
-            <div className="flex gap-3">
-              <Button variant="secondary" onClick={() => setStep('name')}>
-                Назад
-              </Button>
-              <Button onClick={handleComplete} className="flex-1">
-                Завершить
-              </Button>
-            </div>
-          </div>
-        )}
+          )}
 
-        {step === 'creating' && (
-          <div className="text-center py-8">
-            <div className="animate-spin text-4xl mb-4">⏳</div>
-            <p className="text-gray-600 dark:text-gray-400">
-              Создаём карточки грамматики...
-            </p>
-          </div>
-        )}
-      </Card>
+          {step === 'level' && (
+            <div className="animate-fade-in-up">
+              <h2 className="font-display text-display-sm font-semibold text-stone-900 dark:text-stone-50 mb-1">
+                Ваш уровень
+              </h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400 mb-5">
+                {languageLabels[currentLanguage]}
+              </p>
+              <div className="space-y-2 mb-6">
+                {LEVELS.map((l) => (
+                  <button
+                    key={l.value}
+                    onClick={() => setLevel(l.value)}
+                    className={`
+                      w-full text-left p-3.5 rounded-xl border transition-smooth
+                      ${
+                        level === l.value
+                          ? 'border-accent-500 bg-accent-50 dark:bg-accent-900/20'
+                          : 'border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-800/50'
+                      }
+                    `}
+                  >
+                    <div className="text-sm font-medium text-stone-900 dark:text-stone-50">
+                      {l.label}
+                    </div>
+                    <div className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                      {l.description}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              {error && (
+                <p className="text-danger-500 text-sm mb-4">{error}</p>
+              )}
+              <div className="flex gap-3">
+                <Button variant="ghost" onClick={() => setStep('name')}>
+                  Назад
+                </Button>
+                <Button onClick={handleComplete} className="flex-1">
+                  Завершить
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 'creating' && (
+            <div className="text-center py-6 animate-fade-in">
+              <div className="w-10 h-10 mx-auto border-2 border-stone-200 dark:border-stone-800 border-t-accent-500 rounded-full animate-spin mb-5" />
+              <p className="text-sm text-stone-500 dark:text-stone-400">
+                Создаём карточки грамматики...
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

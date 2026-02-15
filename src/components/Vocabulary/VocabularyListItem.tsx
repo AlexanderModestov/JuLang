@@ -18,31 +18,38 @@ export default function VocabularyListItem({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+      className="w-full text-left px-5 py-3.5 flex items-center gap-3 hover:bg-stone-50 dark:hover:bg-stone-800/50 transition-smooth"
     >
-      {/* Status icon */}
-      <span className="text-lg flex-shrink-0" title={statusInfo.label}>
-        {statusInfo.icon}
-      </span>
+      {/* Status dot */}
+      <span
+        className={`w-2 h-2 rounded-full flex-shrink-0 ${
+          status === 'learned' ? 'bg-success-500' :
+          status === 'learning' ? 'bg-warning-500' :
+          'bg-stone-300 dark:bg-stone-600'
+        }`}
+        title={statusInfo.label}
+      />
 
       {/* Word with article and translation */}
       <div className="flex-1 min-w-0">
-        {word.article && (
-          <span className="font-medium text-primary-600 dark:text-primary-400">
-            {word.article}
-            {word.article !== "l'" && ' '}
+        <span className="text-sm">
+          {word.article && (
+            <span className="text-accent-500 dark:text-accent-400 font-medium">
+              {word.article}
+              {word.article !== "l'" && ' '}
+            </span>
+          )}
+          <span className="font-medium text-stone-900 dark:text-stone-50">
+            {getCardWord(word)}
           </span>
-        )}
-        <span className="font-medium text-gray-900 dark:text-white">
-          {getCardWord(word)}
-        </span>
-        <span className="text-gray-400 dark:text-gray-500 mx-2">—</span>
-        <span className="text-gray-600 dark:text-gray-400 truncate">
-          {word.russian}
+          <span className="text-stone-300 dark:text-stone-600 mx-2">&mdash;</span>
+          <span className="text-stone-500 dark:text-stone-400 truncate">
+            {word.russian}
+          </span>
         </span>
       </div>
 
-      {/* Difficulty stars */}
+      {/* Difficulty */}
       <div className="flex-shrink-0">
         <DifficultyStars difficulty={word.difficulty} />
       </div>

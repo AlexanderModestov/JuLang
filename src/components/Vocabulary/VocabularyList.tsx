@@ -9,12 +9,6 @@ interface VocabularyListProps {
   onWordClick: (word: VocabularyCard) => void
 }
 
-/**
- * Calculate learning status based on progress data.
- * - 'new': no record in vocabularyProgress
- * - 'learning': repetitions < 3
- * - 'learned': repetitions >= 3
- */
 function getLearningStatus(
   cardId: string,
   progress: VocabularyProgress[]
@@ -41,7 +35,7 @@ export default function VocabularyList({
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-stone-500 dark:text-stone-400">
             Нет слов для отображения.
           </p>
         </div>
@@ -51,7 +45,7 @@ export default function VocabularyList({
 
   return (
     <Card padding="none">
-      <div className="max-h-[60vh] overflow-y-auto">
+      <div className="max-h-[60vh] overflow-y-auto divide-y divide-stone-100 dark:divide-stone-800/60">
         {words.map((word) => (
           <VocabularyListItem
             key={word.id}
@@ -65,5 +59,4 @@ export default function VocabularyList({
   )
 }
 
-// Export the helper function for external use
 export { getLearningStatus }

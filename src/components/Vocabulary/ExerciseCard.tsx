@@ -152,10 +152,10 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
 
   return (
     <Card>
-      <div className="space-y-4">
+      <div className="space-y-5">
         {/* Prompt */}
         <div className="text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          <p className="text-sm text-stone-500 dark:text-stone-400 mb-2">
             {getPromptText()}
           </p>
 
@@ -163,13 +163,15 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
           {exerciseType === 'listening' ? (
             <button
               onClick={handlePlayAudio}
-              className="mx-auto flex items-center justify-center gap-2 px-6 py-4 bg-primary-100 dark:bg-primary-900/30 rounded-xl hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+              className="mx-auto flex items-center justify-center gap-2 px-6 py-4 bg-accent-50 dark:bg-accent-900/20 rounded-xl hover:bg-accent-100 dark:hover:bg-accent-900/30 transition-smooth"
             >
-              <span className="text-4xl">🔊</span>
-              <span className="text-lg text-primary-700 dark:text-primary-300">Прослушать</span>
+              <svg className="w-8 h-8 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+              </svg>
+              <span className="text-lg text-accent-700 dark:text-accent-300">Прослушать</span>
             </button>
           ) : (
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="font-display text-display-sm font-semibold text-stone-900 dark:text-stone-50">
               {getPromptWord()}
             </p>
           )}
@@ -188,17 +190,17 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
                   key={option}
                   onClick={() => handleSelectOption(option)}
                   disabled={showResult}
-                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                  className={`w-full text-left p-3 rounded-xl border transition-smooth ${
                     showResult
                       ? option === correctAnswer
-                        ? 'bg-green-100 dark:bg-green-900/30 border-green-500'
+                        ? 'bg-success-50 dark:bg-green-900/20 border-success-500'
                         : option === selectedOption && !isCorrect
-                          ? 'bg-red-100 dark:bg-red-900/30 border-red-500'
-                          : 'border-gray-200 dark:border-gray-700'
-                      : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                          ? 'bg-danger-50 dark:bg-red-900/20 border-danger-500'
+                          : 'border-stone-200/60 dark:border-stone-800/60'
+                      : 'border-stone-200/60 dark:border-stone-800/60 hover:bg-stone-50 dark:hover:bg-stone-800/50'
                   }`}
                 >
-                  {option}
+                  <span className="text-stone-900 dark:text-stone-50">{option}</span>
                 </button>
               )
             })}
@@ -227,22 +229,22 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
 
         {/* Result */}
         {showResult && (
-          <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
-            <p className={`font-medium ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
-              {isCorrect ? '✓ Правильно!' : '✗ Неправильно'}
+          <div className={`p-3 rounded-xl animate-fade-in ${isCorrect ? 'bg-success-50 dark:bg-green-900/20' : 'bg-danger-50 dark:bg-red-900/20'}`}>
+            <p className={`font-medium ${isCorrect ? 'text-success-600 dark:text-green-400' : 'text-danger-600 dark:text-red-400'}`}>
+              {isCorrect ? '\u2713 Правильно!' : '\u2717 Неправильно'}
             </p>
             {!isCorrect && (
-              <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+              <p className="text-sm text-stone-700 dark:text-stone-300 mt-1">
                 Правильный ответ: <strong>{getWordWithArticle(card)}</strong> — {card.russian}
               </p>
             )}
             {/* Show first example */}
             {card.examples.length > 0 && (
-              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-                <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+              <div className="mt-2 pt-2 border-t border-stone-200/60 dark:border-stone-700/40">
+                <p className="text-sm text-stone-600 dark:text-stone-400 italic">
                   {getExampleText(card.examples[0])}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-500 italic">
+                <p className="text-sm text-stone-500 dark:text-stone-500 italic">
                   {card.examples[0].ru}
                 </p>
               </div>

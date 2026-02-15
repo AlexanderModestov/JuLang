@@ -30,11 +30,33 @@ export default function ContextBadge({ context }: ContextBadgeProps) {
   const hasItem = context.itemId && context.itemPreview
 
   return (
-    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md">
-      <span className="flex-shrink-0">📍</span>
+    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-stone-500 dark:text-stone-400 bg-stone-50 dark:bg-stone-800/50 rounded-lg">
+      <svg
+        className="w-3 h-3 flex-shrink-0 text-stone-400 dark:text-stone-500"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+        />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+        />
+      </svg>
       <span className="truncate">
         {screenLabel}
-        {hasItem && `: ${context.itemPreview}`}
+        {hasItem && (
+          <>
+            <span className="mx-1 text-stone-300 dark:text-stone-600">&middot;</span>
+            {context.itemPreview}
+          </>
+        )}
       </span>
     </div>
   )

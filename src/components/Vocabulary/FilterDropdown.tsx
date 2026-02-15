@@ -53,7 +53,7 @@ export default function FilterDropdown<T>({
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-xl shadow-soft-lg bg-white dark:bg-stone-900 border border-stone-200/60 dark:border-stone-800/60 animate-scale-in"
     >
       {options.map((option, index) => {
         const isSelected = option.value === value
@@ -62,21 +62,21 @@ export default function FilterDropdown<T>({
             key={index}
             onClick={() => handleSelect(option.value)}
             className={`
-              w-full px-3 py-2 text-left text-sm transition-colors
+              w-full px-3 py-2 text-left text-sm transition-smooth
               flex items-center gap-2
               ${
                 isSelected
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-medium'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-accent-50 dark:bg-accent-900/20 text-accent-700 dark:text-accent-300 font-medium'
+                  : 'text-stone-700 dark:text-stone-300 hover:bg-stone-50 dark:hover:bg-stone-800/50'
               }
             `}
           >
             {option.icon && <span>{option.icon}</span>}
             <span>{option.label}</span>
             {isSelected && (
-              <span className="ml-auto text-primary-600 dark:text-primary-400">
-                ✓
-              </span>
+              <svg className="ml-auto w-4 h-4 text-accent-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
             )}
           </button>
         )

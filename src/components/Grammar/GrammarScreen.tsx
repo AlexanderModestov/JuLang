@@ -51,16 +51,18 @@ export default function GrammarScreen() {
 
   if (topics.length === 0) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          Грамматика
-        </h1>
-        <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">📖</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+      <div className="space-y-8 stagger-children">
+        <div>
+          <h1 className="font-display text-display-md font-semibold text-stone-900 dark:text-stone-50">
+            Грамматика
+          </h1>
+        </div>
+        <Card className="text-center py-12">
+          <span className="text-4xl block mb-4 opacity-60">&#128214;</span>
+          <h2 className="text-lg font-medium text-stone-900 dark:text-stone-50 mb-2">
             Нет доступных тем
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-stone-500 dark:text-stone-400">
             Грамматические правила скоро появятся.
           </p>
         </Card>
@@ -69,23 +71,26 @@ export default function GrammarScreen() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+    <div className="space-y-8 stagger-children">
+      {/* Header */}
+      <div className="flex items-end justify-between">
+        <h1 className="font-display text-display-md font-semibold text-stone-900 dark:text-stone-50">
           Грамматика
         </h1>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          {topics.length} тем для уровня {profile?.french_level || 'A1'}
+        <span className="text-xs font-medium text-stone-400 dark:text-stone-500 bg-stone-100 dark:bg-stone-800 px-2.5 py-1 rounded-full">
+          {topics.length} тем &middot; {profile?.french_level || 'A1'}
         </span>
       </div>
 
+      {/* Info card */}
       <Card padding="md">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-stone-500 dark:text-stone-400 leading-relaxed">
           Справочник грамматических правил. {languageLabels[currentLanguage]}. Выберите тему для
           изучения.
         </p>
       </Card>
 
+      {/* Topic groups */}
       <div>
         {groupOrder.map((group) => {
           const groupTopics = groupedTopics[group]

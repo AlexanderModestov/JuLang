@@ -169,14 +169,14 @@ export default function TeacherChatWidget() {
   return (
     <div
       ref={widgetRef}
-      className="fixed bottom-24 right-6 z-50 w-[350px] h-[450px] flex flex-col bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+      className="fixed bottom-24 right-6 z-50 w-[360px] h-[460px] flex flex-col bg-white dark:bg-stone-900 rounded-2xl shadow-soft-lg border border-stone-200/60 dark:border-stone-800/60 overflow-hidden animate-scale-in"
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-primary-600 text-white">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between px-4 py-3 bg-stone-900 dark:bg-stone-800 text-white">
+        <div className="flex items-center gap-2.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
+            className="w-5 h-5 text-stone-300"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -188,16 +188,16 @@ export default function TeacherChatWidget() {
               d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
             />
           </svg>
-          <h3 className="font-semibold">Учитель</h3>
+          <h3 className="font-display font-semibold text-sm tracking-wide">Учитель</h3>
         </div>
         <button
           onClick={closeChat}
-          className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-primary-500 transition-colors"
+          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-stone-700 transition-smooth"
           aria-label="Закрыть чат"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
+            className="w-4 h-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -213,7 +213,7 @@ export default function TeacherChatWidget() {
       </div>
 
       {/* Context badge */}
-      <div className="px-3 py-2 border-b border-gray-200 dark:border-gray-700">
+      <div className="px-3 py-2 border-b border-stone-200/60 dark:border-stone-800/60">
         <ContextBadge context={currentContext} />
       </div>
 
@@ -221,40 +221,21 @@ export default function TeacherChatWidget() {
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
         {isLoading && messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400">
-              <svg
-                className="animate-spin w-5 h-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-              <span>Загрузка...</span>
+            <div className="flex items-center gap-2 text-stone-500 dark:text-stone-400">
+              <div className="w-4 h-4 border-2 border-stone-200 dark:border-stone-700 border-t-accent-500 rounded-full animate-spin" />
+              <span className="text-sm">Загрузка...</span>
             </div>
           </div>
         ) : messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center px-4">
-            <div className="w-16 h-16 mb-4 rounded-full bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center">
+          <div className="flex flex-col items-center justify-center h-full text-center px-4 animate-fade-in">
+            <div className="w-14 h-14 mb-4 rounded-2xl bg-stone-100 dark:bg-stone-800 flex items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-8 h-8 text-primary-600 dark:text-primary-400"
+                className="w-7 h-7 text-stone-400 dark:text-stone-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth={2}
+                strokeWidth={1.5}
               >
                 <path
                   strokeLinecap="round"
@@ -263,10 +244,10 @@ export default function TeacherChatWidget() {
                 />
               </svg>
             </div>
-            <p className="text-gray-600 dark:text-gray-300 font-medium mb-1">
+            <p className="text-stone-900 dark:text-stone-50 font-display font-medium text-sm mb-1">
               Задайте вопрос учителю
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-stone-500 dark:text-stone-400 leading-relaxed">
               Спросите о грамматике, лексике или попросите объяснить что-либо
             </p>
           </div>
@@ -280,15 +261,15 @@ export default function TeacherChatWidget() {
 
         {/* Loading indicator when sending */}
         {isSending && (
-          <div className="flex justify-start">
-            <div className="px-3 py-2 rounded-xl rounded-bl-sm bg-gray-100 dark:bg-gray-700 text-sm text-gray-600 dark:text-gray-300">
+          <div className="flex justify-start animate-fade-in">
+            <div className="px-3 py-2.5 rounded-xl rounded-bl-sm bg-stone-100 dark:bg-stone-800 text-sm text-stone-500 dark:text-stone-400">
               <div className="flex items-center gap-2">
                 <span className="flex gap-1">
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <span className="w-1.5 h-1.5 bg-stone-400 dark:bg-stone-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 bg-stone-400 dark:bg-stone-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 bg-stone-400 dark:bg-stone-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </span>
-                <span>Учитель печатает...</span>
+                <span className="text-xs">Учитель печатает...</span>
               </div>
             </div>
           </div>
@@ -299,14 +280,14 @@ export default function TeacherChatWidget() {
 
       {/* Error message with retry */}
       {error && (
-        <div className="px-3 py-2 bg-red-50 dark:bg-red-900/30 border-t border-red-200 dark:border-red-800">
+        <div className="px-3 py-2 bg-red-50 dark:bg-red-950/30 border-t border-red-200/60 dark:border-red-900/40">
           <div className="flex items-center justify-between gap-2">
-            <p className="text-sm text-red-600 dark:text-red-400 truncate">
+            <p className="text-xs text-red-600 dark:text-red-400 truncate">
               {error}
             </p>
             <button
               onClick={handleRetry}
-              className="flex-shrink-0 text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium"
+              className="flex-shrink-0 text-xs text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium transition-smooth"
             >
               Повторить
             </button>
@@ -315,7 +296,7 @@ export default function TeacherChatWidget() {
       )}
 
       {/* Input area */}
-      <div className="px-3 py-3 border-t border-gray-200 dark:border-gray-700">
+      <div className="px-3 py-3 border-t border-stone-200/60 dark:border-stone-800/60">
         <div className="flex gap-2">
           <input
             ref={inputRef}
@@ -324,19 +305,19 @@ export default function TeacherChatWidget() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Напишите вопрос..."
-            className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            className="flex-1 px-3 py-2 text-sm border border-stone-200/60 dark:border-stone-700 rounded-xl bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-50 placeholder-stone-400 dark:placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-accent-500/40 focus:border-accent-500 transition-smooth"
             disabled={isSending}
             autoComplete="off"
           />
           <button
             onClick={handleSend}
             disabled={!input.trim() || isSending}
-            className="px-3 py-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            className="px-3 py-2 bg-stone-900 dark:bg-stone-50 hover:bg-stone-800 dark:hover:bg-stone-200 disabled:opacity-40 disabled:cursor-not-allowed text-white dark:text-stone-900 rounded-xl transition-smooth focus:outline-none focus:ring-2 focus:ring-accent-500/40 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-stone-900"
             aria-label="Отправить"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

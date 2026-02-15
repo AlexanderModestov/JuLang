@@ -52,18 +52,21 @@ export default function SettingsScreen() {
   if (!profile) return null
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-        Настройки
-      </h1>
+    <div className="space-y-8 stagger-children">
+      {/* Header */}
+      <div>
+        <h1 className="font-display text-display-md font-semibold text-stone-900 dark:text-stone-50">
+          Настройки
+        </h1>
+      </div>
 
       {/* Profile */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-50 mb-5">
           Профиль
         </h3>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <Input
             label="Имя"
             value={profile.name || ''}
@@ -71,7 +74,7 @@ export default function SettingsScreen() {
           />
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm text-stone-600 dark:text-stone-400 mb-3">
               Уровень ({languageLabels[currentLanguage]})
             </label>
             <div className="flex flex-wrap gap-2">
@@ -80,11 +83,11 @@ export default function SettingsScreen() {
                   key={level}
                   onClick={() => updateProfile({ french_level: level })}
                   className={`
-                    px-4 py-2 rounded-lg font-medium transition-colors
+                    px-4 py-2 rounded-xl text-sm font-medium transition-smooth active:scale-[0.98]
                     ${
                       profile.french_level === level
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        ? 'bg-stone-900 text-white dark:bg-stone-50 dark:text-stone-900'
+                        : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
                     }
                   `}
                 >
@@ -98,14 +101,14 @@ export default function SettingsScreen() {
 
       {/* Voice settings (TTS) */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-50 mb-5">
           Озвучка
         </h3>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {/* Voice selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm text-stone-600 dark:text-stone-400 mb-2">
               Голос
             </label>
             <select
@@ -113,7 +116,7 @@ export default function SettingsScreen() {
               onChange={(e) => updateProfile({
                 speech_settings: { ...profile.speech_settings, voiceName: e.target.value || null }
               })}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-4 py-2.5 text-sm border border-stone-200 dark:border-stone-800 rounded-xl bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-50 transition-smooth hover:border-stone-300 dark:hover:border-stone-700 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500"
             >
               <option value="">
                 Автовыбор{bestVoice ? ` (${bestVoice.name})` : ''}
@@ -128,7 +131,7 @@ export default function SettingsScreen() {
 
           {/* Speech rate slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm text-stone-600 dark:text-stone-400 mb-2">
               Скорость речи: {profile.speech_settings.rate.toFixed(1)}x
             </label>
             <input
@@ -140,9 +143,9 @@ export default function SettingsScreen() {
               onChange={(e) => updateProfile({
                 speech_settings: { ...profile.speech_settings, rate: parseFloat(e.target.value) }
               })}
-              className="w-full"
+              className="w-full accent-accent-500"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-stone-400 dark:text-stone-500 mt-1.5">
               <span>0.5x</span>
               <span>1.5x</span>
             </div>
@@ -150,7 +153,7 @@ export default function SettingsScreen() {
 
           {/* Pitch slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm text-stone-600 dark:text-stone-400 mb-2">
               Высота голоса: {profile.speech_settings.pitch.toFixed(1)}x
             </label>
             <input
@@ -162,9 +165,9 @@ export default function SettingsScreen() {
               onChange={(e) => updateProfile({
                 speech_settings: { ...profile.speech_settings, pitch: parseFloat(e.target.value) }
               })}
-              className="w-full"
+              className="w-full accent-accent-500"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-stone-400 dark:text-stone-500 mt-1.5">
               <span>0.5x</span>
               <span>1.5x</span>
             </div>
@@ -195,13 +198,13 @@ export default function SettingsScreen() {
 
       {/* Voice input settings */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-50 mb-5">
           Голосовой ввод
         </h3>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm text-stone-600 dark:text-stone-400 mb-2">
               Пауза для завершения записи: {profile.speech_pause_timeout} сек
             </label>
             <input
@@ -211,13 +214,13 @@ export default function SettingsScreen() {
               step="1"
               value={profile.speech_pause_timeout}
               onChange={(e) => updateProfile({ speech_pause_timeout: parseInt(e.target.value) })}
-              className="w-full"
+              className="w-full accent-accent-500"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-stone-400 dark:text-stone-500 mt-1.5">
               <span>1 сек</span>
               <span>15 сек</span>
             </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-xs text-stone-400 dark:text-stone-500 mt-3 leading-relaxed">
               Чем больше значение, тем дольше можно думать между фразами.
             </p>
           </div>
@@ -226,21 +229,21 @@ export default function SettingsScreen() {
 
       {/* Theme */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-50 mb-5">
           Оформление
         </h3>
 
-        <div className="flex gap-2">
+        <div className="flex gap-1 p-1 bg-stone-100 dark:bg-stone-800 rounded-xl">
           {(['light', 'dark', 'system'] as const).map((theme) => (
             <button
               key={theme}
               onClick={() => handleThemeChange(theme)}
               className={`
-                flex-1 px-4 py-3 rounded-lg font-medium transition-colors
+                flex-1 px-4 py-2.5 rounded-[10px] text-sm font-medium transition-smooth active:scale-[0.98]
                 ${
                   settings.theme === theme
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-50 shadow-soft'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
                 }
               `}
             >
@@ -254,11 +257,11 @@ export default function SettingsScreen() {
 
       {/* Data */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="text-sm font-medium text-stone-900 dark:text-stone-50 mb-5">
           Данные
         </h3>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           <Button variant="secondary" className="w-full">
             Экспортировать данные
           </Button>
@@ -272,20 +275,20 @@ export default function SettingsScreen() {
       </Card>
 
       {/* Sign out */}
-      <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+      <div className="pt-4 border-t border-stone-200/60 dark:border-stone-800/60">
+        <p className="text-xs text-stone-400 dark:text-stone-500 mb-3">
           Вы вошли как {user?.email}
         </p>
         <button
           onClick={signOut}
-          className="w-full px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+          className="w-full px-4 py-3 bg-danger-50 dark:bg-red-900/20 text-danger-600 dark:text-red-400 rounded-xl text-sm font-medium hover:bg-red-100 dark:hover:bg-red-900/30 transition-smooth active:scale-[0.98]"
         >
           Выйти из аккаунта
         </button>
       </div>
 
       {/* Version */}
-      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="text-center text-xs text-stone-400 dark:text-stone-500 pb-4">
         JuLang v0.1.0
       </div>
     </div>

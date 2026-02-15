@@ -12,7 +12,6 @@ import {
   pickRandomExerciseType,
   getCardWord,
 } from '@/modules/VocabularyEngine'
-// Auto-SRS: no manual quality rating needed
 import { db } from '@/db'
 import { useVocabularyFilters } from '@/hooks/useVocabularyFilters'
 import NewCardView from './NewCardView'
@@ -24,7 +23,6 @@ import ExerciseCard from './ExerciseCard'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
-// Removed 'menu' mode - list is shown by default
 type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
@@ -37,18 +35,15 @@ export default function VocabularyScreen() {
   const [allProgress, setAllProgress] = useState<VocabularyProgress[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Detail/practice mode state
   const [selectedWord, setSelectedWord] = useState<VocabularyCard | null>(null)
   const [filteredWordsIndex, setFilteredWordsIndex] = useState(0)
   const [exerciseType, setExerciseType] = useState<VocabularyExerciseType>(pickRandomExerciseType)
   const [showPracticeRating, setShowPracticeRating] = useState(false)
   const [lastPracticeCorrect, setLastPracticeCorrect] = useState(false)
 
-  // Filters
   const { filters, setFilter, clearFilters, applyFilters, activeFilterCount } =
     useVocabularyFilters()
 
-  // Set teacher chat context - updates when viewing specific word
   useTeacherContext({
     screen: 'vocabulary',
     itemId: selectedWord?.id,
@@ -75,7 +70,6 @@ export default function VocabularyScreen() {
     setLoading(false)
   }
 
-  // Apply filters to get the filtered list
   const filteredWords = useMemo(() => {
     return applyFilters(allCards, allProgress)
   }, [allCards, allProgress, applyFilters])
@@ -103,7 +97,6 @@ export default function VocabularyScreen() {
       setFilteredWordsIndex(nextIndex)
       setSelectedWord(filteredWords[nextIndex])
     } else {
-      // No more words, go back to list
       setMode('list')
       setSelectedWord(null)
     }
@@ -115,33 +108,26 @@ export default function VocabularyScreen() {
     setMode('practice')
   }
 
-  // Auto-SRS: schedule card based on correct/incorrect, then auto-transition
   const handlePracticeResult = async (correct: boolean) => {
     if (!user || !selectedWord) return
 
-    // Find or create progress entry
     let progressEntry = allProgress.find((p) => p.cardId === selectedWord.id)
 
     if (!progressEntry) {
-      // Add to progress first
       progressEntry = await addCardToProgress(user.id, selectedWord.id)
     }
 
-    // Schedule the card automatically (correct=4, incorrect=0)
     await scheduleVocabularyCardAuto(progressEntry.id, correct)
 
-    // Reload progress data
     const updatedProgress = await db.vocabularyProgress
       .where('userId')
       .equals(user.id)
       .toArray()
     setAllProgress(updatedProgress)
 
-    // Show result briefly, then auto-transition
     setLastPracticeCorrect(correct)
     setShowPracticeRating(true)
 
-    // Auto-transition after delay
     setTimeout(() => {
       setShowPracticeRating(false)
       setMode('detail')
@@ -160,7 +146,7 @@ export default function VocabularyScreen() {
   if (!user || !profile || loading) {
     return (
       <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка...</p>
+        <div className="w-6 h-6 border-2 border-stone-200 dark:border-stone-800 border-t-accent-500 rounded-full animate-spin" />
       </div>
     )
   }
@@ -168,12 +154,15 @@ export default function VocabularyScreen() {
   // New words session mode
   if (mode === 'new') {
     return (
-      <div className="space-y-4">
+      <div className="space-y-5 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
-            ← Назад
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-medium text-stone-900 dark:text-stone-50">
             Новые слова
           </h1>
         </div>
@@ -189,12 +178,15 @@ export default function VocabularyScreen() {
   // Review session mode
   if (mode === 'review') {
     return (
-      <div className="space-y-4">
+      <div className="space-y-5 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
-            ← Назад
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-medium text-stone-900 dark:text-stone-50">
             Повторение
           </h1>
         </div>
@@ -203,15 +195,18 @@ export default function VocabularyScreen() {
     )
   }
 
-  // Practice mode (single word exercise with auto-SRS)
+  // Practice mode
   if (mode === 'practice' && selectedWord) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-5 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('detail')}>
-            ← Назад
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-medium text-stone-900 dark:text-stone-50">
             Практика
           </h1>
         </div>
@@ -225,17 +220,17 @@ export default function VocabularyScreen() {
           />
         ) : (
           <Card>
-            <div className="space-y-4 text-center py-8">
+            <div className="space-y-3 text-center py-8">
               <p
-                className={`text-2xl font-bold ${
+                className={`text-xl font-semibold ${
                   lastPracticeCorrect
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-red-600 dark:text-red-400'
+                    ? 'text-success-500'
+                    : 'text-danger-500'
                 }`}
               >
-                {lastPracticeCorrect ? '✓ Правильно!' : '✗ Неправильно'}
+                {lastPracticeCorrect ? 'Правильно' : 'Неправильно'}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-stone-400 dark:text-stone-500">
                 Переход к карточке...
               </p>
             </div>
@@ -250,15 +245,18 @@ export default function VocabularyScreen() {
     const hasNextWord = filteredWordsIndex < filteredWords.length - 1
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-5 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={handleBackToList}>
-            ← Назад
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+            </svg>
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-lg font-medium text-stone-900 dark:text-stone-50 flex-1">
             {getCardWord(selectedWord)}
           </h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+          <span className="text-xs text-stone-400 dark:text-stone-500">
             {filteredWordsIndex + 1} / {filteredWords.length}
           </span>
         </div>
@@ -273,25 +271,22 @@ export default function VocabularyScreen() {
     )
   }
 
-  // List mode (default - shown immediately on entering Vocabulary)
+  // List mode (default)
   return (
-    <div className="space-y-4">
-      {/* Header with title and level */}
+    <div className="space-y-6 stagger-children">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="font-display text-display-sm font-semibold text-stone-900 dark:text-stone-50">
             Словарь
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-xs text-stone-400 dark:text-stone-500 mt-0.5">
             Уровень: {profile.french_level || 'A1'}
           </p>
         </div>
-        <Button variant="ghost" size="sm" onClick={handleBackToMain}>
-          На главную
-        </Button>
       </div>
 
-      {/* Compact action buttons at top */}
+      {/* Action buttons */}
       <div className="grid grid-cols-2 gap-3">
         <Button
           onClick={() => newCards.length > 0 && setMode('new')}
@@ -319,7 +314,7 @@ export default function VocabularyScreen() {
       />
 
       {/* Word count */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-xs text-stone-400 dark:text-stone-500">
         Показано: {filteredWords.length} из {allCards.length} слов
       </p>
 

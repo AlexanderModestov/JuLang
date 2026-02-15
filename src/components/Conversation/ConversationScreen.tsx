@@ -185,12 +185,12 @@ export default function ConversationScreen() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)]">
+    <div className="flex flex-col h-[calc(100vh-140px)] animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-between pb-4 border-b border-stone-200/60 dark:border-stone-800/60">
         <div>
-          <h2 className="font-semibold text-gray-900 dark:text-white">{topic}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <h2 className="font-display text-display-sm text-stone-900 dark:text-stone-50">{topic}</h2>
+          <p className="text-sm text-stone-400 dark:text-stone-500 mt-0.5">
             {messages.length} сообщений
           </p>
         </div>
@@ -200,14 +200,14 @@ export default function ConversationScreen() {
             size="sm"
             onClick={() => setMode('text')}
           >
-            ⌨️
+            &#9000;
           </Button>
           <Button
             variant={mode === 'voice' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setMode('voice')}
           >
-            🎤
+            &#127908;
           </Button>
           <Button variant="secondary" size="sm" onClick={handleEndConversation}>
             Завершить
@@ -216,20 +216,24 @@ export default function ConversationScreen() {
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto py-6 space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}
           >
             <div
-              className={`max-w-[80%] p-3 rounded-xl ${
+              className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                 message.role === 'user'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700'
+                  ? 'bg-stone-900 text-white dark:bg-stone-50 dark:text-stone-900'
+                  : 'bg-stone-100 dark:bg-stone-800 border border-stone-200/40 dark:border-stone-700/40'
               }`}
             >
-              <p className={message.role === 'user' ? 'text-white' : 'text-gray-900 dark:text-white'}>
+              <p className={`leading-relaxed ${
+                message.role === 'user'
+                  ? 'text-white dark:text-stone-900'
+                  : 'text-stone-900 dark:text-stone-50'
+              }`}>
                 {message.role === 'assistant'
                   ? message.content.split(/(\s+)/).map((part, i) => {
                       const trimmed = part.replace(/[.,!?;:'"()«»\-—]/g, '')
@@ -237,7 +241,7 @@ export default function ConversationScreen() {
                       return (
                         <span
                           key={i}
-                          className="cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded px-0.5 transition-colors"
+                          className="cursor-pointer hover:bg-accent-50 dark:hover:bg-accent-900/20 rounded px-0.5 transition-smooth"
                           onClick={() => setPopupWord({ word: trimmed, sentence: message.content })}
                         >
                           {part}
@@ -249,7 +253,7 @@ export default function ConversationScreen() {
               {message.role === 'assistant' && (
                 <button
                   onClick={() => speak(message.content, { language: currentLanguage })}
-                  className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  className="mt-2.5 text-xs text-stone-400 hover:text-stone-600 dark:text-stone-500 dark:hover:text-stone-300 transition-smooth"
                 >
                   Прослушать
                 </button>
@@ -259,12 +263,12 @@ export default function ConversationScreen() {
         ))}
 
         {isLoading && (
-          <div className="flex justify-start">
-            <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700">
-              <div className="flex gap-1">
-                <span className="animate-bounce">.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+          <div className="flex justify-start animate-fade-in">
+            <div className="px-4 py-3 rounded-2xl bg-stone-100 dark:bg-stone-800 border border-stone-200/40 dark:border-stone-700/40">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-400 dark:bg-stone-500 animate-pulse-soft" />
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-400 dark:bg-stone-500 animate-pulse-soft" style={{ animationDelay: '0.3s' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-stone-400 dark:bg-stone-500 animate-pulse-soft" style={{ animationDelay: '0.6s' }} />
               </div>
             </div>
           </div>
@@ -274,7 +278,7 @@ export default function ConversationScreen() {
       </div>
 
       {/* Input */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="pt-4 border-t border-stone-200/60 dark:border-stone-800/60">
         <div className="flex gap-2">
           {mode === 'text' ? (
             <>
@@ -291,7 +295,7 @@ export default function ConversationScreen() {
                   de: 'Schreiben Sie auf Deutsch...',
                   pt: 'Escreva em português...',
                 }[currentLanguage] || 'Write here...'}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 px-4 py-2.5 text-sm border border-stone-200 dark:border-stone-800 rounded-xl bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-50 placeholder-stone-400 dark:placeholder-stone-600 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 transition-smooth hover:border-stone-300 dark:hover:border-stone-700 disabled:opacity-40 disabled:cursor-not-allowed"
                 disabled={isLoading}
                 autoComplete="off"
                 autoCorrect="off"
@@ -310,12 +314,12 @@ export default function ConversationScreen() {
               className={`flex-1 ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
               size="lg"
             >
-              {isListening ? '🔴 Запись...' : '🎤 Нажмите и говорите'}
+              {isListening ? '\uD83D\uDD34 Запись...' : '\uD83C\uDFA4 Нажмите и говорите'}
             </Button>
           )}
         </div>
         {input && mode === 'voice' && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-stone-500 dark:text-stone-400">
             Распознано: {input}
           </p>
         )}

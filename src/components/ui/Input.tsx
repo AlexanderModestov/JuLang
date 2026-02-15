@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            className="block text-sm font-medium text-stone-600 dark:text-stone-400 mb-2"
           >
             {label}
           </label>
@@ -35,28 +35,28 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           {...autoCorrectProps}
           className={`
-            w-full px-4 py-2
-            border rounded-lg
-            transition-colors duration-200
-            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
+            w-full px-4 py-2.5 text-sm
+            border rounded-xl
+            transition-smooth
+            focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500
             ${
               error
-                ? 'border-red-500 focus:ring-red-500'
-                : 'border-gray-300 dark:border-gray-600'
+                ? 'border-danger-500 focus:ring-danger-500/20'
+                : 'border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700'
             }
-            bg-white dark:bg-gray-700
-            text-gray-900 dark:text-white
-            placeholder-gray-400 dark:placeholder-gray-500
-            disabled:opacity-50 disabled:cursor-not-allowed
+            bg-white dark:bg-stone-900
+            text-stone-900 dark:text-stone-50
+            placeholder-stone-400 dark:placeholder-stone-600
+            disabled:opacity-40 disabled:cursor-not-allowed
             ${className}
           `}
           {...props}
         />
         {error && (
-          <p className="mt-1 text-sm text-red-500">{error}</p>
+          <p className="mt-1.5 text-xs text-danger-500">{error}</p>
         )}
         {helperText && !error && (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+          <p className="mt-1.5 text-xs text-stone-400 dark:text-stone-500">{helperText}</p>
         )}
       </div>
     )

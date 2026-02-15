@@ -36,7 +36,7 @@ interface TabListProps {
 export function TabList({ children, className = '' }: TabListProps) {
   return (
     <div
-      className={`flex border-b border-gray-200 dark:border-gray-700 ${className}`}
+      className={`flex gap-1 p-1 bg-stone-100 dark:bg-stone-800 rounded-xl ${className}`}
       role="tablist"
     >
       {children}
@@ -63,12 +63,12 @@ export function Tab({ id, children, icon }: TabProps) {
       aria-selected={isActive}
       onClick={() => setActiveTab(id)}
       className={`
-        flex items-center gap-2 px-4 py-3 text-sm font-medium
-        border-b-2 -mb-px transition-colors
+        flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium
+        rounded-lg transition-smooth
         ${
           isActive
-            ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+            ? 'bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-50 shadow-soft'
+            : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-300'
         }
       `}
     >
@@ -93,7 +93,7 @@ export function TabPanel({ id, children, className = '' }: TabPanelProps) {
   if (activeTab !== id) return null
 
   return (
-    <div role="tabpanel" className={className}>
+    <div role="tabpanel" className={`animate-fade-in ${className}`}>
       {children}
     </div>
   )

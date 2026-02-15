@@ -42,10 +42,10 @@ export default function Modal({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-stone-950/30 dark:bg-stone-950/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -53,40 +53,29 @@ export default function Modal({
       <div
         className={`
           relative ${sizes[size]} w-full mx-4
-          bg-white dark:bg-gray-800
-          rounded-xl shadow-xl
-          animate-in fade-in zoom-in-95 duration-200
+          bg-white dark:bg-stone-900
+          border border-stone-200/60 dark:border-stone-800/60
+          rounded-2xl shadow-soft-lg
+          animate-scale-in
         `}
       >
-        {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-stone-200/60 dark:border-stone-800/60">
+            <h2 className="text-base font-semibold text-stone-900 dark:text-stone-50">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="p-1.5 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-smooth"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         )}
 
-        {/* Body */}
-        <div className="px-6 py-4">{children}</div>
+        <div className="px-6 py-5">{children}</div>
       </div>
     </div>,
     document.body

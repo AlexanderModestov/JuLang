@@ -48,24 +48,24 @@ export default function ReviewSession({ queue, onComplete }: ReviewSessionProps)
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400">Нет карточек для повторения.</p>
+          <p className="text-sm text-stone-500 dark:text-stone-400">Нет карточек для повторения.</p>
         </div>
       </Card>
     )
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       {/* Progress indicator */}
-      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+      <div className="flex items-center justify-between text-sm text-stone-500 dark:text-stone-400">
         <span>{currentIndex + 1} / {queue.length}</span>
         <span>{stats.correct}/{stats.total} правильно</span>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-1 bg-stone-200 dark:bg-stone-800 rounded-full overflow-hidden">
         <div
-          className="h-full bg-primary-500 transition-all duration-300"
+          className="h-full bg-accent-500 transition-all duration-300"
           style={{ width: `${((currentIndex + 1) / queue.length) * 100}%` }}
         />
       </div>
@@ -79,11 +79,11 @@ export default function ReviewSession({ queue, onComplete }: ReviewSessionProps)
         />
       ) : (
         <Card>
-          <div className="text-center py-8">
-            <p className={`text-2xl font-bold ${lastCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-              {lastCorrect ? '✓ Правильно!' : '✗ Неправильно'}
+          <div className="text-center py-8 animate-fade-in">
+            <p className={`text-xl font-semibold ${lastCorrect ? 'text-success-500' : 'text-danger-500'}`}>
+              {lastCorrect ? '\u2713 Правильно!' : '\u2717 Неправильно'}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-sm text-stone-400 dark:text-stone-500 mt-2">
               {currentIndex < queue.length - 1 ? 'Следующее слово...' : 'Завершение...'}
             </p>
           </div>

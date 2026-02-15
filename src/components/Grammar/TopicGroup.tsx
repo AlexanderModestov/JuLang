@@ -20,24 +20,31 @@ export default function TopicGroup({
   }
 
   return (
-    <div className="mb-4">
+    <div className="mb-6">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-2 py-2 text-left focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded"
+        className="w-full flex items-center justify-between py-3 px-3 hover:bg-stone-100/60 dark:hover:bg-stone-800/40 rounded-xl transition-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-500 focus-visible:ring-offset-2"
       >
-        <span className="text-gray-500 dark:text-gray-400 w-4 text-center">
-          {isExpanded ? '\u25BC' : '\u25B6'}
-        </span>
-        <h3 className="font-semibold text-gray-900 dark:text-white">
-          {groupName}
-        </h3>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          ({topics.length})
-        </span>
+        <div className="flex items-center gap-2.5">
+          <h3 className="text-xs font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-wider">
+            {groupName}
+          </h3>
+          <span className="text-xs text-stone-400 dark:text-stone-600">
+            {topics.length}
+          </span>
+        </div>
+        <svg
+          className={`w-4 h-4 text-stone-400 dark:text-stone-500 transition-smooth ${isExpanded ? 'rotate-180' : ''}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
 
       {isExpanded && (
-        <div className="mt-2 space-y-2 pl-6">
+        <div className="mt-2 space-y-1.5 pl-3">
           {topics.map((topic) => (
             <TopicListItem key={topic.id} topic={topic} />
           ))}

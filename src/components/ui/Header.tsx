@@ -28,57 +28,52 @@ export default function Header({ title, showBack, onBack }: HeaderProps) {
   }
 
   return (
-    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
-      <div className="max-w-4xl mx-auto flex items-center justify-between">
-        {/* Left side: Logo or back button + title */}
-        <div className="flex items-center gap-2">
+    <header className="sticky top-0 z-30 glass border-b border-stone-200/60 dark:border-stone-800/60">
+      <div className="max-w-2xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
+        {/* Left side */}
+        <div className="flex items-center gap-3">
           {!isHome && showBack !== false && (
             <button
               onClick={handleBack}
-              className="p-1 -ml-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="p-1.5 -ml-1.5 rounded-lg text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-smooth"
               aria-label="Назад"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
               </svg>
             </button>
           )}
 
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 group">
             {isHome ? (
-              <>
-                <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  JuLang
-                </span>
-              </>
+              <span className="font-display text-xl font-semibold text-stone-900 dark:text-stone-50 tracking-tight">
+                JuLang
+              </span>
             ) : (
-              <span className="text-lg font-semibold text-gray-900 dark:text-white">
+              <span className="text-base font-medium text-stone-900 dark:text-stone-50">
                 {title || 'JuLang'}
               </span>
             )}
           </Link>
         </div>
 
-        {/* Right side: Language switcher, user name, settings */}
+        {/* Right side */}
         {profile && (
-          <div className="flex items-center gap-3">
-            {/* Language switcher */}
+          <div className="flex items-center gap-2">
             <LanguageSwitcher />
 
-            {/* User name */}
-            <span className="text-sm text-gray-600 dark:text-gray-400 hidden sm:inline">
+            <span className="text-xs text-stone-400 dark:text-stone-500 hidden sm:inline pl-1">
               {profile.name}
             </span>
 
-            {/* Settings icon */}
             <button
               onClick={handleSettingsClick}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 rounded-lg text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-smooth"
               aria-label="Настройки"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
           </div>

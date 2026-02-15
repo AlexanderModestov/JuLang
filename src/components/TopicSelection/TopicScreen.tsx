@@ -16,37 +16,37 @@ const CATEGORIES: TopicCategory[] = [
   {
     id: 'food',
     name: 'Еда и рестораны',
-    icon: '🍽️',
+    icon: '\uD83C\uDF7D\uFE0F',
     topics: ['В ресторане', 'Заказ еды', 'Французская кухня', 'Рецепты'],
   },
   {
     id: 'travel',
     name: 'Путешествия',
-    icon: '✈️',
+    icon: '\u2708\uFE0F',
     topics: ['В аэропорту', 'В отеле', 'Достопримечательности', 'Транспорт'],
   },
   {
     id: 'work',
     name: 'Работа и карьера',
-    icon: '💼',
+    icon: '\uD83D\uDCBC',
     topics: ['Собеседование', 'В офисе', 'Деловая встреча', 'Телефонный разговор'],
   },
   {
     id: 'hobbies',
     name: 'Хобби и досуг',
-    icon: '🎨',
+    icon: '\uD83C\uDFA8',
     topics: ['Спорт', 'Музыка', 'Кино', 'Книги'],
   },
   {
     id: 'daily',
     name: 'Повседневная жизнь',
-    icon: '🏠',
+    icon: '\uD83C\uDFE0',
     topics: ['Утро', 'Покупки', 'В городе', 'Погода'],
   },
   {
     id: 'culture',
     name: 'Культура и искусство',
-    icon: '🎭',
+    icon: '\uD83C\uDFAD',
     topics: ['Музеи', 'Театр', 'Праздники', 'Традиции'],
   },
 ]
@@ -78,12 +78,12 @@ export default function TopicScreen() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 stagger-children">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="font-display text-display-lg text-stone-900 dark:text-stone-50">
           Выберите тему для разговора
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
+        <p className="text-stone-500 dark:text-stone-400 mt-2">
           Уровень: {profile?.french_level || 'A1'}
         </p>
       </div>
@@ -95,14 +95,14 @@ export default function TopicScreen() {
         className="w-full"
         size="lg"
       >
-        🎲 Случайная тема
+        &#127922; Случайная тема
       </Button>
 
       {/* Random topic preview */}
       {randomTopic && (
-        <Card className="border-2 border-primary-300 dark:border-primary-700">
+        <Card className="border-2 border-accent-300 dark:border-accent-700 animate-fade-in-up">
           <div className="text-center">
-            <p className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            <p className="text-lg font-medium text-stone-900 dark:text-stone-50 mb-4">
               {randomTopic}
             </p>
             <div className="flex gap-3 justify-center">
@@ -119,7 +119,7 @@ export default function TopicScreen() {
 
       {/* Custom topic */}
       <Card>
-        <h3 className="font-medium text-gray-900 dark:text-white mb-3">
+        <h3 className="font-medium text-stone-900 dark:text-stone-50 mb-3">
           Или введите свою тему
         </h3>
         <div className="flex gap-2">
@@ -141,34 +141,40 @@ export default function TopicScreen() {
 
       {/* Categories */}
       {!selectedCategory ? (
-        <div className="grid grid-cols-2 gap-3">
-          {CATEGORIES.map((category) => (
-            <Card
-              key={category.id}
-              variant="elevated"
-              className="cursor-pointer hover:scale-[1.02] transition-transform"
-              onClick={() => handleSelectCategory(category)}
-            >
-              <div className="text-center">
-                <span className="text-3xl block mb-2">{category.icon}</span>
-                <h3 className="font-medium text-gray-900 dark:text-white text-sm">
-                  {category.name}
-                </h3>
-              </div>
-            </Card>
-          ))}
+        <div>
+          <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-4">Категории</p>
+          <div className="grid grid-cols-2 gap-3">
+            {CATEGORIES.map((category) => (
+              <Card
+                key={category.id}
+                variant="elevated"
+                className="cursor-pointer card-interactive"
+                onClick={() => handleSelectCategory(category)}
+              >
+                <div className="text-center">
+                  <span className="text-3xl block mb-2">{category.icon}</span>
+                  <h3 className="font-medium text-stone-900 dark:text-stone-50 text-sm">
+                    {category.name}
+                  </h3>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       ) : (
-        <div>
+        <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => handleSelectCategory(null)}
             >
-              ← Назад
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              Назад
             </Button>
-            <h3 className="font-medium text-gray-900 dark:text-white">
+            <h3 className="font-medium text-stone-900 dark:text-stone-50">
               {selectedCategory.icon} {selectedCategory.name}
             </h3>
           </div>
@@ -179,12 +185,14 @@ export default function TopicScreen() {
                 key={topic}
                 variant="outlined"
                 padding="sm"
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                className="cursor-pointer hover:bg-stone-50 dark:hover:bg-stone-800/50 transition-smooth active:scale-[0.98]"
                 onClick={() => handleStartConversation(topic)}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-900 dark:text-white">{topic}</span>
-                  <span className="text-gray-400">→</span>
+                  <span className="text-stone-900 dark:text-stone-50">{topic}</span>
+                  <svg className="w-4 h-4 text-stone-400 dark:text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
                 </div>
               </Card>
             ))}
