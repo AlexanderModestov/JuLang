@@ -62,18 +62,26 @@ export default function VocabularyScreen() {
   const loadData = async () => {
     if (!user || !profile) return
     setLoading(true)
-    const frenchLevel = profile.french_level || 'A1'
-    const [nc, rq, supabaseProgress] = await Promise.all([
-      getNewCards(user.id, frenchLevel, currentLanguage),
-      getReviewQueue(user.id, currentLanguage),
-      userDataService.getVocabularyProgress(user.id, currentLanguage),
-    ])
-    const progress = supabaseProgress.map(toLocalVocabularyProgress)
-    setNewCards(nc)
-    setReviewQueue(rq)
-    setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
-    setAllProgress(progress)
-    setLoading(false)
+    try {
+      const frenchLevel = profile.french_level || 'A1'
+      const [nc, rq, supabaseProgress] = await Promise.all([
+        getNewCards(user.id, frenchLevel, currentLanguage),
+        getReviewQueue(user.id, currentLanguage),
+        userDataService.getVocabularyProgress(user.id),
+      ])
+      // Filter by language in JS (matching pattern used by useHomeStats and getNewCards)
+      const progress = supabaseProgress
+        .filter((p) => (p as any).language === currentLanguage)
+        .map(toLocalVocabularyProgress)
+      setNewCards(nc)
+      setReviewQueue(rq)
+      setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
+      setAllProgress(progress)
+    } catch (error) {
+      console.error('Failed to load vocabulary data:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   // Apply filters to get the filtered list
@@ -132,8 +140,12 @@ export default function VocabularyScreen() {
     await scheduleVocabularyCardAuto(progressEntry.id, correct)
 
     // Reload progress data from Supabase
-    const updatedSupabase = await userDataService.getVocabularyProgress(user.id, currentLanguage)
-    setAllProgress(updatedSupabase.map(toLocalVocabularyProgress))
+    const updatedSupabase = await userDataService.getVocabularyProgress(user.id)
+    setAllProgress(
+      updatedSupabase
+        .filter((p) => (p as any).language === currentLanguage)
+        .map(toLocalVocabularyProgress)
+    )
 
     // Show result briefly, then auto-transition
     setLastPracticeCorrect(correct)
