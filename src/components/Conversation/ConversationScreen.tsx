@@ -10,6 +10,7 @@ import {
 } from '@/modules/SpeechService'
 import { useSpeech } from '@/hooks/useSpeech'
 import { saveConversation } from '@/db'
+import { userDataService } from '@/services/userDataService'
 import type { Message, Conversation } from '@/types'
 import { languageTTSCodes } from '@/types'
 import Button from '@/components/ui/Button'
@@ -174,11 +175,54 @@ export default function ConversationScreen() {
 
     await saveConversation(conversation)
 
-    // Update progress
+    // Save conversation to Supabase so dashboard stats work
+    try {
+      await userDataService.createConversation({
+        id: conversationId,
+        user_id: user.id,
+        language: currentLanguage,
+        topic_id: topic,
+        ai_provider: 'openai',
+        mode,
+        started_at: conversationStartedAt.toISOString(),
+        ended_at: endedAt.toISOString(),
+        duration_ms: durationMs,
+        messages: messages.map((m) => ({
+          id: m.id,
+          role: m.role,
+          content: m.content,
+          timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
+        })),
+      })
+    } catch (err) {
+      console.error('Failed to save conversation to Supabase:', err)
+    }
+
+    // Update progress and streak
     if (progress) {
+      const today = new Date().toISOString().split('T')[0]
+      const lastActivity = progress.last_activity_date
+        ? progress.last_activity_date.split('T')[0]
+        : null
+
+      let newStreak = progress.current_streak
+      if (lastActivity !== today) {
+        // Check if last activity was yesterday (continue streak) or earlier (reset)
+        if (lastActivity) {
+          const yesterday = new Date()
+          yesterday.setDate(yesterday.getDate() - 1)
+          const yesterdayStr = yesterday.toISOString().split('T')[0]
+          newStreak = lastActivity === yesterdayStr ? newStreak + 1 : 1
+        } else {
+          newStreak = 1
+        }
+      }
+
       updateProgress({
         total_conversations: progress.total_conversations + 1,
         topics_covered: [...new Set([...progress.topics_covered, topic])],
+        current_streak: newStreak,
+        last_activity_date: today,
       })
     }
 
