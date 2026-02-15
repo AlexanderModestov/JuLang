@@ -17,15 +17,50 @@
       "category": "articles",
       "group": "articles",
       "content": {
-        "rule": "Определённый артикль 'the' используется, когда мы говорим о конкретном предмете, известном собеседникам. Произносится [ðə] перед согласными и [ði] перед гласными звуками.",
+        "rule": "Определённый артикль 'the' используется, когда мы говорим о конкретном предмете, известном обоим собеседникам. Это единственный определённый артикль в английском языке — он не изменяется по родам и числам. Произносится [ðə] перед согласными звуками и [ði] перед гласными звуками. Артикль 'the' обязателен с уникальными объектами (the sun, the moon), порядковыми числительными (the first, the second), превосходной степенью (the best, the tallest), а также с известными из контекста предметами.",
+        "formation": {
+          "description": "Артикль the ставится перед существительным (или его определением)",
+          "formula": "the + (adjective) + noun",
+          "details": [
+            "Единственное число: the book, the apple",
+            "Множественное число: the books, the apples",
+            "С прилагательным: the big house, the old man",
+            "Произношение: [ðə] перед согласными (the book), [ði] перед гласными (the apple)"
+          ]
+        },
+        "usage": [
+          "Конкретный предмет, известный собеседникам: The book you gave me is great.",
+          "Уникальные объекты: the sun, the moon, the Earth, the Internet",
+          "С превосходной степенью: the best, the most interesting",
+          "С порядковыми числительными: the first, the third",
+          "Предмет упомянут повторно: I saw a cat. The cat was black.",
+          "Географические названия: the Thames, the Alps, the United States"
+        ],
+        "exceptions": [
+          "Абстрактные понятия без артикля: Love is beautiful (НЕ The love)",
+          "Языки: She speaks English (НЕ the English)",
+          "Приёмы пищи: Let's have lunch (НЕ the lunch)",
+          "Спорт: He plays football (НЕ the football)",
+          "Страны (обычно): France, Germany (НО: the United Kingdom)"
+        ],
         "examples": [
           { "en": "The book is on the table.", "ru": "Книга на столе." },
-          { "en": "I love the music.", "ru": "Я люблю эту музыку." },
-          { "en": "The apple is red.", "ru": "Яблоко красное." }
+          { "en": "I love the music you're playing.", "ru": "Мне нравится музыка, которую ты играешь." },
+          { "en": "The apple is red.", "ru": "Яблоко красное." },
+          { "en": "She is the best student in the class.", "ru": "Она лучшая ученица в классе." },
+          { "en": "The sun rises in the east.", "ru": "Солнце встаёт на востоке." },
+          { "en": "I went to the shop on the corner.", "ru": "Я пошёл в магазин на углу." }
         ],
         "commonMistakes": [
           "Пропуск артикля с уникальными объектами: Sun is bright → The sun is bright",
-          "Использование с абстрактными понятиями: I love the music (вообще) → I love music"
+          "Использование с абстрактными понятиями: I love the music (вообще) → I love music",
+          "Использование с языками: She speaks the English → She speaks English",
+          "Пропуск перед превосходной степенью: She is best → She is the best"
+        ],
+        "tips": [
+          "Если можно сказать «этот/тот» — скорее всего, нужен the",
+          "С музыкальными инструментами: play the piano, play the guitar",
+          "Если предмет упомянут впервые — используйте a/an, повторно — the"
         ]
       }
     },
@@ -37,16 +72,49 @@
       "category": "articles",
       "group": "articles",
       "content": {
-        "rule": "Неопределённые артикли 'a' (перед согласным звуком) и 'an' (перед гласным звуком) используются с исчисляемыми существительными в единственном числе, когда мы говорим о предмете впервые или о любом представителе класса.",
+        "rule": "Неопределённые артикли 'a' (перед согласным звуком) и 'an' (перед гласным звуком) используются с исчисляемыми существительными в единственном числе, когда мы говорим о предмете впервые или о любом представителе класса. Выбор между a и an зависит от ЗВУКА, а не от буквы: a university (звук [j]), но an hour (немая h). Неопределённый артикль не используется с множественным числом и неисчисляемыми существительными.",
+        "formation": {
+          "description": "Артикль a/an ставится перед исчисляемым существительным в единственном числе",
+          "formula": "a/an + (adjective) + singular countable noun",
+          "details": [
+            "a + согласный ЗВУК: a book, a cat, a university",
+            "an + гласный ЗВУК: an apple, an hour, an umbrella",
+            "С прилагательным: a big house, an old man",
+            "Не используется с множественным числом и неисчисляемыми"
+          ]
+        },
+        "usage": [
+          "Впервые упомянутый предмет: I saw a cat in the garden.",
+          "Любой представитель класса: A dog is a loyal animal.",
+          "С профессиями: She is a doctor. He is an engineer.",
+          "В значении «один»: Can I have a coffee, please?",
+          "В восклицаниях с what: What a beautiful day!",
+          "После there is: There is a problem."
+        ],
+        "exceptions": [
+          "Перед неисчисляемыми: a water → water (НО: a glass of water)",
+          "Перед множественным числом: a books → books / some books",
+          "Звук важнее буквы: a European, a university, BUT an hour, an MBA"
+        ],
         "examples": [
           { "en": "I have a cat.", "ru": "У меня есть кот." },
           { "en": "She is an engineer.", "ru": "Она инженер." },
-          { "en": "It's an hour away.", "ru": "Это в часе езды." }
+          { "en": "It's an hour away.", "ru": "Это в часе езды." },
+          { "en": "I need a new computer.", "ru": "Мне нужен новый компьютер." },
+          { "en": "What a wonderful idea!", "ru": "Какая замечательная идея!" },
+          { "en": "He is a university professor.", "ru": "Он университетский профессор." },
+          { "en": "There is an umbrella by the door.", "ru": "У двери зонт." }
         ],
         "commonMistakes": [
           "An перед согласным звуком: an university → a university (звук [j])",
           "A перед гласным звуком: a apple → an apple",
-          "Пропуск артикля с профессиями: She is doctor → She is a doctor"
+          "Пропуск артикля с профессиями: She is doctor → She is a doctor",
+          "С неисчисляемыми: I need an advice → I need advice / a piece of advice"
+        ],
+        "tips": [
+          "Слушайте ЗВУК, а не букву: an hour (h немая), a house (h звучит)",
+          "С профессиями после be всегда артикль: I am a teacher",
+          "A/an = один, но менее конкретный, чем «one»"
         ]
       }
     },
@@ -58,16 +126,51 @@
       "category": "verbs",
       "group": "tenses",
       "content": {
-        "rule": "Глагол 'to be' — один из важнейших глаголов английского языка. I am, you are, he/she/it is, we are, they are. Сокращённые формы: I'm, you're, he's, she's, it's, we're, they're.",
+        "rule": "Глагол 'to be' — один из важнейших глаголов английского языка. Он не требует вспомогательного глагола для образования вопросов и отрицаний. Формы в настоящем времени: I am, you are, he/she/it is, we are, they are. Сокращённые формы: I'm, you're, he's, she's, it's, we're, they're. Отрицательные сокращения: isn't, aren't. Используется для описания состояний, характеристик, возраста, профессии, национальности и местонахождения.",
+        "formation": {
+          "description": "Спряжение to be в Present Simple",
+          "formula": "Subject + am/is/are + complement",
+          "details": [
+            "I am (I'm) — первое лицо единственного числа",
+            "You are (You're) — второе лицо",
+            "He/She/It is (He's/She's/It's) — третье лицо единственного числа",
+            "We/They are (We're/They're) — множественное число",
+            "Отрицание: am not, isn't (is not), aren't (are not)",
+            "Вопрос: Am I...? Is he...? Are they...?"
+          ]
+        },
+        "usage": [
+          "Профессия и род деятельности: I am a teacher.",
+          "Национальность и происхождение: She is French. We are from Moscow.",
+          "Возраст: He is 25 years old.",
+          "Описание состояния и чувств: I am tired. They are happy.",
+          "Местонахождение: The book is on the table.",
+          "Погода и время: It is cold. It is 3 o'clock."
+        ],
+        "exceptions": [
+          "Нет сокращения am not → aren't I? (в вопросах-тегах)",
+          "В формальной речи сокращения не используются",
+          "This/That is (this's/that's — сокращение редко используется)"
+        ],
         "examples": [
           { "en": "I am a student.", "ru": "Я студент." },
           { "en": "She is twenty years old.", "ru": "Ей двадцать лет." },
-          { "en": "We are from Russia.", "ru": "Мы из России." }
+          { "en": "We are from Russia.", "ru": "Мы из России." },
+          { "en": "It isn't cold today.", "ru": "Сегодня не холодно." },
+          { "en": "Are you ready?", "ru": "Ты готов?" },
+          { "en": "They aren't at home.", "ru": "Их нет дома." },
+          { "en": "I'm not sure about that.", "ru": "Я не уверен в этом." }
         ],
         "commonMistakes": [
           "Пропуск глагола: I student → I am a student",
           "Неправильная форма: He are happy → He is happy",
-          "Использование have для возраста: I have 20 years → I am 20 years old"
+          "Использование have для возраста: I have 20 years → I am 20 years old",
+          "Двойной глагол: I'm am tired → I'm tired / I am tired"
+        ],
+        "tips": [
+          "В русском «быть» в настоящем времени опускается, в английском — нет: Я студент → I AM a student",
+          "Для возраста используйте be, а не have: I am 25 (НЕ I have 25)",
+          "В вопросах просто переставьте be и подлежащее: You are → Are you?"
         ]
       }
     },
@@ -79,16 +182,49 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Present Simple используется для привычных действий, общих истин и расписаний. Добавляем -s/-es в 3-м лице ед.ч. (he, she, it). Для отрицания и вопросов используем do/does.",
+        "rule": "Present Simple используется для регулярных, привычных действий, общих истин, научных фактов и расписаний. Глагол используется в базовой форме, но в 3-м лице единственного числа (he, she, it) добавляется окончание -s/-es/-ies. Для образования отрицаний и вопросов нужен вспомогательный глагол do/does. Маркеры времени: always, usually, often, sometimes, never, every day/week.",
+        "formation": {
+          "description": "Образование утвердительных, отрицательных предложений и вопросов",
+          "formula": "Subject + V (V+s/es для he/she/it)",
+          "details": [
+            "Утверждение: I/You/We/They work. He/She/It works.",
+            "Отрицание: I/You/We/They don't (do not) work. He/She/It doesn't (does not) work.",
+            "Вопрос: Do I/you/we/they work? Does he/she/it work?",
+            "Правила -s: adds → add+s, watches → watch+es, studies → stud+ies (y после согласной)"
+          ]
+        },
+        "usage": [
+          "Регулярные действия: I go to work every day.",
+          "Привычки: She always drinks coffee in the morning.",
+          "Общие истины и факты: Water boils at 100 degrees.",
+          "Расписания: The train leaves at 9 am.",
+          "Состояния: I love chocolate. She knows the answer.",
+          "Спортивные комментарии и инструкции: He passes the ball. You mix the ingredients."
+        ],
+        "exceptions": [
+          "State verbs обычно не используются в Continuous: I know (НЕ I am knowing)",
+          "Глагол have: I have a car (НЕ I am having a car), НО: I'm having lunch (= eating)",
+          "Do как смысловой глагол: What do you do? (профессия)"
+        ],
         "examples": [
           { "en": "I work every day.", "ru": "Я работаю каждый день." },
-          { "en": "She speaks English.", "ru": "Она говорит по-английски." },
-          { "en": "Do you like coffee?", "ru": "Ты любишь кофе?" }
+          { "en": "She speaks English fluently.", "ru": "Она бегло говорит по-английски." },
+          { "en": "Do you like coffee?", "ru": "Ты любишь кофе?" },
+          { "en": "He doesn't eat meat.", "ru": "Он не ест мясо." },
+          { "en": "The sun rises in the east.", "ru": "Солнце встаёт на востоке." },
+          { "en": "We usually have dinner at 7.", "ru": "Мы обычно ужинаем в 7." },
+          { "en": "Does she live in London?", "ru": "Она живёт в Лондоне?" }
         ],
         "commonMistakes": [
           "Забывают -s: He work → He works",
           "Двойной глагол: Does she works? → Does she work?",
-          "Неправильное отрицание: He not likes → He doesn't like"
+          "Неправильное отрицание: He not likes → He doesn't like",
+          "Без do в вопросе: You like coffee? → Do you like coffee?"
+        ],
+        "tips": [
+          "После does глагол БЕЗ -s: Does he work? (НЕ Does he works?)",
+          "Маркеры: always, usually, often, sometimes, rarely, never — стоят перед глаголом",
+          "Для привычек используйте Present Simple, для «прямо сейчас» — Present Continuous"
         ]
       }
     },
@@ -100,16 +236,44 @@
       "category": "pronouns",
       "group": "pronouns",
       "content": {
-        "rule": "Личные местоимения-подлежащие: I (я), you (ты/вы), he (он), she (она), it (оно), we (мы), they (они). 'You' одинаково для единственного и множественного числа.",
+        "rule": "Личные местоимения-подлежащие заменяют существительные в позиции подлежащего. Формы: I (я), you (ты/вы), he (он), she (она), it (оно/это), we (мы), they (они). В английском местоимение обязательно — нельзя опустить подлежащее. 'You' одинаково для единственного и множественного числа. 'It' используется для предметов, животных (когда пол неважен) и в безличных конструкциях (It is cold, It is raining).",
+        "formation": {
+          "description": "Местоимения-подлежащие стоят перед глаголом",
+          "formula": "Subject Pronoun + verb + ...",
+          "details": [
+            "I — всегда с большой буквы, даже в середине предложения",
+            "You — единственное и множественное число, формальное и неформальное",
+            "He/She — для людей, He/She иногда для домашних животных",
+            "It — для предметов, животных, погоды, времени",
+            "We — говорящий + другие",
+            "They — для множественного числа, а также в гендерно-нейтральном значении (Someone left their bag)"
+          ]
+        },
+        "usage": [
+          "Замена существительного-подлежащего: John is tall. → He is tall.",
+          "Безличные конструкции: It is cold. It is Monday.",
+          "Погода: It is raining. It snows in winter.",
+          "Время: It is 5 o'clock. It is late.",
+          "Гендерно-нейтральное they: Someone called. They left a message."
+        ],
         "examples": [
           { "en": "I am happy.", "ru": "Я счастлив." },
           { "en": "She works here.", "ru": "Она работает здесь." },
-          { "en": "They are students.", "ru": "Они студенты." }
+          { "en": "They are students.", "ru": "Они студенты." },
+          { "en": "It is raining outside.", "ru": "На улице идёт дождь." },
+          { "en": "We live in a small town.", "ru": "Мы живём в маленьком городе." },
+          { "en": "He is my brother.", "ru": "Он мой брат." }
         ],
         "commonMistakes": [
           "Путают he/she: My sister... he → she",
-          "It для людей: The baby... he → it (или he/she, если известен пол)",
-          "Пропуск местоимения: Is cold → It is cold"
+          "Пропуск подлежащего: Is cold → It is cold",
+          "It для людей: The baby... it → he/she (когда пол известен)",
+          "I с маленькой буквы: i am → I am"
+        ],
+        "tips": [
+          "В английском НЕЛЬЗЯ опустить подлежащее — «Холодно» = It is cold",
+          "They как единственное число — нормально: If someone calls, tell them I'm busy",
+          "I — всегда заглавная, независимо от позиции в предложении"
         ]
       }
     },
@@ -121,16 +285,48 @@
       "category": "syntax",
       "group": "negation",
       "content": {
-        "rule": "Отрицание образуется с помощью 'not' после вспомогательного глагола. С to be: am/is/are + not. С Present Simple: do/does + not + инфинитив. Сокращения: don't, doesn't, isn't, aren't.",
+        "rule": "Отрицание в английском образуется добавлением 'not' после вспомогательного глагола. С глаголом to be: am/is/are + not. С Present Simple: do/does + not + инфинитив (без to). С модальными глаголами: can't, won't, mustn't. Важно: в английском не используется двойное отрицание (в отличие от русского). Сокращённые формы: don't, doesn't, isn't, aren't, can't, won't, hasn't, haven't.",
+        "formation": {
+          "description": "Отрицание зависит от типа глагола в предложении",
+          "formula": "Subject + auxiliary + not + main verb",
+          "details": [
+            "С to be: I am not (I'm not), He is not (isn't), They are not (aren't)",
+            "Present Simple: I do not (don't) like. She does not (doesn't) like.",
+            "Past Simple: I did not (didn't) go.",
+            "С модальными: can → can't, will → won't, must → mustn't",
+            "Present Perfect: have not (haven't) / has not (hasn't)"
+          ]
+        },
+        "usage": [
+          "Отрицание факта: I don't like coffee.",
+          "Запрет: You mustn't touch that.",
+          "Отрицание с be: She isn't here today.",
+          "Отрицание в прошлом: We didn't go to the party.",
+          "С any/anything/anyone: I don't have any money. I don't know anyone here."
+        ],
+        "exceptions": [
+          "Двойное отрицание — грамматическая ошибка: I don't know nothing → I don't know anything",
+          "Ain't — нестандартная (разговорная/диалектная) форма: I ain't going",
+          "Needn't — модальный без do: You needn't worry (= You don't need to worry)"
+        ],
         "examples": [
           { "en": "I am not tired.", "ru": "Я не устал." },
           { "en": "She doesn't like fish.", "ru": "Она не любит рыбу." },
-          { "en": "They don't work on Sundays.", "ru": "Они не работают по воскресеньям." }
+          { "en": "They don't work on Sundays.", "ru": "Они не работают по воскресеньям." },
+          { "en": "We didn't see the movie.", "ru": "Мы не смотрели фильм." },
+          { "en": "He can't swim.", "ru": "Он не умеет плавать." },
+          { "en": "I haven't finished yet.", "ru": "Я ещё не закончил." }
         ],
         "commonMistakes": [
           "Двойное отрицание: I don't know nothing → I don't know anything",
           "Без вспомогательного: She not likes → She doesn't like",
-          "Неправильный порядок: Not I am → I am not"
+          "Неправильный порядок: Not I am → I am not",
+          "Основной глагол с -s после doesn't: She doesn't likes → She doesn't like"
+        ],
+        "tips": [
+          "Запомните: after don't/doesn't/didn't глагол в базовой форме (БЕЗ -s, БЕЗ -ed)",
+          "No = not any: I have no money = I don't have any money",
+          "Для вежливого отказа используйте: I'm afraid I can't..."
         ]
       }
     },
@@ -142,15 +338,50 @@
       "category": "adjectives",
       "group": "adjectives",
       "content": {
-        "rule": "Прилагательные в английском ставятся ПЕРЕД существительным. При нескольких прилагательных порядок: мнение → размер → возраст → форма → цвет → происхождение → материал → назначение.",
+        "rule": "В английском прилагательные ставятся ПЕРЕД существительным (в отличие от многих языков). Если прилагательных несколько, существует строгий порядок: мнение → размер → возраст → форма → цвет → происхождение → материал → назначение. Этот порядок воспринимается носителями интуитивно — нарушение звучит неестественно. Прилагательные не склоняются по числам и родам: a big house, big houses.",
+        "formation": {
+          "description": "Прилагательные перед существительным в определённом порядке",
+          "formula": "opinion → size → age → shape → colour → origin → material → purpose + noun",
+          "details": [
+            "Opinion (мнение): beautiful, nice, ugly, lovely",
+            "Size (размер): big, small, tall, tiny, huge",
+            "Age (возраст): old, young, new, ancient",
+            "Shape (форма): round, square, flat, long",
+            "Colour (цвет): red, blue, green, dark",
+            "Origin (происхождение): French, Russian, European",
+            "Material (материал): wooden, metal, cotton, glass",
+            "Purpose (назначение): sleeping (bag), running (shoes)"
+          ]
+        },
+        "usage": [
+          "Перед существительным: a beautiful house, a big city",
+          "После linking verbs (be, seem, look, feel): She is happy. It looks great.",
+          "Несколько прилагательных: a lovely small old cottage",
+          "С наречиями степени: a very big house, an extremely hot day"
+        ],
+        "exceptions": [
+          "После linking verbs (be, seem, look, feel, smell, taste): The cake tastes delicious",
+          "Некоторые прилагательные только после глагола: alive, asleep, afraid, alone",
+          "С something/anything: something interesting (прилагательное ПОСЛЕ)"
+        ],
         "examples": [
           { "en": "A beautiful house.", "ru": "Красивый дом." },
           { "en": "A big old wooden table.", "ru": "Большой старый деревянный стол." },
-          { "en": "She has long brown hair.", "ru": "У неё длинные каштановые волосы." }
+          { "en": "She has long brown hair.", "ru": "У неё длинные каштановые волосы." },
+          { "en": "It's a lovely little Italian restaurant.", "ru": "Это прелестный маленький итальянский ресторан." },
+          { "en": "He bought a new red sports car.", "ru": "Он купил новый красный спортивный автомобиль." },
+          { "en": "She wore a beautiful long white dress.", "ru": "Она была в красивом длинном белом платье." }
         ],
         "commonMistakes": [
           "Прилагательное после существительного: house beautiful → beautiful house",
-          "Неправильный порядок: a wooden big table → a big wooden table"
+          "Неправильный порядок: a wooden big table → a big wooden table",
+          "Склонение по числам: bigs houses → big houses",
+          "Забывают порядок: a red big car → a big red car"
+        ],
+        "tips": [
+          "Мнемоника OSASCOMP: Opinion, Size, Age, Shape, Colour, Origin, Material, Purpose",
+          "Обычно не используйте больше 2-3 прилагательных подряд",
+          "Afraid, asleep, alive, alone — только после глагола: The child is asleep (НЕ an asleep child)"
         ]
       }
     },
@@ -162,16 +393,49 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Present Continuous (am/is/are + V-ing) используется для действий, происходящих прямо сейчас, временных ситуаций и запланированных действий в ближайшем будущем.",
+        "rule": "Present Continuous (am/is/are + V-ing) используется для действий, происходящих прямо сейчас, временных ситуаций и запланированных действий в ближайшем будущем. Это одно из ключевых времён для описания текущих процессов. Не используется с глаголами состояния (state verbs): know, like, believe, want, need, belong и т.д. Маркеры: now, right now, at the moment, currently, today, this week.",
+        "formation": {
+          "description": "Глагол to be + причастие настоящего времени (V-ing)",
+          "formula": "Subject + am/is/are + V-ing",
+          "details": [
+            "Утверждение: I am working. She is reading. They are playing.",
+            "Отрицание: I am not (I'm not) working. She isn't reading.",
+            "Вопрос: Are you working? Is she reading?",
+            "Правила -ing: write → writing (убираем -e), run → running (удвоение), lie → lying (ie → y)"
+          ]
+        },
+        "usage": [
+          "Действие прямо сейчас: I am reading a book right now.",
+          "Временная ситуация: She is working from home this week.",
+          "Запланированное будущее: We are meeting tomorrow at 5.",
+          "Изменения и тренды: Prices are rising. He is getting better.",
+          "Раздражение (с always): He is always losing his keys!",
+          "Описание картинки: In this photo, she is smiling."
+        ],
+        "exceptions": [
+          "State verbs не используются в Continuous: know, believe, like, love, want, need, own, belong",
+          "Have (= иметь) — state: I have a car (НЕ am having). НО: I'm having lunch (= eating)",
+          "Think (= считать) — state: I think it's good. НО: I'm thinking about it (= обдумываю)",
+          "See (= видеть) — state: I see a bird. НО: I'm seeing my doctor tomorrow (= встречаюсь)"
+        ],
         "examples": [
           { "en": "I am reading a book now.", "ru": "Я сейчас читаю книгу." },
           { "en": "She is working from home this week.", "ru": "Она работает из дома на этой неделе." },
-          { "en": "We are meeting tomorrow.", "ru": "Мы встречаемся завтра." }
+          { "en": "We are meeting tomorrow.", "ru": "Мы встречаемся завтра." },
+          { "en": "The weather is getting warmer.", "ru": "Погода становится теплее." },
+          { "en": "Why are you laughing?", "ru": "Почему ты смеёшься?" },
+          { "en": "He is always complaining about something.", "ru": "Он вечно на что-то жалуется." }
         ],
         "commonMistakes": [
           "Забывают be: I reading → I am reading",
           "State verbs в Continuous: I am knowing → I know",
-          "Неправильное -ing: runing → running (удвоение согласной)"
+          "Неправильное -ing: runing → running (удвоение согласной)",
+          "Путают с Present Simple: I work now → I am working now"
+        ],
+        "tips": [
+          "NOW = Present Continuous, EVERY DAY = Present Simple",
+          "Если сомневаетесь — state verb или нет — попробуйте заменить на «в процессе»",
+          "С always + Continuous = раздражение: She is always talking! (= слишком много)"
         ]
       }
     },
@@ -183,16 +447,48 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Past Simple используется для завершённых действий в прошлом. Правильные глаголы: + -ed. Неправильные имеют особые формы (go → went, see → saw). Вопросы и отрицания с did.",
+        "rule": "Past Simple используется для завершённых действий в прошлом, когда известно или подразумевается время действия. Правильные глаголы образуются добавлением -ed (worked, played, wanted). Неправильные имеют особые формы (go → went, see → saw, buy → bought). Вопросы и отрицания образуются с помощью did (+ инфинитив без to). Маркеры: yesterday, last week/month/year, ago, in 2020, when I was young.",
+        "formation": {
+          "description": "Правильные глаголы: +ed; неправильные: особая форма (V2)",
+          "formula": "Subject + V2 (past form)",
+          "details": [
+            "Утверждение: I worked. She went. They bought.",
+            "Отрицание: I didn't (did not) work. She didn't go.",
+            "Вопрос: Did you work? Did she go? What did they buy?",
+            "Правила -ed: work → worked, play → played, stop → stopped (удвоение), study → studied (y→ied)",
+            "Произношение -ed: [t] после глухих (worked), [d] после звонких (played), [ɪd] после t/d (wanted)"
+          ]
+        },
+        "usage": [
+          "Завершённое действие в прошлом: I visited Paris last year.",
+          "Последовательность событий: She woke up, had breakfast and left.",
+          "Привычки в прошлом: When I was a child, I played outside every day.",
+          "Факт из прошлого: Shakespeare wrote many plays.",
+          "С конкретным временем: I saw him yesterday at 3 pm."
+        ],
+        "exceptions": [
+          "Неправильные глаголы нужно запоминать: go-went, see-saw, buy-bought, take-took",
+          "Be в прошлом: was (I/he/she/it), were (you/we/they)",
+          "Have → had, do → did, can → could"
+        ],
         "examples": [
           { "en": "I worked yesterday.", "ru": "Я работал вчера." },
           { "en": "She went to Paris last year.", "ru": "Она ездила в Париж в прошлом году." },
-          { "en": "Did you see the movie?", "ru": "Ты видел этот фильм?" }
+          { "en": "Did you see the movie?", "ru": "Ты видел этот фильм?" },
+          { "en": "We didn't have time.", "ru": "У нас не было времени." },
+          { "en": "He bought a new car last month.", "ru": "Он купил новую машину в прошлом месяце." },
+          { "en": "What did you do on the weekend?", "ru": "Что ты делал на выходных?" }
         ],
         "commonMistakes": [
           "Did + прошедшее время: Did you went? → Did you go?",
           "Неправильные формы: He goed → He went",
-          "Произношение -ed: worked [t], played [d], wanted [ɪd]"
+          "Без did в вопросе: You saw the movie? → Did you see the movie?",
+          "Глагол после didn't с окончанием: He didn't went → He didn't go"
+        ],
+        "tips": [
+          "После did/didn't глагол ВСЕГДА в базовой форме (инфинитив без to)",
+          "Для неправильных глаголов учите три формы: go-went-gone",
+          "Произношение -ed: worked [t], played [d], wanted [ɪd] — зависит от последнего звука"
         ]
       }
     },
@@ -204,16 +500,49 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Present Perfect (have/has + Past Participle) связывает прошлое с настоящим. Используется для опыта, незавершённых действий и результата прошлых действий. Маркеры: ever, never, already, yet, just.",
+        "rule": "Present Perfect (have/has + Past Participle) связывает прошлое с настоящим. Это время используется, когда важен результат действия, а не его время. Применяется для жизненного опыта, незавершённых периодов, действий с результатом в настоящем и с наречиями ever, never, already, yet, just, recently, since, for. НЕ используется с конкретным прошедшим временем (yesterday, last week, in 2020).",
+        "formation": {
+          "description": "Have/has + третья форма глагола (Past Participle, V3)",
+          "formula": "Subject + have/has + V3 (Past Participle)",
+          "details": [
+            "Утверждение: I/You/We/They have (I've) worked. He/She/It has (He's) worked.",
+            "Отрицание: I haven't worked. She hasn't finished.",
+            "Вопрос: Have you worked? Has she finished?",
+            "Правильные: V3 = V2 (worked, played). Неправильные: go-went-gone, see-saw-seen"
+          ]
+        },
+        "usage": [
+          "Жизненный опыт: I have visited 10 countries. Have you ever tried sushi?",
+          "Результат в настоящем: I have lost my keys. (= сейчас без ключей)",
+          "Незавершённый период: I have read 3 books this month.",
+          "С since/for: I have lived here since 2020 / for 5 years.",
+          "Только что: She has just arrived. I have recently finished the project.",
+          "Ещё не / уже: Have you finished yet? I have already done it."
+        ],
+        "exceptions": [
+          "С конкретным временем — Past Simple: I saw him yesterday (НЕ have seen)",
+          "Been vs gone: She has been to Paris (и вернулась). She has gone to Paris (она там сейчас).",
+          "Американский английский часто использует Past Simple вместо Present Perfect: I just ate (AmE) = I have just eaten (BrE)"
+        ],
         "examples": [
           { "en": "I have visited London.", "ru": "Я бывал в Лондоне." },
           { "en": "She has just finished.", "ru": "Она только что закончила." },
-          { "en": "Have you ever eaten sushi?", "ru": "Ты когда-нибудь ел суши?" }
+          { "en": "Have you ever eaten sushi?", "ru": "Ты когда-нибудь ел суши?" },
+          { "en": "We haven't seen her since Monday.", "ru": "Мы не видели её с понедельника." },
+          { "en": "He has worked here for ten years.", "ru": "Он работает здесь десять лет." },
+          { "en": "I've already done my homework.", "ru": "Я уже сделал домашнее задание." },
+          { "en": "They have never been abroad.", "ru": "Они никогда не были за границей." }
         ],
         "commonMistakes": [
           "С конкретным временем: I have seen him yesterday → I saw him yesterday",
           "Забывают have/has: I seen the movie → I have seen the movie",
-          "Путают с Past Simple: I have went → I have gone / I went"
+          "Путают V2 и V3: I have went → I have gone",
+          "Since/for путают: I have lived here since 5 years → for 5 years"
+        ],
+        "tips": [
+          "Since + точка начала (since 2020, since Monday). For + длительность (for 5 years, for a week).",
+          "Yet — в вопросах и отрицаниях (в конце). Already — в утверждениях (перед V3).",
+          "Нет конкретного времени = Present Perfect. Есть время = Past Simple."
         ]
       }
     },
@@ -225,16 +554,49 @@
       "category": "pronouns",
       "group": "pronouns",
       "content": {
-        "rule": "Объектные местоимения используются после глаголов и предлогов: me (меня/мне), you (тебя), him (его/ему), her (её/ей), it (его/её), us (нас), them (их).",
+        "rule": "Объектные местоимения используются после глаголов и предлогов в функции дополнения. Формы: me (меня/мне), you (тебя/тебе), him (его/ему), her (её/ей), it (его/её — неодуш.), us (нас/нам), them (их/им). Не путайте с подлежащими (subject pronouns): I→me, he→him, she→her, we→us, they→them. Объектные местоимения ВСЕГДА стоят после глагола или предлога.",
+        "formation": {
+          "description": "Объектные формы личных местоимений",
+          "formula": "verb/preposition + object pronoun",
+          "details": [
+            "I → me: Tell me. Give it to me.",
+            "you → you: I see you. (форма не меняется)",
+            "he → him: I know him. Talk to him.",
+            "she → her: I met her. Send it to her.",
+            "it → it: I like it. (форма не меняется)",
+            "we → us: Help us. Come with us.",
+            "they → them: I told them. Listen to them."
+          ]
+        },
+        "usage": [
+          "После глагола (прямое дополнение): I love her. She knows me.",
+          "После предлога: Give it to him. Come with us.",
+          "Двойное дополнение: Give me the book. = Give the book to me.",
+          "В кратких ответах: 'Who did this?' — 'Me.' (разговорная речь)"
+        ],
+        "exceptions": [
+          "After 'than' и 'as' — формально subject, разговорно object: She is taller than I (am) / than me",
+          "It's me / It's I — оба допустимы, It's me более распространено",
+          "Между 'between': between you and me (НЕ between you and I)"
+        ],
         "examples": [
           { "en": "Can you help me?", "ru": "Можешь мне помочь?" },
           { "en": "I saw him yesterday.", "ru": "Я видел его вчера." },
-          { "en": "Give it to her.", "ru": "Отдай это ей." }
+          { "en": "Give it to her.", "ru": "Отдай это ей." },
+          { "en": "Tell us about your trip.", "ru": "Расскажи нам о поездке." },
+          { "en": "I will call them tomorrow.", "ru": "Я позвоню им завтра." },
+          { "en": "She sat between you and me.", "ru": "Она сидела между тобой и мной." }
         ],
         "commonMistakes": [
           "Subject вместо object: Give it to I → Give it to me",
           "После предлогов: between you and I → between you and me",
-          "Путают him/her: Tell my sister that I love him → her"
+          "Путают him/her: Tell my sister that I love him → her",
+          "Object вместо subject: Me went → I went"
+        ],
+        "tips": [
+          "После предлога (to, with, for, about) — ВСЕГДА объектная форма",
+          "Проверка: уберите второе лицо: Give it to John and I → Give it to I? Нет! → Give it to me",
+          "Порядок: сначала другие, потом себя: He invited John and me (НЕ me and John)"
         ]
       }
     },
@@ -246,16 +608,49 @@
       "category": "pronouns",
       "group": "pronouns",
       "content": {
-        "rule": "Притяжательные прилагательные стоят перед существительным: my (мой), your (твой), his (его), her (её), its (его/её для неодуш.), our (наш), their (их). Не путать с притяжательными местоимениями (mine, yours...).",
+        "rule": "Притяжательные прилагательные стоят перед существительным и показывают принадлежность: my (мой), your (твой/ваш), his (его), her (её), its (его/её — неодуш.), our (наш), their (их). Не путайте с притяжательными местоимениями (mine, yours, his, hers, ours, theirs), которые стоят без существительного. Особенно важно различать: it's (= it is) и its (притяжательное), they're (= they are) и their (притяжательное), you're (= you are) и your (притяжательное).",
+        "formation": {
+          "description": "Притяжательное прилагательное + существительное",
+          "formula": "possessive adjective + (adjective) + noun",
+          "details": [
+            "I → my: my book, my big house",
+            "you → your: your name, your new car",
+            "he → his: his phone, his idea",
+            "she → her: her bag, her daughter",
+            "it → its: its tail, its colour (БЕЗ апострофа!)",
+            "we → our: our school, our plan",
+            "they → their: their house, their friends"
+          ]
+        },
+        "usage": [
+          "Принадлежность: This is my book. Where is your car?",
+          "Части тела: She broke her arm. (НЕ the arm)",
+          "Родственники: My mother is a teacher.",
+          "Без артикля: my book (НЕ the my book, НЕ a my book)"
+        ],
+        "exceptions": [
+          "Its БЕЗ апострофа = притяжательное. It's С апострофом = it is",
+          "Не сочетаются с артиклями: the my book → my book",
+          "One's в безличных: One should mind one's own business"
+        ],
         "examples": [
           { "en": "This is my book.", "ru": "Это моя книга." },
           { "en": "Where is your car?", "ru": "Где твоя машина?" },
-          { "en": "The dog ate its food.", "ru": "Собака съела свою еду." }
+          { "en": "The dog ate its food.", "ru": "Собака съела свою еду." },
+          { "en": "She loves her children.", "ru": "Она любит своих детей." },
+          { "en": "We forgot our passports.", "ru": "Мы забыли наши паспорта." },
+          { "en": "They sold their house.", "ru": "Они продали свой дом." }
         ],
         "commonMistakes": [
           "It's vs its: The cat lost it's tail → its tail (it's = it is)",
           "Their/there/they're: Their going → They're going",
-          "Your/you're: Your welcome → You're welcome"
+          "Your/you're: Your welcome → You're welcome (you're = you are)",
+          "С артиклем: the my friend → my friend"
+        ],
+        "tips": [
+          "Тест на it's/its: замените на «it is». Если подходит — it's, если нет — its",
+          "Тест на your/you're: замените на «you are». Если подходит — you're, если нет — your",
+          "Притяжательное прилагательное заменяет артикль: my book (НЕ the my book)"
         ]
       }
     },
@@ -267,16 +662,48 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Will + инфинитив используется для предсказаний, спонтанных решений, обещаний и предложений помощи. Сокращение: 'll (I'll, you'll). Отрицание: won't (will not).",
+        "rule": "Will + инфинитив (без to) используется для предсказаний, спонтанных решений, обещаний и предложений помощи. Сокращение: 'll (I'll, you'll, he'll). Отрицание: will not = won't. Will одинаково для всех лиц. Для запланированных действий чаще используется Present Continuous или 'going to'. В условных предложениях (after if) will НЕ используется.",
+        "formation": {
+          "description": "Will + инфинитив без to для всех лиц",
+          "formula": "Subject + will + V (base form)",
+          "details": [
+            "Утверждение: I will (I'll) help. She will (She'll) come.",
+            "Отрицание: I will not (won't) go. She won't come.",
+            "Вопрос: Will you help? Will it rain?",
+            "Краткий ответ: Yes, I will. / No, I won't."
+          ]
+        },
+        "usage": [
+          "Предсказания: It will rain tomorrow. She will be a great doctor.",
+          "Спонтанные решения: I'll have the chicken, please. I'll answer the phone.",
+          "Обещания: I will always love you. I won't tell anyone.",
+          "Предложения помощи: I'll carry that for you.",
+          "Угрозы и предупреждения: If you don't study, you will fail.",
+          "Факты о будущем: I will be 30 next year."
+        ],
+        "exceptions": [
+          "После if (1st conditional): If it rains, I will stay home. (НЕ if it will rain)",
+          "После when/after/before/until в будущем: When she arrives... (НЕ when she will arrive)",
+          "Shall — используется для предложений и с I/we: Shall we go? Shall I open the window?"
+        ],
         "examples": [
           { "en": "It will rain tomorrow.", "ru": "Завтра будет дождь." },
           { "en": "I'll help you.", "ru": "Я тебе помогу." },
-          { "en": "She won't come to the party.", "ru": "Она не придёт на вечеринку." }
+          { "en": "She won't come to the party.", "ru": "Она не придёт на вечеринку." },
+          { "en": "Will you marry me?", "ru": "Ты выйдешь за меня?" },
+          { "en": "I think he'll be late.", "ru": "Думаю, он опоздает." },
+          { "en": "Don't worry, everything will be fine.", "ru": "Не волнуйся, всё будет хорошо." }
         ],
         "commonMistakes": [
           "Will после if: If it will rain → If it rains",
-          "Двойной глагол: I will to go → I will go",
-          "Will goes: He will goes → He will go"
+          "Will + to: I will to go → I will go",
+          "Will + -s: He will goes → He will go",
+          "Путают will и going to: Look at the clouds, it will rain → it's going to rain (есть признаки)"
+        ],
+        "tips": [
+          "Спонтанное решение «прямо сейчас» = will. Заранее запланированное = going to / Present Continuous.",
+          "Will для предсказаний (I think it will...), going to для очевидных признаков (Look! It's going to rain!)",
+          "После I think/hope/believe/expect используйте will: I think she will agree."
         ]
       }
     },
@@ -288,16 +715,49 @@
       "category": "adjectives",
       "group": "adjectives",
       "content": {
-        "rule": "Короткие прилагательные (1-2 слога): + -er (bigger, faster). Длинные (3+ слога): more + adj (more beautiful). Неправильные: good → better, bad → worse. Сравнение: than.",
+        "rule": "Сравнительная степень прилагательных используется для сравнения двух предметов или людей. Короткие прилагательные (1 слог, и некоторые 2-сложные): + -er (bigger, faster, happier). Длинные прилагательные (2+ слога): more + adjective (more beautiful, more interesting). Для сравнения используется 'than'. Несколько прилагательных имеют неправильные формы: good → better, bad → worse, far → farther/further.",
+        "formation": {
+          "description": "Короткие: +er, длинные: more + adj",
+          "formula": "adjective-er / more + adjective + than",
+          "details": [
+            "1 слог: tall → taller, fast → faster, old → older",
+            "1 слог на -e: nice → nicer, large → larger",
+            "1 слог CVC: big → bigger, hot → hotter, thin → thinner (удвоение)",
+            "2 слога на -y: happy → happier, easy → easier (y → ier)",
+            "2+ слога: beautiful → more beautiful, expensive → more expensive",
+            "Неправильные: good → better, bad → worse, far → farther/further, little → less, much/many → more"
+          ]
+        },
+        "usage": [
+          "Сравнение двух: She is taller than me.",
+          "Постепенное изменение: It is getting colder and colder.",
+          "The ... the: The more you practice, the better you become.",
+          "Усиление: much/far/a lot + comparative: It's much better. She is far more intelligent."
+        ],
+        "exceptions": [
+          "Good → better (НЕ gooder, НЕ more good)",
+          "Bad → worse (НЕ badder, НЕ more bad)",
+          "Fun — допустимы оба: funner / more fun",
+          "Двусложные на -ow, -er, -le: narrow → narrower, clever → cleverer, simple → simpler"
+        ],
         "examples": [
           { "en": "She is taller than me.", "ru": "Она выше меня." },
           { "en": "This book is more interesting.", "ru": "Эта книга интереснее." },
-          { "en": "My English is getting better.", "ru": "Мой английский становится лучше." }
+          { "en": "My English is getting better.", "ru": "Мой английский становится лучше." },
+          { "en": "Living in a city is more expensive than in a village.", "ru": "Жить в городе дороже, чем в деревне." },
+          { "en": "The weather is much colder today.", "ru": "Сегодня погода намного холоднее." },
+          { "en": "The more you read, the more you know.", "ru": "Чем больше читаешь, тем больше знаешь." }
         ],
         "commonMistakes": [
           "More + -er: more bigger → bigger",
           "Than опущено или неправильно: He is taller that me → than me",
-          "Неправильные формы: gooder → better"
+          "Неправильные формы: gooder → better",
+          "Без удвоения: biger → bigger"
+        ],
+        "tips": [
+          "Если 1 слог — обычно -er. Если 3+ слога — всегда more. 2 слога — зависит от слова.",
+          "Much/far/a lot + comparative для усиления: much better, far more interesting",
+          "The + comparative, the + comparative: The sooner, the better."
         ]
       }
     },
@@ -309,16 +769,49 @@
       "category": "adjectives",
       "group": "adjectives",
       "content": {
-        "rule": "Короткие прилагательные: the + -est (the biggest). Длинные: the most + adj (the most beautiful). Неправильные: the best, the worst. Всегда с 'the'.",
+        "rule": "Превосходная степень используется для выделения одного предмета из группы (трёх и более). Короткие прилагательные: the + -est (the biggest, the tallest). Длинные: the most + adjective (the most beautiful). Неправильные: the best, the worst, the furthest/farthest. Артикль 'the' обязателен. Часто используется с 'in' (для мест/групп) или 'of' (для периодов).",
+        "formation": {
+          "description": "The + прилагательное в превосходной степени",
+          "formula": "the + adjective-est / the most + adjective",
+          "details": [
+            "1 слог: the tallest, the fastest, the oldest",
+            "1 слог на -e: the nicest, the largest",
+            "1 слог CVC: the biggest, the hottest (удвоение)",
+            "2 слога на -y: the happiest, the easiest (y → iest)",
+            "2+ слога: the most beautiful, the most expensive",
+            "Неправильные: the best, the worst, the furthest/farthest, the least, the most"
+          ]
+        },
+        "usage": [
+          "Выделение из группы: She is the tallest in the class.",
+          "С предлогом in (место/группа): the best restaurant in town",
+          "С предлогом of (период): the coldest day of the year",
+          "С ever + Present Perfect: It's the best movie I've ever seen."
+        ],
+        "exceptions": [
+          "Good → the best (НЕ the goodest)",
+          "Bad → the worst (НЕ the baddest, хотя встречается в сленге)",
+          "Far → the furthest/farthest (оба допустимы)",
+          "Без the в предикативном: This problem is most serious (формально)"
+        ],
         "examples": [
           { "en": "This is the tallest building.", "ru": "Это самое высокое здание." },
           { "en": "She is the most talented singer.", "ru": "Она самая талантливая певица." },
-          { "en": "It was the best day of my life.", "ru": "Это был лучший день в моей жизни." }
+          { "en": "It was the best day of my life.", "ru": "Это был лучший день в моей жизни." },
+          { "en": "He is the fastest runner in the school.", "ru": "Он самый быстрый бегун в школе." },
+          { "en": "What is the longest river in the world?", "ru": "Какая самая длинная река в мире?" },
+          { "en": "It's the most expensive hotel I've stayed in.", "ru": "Это самый дорогой отель, в котором я останавливался." }
         ],
         "commonMistakes": [
           "Без the: She is smartest → She is the smartest",
           "Most + -est: the most tallest → the tallest",
-          "Неправильные: the goodest → the best"
+          "Неправильные формы: the goodest → the best",
+          "Без удвоения: the bigest → the biggest"
+        ],
+        "tips": [
+          "Превосходная степень ВСЕГДА с the: the best, the most important",
+          "In — для мест и групп: the best in the world. Of — для периодов: the hottest of all.",
+          "С ever: This is the best cake I've EVER tasted."
         ]
       }
     },
@@ -330,16 +823,48 @@
       "category": "pronouns",
       "group": "pronouns",
       "content": {
-        "rule": "Who — для людей, which — для предметов, that — для обоих. Whose — притяжательное. Where — для мест, when — для времени. В определяющих придаточных that предпочтительнее.",
+        "rule": "Относительные придаточные дают дополнительную информацию о существительном. Who — для людей, which — для предметов и животных, that — для обоих (в определяющих придаточных). Whose — притяжательное (чей), where — для мест, when — для времени. Различают два типа: defining (определяющие — без запятых, необходимая информация) и non-defining (неопределяющие — с запятыми, дополнительная информация). В non-defining нельзя использовать that.",
+        "formation": {
+          "description": "Существительное + относительное местоимение + придаточное",
+          "formula": "noun + who/which/that + clause",
+          "details": [
+            "Who — для людей: The man who called you is here.",
+            "Which — для вещей/животных: The book which I read was great.",
+            "That — для людей и вещей (defining only): The car that I bought is red.",
+            "Whose — притяжательное: The girl whose mother is a doctor.",
+            "Where — для мест: The city where I was born.",
+            "When — для времени: The day when we met."
+          ]
+        },
+        "usage": [
+          "Defining (определяющее): The man who lives next door is nice. (убрать нельзя)",
+          "Non-defining (неопределяющее): My sister, who lives in London, is a doctor. (убрать можно)",
+          "Опущение who/which/that (если дополнение): The book (that) I read. The man (who) I met.",
+          "Whose для принадлежности: The woman whose car was stolen."
+        ],
+        "exceptions": [
+          "That НЕЛЬЗЯ в non-defining: My father, that is 60 → My father, who is 60",
+          "Which может относиться ко всему предложению: He passed the exam, which surprised everyone.",
+          "Предлог в конце: The person (who) I spoke to. (формально: to whom I spoke)"
+        ],
         "examples": [
           { "en": "The man who lives next door is nice.", "ru": "Мужчина, который живёт по соседству, милый." },
           { "en": "The book which I read was great.", "ru": "Книга, которую я прочитал, была отличной." },
-          { "en": "The house where I grew up.", "ru": "Дом, где я вырос." }
+          { "en": "The house where I grew up.", "ru": "Дом, где я вырос." },
+          { "en": "I have a friend whose father is a pilot.", "ru": "У меня есть друг, чей отец — пилот." },
+          { "en": "The day when we first met was rainy.", "ru": "День, когда мы впервые встретились, был дождливым." },
+          { "en": "Paris, which is the capital of France, is beautiful.", "ru": "Париж, который является столицей Франции, прекрасен." }
         ],
         "commonMistakes": [
-          "Which для людей: The person which → The person who",
+          "Which для людей: The person which → The person who/that",
           "Лишнее местоимение: The book which I read it → which I read",
-          "Пропуск запятых в неопределяющих: My sister who lives in London → My sister, who lives in London, ..."
+          "Пропуск запятых в non-defining: My sister who lives in London → My sister, who lives in London,",
+          "That в non-defining: London, that is... → London, which is..."
+        ],
+        "tips": [
+          "Defining = без запятых, информация необходима. Non-defining = с запятыми, информация дополнительная.",
+          "Если who/which/that — дополнение, его можно опустить: The man (that) I met.",
+          "В non-defining ТОЛЬКО who (люди) и which (вещи), НЕ that."
         ]
       }
     },
@@ -351,16 +876,48 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Past Continuous (was/were + V-ing) используется для длительного действия в прошлом, фона для другого события, параллельных действий. Часто с when/while.",
+        "rule": "Past Continuous (was/were + V-ing) используется для длительного действия, которое происходило в определённый момент в прошлом. Часто описывает фон (background) для другого события (Past Simple). Типичные конструкции: was doing + when + Past Simple; while + was doing. Также используется для параллельных действий в прошлом и для описания атмосферы в рассказах.",
+        "formation": {
+          "description": "Was/were + причастие настоящего времени",
+          "formula": "Subject + was/were + V-ing",
+          "details": [
+            "I/He/She/It + was + V-ing: I was reading.",
+            "You/We/They + were + V-ing: They were sleeping.",
+            "Отрицание: I wasn't reading. They weren't sleeping.",
+            "Вопрос: Were you sleeping? Was she working?",
+            "Правила -ing те же, что и для Present Continuous"
+          ]
+        },
+        "usage": [
+          "Действие в процессе в определённый момент: At 8 pm, I was watching TV.",
+          "Фон для другого события: I was sleeping when the phone rang.",
+          "Параллельные действия: She was cooking while he was cleaning.",
+          "Описание атмосферы: The sun was shining. Birds were singing.",
+          "Повторяющееся раздражающее действие (с always): He was always interrupting me."
+        ],
+        "exceptions": [
+          "State verbs не используются в Past Continuous: I was knowing → I knew",
+          "Для однократных завершённых действий — Past Simple: I was calling her yesterday → I called her yesterday",
+          "When + Past Simple (короткое): When I arrived (НЕ was arriving)"
+        ],
         "examples": [
           { "en": "I was sleeping when you called.", "ru": "Я спал, когда ты позвонил." },
           { "en": "They were watching TV while I was cooking.", "ru": "Они смотрели телевизор, пока я готовил." },
-          { "en": "What were you doing at 8 pm?", "ru": "Что ты делал в 8 вечера?" }
+          { "en": "What were you doing at 8 pm?", "ru": "Что ты делал в 8 вечера?" },
+          { "en": "It was raining all morning.", "ru": "Весь дождь шёл утром." },
+          { "en": "She was reading when the lights went out.", "ru": "Она читала, когда погас свет." },
+          { "en": "The children were playing in the garden.", "ru": "Дети играли в саду." }
         ],
         "commonMistakes": [
           "Для однократных действий: I was calling you yesterday → I called you yesterday",
-          "When + Past Continuous: When I was arriving → When I arrived",
-          "Неправильный выбор was/were: They was sleeping → They were sleeping"
+          "When + Past Continuous (для короткого действия): When I was arriving → When I arrived",
+          "Неправильный выбор was/were: They was sleeping → They were sleeping",
+          "Забывают was/were: I reading a book → I was reading a book"
+        ],
+        "tips": [
+          "When + Past Simple (короткое). While + Past Continuous (длинное).",
+          "Past Continuous = фон, Past Simple = событие: I was walking (фон) when I saw (событие) a cat.",
+          "Для описания сцены в рассказе используйте Past Continuous: The birds were singing..."
         ]
       }
     },
@@ -372,16 +929,47 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Первый тип условных предложений описывает реальные, возможные ситуации в будущем. Структура: If + Present Simple, will + инфинитив. В части с if НЕ используется will.",
+        "rule": "Первый тип условных предложений описывает реальные, возможные ситуации в будущем. Структура: If + Present Simple, will + инфинитив. В части с if НИКОГДА не используется will. Части предложения можно менять местами: If it rains, I'll stay home. = I'll stay home if it rains. Когда if-часть стоит первой, ставится запятая. Вместо will можно использовать may, might, can.",
+        "formation": {
+          "description": "If + Present Simple в условии, will + инфинитив в результате",
+          "formula": "If + Present Simple, will + V (base form)",
+          "details": [
+            "If + Present Simple, + will/won't + V: If it rains, I will stay home.",
+            "Можно менять порядок: I will stay home if it rains. (без запятой)",
+            "Вместо will: may, might, can, should: If you ask, she might help.",
+            "Unless = if not: Unless you hurry, you'll be late. = If you don't hurry..."
+          ]
+        },
+        "usage": [
+          "Реальные условия в будущем: If it rains, we'll cancel the picnic.",
+          "Обещания: If you help me, I'll buy you dinner.",
+          "Угрозы/предупреждения: If you don't study, you will fail.",
+          "Предложения: If you're hungry, I'll make you a sandwich.",
+          "С unless: I'll go unless it rains. (= if it doesn't rain)"
+        ],
+        "exceptions": [
+          "If + will допустимо для вежливой просьбы: If you will wait here... (= if you are willing to)",
+          "If + Present Perfect для завершённости: If you have finished, we can go.",
+          "If + should для маловероятного: If you should see him, tell him I called."
+        ],
         "examples": [
           { "en": "If it rains, I will stay home.", "ru": "Если пойдёт дождь, я останусь дома." },
           { "en": "I will call you if I have time.", "ru": "Я позвоню тебе, если будет время." },
-          { "en": "If you study hard, you will pass.", "ru": "Если будешь усердно учиться, сдашь." }
+          { "en": "If you study hard, you will pass the exam.", "ru": "Если будешь усердно учиться, сдашь экзамен." },
+          { "en": "Unless you leave now, you'll miss the train.", "ru": "Если ты не уйдёшь сейчас, опоздаешь на поезд." },
+          { "en": "If she asks, I'll tell her the truth.", "ru": "Если она спросит, я скажу ей правду." },
+          { "en": "You won't pass if you don't study.", "ru": "Ты не сдашь, если не будешь учиться." }
         ],
         "commonMistakes": [
           "Will после if: If it will rain → If it rains",
-          "Present Perfect вместо Present Simple: If you have finished → If you finish",
-          "Неправильный порядок без запятой: I will help you if you ask → If you ask, I will help you"
+          "Future в обеих частях: If I will see, I will tell → If I see, I will tell",
+          "Пропуск запятой: If it rains I'll stay home → If it rains, I'll stay home",
+          "Unless + отрицание: Unless you don't hurry → Unless you hurry"
+        ],
+        "tips": [
+          "Правило: в if-части — Present Simple, в результате — will + V",
+          "Unless = if not: Unless you study = If you don't study",
+          "First Conditional = реальная ситуация. Second Conditional = нереальная/гипотетическая."
         ]
       }
     },
@@ -393,16 +981,49 @@
       "category": "syntax",
       "group": "tenses",
       "content": {
-        "rule": "Страдательный залог: to be + Past Participle. Используется, когда действие важнее, чем его исполнитель, или исполнитель неизвестен. Исполнитель вводится через 'by'.",
+        "rule": "Страдательный залог (Passive Voice) образуется с помощью to be + Past Participle (V3). Используется, когда действие важнее, чем его исполнитель, когда исполнитель неизвестен или очевиден. Исполнитель (agent) вводится через 'by'. Пассив возможен во всех временах: is written, was written, has been written, will be written и т.д.",
+        "formation": {
+          "description": "To be (в нужном времени) + Past Participle (V3)",
+          "formula": "Subject + to be + V3 (+ by agent)",
+          "details": [
+            "Present Simple: The cake is made every day.",
+            "Past Simple: The letter was written yesterday.",
+            "Present Perfect: The work has been done.",
+            "Future: The report will be finished tomorrow.",
+            "Modal: It can be fixed. It must be completed.",
+            "Continuous: The house is being built. The road was being repaired."
+          ]
+        },
+        "usage": [
+          "Исполнитель неизвестен: My wallet was stolen.",
+          "Исполнитель очевиден: He was arrested. (= полицией)",
+          "Действие важнее: The Mona Lisa was painted by Leonardo da Vinci.",
+          "Формальный стиль / научные тексты: The experiment was conducted...",
+          "Процессы и инструкции: Rice is grown in Asia. The door should be locked."
+        ],
+        "exceptions": [
+          "Непереходные глаголы не имеют пассива: happen, arrive, die, rain",
+          "Get + V3 (неформальный пассив): She got promoted. He got fired.",
+          "Have something done (каузатив): I had my car repaired. (= кто-то починил мне)"
+        ],
         "examples": [
           { "en": "The letter was written by Mary.", "ru": "Письмо было написано Мэри." },
           { "en": "English is spoken here.", "ru": "Здесь говорят по-английски." },
-          { "en": "The house was built in 1990.", "ru": "Дом был построен в 1990 году." }
+          { "en": "The house was built in 1990.", "ru": "Дом был построен в 1990 году." },
+          { "en": "The report will be finished by Friday.", "ru": "Отчёт будет закончен к пятнице." },
+          { "en": "The window has been broken.", "ru": "Окно разбито." },
+          { "en": "The food is being prepared now.", "ru": "Еда сейчас готовится." }
         ],
         "commonMistakes": [
           "Без be: The letter written → The letter was written",
           "Активное причастие: The book was writing → was written",
-          "By опущено неправильно: It was made from John → by John"
+          "By ошибочно заменён: It was made from John → by John",
+          "Пассив с непереходным: It was happened → It happened"
+        ],
+        "tips": [
+          "Используйте пассив, когда исполнитель неважен: My phone was stolen (неважно кем)",
+          "Не злоупотребляйте пассивом — активный залог обычно звучит живее",
+          "By + agent только когда исполнитель важен: The book was written BY Tolkien"
         ]
       }
     },
@@ -414,16 +1035,47 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Второй тип описывает нереальные, гипотетические ситуации в настоящем/будущем. Структура: If + Past Simple, would + инфинитив. С be используется were для всех лиц (формально).",
+        "rule": "Второй тип условных предложений описывает нереальные, гипотетические ситуации в настоящем или будущем. Структура: If + Past Simple, would + инфинитив. С глаголом be формально используется were для всех лиц (If I were you), хотя was допустимо в неформальной речи. Would НИКОГДА не ставится после if. Второй тип используется для мечтаний, советов ('If I were you...') и маловероятных ситуаций.",
+        "formation": {
+          "description": "If + Past Simple (нереальное), would + инфинитив",
+          "formula": "If + Past Simple, would + V (base form)",
+          "details": [
+            "If + V2, + would/wouldn't + V: If I had money, I would travel.",
+            "С be: If I were/was rich... (were формально для всех лиц)",
+            "Можно менять порядок: I would travel if I had money.",
+            "Could/might вместо would: If I had time, I could/might help."
+          ]
+        },
+        "usage": [
+          "Нереальные ситуации: If I were a bird, I would fly.",
+          "Совет: If I were you, I would accept the offer.",
+          "Маловероятные ситуации: If I won the lottery, I would buy a house.",
+          "Вежливые просьбы: It would be nice if you could help.",
+          "Мечты: If I lived in Paris, I would visit the Eiffel Tower every day."
+        ],
+        "exceptions": [
+          "Were для всех лиц (формально): If I were (НЕ was) you...",
+          "Wish + Past Simple (аналогичная конструкция): I wish I had more time.",
+          "If + were to (подчёркивает нереальность): If he were to ask me, I would agree."
+        ],
         "examples": [
           { "en": "If I had money, I would travel.", "ru": "Если бы у меня были деньги, я бы путешествовал." },
           { "en": "If I were you, I would accept.", "ru": "На твоём месте я бы согласился." },
-          { "en": "She would help if she could.", "ru": "Она бы помогла, если бы могла." }
+          { "en": "She would help if she could.", "ru": "Она бы помогла, если бы могла." },
+          { "en": "If I lived in Japan, I would learn Japanese.", "ru": "Если бы я жил в Японии, я бы учил японский." },
+          { "en": "What would you do if you won a million dollars?", "ru": "Что бы ты сделал, если бы выиграл миллион долларов?" },
+          { "en": "If it weren't so cold, we would go for a walk.", "ru": "Если бы не было так холодно, мы бы пошли гулять." }
         ],
         "commonMistakes": [
           "Would после if: If I would have → If I had",
           "Was вместо were: If I was you → If I were you (формально)",
-          "Путают с первым типом: If I have time, I would → If I had time, I would"
+          "Путают с первым типом: If I have time, I would → If I had time, I would",
+          "Will вместо would: If I had money, I will → I would"
+        ],
+        "tips": [
+          "1st Conditional (реально): If it rains, I WILL... 2nd Conditional (нереально): If it rained, I WOULD...",
+          "Для совета: If I were you, I would... (самая частая конструкция)",
+          "Past Simple после if — это НЕ прошедшее время, это нереальное настоящее/будущее"
         ]
       }
     },
@@ -435,16 +1087,46 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Третий тип описывает нереальные ситуации в прошлом (что бы случилось, если бы...). Структура: If + Past Perfect, would have + Past Participle.",
+        "rule": "Третий тип условных предложений описывает нереальные ситуации в ПРОШЛОМ — то, что могло бы случиться, но не случилось. Структура: If + Past Perfect, would have + Past Participle. Используется для сожалений и размышлений о прошлом. Would have НИКОГДА не ставится после if. Также возможны could have / might have вместо would have.",
+        "formation": {
+          "description": "If + Past Perfect, would have + Past Participle (V3)",
+          "formula": "If + had + V3, would have + V3",
+          "details": [
+            "If + had + V3, + would/wouldn't have + V3",
+            "Сокращения: If I'd known, I'd have helped.",
+            "Could/might have вместо would have: If I had tried, I might have succeeded.",
+            "Можно менять порядок: I would have helped if I had known."
+          ]
+        },
+        "usage": [
+          "Нереальное прошлое: If I had studied, I would have passed.",
+          "Сожаления: If I had known about the party, I would have come.",
+          "Размышления: If they had left earlier, they wouldn't have missed the train.",
+          "Критика прошлых решений: If you had listened to me, this wouldn't have happened."
+        ],
+        "exceptions": [
+          "Mixed conditionals: If I had studied (3rd), I would be (2nd) a doctor now. (прошлое условие → настоящий результат)",
+          "Wish + Past Perfect: I wish I had studied harder.",
+          "Инверсия вместо if: Had I known... = If I had known..."
+        ],
         "examples": [
           { "en": "If I had known, I would have helped.", "ru": "Если бы я знал, я бы помог." },
           { "en": "She would have come if you had invited her.", "ru": "Она бы пришла, если бы ты её пригласил." },
-          { "en": "If it hadn't rained, we would have gone out.", "ru": "Если бы не дождь, мы бы пошли гулять." }
+          { "en": "If it hadn't rained, we would have gone out.", "ru": "Если бы не дождь, мы бы пошли гулять." },
+          { "en": "If I had studied harder, I would have passed the exam.", "ru": "Если бы я учился усерднее, я бы сдал экзамен." },
+          { "en": "They might have won if they had played better.", "ru": "Они, возможно, выиграли бы, если бы играли лучше." },
+          { "en": "I wouldn't have been late if the train hadn't been delayed.", "ru": "Я бы не опоздал, если бы поезд не задержался." }
         ],
         "commonMistakes": [
           "Would have после if: If I would have known → If I had known",
           "Смешение со вторым типом: If I knew, I would have → If I had known, I would have",
-          "Пропуск have: I would helped → I would have helped"
+          "Пропуск have: I would helped → I would have helped",
+          "Past Simple вместо Past Perfect: If I studied → If I had studied"
+        ],
+        "tips": [
+          "3rd Conditional = сожаление о прошлом: «Если бы я знал тогда...»",
+          "Формула: If + HAD + V3, would + HAVE + V3 — обе части в «перфекте»",
+          "Mixed conditional: прошлое условие + настоящий результат: If I had been born in France, I would speak French (now)."
         ]
       }
     },
@@ -456,16 +1138,50 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "При передаче чужих слов времена сдвигаются назад: Present → Past, Past → Past Perfect, will → would. Меняются местоимения и указатели времени (today → that day).",
+        "rule": "При передаче чужих слов (косвенная речь) происходит сдвиг времён назад (backshift): Present → Past, Past → Past Perfect, will → would, can → could. Меняются местоимения (I → he/she) и указатели времени (today → that day, yesterday → the day before, tomorrow → the next day). Для передачи вопросов используются if/whether (yes/no) и вопросительные слова (wh-). Порядок слов в косвенных вопросах — как в утверждении.",
+        "formation": {
+          "description": "Сдвиг времён, местоимений и указателей времени",
+          "formula": "He said (that) + [backshifted clause]",
+          "details": [
+            "Present Simple → Past Simple: 'I work' → He said he worked.",
+            "Present Continuous → Past Continuous: 'I am working' → He said he was working.",
+            "Past Simple → Past Perfect: 'I went' → He said he had gone.",
+            "Will → Would: 'I will come' → He said he would come.",
+            "Can → Could: 'I can swim' → He said he could swim.",
+            "Вопросы: 'Are you happy?' → He asked if I was happy."
+          ]
+        },
+        "usage": [
+          "Передача утверждений: She said (that) she was tired.",
+          "Передача вопросов (yes/no): He asked if/whether I liked coffee.",
+          "Передача вопросов (wh-): She asked where I lived.",
+          "Передача просьб/приказов: He told me to sit down. She asked me not to shout.",
+          "Передача предложений: He suggested going to the cinema."
+        ],
+        "exceptions": [
+          "Если информация по-прежнему верна, backshift необязателен: He said the Earth IS round.",
+          "Must → had to / must: He said he must/had to leave.",
+          "Could, would, should, might — не меняются: 'I could help' → He said he could help.",
+          "Say vs Tell: She said (that)... / She told me (that)... (tell всегда с объектом)"
+        ],
         "examples": [
           { "en": "He said: 'I am tired' → He said he was tired.", "ru": "Он сказал: «Я устал» → Он сказал, что устал." },
           { "en": "She said: 'I will come' → She said she would come.", "ru": "Она сказала: «Я приду» → Она сказала, что придёт." },
-          { "en": "He asked: 'Are you happy?' → He asked if I was happy.", "ru": "Он спросил: «Ты счастлив?» → Он спросил, счастлив ли я." }
+          { "en": "He asked: 'Are you happy?' → He asked if I was happy.", "ru": "Он спросил: «Ты счастлив?» → Он спросил, счастлив ли я." },
+          { "en": "She asked: 'Where do you live?' → She asked where I lived.", "ru": "Она спросила: «Где ты живёшь?» → Она спросила, где я живу." },
+          { "en": "He told me: 'Don't be late' → He told me not to be late.", "ru": "Он сказал мне: «Не опаздывай» → Он сказал мне не опаздывать." },
+          { "en": "They said: 'We have finished' → They said they had finished.", "ru": "Они сказали: «Мы закончили» → Они сказали, что закончили." }
         ],
         "commonMistakes": [
-          "Без изменения времени: He said he is tired → he was tired",
-          "Вопросительный порядок: He asked if was I → if I was",
-          "That опущено неправильно в вопросах: He asked that... → He asked if..."
+          "Без сдвига времени: He said he is tired → he was tired",
+          "Вопросительный порядок: He asked if was I happy → if I was happy",
+          "That в вопросах: He asked that where I lived → He asked where I lived",
+          "Say + объект: He said me → He told me / He said to me"
+        ],
+        "tips": [
+          "Said = без объекта. Told = с объектом: She SAID she was happy. She TOLD ME she was happy.",
+          "В косвенных вопросах ПРЯМОЙ порядок слов: He asked where I lived (НЕ where did I live).",
+          "Просьбы: asked + to + V / told + to + V. Запреты: asked/told + not to + V."
         ]
       }
     },
@@ -477,16 +1193,47 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Past Perfect (had + Past Participle) описывает действие, которое произошло ДО другого прошедшего действия. Показывает более раннее из двух событий в прошлом.",
+        "rule": "Past Perfect (had + Past Participle) описывает действие, которое произошло ДО другого прошедшего действия. Это «прошлое в прошлом». Показывает более раннее из двух событий. Часто используется с when, before, after, by the time, already, never...before. Одинаково для всех лиц (had). Не используется, если хронология событий и так ясна.",
+        "formation": {
+          "description": "Had + Past Participle (V3) для всех лиц",
+          "formula": "Subject + had + V3 (Past Participle)",
+          "details": [
+            "Утверждение: I had (I'd) finished. She had (She'd) left.",
+            "Отрицание: I had not (hadn't) finished.",
+            "Вопрос: Had you finished? Had she left?",
+            "Правильные: had worked, had played. Неправильные: had gone, had seen, had written."
+          ]
+        },
+        "usage": [
+          "Более раннее действие: When I arrived, she had already left.",
+          "Опыт до момента в прошлом: I had never seen such beauty before.",
+          "Результат к моменту в прошлом: He realized he had forgotten his keys.",
+          "С by the time: By the time we got there, the movie had started.",
+          "В 3rd Conditional: If I had known, I would have helped."
+        ],
+        "exceptions": [
+          "Если хронология ясна, Past Perfect не обязателен: After she ate, she went to bed. (after уже показывает порядок)",
+          "В Reported Speech: 'I went' → He said he had gone.",
+          "С wish (сожаление о прошлом): I wish I had studied harder."
+        ],
         "examples": [
           { "en": "When I arrived, she had already left.", "ru": "Когда я пришёл, она уже ушла." },
           { "en": "I had never seen such beauty before.", "ru": "Я никогда раньше не видел такой красоты." },
-          { "en": "He realized he had forgotten his keys.", "ru": "Он понял, что забыл ключи." }
+          { "en": "He realized he had forgotten his keys.", "ru": "Он понял, что забыл ключи." },
+          { "en": "By the time we arrived, the concert had started.", "ru": "К тому времени, когда мы приехали, концерт уже начался." },
+          { "en": "She told me she had already eaten.", "ru": "Она сказала мне, что уже поела." },
+          { "en": "I had lived in London before I moved to Paris.", "ru": "Я жил в Лондоне до того, как переехал в Париж." }
         ],
         "commonMistakes": [
-          "Past Simple вместо Past Perfect: When I arrived, she left → had left",
-          "Избыточное использование: I had went → I had gone",
-          "В простых предложениях: I had finished yesterday → I finished yesterday"
+          "Past Simple вместо Past Perfect: When I arrived, she already left → had already left",
+          "Неправильная форма: I had went → I had gone",
+          "В простых предложениях: I had finished yesterday → I finished yesterday",
+          "Избыточное использование без второго события: I had eaten lunch. (если нет контекста «до чего-то»)"
+        ],
+        "tips": [
+          "Past Perfect нужен, чтобы показать «что было ДО» другого прошедшего события.",
+          "Маркеры: already, just, never...before, by the time.",
+          "Если и так понятно из контекста (after, before), Past Perfect не обязателен."
         ]
       }
     },
@@ -498,16 +1245,45 @@
       "category": "tenses",
       "group": "tenses",
       "content": {
-        "rule": "Future Perfect (will have + Past Participle) описывает действие, которое будет завершено к определённому моменту в будущем. Часто с by + время.",
+        "rule": "Future Perfect (will have + Past Participle) описывает действие, которое будет завершено К определённому моменту в будущем. Часто используется с by + время (by 5 pm, by next year, by the time...). Показывает результат или завершённость к будущей точке отсчёта. Не путайте с Future Simple (will + V — просто будущее) и Present Perfect (have + V3 — связь прошлого с настоящим).",
+        "formation": {
+          "description": "Will have + Past Participle (V3)",
+          "formula": "Subject + will have + V3",
+          "details": [
+            "Утверждение: I will have finished. She will have left.",
+            "Отрицание: I won't have finished. She won't have left.",
+            "Вопрос: Will you have finished? Will she have left?",
+            "Сокращение: I'll have finished by then."
+          ]
+        },
+        "usage": [
+          "Завершённость к моменту в будущем: By next year, I will have graduated.",
+          "Длительность к будущему моменту: By June, they will have been married for 10 years.",
+          "Предположения о прошлом: She will have received my letter by now. (= вероятно уже получила)",
+          "С by the time: By the time you arrive, I will have cooked dinner."
+        ],
+        "exceptions": [
+          "В придаточных времени (after, when, by the time) — Present Perfect вместо Future Perfect: By the time she arrives (НЕ will arrive), I will have finished.",
+          "Future Perfect Continuous: will have been + V-ing (для длительности): By May, I will have been working here for 5 years."
+        ],
         "examples": [
           { "en": "By next year, I will have graduated.", "ru": "К следующему году я закончу учёбу." },
           { "en": "She will have finished by 5 pm.", "ru": "Она закончит к 5 часам." },
-          { "en": "They will have been married for 10 years.", "ru": "Они будут женаты уже 10 лет." }
+          { "en": "They will have been married for 10 years.", "ru": "Они будут женаты уже 10 лет." },
+          { "en": "By the time you arrive, I'll have cooked dinner.", "ru": "К тому времени, когда ты придёшь, я приготовлю ужин." },
+          { "en": "He won't have completed the project by Friday.", "ru": "Он не завершит проект к пятнице." },
+          { "en": "Will you have read the report by Monday?", "ru": "Ты прочитаешь отчёт к понедельнику?" }
         ],
         "commonMistakes": [
-          "Will + Past Participle без have: I will finished → I will have finished",
+          "Will + V3 без have: I will finished → I will have finished",
           "Present Perfect вместо Future: By then I have done → will have done",
-          "Неправильный participle: will have went → will have gone"
+          "Неправильный participle: will have went → will have gone",
+          "Future в придаточном: By the time she will arrive → By the time she arrives"
+        ],
+        "tips": [
+          "Ключевое слово — BY: by 5 pm, by next week, by the time...",
+          "Future Perfect = завершённость К моменту. Future Simple = просто будущее.",
+          "В придаточных времени (when, by the time, before) — Present Simple/Perfect, НЕ will."
         ]
       }
     },
@@ -519,16 +1295,49 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Инверсия (вспомогательный глагол перед подлежащим) используется после отрицательных наречий (never, rarely, hardly) и в условных без if (Had I known...). Придаёт формальность и выразительность.",
+        "rule": "Инверсия (вспомогательный глагол перед подлежащим) используется в формальной и эмфатической речи. Применяется после отрицательных или ограничительных наречий в начале предложения: never, rarely, seldom, hardly, scarcely, no sooner, not only, little, at no time. Также используется в условных без if (Had I known..., Were I rich..., Should you need...). Придаёт формальность и риторическую выразительность.",
+        "formation": {
+          "description": "Отрицательное/ограничительное наречие + вспомогательный глагол + подлежащее",
+          "formula": "Negative adverb + auxiliary + subject + main verb",
+          "details": [
+            "Never + aux + S: Never have I seen such a thing.",
+            "Rarely/Seldom + aux + S: Rarely does she complain.",
+            "Not only + aux + S: Not only did he arrive late, but he also forgot.",
+            "Hardly/Scarcely...when: Hardly had I sat down when the phone rang.",
+            "No sooner...than: No sooner had I arrived than it started raining.",
+            "Условные без if: Had I known... Were I rich... Should you need help..."
+          ]
+        },
+        "usage": [
+          "Эмфатическое усиление: Never have I been so embarrassed!",
+          "Формальный стиль: At no time were the students left unsupervised.",
+          "Литературная речь: Little did he know what awaited him.",
+          "Условные без if: Had I known, I would have helped. (= If I had known)",
+          "Риторические конструкции: Not only is she smart, but she is also kind."
+        ],
+        "exceptions": [
+          "Инверсия ТОЛЬКО когда наречие в НАЧАЛЕ предложения: I have never seen → OK (без инверсии). Never have I seen → инверсия.",
+          "С not until: Not until I saw her did I realize... (инверсия в главном предложении)",
+          "Only after/when + инверсия в главном: Only when he left did I notice..."
+        ],
         "examples": [
           { "en": "Never have I seen such a thing.", "ru": "Никогда я не видел такого." },
           { "en": "Had I known, I would have helped.", "ru": "Знай я об этом, я бы помог." },
-          { "en": "Not only was he late, but he also forgot.", "ru": "Мало того, что он опоздал, он ещё и забыл." }
+          { "en": "Not only was he late, but he also forgot the documents.", "ru": "Мало того что он опоздал, он ещё и забыл документы." },
+          { "en": "Rarely does she complain about anything.", "ru": "Она редко на что-то жалуется." },
+          { "en": "Little did they know about the surprise.", "ru": "Они и не подозревали о сюрпризе." },
+          { "en": "Hardly had I sat down when the doorbell rang.", "ru": "Едва я сел, как зазвонил звонок." }
         ],
         "commonMistakes": [
           "Без инверсии: Never I have seen → Never have I seen",
-          "В неформальной речи: использование формальных конструкций без необходимости",
-          "Двойная инверсия: Had I have known → Had I known"
+          "Двойная инверсия: Had I have known → Had I known",
+          "Инверсия в неформальной речи без необходимости",
+          "Only + инверсия в придаточном вместо главного: Only when did he leave I noticed → Only when he left did I notice"
+        ],
+        "tips": [
+          "Инверсия — признак формального, литературного стиля. Не используйте в повседневной речи без необходимости.",
+          "Had I known = If I had known. Were I you = If I were you. Should you need = If you should need.",
+          "Hardly...when, No sooner...than — фиксированные пары. Не путайте: Hardly...than или No sooner...when."
         ]
       }
     },
@@ -540,16 +1349,51 @@
       "category": "verbs",
       "group": "tenses",
       "content": {
-        "rule": "Сослагательное наклонение используется после глаголов требования/предложения (suggest, recommend, insist) и в конструкциях с if only, wish. Форма: инфинитив без to (He suggested she go).",
+        "rule": "Сослагательное наклонение (subjunctive) в английском используется для выражения пожеланий, требований, предложений и нереальных ситуаций. После глаголов suggest, recommend, insist, demand, propose, request — используется инфинитив без to (bare infinitive) для всех лиц: He suggests she GO (не goes). В конструкциях wish + Past Simple (нереальное настоящее), wish + Past Perfect (сожаление о прошлом), if only. С be: формально were для всех лиц.",
+        "formation": {
+          "description": "Bare infinitive после глаголов требования/предложения; were/had в нереальных ситуациях",
+          "formula": "Subject + suggest/insist/... + (that) + S + V (base form)",
+          "details": [
+            "После suggest/recommend/insist: He suggested (that) she BE more careful.",
+            "Отрицание: He suggested she NOT go.",
+            "Wish + Past Simple (нереальное настоящее): I wish I had more time.",
+            "Wish + Past Perfect (сожаление о прошлом): I wish I had studied harder.",
+            "Wish + would (раздражение/желание изменения): I wish it would stop raining.",
+            "If only: If only I were taller! If only I had known!"
+          ]
+        },
+        "usage": [
+          "Предложения: I suggest (that) he go home early.",
+          "Требования: The doctor insists (that) she take this medicine.",
+          "Необходимость: It is essential (that) everyone be present.",
+          "Пожелания о настоящем: I wish I were rich. I wish I had a car.",
+          "Сожаления о прошлом: I wish I had told her. If only I had listened.",
+          "Формулы: God bless you! Long live the Queen! Be that as it may."
+        ],
+        "exceptions": [
+          "В британском английском вместо subjunctive часто should + V: He suggested she should go.",
+          "Were vs was: формально — were для всех лиц (If I were you), разговорно — was допустимо (If I was you).",
+          "Wish + could: I wish I could fly. (= жаль, что не могу)",
+          "Фиксированные выражения: come what may, suffice it to say, be it noted"
+        ],
         "examples": [
           { "en": "I suggest that he be more careful.", "ru": "Я предлагаю ему быть осторожнее." },
           { "en": "If only I were taller.", "ru": "Если бы только я был выше." },
-          { "en": "I wish I had more time.", "ru": "Жаль, что у меня мало времени." }
+          { "en": "I wish I had more time.", "ru": "Жаль, что у меня мало времени." },
+          { "en": "The teacher insisted that every student hand in the essay.", "ru": "Учитель настоял, чтобы каждый ученик сдал эссе." },
+          { "en": "I wish I hadn't said that.", "ru": "Жаль, что я это сказал." },
+          { "en": "It is vital that she attend the meeting.", "ru": "Крайне важно, чтобы она присутствовала на собрании." }
         ],
         "commonMistakes": [
-          "Обычная форма вместо subjunctive: I suggest he goes → he go",
-          "Was вместо were после wish/if only: I wish I was → I wish I were",
-          "Present после wish: I wish I have → I wish I had"
+          "Обычная форма: I suggest he goes → I suggest he go",
+          "Was вместо were после wish/if only: I wish I was → I wish I were (формально)",
+          "Present после wish: I wish I have → I wish I had",
+          "To после suggest: I suggest him to go → I suggest he go"
+        ],
+        "tips": [
+          "После suggest/recommend/insist — НЕТ -s для 3 лица: He suggests she GO (не goes).",
+          "Wish + Past = нереальное настоящее. Wish + Past Perfect = сожаление о прошлом.",
+          "В повседневной речи субъюнктив встречается редко, но он важен для формального и письменного английского."
         ]
       }
     },
@@ -561,16 +1405,48 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Расщеплённые предложения выделяют определённую информацию: It was X that/who..., What X did was..., The thing that... Используются для эмфатического выделения.",
+        "rule": "Расщеплённые предложения (cleft sentences) — конструкции, которые разделяют простое предложение на две части для эмфатического выделения определённой информации. Основные типы: It-clefts (It was John who broke the vase), Wh-clefts / pseudo-clefts (What I need is a vacation), reverse clefts (A vacation is what I need). Они подчёркивают новую или контрастную информацию. Широко используются в формальной речи и письме.",
+        "formation": {
+          "description": "Разделение предложения на две части для выделения элемента",
+          "formula": "It + be + focus + that/who + rest of sentence",
+          "details": [
+            "It-cleft: It was JOHN who/that broke the vase. (выделяем John)",
+            "Wh-cleft: What I NEED is a vacation. (выделяем a vacation)",
+            "Reverse cleft: A VACATION is what I need. (выделяем a vacation)",
+            "The thing/reason/place: The reason I called is to ask a favour.",
+            "All-cleft: All I want is peace and quiet."
+          ]
+        },
+        "usage": [
+          "Выделение деятеля: It was Mary who called. (не кто-то другой)",
+          "Выделение объекта: It was the red dress that she chose.",
+          "Выделение времени: It was yesterday that I met him.",
+          "Выделение причины: The reason I'm late is that my car broke down.",
+          "Контраст: It isn't money that I need — it's time."
+        ],
+        "exceptions": [
+          "Who для людей, that для вещей/людей в It-clefts: It was he who/that...",
+          "Время в It-cleft: It was → was, даже если событие в другом времени: It was yesterday that I SAW him.",
+          "All + that можно сократить: All (that) I want is..."
+        ],
         "examples": [
           { "en": "It was John who broke the vase.", "ru": "Это Джон разбил вазу." },
           { "en": "What I need is a vacation.", "ru": "Что мне нужно — это отпуск." },
-          { "en": "The reason I'm calling is to inform you.", "ru": "Причина моего звонка — сообщить вам." }
+          { "en": "The reason I'm calling is to inform you.", "ru": "Причина моего звонка — сообщить вам." },
+          { "en": "It isn't money that I need — it's time.", "ru": "Мне нужны не деньги — а время." },
+          { "en": "What surprised me was her reaction.", "ru": "Что меня удивило — это её реакция." },
+          { "en": "All I want is a cup of tea.", "ru": "Всё, что я хочу — это чашку чая." }
         ],
         "commonMistakes": [
-          "Неправильное относительное местоимение: It was him which → who",
+          "Неправильное относительное местоимение: It was him which → who/that",
           "Нет согласования: It were John → It was John",
-          "Избыточное использование: применение без необходимости выделения"
+          "Избыточное использование без необходимости выделения",
+          "Путают порядок в wh-cleft: What is I need a vacation → What I need is a vacation"
+        ],
+        "tips": [
+          "It-cleft подчёркивает существительное или наречие: It was YESTERDAY that..., It was JOHN who...",
+          "Wh-cleft подчёркивает действие или результат: What she DID was resign.",
+          "Используйте cleft sentences для контраста: It's not X that... — it's Y."
         ]
       }
     },
@@ -582,16 +1458,51 @@
       "category": "syntax",
       "group": "questions",
       "content": {
-        "rule": "Эллипсис — опущение слов, понятных из контекста. Замещение — использование слов-заменителей (do so, one, that). Помогает избежать повторов и делает речь естественной.",
+        "rule": "Эллипсис — опущение слов, понятных из контекста, для избежания повторов. Замещение (substitution) — замена слов заменителями: do/does/did (для глаголов), so/not (для придаточных), one/ones (для существительных). Эти приёмы делают речь более естественной, краткой и элегантной. Эллипсис и замещение широко используются в разговорной речи, а также в формальных текстах для стилистического эффекта.",
+        "formation": {
+          "description": "Опущение повторяющихся слов или замена их заменителями",
+          "formula": "so + auxiliary (agreement) / auxiliary + too / neither + auxiliary",
+          "details": [
+            "Auxiliary substitution: 'Can you swim?' 'Yes, I can.' (опущен swim)",
+            "So + auxiliary (согласие): She can sing, and so can I. (= I can too)",
+            "Neither/Nor + auxiliary (отрицательное согласие): I don't like it. Neither do I.",
+            "One/ones для существительных: Which shirt? The blue one.",
+            "To-infinitive ellipsis: 'Will you help?' 'I'd like to.' (опущено help)",
+            "So/not для придаточных: 'Will it rain?' 'I think so.' / 'I hope not.'"
+          ]
+        },
+        "usage": [
+          "Согласие: 'I love pizza.' 'So do I.' / 'Me too.' (разговорное)",
+          "Отрицательное согласие: 'I don't like spiders.' 'Neither do I.' / 'Me neither.'",
+          "Краткие ответы: 'Have you been there?' 'Yes, I have.' / 'No, I haven't.'",
+          "Замена существительного: I need a pen. Do you have one?",
+          "So/not: 'Is she coming?' 'I think so.' / 'I don't think so.'",
+          "Опущение инфинитива: 'Would you like to dance?' 'I'd love to.'"
+        ],
+        "exceptions": [
+          "I think so / I hope so / I'm afraid so — НО: I don't think so (НЕ I think not, хотя формально допустимо)",
+          "I hope not (НЕ I don't hope so)",
+          "Me too / Me neither — грамматически неточно, но широко принято в разговорной речи",
+          "Do so (формально): He asked me to leave, and I did so."
+        ],
         "examples": [
           { "en": "She can speak French and so can I.", "ru": "Она говорит по-французски, и я тоже." },
           { "en": "'Will you help?' 'I'd like to.'", "ru": "«Поможешь?» «Хотел бы.»" },
-          { "en": "I told him not to, but he did anyway.", "ru": "Я сказал ему не делать этого, но он всё равно сделал." }
+          { "en": "I told him not to, but he did anyway.", "ru": "Я сказал ему не делать этого, но он всё равно сделал." },
+          { "en": "'Is it going to rain?' 'I hope not.'", "ru": "«Будет дождь?» «Надеюсь, нет.»" },
+          { "en": "I don't like horror movies. Neither does she.", "ru": "Я не люблю фильмы ужасов. Она тоже." },
+          { "en": "Which shoes do you want? The black ones.", "ru": "Какие туфли хочешь? Чёрные." }
         ],
         "commonMistakes": [
           "Лишнее повторение: I can swim and she can swim too → and so can she",
           "Неправильный заменитель: He runs faster than I run → than I do",
-          "Пропуск нужных слов: I'd like → I'd like to (to опускается только в определённых контекстах)"
+          "I think not вместо I don't think so (в повседневном английском)",
+          "Neither/Nor с утвердительным: Neither I like it → Neither do I (like it)"
+        ],
+        "tips": [
+          "So do I = согласие с утверждением. Neither do I = согласие с отрицанием.",
+          "Порядок в so/neither: So + auxiliary + subject: So do I. Neither can she.",
+          "В разговорной речи «Me too» и «Me neither» — вполне допустимы и естественны."
         ]
       }
     }
