@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import type { VocabularyCard } from '@/types'
-import { speak } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import {
   getWordWithArticle,
   getCardWord,
@@ -23,6 +23,7 @@ interface NewCardViewProps {
 type ViewMode = 'learning' | 'mini-session' | 'result'
 
 export default function NewCardView({ cards, onCardLearned, onComplete }: NewCardViewProps) {
+  const { speak } = useSpeech()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [learnedCards, setLearnedCards] = useState<VocabularyCard[]>([])

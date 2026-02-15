@@ -1,5 +1,5 @@
 import type { VocabularyCard } from '@/types'
-import { speak } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import { getCardWord, getWordWithArticle, getExampleText } from '@/modules/VocabularyEngine'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -64,6 +64,7 @@ export default function WordCard({
   onNext,
   onPractice,
 }: WordCardProps) {
+  const { speak } = useSpeech()
   const handleSpeak = (text: string) => {
     speak(text)
   }

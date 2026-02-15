@@ -6,9 +6,9 @@ import { startConversation, continueConversation } from '@/modules/AIService'
 import {
   startListening,
   stopListening,
-  speak,
   isSpeechRecognitionSupported,
 } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import { saveConversation } from '@/db'
 import type { Message, Conversation } from '@/types'
 import { languageTTSCodes } from '@/types'
@@ -19,6 +19,7 @@ export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
+  const { speak } = useSpeech()
 
   const topic = searchParams.get('topic') || 'conversation libre'
   const [messages, setMessages] = useState<Message[]>([])

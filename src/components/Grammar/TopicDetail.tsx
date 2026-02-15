@@ -9,7 +9,7 @@ import {
   createCardFromStatic,
 } from '@/modules/GrammarEngine'
 import { enhanceCardExplanation } from '@/modules/AIService'
-import { speakWithPauses } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import type { GrammarCard, GrammarTopic, FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -20,6 +20,7 @@ export default function TopicDetail() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
   const { user, profile } = useAuthContext()
+  const { speakWithPauses } = useSpeech()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -111,9 +112,7 @@ export default function TopicDetail() {
   }
 
   const handleSpeak = (text: string) => {
-    if (profile) {
-      speakWithPauses(text, profile.speech_settings)
-    }
+    speakWithPauses(text)
   }
 
   const handleNextRule = () => {

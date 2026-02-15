@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useAppStore } from '@/store/useAppStore'
-import { getAvailableVoices, selectBestVoice, speakWithPauses } from '@/modules/SpeechService'
+import { getAvailableVoices, selectBestVoice } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import type { FrenchLevel } from '@/types'
 import { languageLabels } from '@/types'
 import Button from '@/components/ui/Button'
@@ -12,6 +13,7 @@ const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function SettingsScreen() {
   const { user, profile, signOut, updateProfile, currentLanguage } = useAuthContext()
+  const { speakWithPauses } = useSpeech()
   const { settings, updateSettings } = useAppStore()
 
   const [languageVoices, setLanguageVoices] = useState<SpeechSynthesisVoice[]>([])
@@ -182,9 +184,7 @@ export default function SettingsScreen() {
                 pt: "Olá! Como você está hoje? Espero que esteja tendo um bom dia.",
               }
               speakWithPauses(
-                examples[currentLanguage] || examples.en,
-                profile.speech_settings,
-                currentLanguage
+                examples[currentLanguage] || examples.en
               )
             }}
           >

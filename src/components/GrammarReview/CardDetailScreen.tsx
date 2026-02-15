@@ -4,7 +4,7 @@ import { useAuthContext } from '@/contexts/AuthContext'
 import { getAllCards, saveCard } from '@/db'
 import { getGrammarTopicById } from '@/modules/GrammarEngine'
 import { enhanceCardExplanation } from '@/modules/AIService'
-import { speakWithPauses } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import type { GrammarCard } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -12,7 +12,8 @@ import Card from '@/components/ui/Card'
 export default function CardDetailScreen() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
-  const { user, profile, currentLanguage } = useAuthContext()
+  const { user, currentLanguage } = useAuthContext()
+  const { speakWithPauses } = useSpeech()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
   const [isEnhancing, setIsEnhancing] = useState(false)
@@ -63,9 +64,7 @@ export default function CardDetailScreen() {
   }
 
   const handleSpeak = (text: string) => {
-    if (profile) {
-      speakWithPauses(text, profile.speech_settings)
-    }
+    speakWithPauses(text)
   }
 
   if (!topic) {

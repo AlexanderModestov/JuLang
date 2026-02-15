@@ -11,7 +11,7 @@ import {
   getCardWord,
   getExampleText,
 } from '@/modules/VocabularyEngine'
-import { speak } from '@/modules/SpeechService'
+import { useSpeech } from '@/hooks/useSpeech'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
@@ -24,6 +24,7 @@ interface ExerciseCardProps {
 
 export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseCardProps) {
   const { currentLanguage } = useAuthContext()
+  const { speak } = useSpeech()
   const [userAnswer, setUserAnswer] = useState('')
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [showResult, setShowResult] = useState(false)
