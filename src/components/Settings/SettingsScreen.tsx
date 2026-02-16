@@ -13,7 +13,7 @@ import Input from '@/components/ui/Input'
 const LEVELS: LanguageLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 // Languages with full implementation
-const IMPLEMENTED_LANGUAGES: Language[] = ['fr', 'en']
+const IMPLEMENTED_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 const ALL_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 
 export default function SettingsScreen() {
