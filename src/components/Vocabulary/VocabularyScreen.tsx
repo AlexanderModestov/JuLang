@@ -15,6 +15,7 @@ import {
 } from '@/modules/VocabularyEngine'
 import { userDataService } from '@/services/userDataService'
 import { useVocabularyFilters } from '@/hooks/useVocabularyFilters'
+import { ChevronLeft, Check, X } from 'lucide-react'
 import NewCardView from './NewCardView'
 import ReviewSession from './ReviewSession'
 import VocabularyFilters from './VocabularyFilters'
@@ -170,7 +171,7 @@ export default function VocabularyScreen() {
   if (!user || !profile || loading) {
     return (
       <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка...</p>
+        <p className="text-text-muted animate-pulse">Загрузка...</p>
       </div>
     )
   }
@@ -178,12 +179,13 @@ export default function VocabularyScreen() {
   // New words session mode
   if (mode === 'new') {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
-            ← Назад
+            <ChevronLeft size={16} className="mr-1" />
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-text-primary">
             Новые слова
           </h1>
         </div>
@@ -199,12 +201,13 @@ export default function VocabularyScreen() {
   // Review session mode
   if (mode === 'review') {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
-            ← Назад
+            <ChevronLeft size={16} className="mr-1" />
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-text-primary">
             Повторение
           </h1>
         </div>
@@ -216,12 +219,13 @@ export default function VocabularyScreen() {
   // Practice mode (single word exercise with auto-SRS)
   if (mode === 'practice' && selectedWord) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setMode('detail')}>
-            ← Назад
+            <ChevronLeft size={16} className="mr-1" />
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-text-primary">
             Практика
           </h1>
         </div>
@@ -237,15 +241,16 @@ export default function VocabularyScreen() {
           <Card>
             <div className="space-y-4 text-center py-8">
               <p
-                className={`text-2xl font-bold ${
+                className={`text-2xl font-bold flex items-center justify-center gap-2 ${
                   lastPracticeCorrect
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-red-600 dark:text-red-400'
+                    ? 'text-success'
+                    : 'text-error'
                 }`}
               >
-                {lastPracticeCorrect ? '✓ Правильно!' : '✗ Неправильно'}
+                {lastPracticeCorrect ? <Check size={28} /> : <X size={28} />}
+                {lastPracticeCorrect ? 'Правильно!' : 'Неправильно'}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-text-muted">
                 Переход к карточке...
               </p>
             </div>
@@ -260,15 +265,16 @@ export default function VocabularyScreen() {
     const hasNextWord = filteredWordsIndex < filteredWords.length - 1
 
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={handleBackToList}>
-            ← Назад
+            <ChevronLeft size={16} className="mr-1" />
+            Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-text-primary">
             {getCardWord(selectedWord)}
           </h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+          <span className="text-sm text-text-muted ml-auto">
             {filteredWordsIndex + 1} / {filteredWords.length}
           </span>
         </div>
@@ -285,14 +291,14 @@ export default function VocabularyScreen() {
 
   // List mode (default - shown immediately on entering Vocabulary)
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-fade-in">
       {/* Header with title and level */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-text-primary">
             Словарь
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-text-muted">
             Уровень: {profile.french_level || 'A1'}
           </p>
         </div>
@@ -329,7 +335,7 @@ export default function VocabularyScreen() {
       />
 
       {/* Word count */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-sm text-text-muted">
         Показано: {filteredWords.length} из {allCards.length} слов
       </p>
 

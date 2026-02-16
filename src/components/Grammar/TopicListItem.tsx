@@ -15,12 +15,12 @@ export default function TopicListItem({ topic }: TopicListItemProps) {
   return (
     <button
       onClick={handleClick}
-      className="w-full text-left px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="w-full text-left px-4 py-3 bg-surface-1 border border-border-subtle rounded-xl hover:bg-surface-2 hover:border-border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2 focus:ring-offset-surface-0"
     >
-      <p className="font-medium text-gray-900 dark:text-white">
+      <p className="font-medium text-text-primary">
         {topic.titleRu}
       </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+      <p className="text-sm text-text-muted mt-0.5">
         {topic.title}
       </p>
     </button>

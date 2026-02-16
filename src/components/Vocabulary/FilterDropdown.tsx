@@ -1,9 +1,10 @@
 import { useRef, useEffect } from 'react'
+import { Check } from 'lucide-react'
 
 export interface FilterOption<T> {
   value: T | null
   label: string
-  icon?: string
+  icon?: React.ReactNode
 }
 
 interface FilterDropdownProps<T> {
@@ -53,7 +54,7 @@ export default function FilterDropdown<T>({
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-xl shadow-lg bg-surface-1 border border-border-subtle animate-scale-in"
     >
       {options.map((option, index) => {
         const isSelected = option.value === value
@@ -66,17 +67,15 @@ export default function FilterDropdown<T>({
               flex items-center gap-2
               ${
                 isSelected
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-medium'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-accent-subtle text-accent font-medium'
+                  : 'text-text-secondary hover:bg-surface-2'
               }
             `}
           >
-            {option.icon && <span>{option.icon}</span>}
+            {option.icon && <span className="flex-shrink-0">{option.icon}</span>}
             <span>{option.label}</span>
             {isSelected && (
-              <span className="ml-auto text-primary-600 dark:text-primary-400">
-                ✓
-              </span>
+              <Check size={14} className="ml-auto text-accent" />
             )}
           </button>
         )

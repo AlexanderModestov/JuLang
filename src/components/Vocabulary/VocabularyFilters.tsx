@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { FolderOpen, BarChart3, Star, Target, X } from 'lucide-react'
 import type { VocabularyTopic, FrenchLevel } from '@/types'
 import { vocabularyTopicLabels } from '@/types'
 import FilterDropdown, { type FilterOption } from './FilterDropdown'
 import type { VocabularyFilters as FiltersType } from '@/hooks/useVocabularyFilters'
+import { HelpCircle, BookOpen, CheckCircle2 } from 'lucide-react'
 
 interface VocabularyFiltersProps {
   filters: FiltersType
@@ -15,15 +17,15 @@ type FilterKey = 'topic' | 'status' | 'difficulty' | 'level'
 
 interface FilterButtonConfig {
   key: FilterKey
-  icon: string
+  icon: React.ReactNode
   label: string
 }
 
 const FILTER_BUTTONS: FilterButtonConfig[] = [
-  { key: 'topic', icon: '📁', label: 'Тема' },
-  { key: 'status', icon: '📊', label: 'Статус' },
-  { key: 'difficulty', icon: '⭐', label: 'Сложность' },
-  { key: 'level', icon: '🎯', label: 'Уровень' },
+  { key: 'topic', icon: <FolderOpen size={14} />, label: 'Тема' },
+  { key: 'status', icon: <BarChart3 size={14} />, label: 'Статус' },
+  { key: 'difficulty', icon: <Star size={14} />, label: 'Сложность' },
+  { key: 'level', icon: <Target size={14} />, label: 'Уровень' },
 ]
 
 // Topic filter options
@@ -39,18 +41,18 @@ const TOPIC_OPTIONS: FilterOption<VocabularyTopic>[] = [
 type StatusValue = 'new' | 'learning' | 'learned'
 const STATUS_OPTIONS: FilterOption<StatusValue>[] = [
   { value: null, label: 'Все' },
-  { value: 'new', label: 'Новые', icon: '❓' },
-  { value: 'learning', label: 'В процессе', icon: '📖' },
-  { value: 'learned', label: 'Изученные', icon: '✅' },
+  { value: 'new', label: 'Новые', icon: <HelpCircle size={14} className="text-accent" /> },
+  { value: 'learning', label: 'В процессе', icon: <BookOpen size={14} className="text-warm" /> },
+  { value: 'learned', label: 'Изученные', icon: <CheckCircle2 size={14} className="text-success" /> },
 ]
 
 // Difficulty filter options
 type DifficultyValue = 1 | 2 | 3
 const DIFFICULTY_OPTIONS: FilterOption<DifficultyValue>[] = [
   { value: null, label: 'Любая' },
-  { value: 1, label: 'Лёгкие', icon: '⭐' },
-  { value: 2, label: 'Средние', icon: '⭐⭐' },
-  { value: 3, label: 'Сложные', icon: '⭐⭐⭐' },
+  { value: 1, label: 'Лёгкие', icon: <Star size={14} className="text-warm" /> },
+  { value: 2, label: 'Средние', icon: <><Star size={14} className="text-warm" /><Star size={14} className="text-warm" /></> },
+  { value: 3, label: 'Сложные', icon: <><Star size={14} className="text-warm" /><Star size={14} className="text-warm" /><Star size={14} className="text-warm" /></> },
 ]
 
 // Level filter options
@@ -106,22 +108,22 @@ export default function VocabularyFilters({
           <button
             onClick={() => handleFilterClick(button.key)}
             className={`
-              flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors
+              flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-200
               ${
                 isFilterActive(button.key)
-                  ? 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 border border-transparent'
+                  ? 'bg-accent-subtle text-accent border border-accent/30'
+                  : 'bg-surface-2 text-text-secondary hover:bg-surface-3 border border-transparent'
               }
               ${
                 openFilter === button.key
-                  ? 'ring-2 ring-primary-500 ring-offset-1 dark:ring-offset-gray-900'
+                  ? 'ring-2 ring-accent/30 ring-offset-1 ring-offset-surface-0'
                   : ''
               }
             `}
             aria-expanded={openFilter === button.key}
             aria-haspopup="listbox"
           >
-            <span>{button.icon}</span>
+            {button.icon}
             <span className="hidden sm:inline">{button.label}</span>
           </button>
 
@@ -140,12 +142,12 @@ export default function VocabularyFilters({
       {activeFilterCount > 0 && (
         <button
           onClick={onClearFilters}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-medium text-text-muted hover:text-text-primary hover:bg-surface-2 transition-all duration-200"
           title="Сбросить фильтры"
         >
-          <span>✕</span>
+          <X size={14} />
           <span className="hidden sm:inline">Сбросить</span>
-          <span className="inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+          <span className="inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-surface-3 text-text-secondary">
             {activeFilterCount}
           </span>
         </button>

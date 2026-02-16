@@ -11,6 +11,7 @@ import {
   type MiniSessionExercise,
   type MiniSessionResult,
 } from '@/modules/VocabularyEngine'
+import { Volume2, Sparkles } from 'lucide-react'
 import ExerciseCard from './ExerciseCard'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -43,7 +44,7 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-text-muted">
             Нет новых слов для изучения на вашем уровне.
           </p>
         </div>
@@ -122,24 +123,26 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
     return (
       <Card>
         <div className="text-center py-8 space-y-6">
-          <div className="text-6xl">🎉</div>
+          <div className="flex justify-center">
+            <Sparkles size={48} className="text-warm" />
+          </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-text-primary">
               {sessionResult.wordsLearned} новых слов изучено!
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-lg text-text-secondary mt-2">
               {sessionResult.correctCount}/{sessionResult.totalExercises} правильно ({sessionResult.accuracy}%)
             </p>
           </div>
 
           {/* Show learned words */}
-          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Изученные слова:</p>
+          <div className="bg-surface-2 rounded-xl p-4">
+            <p className="text-sm text-text-muted mb-2">Изученные слова:</p>
             <div className="flex flex-wrap gap-2 justify-center">
               {learnedCards.map((c) => (
                 <span
                   key={c.id}
-                  className="px-3 py-1 bg-white dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600"
+                  className="px-3 py-1 bg-surface-1 rounded-full text-sm text-text-primary border border-border-subtle"
                 >
                   {getWordWithArticle(c)}
                 </span>
@@ -162,15 +165,15 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
     return (
       <div className="space-y-4">
         {/* Progress */}
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex items-center justify-between text-sm text-text-muted">
           <span>Закрепление: {miniExerciseIndex + 1} / {miniExercises.length}</span>
           <span>{miniResults.filter(Boolean).length} правильно</span>
         </div>
 
         {/* Progress bar */}
-        <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="h-1 bg-surface-3 rounded-full overflow-hidden">
           <div
-            className="h-full bg-primary-500 transition-all duration-300"
+            className="h-full bg-accent transition-all duration-300"
             style={{ width: `${((miniExerciseIndex + 1) / miniExercises.length) * 100}%` }}
           />
         </div>
@@ -188,7 +191,7 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
   // Learning mode - show new cards
   return (
     <div className="space-y-4">
-      <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+      <p className="text-sm text-text-muted text-center">
         {currentIndex + 1} / {cards.length}
       </p>
 
@@ -198,15 +201,16 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
           <div>
             <button
               onClick={() => handleSpeak(getWordWithArticle(card))}
-              className="text-3xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="text-3xl font-bold text-text-primary hover:text-accent transition-colors inline-flex items-center gap-2"
             >
               {card.article && (
-                <span className="text-primary-600 dark:text-primary-400">
+                <span className="text-accent">
                   {card.article}
                   {card.article !== "l'" && ' '}
                 </span>
               )}
-              {getCardWord(card)} 🔊
+              {getCardWord(card)}
+              <Volume2 size={24} className="text-accent" />
             </button>
           </div>
 
@@ -217,24 +221,25 @@ export default function NewCardView({ cards, onCardLearned, onComplete }: NewCar
             </Button>
           ) : (
             <>
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                <p className="text-xl text-gray-800 dark:text-gray-200">
+              <div className="border-t border-border-subtle pt-4">
+                <p className="text-xl text-text-primary">
                   {card.russian}
                 </p>
               </div>
 
               {/* Examples */}
               {card.examples.length > 0 && (
-                <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 text-left space-y-2">
+                <div className="bg-surface-2 rounded-xl p-3 text-left space-y-2">
                   {card.examples.map((example, idx) => (
-                    <div key={idx} className="border-l-2 border-primary-300 dark:border-primary-600 pl-2">
+                    <div key={idx} className="border-l-2 border-accent-muted pl-2">
                       <button
                         onClick={() => handleSpeak(getExampleText(example))}
-                        className="text-sm text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400"
+                        className="text-sm text-text-primary hover:text-accent transition-colors inline-flex items-center gap-1.5"
                       >
-                        🔊 {getExampleText(example)}
+                        <Volume2 size={14} className="text-accent flex-shrink-0" />
+                        {getExampleText(example)}
                       </button>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-text-muted ml-5">
                         {example.ru}
                       </p>
                     </div>

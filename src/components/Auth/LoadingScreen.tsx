@@ -1,9 +1,13 @@
+import { Loader2 } from 'lucide-react'
+
 export default function LoadingScreen() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-6xl mb-4 animate-pulse">🇫🇷</div>
-        <h1 className="text-xl font-semibold text-gray-700">Загрузка...</h1>
+    <div className="min-h-screen bg-surface-0 flex items-center justify-center">
+      <div className="text-center animate-fade-in">
+        <Loader2 className="w-10 h-10 text-accent animate-spin mx-auto mb-4" />
+        <h1 className="text-lg font-medium text-text-secondary tracking-tight">
+          Загрузка...
+        </h1>
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { translateWord } from '@/modules/AIService'
 import type { WordTranslation } from '@/modules/AIService'
 import { isLemmaInProgress, addCardFromConversation } from '@/modules/VocabularyEngine'
 import Button from '@/components/ui/Button'
+import { Loader2, BookPlus, CheckCircle, X } from 'lucide-react'
 
 interface WordPopupProps {
   word: string
@@ -62,17 +63,18 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-surface-0/80 backdrop-blur-sm" onClick={onClose} />
 
       {/* Popup */}
-      <div className="relative bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm p-5 space-y-4 shadow-xl">
+      <div className="relative bg-surface-1 border border-border-subtle rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm p-5 space-y-4 shadow-2xl shadow-black/20 animate-slide-up">
         {loading ? (
           <div className="text-center py-4">
-            <p className="text-gray-500 dark:text-gray-400">Перевод...</p>
+            <Loader2 className="w-6 h-6 text-accent animate-spin mx-auto mb-2" />
+            <p className="text-text-muted">Перевод...</p>
           </div>
         ) : error ? (
           <div className="text-center py-4">
-            <p className="text-red-500">Не удалось перевести</p>
+            <p className="text-error">Не удалось перевести</p>
             <Button variant="ghost" size="sm" onClick={onClose} className="mt-2">
               Закрыть
             </Button>
@@ -80,22 +82,22 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
         ) : translation ? (
           <>
             <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              <p className="text-2xl font-bold text-text-primary">
                 {translation.article && (
-                  <span className="text-primary-600 dark:text-primary-400">
+                  <span className="text-accent">
                     {translation.article}
                     {translation.article !== "l'" && ' '}
                   </span>
                 )}
                 {translation.lemma}
               </p>
-              <p className="text-lg text-gray-700 dark:text-gray-300 mt-2">
+              <p className="text-lg text-text-secondary mt-2">
                 {translation.russian}
               </p>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-              <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+            <div className="bg-surface-2 rounded-lg p-3">
+              <p className="text-sm text-text-secondary italic">
                 {sentence}
               </p>
             </div>
@@ -103,19 +105,22 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
             <div className="flex gap-2">
               {justAdded ? (
                 <Button disabled className="flex-1">
+                  <CheckCircle size={16} className="mr-2" />
                   Добавлено
                 </Button>
               ) : alreadyAdded ? (
                 <Button disabled className="flex-1">
+                  <BookPlus size={16} className="mr-2" />
                   Уже в словаре
                 </Button>
               ) : (
                 <Button onClick={handleAdd} className="flex-1">
+                  <BookPlus size={16} className="mr-2" />
                   Добавить в словарь
                 </Button>
               )}
               <Button variant="ghost" onClick={onClose}>
-                Закрыть
+                <X size={16} />
               </Button>
             </div>
           </>

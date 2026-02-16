@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { languageFlags, languageLabels, type Language } from '@/types'
+import { ChevronDown, Check } from 'lucide-react'
 
 const AVAILABLE_LANGUAGES: Language[] = ['fr', 'en', 'es', 'de', 'pt']
 
@@ -36,26 +37,21 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg hover:bg-surface-2 transition-colors text-sm"
         title="Сменить язык"
         aria-label={`Текущий язык: ${languageLabels[currentLanguage]}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <span className="text-lg">{languageFlags[currentLanguage]}</span>
-        <svg
-          className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <span className="text-base">{languageFlags[currentLanguage]}</span>
+        <ChevronDown
+          className={`w-3.5 h-3.5 text-text-muted transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+        />
       </button>
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-1 py-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+          className="absolute right-0 mt-1.5 py-1 w-48 bg-surface-1 rounded-xl border border-border-subtle shadow-xl shadow-black/10 z-50 animate-slide-down"
           role="listbox"
           aria-label="Выберите язык"
         >
@@ -63,7 +59,6 @@ export default function LanguageSwitcher() {
             const isCurrentLanguage = language === currentLanguage
             const isUserLanguage = userLanguages.includes(language)
             const isImplemented = IMPLEMENTED_LANGUAGES.includes(language)
-            // Allow selection if language is implemented OR user has it in their profile
             const isEnabled = isImplemented || isUserLanguage
 
             return (
@@ -74,28 +69,26 @@ export default function LanguageSwitcher() {
                 className={`
                   w-full flex items-center gap-3 px-3 py-2 text-left transition-colors
                   ${isCurrentLanguage
-                    ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'bg-accent-subtle text-accent'
+                    : 'hover:bg-surface-2'
                   }
                   ${!isEnabled
-                    ? 'opacity-50 cursor-not-allowed'
+                    ? 'opacity-40 cursor-not-allowed'
                     : 'cursor-pointer'
                   }
                 `}
                 role="option"
                 aria-selected={isCurrentLanguage}
               >
-                <span className="text-xl">{languageFlags[language]}</span>
-                <span className="flex-1 text-sm text-gray-900 dark:text-white">
+                <span className="text-lg">{languageFlags[language]}</span>
+                <span className="flex-1 text-sm text-text-primary">
                   {languageLabels[language]}
                 </span>
                 {isCurrentLanguage && (
-                  <svg className="w-4 h-4 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+                  <Check className="w-4 h-4 text-accent" />
                 )}
                 {!isEnabled && (
-                  <span className="text-xs text-gray-400">Скоро</span>
+                  <span className="text-xs text-text-muted">Скоро</span>
                 )}
               </button>
             )

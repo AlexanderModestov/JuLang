@@ -1,6 +1,7 @@
 import type { VocabularyCard } from '@/types'
 import { useSpeech } from '@/hooks/useSpeech'
 import { getCardWord, getWordWithArticle, getExampleText } from '@/modules/VocabularyEngine'
+import { Volume2, HelpCircle, BookOpen, CheckCircle2, Star, Image } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
@@ -13,11 +14,11 @@ interface WordCardProps {
   onPractice?: () => void
 }
 
-// Status display configuration
-const statusConfig: Record<LearningStatus, { icon: string; label: string; color: string }> = {
-  new: { icon: '❓', label: 'Новое', color: 'text-blue-600 dark:text-blue-400' },
-  learning: { icon: '📖', label: 'Изучается', color: 'text-yellow-600 dark:text-yellow-400' },
-  learned: { icon: '✅', label: 'Выучено', color: 'text-green-600 dark:text-green-400' },
+// Status display configuration - using lucide-react icons
+const statusConfig: Record<LearningStatus, { icon: React.ReactNode; label: string; color: string }> = {
+  new: { icon: <HelpCircle size={16} />, label: 'Новое', color: 'text-accent' },
+  learning: { icon: <BookOpen size={16} />, label: 'Изучается', color: 'text-warm' },
+  learned: { icon: <CheckCircle2 size={16} />, label: 'Выучено', color: 'text-success' },
 }
 
 // Frequency labels in Russian
@@ -32,28 +33,31 @@ const frequencyLabels: Record<1 | 2 | 3 | 4 | 5, string> = {
 // Difficulty stars display
 function DifficultyStars({ difficulty }: { difficulty: 1 | 2 | 3 }) {
   return (
-    <span className="text-yellow-500" title={`Сложность: ${difficulty}`}>
-      {'⭐'.repeat(difficulty)}
+    <span className="inline-flex items-center gap-0.5 text-warm" title={`Сложность: ${difficulty}`}>
+      {Array.from({ length: difficulty }).map((_, i) => (
+        <Star key={i} size={14} fill="currentColor" />
+      ))}
     </span>
   )
 }
 
-// Frequency scale component - visual bars (▓▓▓░░ for value 3)
+// Frequency scale component - visual bars
 function FrequencyScale({ frequency }: { frequency: 1 | 2 | 3 | 4 | 5 }) {
-  const filled = '▓'
-  const empty = '░'
-  const scale = filled.repeat(frequency) + empty.repeat(5 - frequency)
   const label = frequencyLabels[frequency]
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      <span
-        className="font-mono text-gray-600 dark:text-gray-400"
-        title={`Частотность: ${label}`}
-      >
-        {scale}
-      </span>
-      <span className="text-gray-500 dark:text-gray-400">{label}</span>
+      <div className="flex items-center gap-0.5" title={`Частотность: ${label}`}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div
+            key={i}
+            className={`w-2 h-3 rounded-sm ${
+              i < frequency ? 'bg-accent' : 'bg-surface-3'
+            }`}
+          />
+        ))}
+      </div>
+      <span className="text-text-muted">{label}</span>
     </div>
   )
 }
@@ -75,7 +79,7 @@ export default function WordCard({
     <Card>
       <div className="space-y-4">
         {/* Image placeholder or actual image */}
-        <div className="w-full h-40 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex items-center justify-center">
+        <div className="w-full h-40 bg-surface-2 rounded-lg overflow-hidden flex items-center justify-center">
           {word.imageUrl ? (
             <img
               src={word.imageUrl}
@@ -83,7 +87,7 @@ export default function WordCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="text-gray-400 dark:text-gray-500 text-4xl">🖼️</div>
+            <Image size={40} className="text-text-muted" />
           )}
         </div>
 
@@ -91,35 +95,35 @@ export default function WordCard({
         <div className="text-center">
           <button
             onClick={() => handleSpeak(getWordWithArticle(word))}
-            className="text-3xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2"
+            className="text-3xl font-bold text-text-primary hover:text-accent transition-colors inline-flex items-center gap-2"
           >
             {word.article && (
-              <span className="text-primary-600 dark:text-primary-400">
+              <span className="text-accent">
                 {word.article}
                 {word.article !== "l'" && ' '}
               </span>
             )}
             {getCardWord(word)}
-            <span className="text-2xl">🔊</span>
+            <Volume2 size={24} className="text-accent" />
           </button>
         </div>
 
         {/* Translation */}
-        <div className="text-center border-t border-gray-200 dark:border-gray-700 pt-4">
-          <p className="text-xl text-gray-800 dark:text-gray-200">{word.russian}</p>
+        <div className="text-center border-t border-border-subtle pt-4">
+          <p className="text-xl text-text-primary">{word.russian}</p>
         </div>
 
         {/* Status, Difficulty, Frequency row */}
         <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
           {/* Learning status */}
           <div className={`flex items-center gap-1 ${status.color}`}>
-            <span>{status.icon}</span>
+            {status.icon}
             <span>{status.label}</span>
           </div>
 
           {/* Difficulty stars */}
           <div className="flex items-center gap-1">
-            <span className="text-gray-500 dark:text-gray-400">Сложность:</span>
+            <span className="text-text-muted">Сложность:</span>
             <DifficultyStars difficulty={word.difficulty} />
           </div>
         </div>
@@ -130,20 +134,20 @@ export default function WordCard({
         </div>
 
         {/* Examples with TTS (up to 3) */}
-        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Примеры:</p>
+        <div className="bg-surface-2 rounded-lg p-4 space-y-3">
+          <p className="text-sm font-medium text-text-secondary">Примеры:</p>
           {word.examples.map((example, index) => (
-            <div key={index} className="border-l-2 border-primary-300 dark:border-primary-600 pl-3">
+            <div key={index} className="border-l-2 border-accent-muted pl-3">
               <button
                 onClick={() => handleSpeak(getExampleText(example))}
-                className="text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left w-full"
+                className="text-text-primary hover:text-accent transition-colors text-left w-full"
               >
                 <span className="inline-flex items-center gap-2">
-                  <span className="text-lg">🔊</span>
+                  <Volume2 size={16} className="text-accent flex-shrink-0" />
                   <span className="italic">{getExampleText(example)}</span>
                 </span>
               </button>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-7">
+              <p className="text-sm text-text-muted mt-1 ml-6">
                 {example.ru}
               </p>
             </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { MessageCircle, BookOpen, FileText, PenLine, Clock } from 'lucide-react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import type { Language } from '@/types'
 import { useTeacherContext } from '@/store/teacherChatStore'
@@ -25,6 +26,37 @@ const greetings: Record<Language, string> = {
   pt: 'Olá',
 }
 
+const quickActions = [
+  {
+    to: '/topics',
+    icon: MessageCircle,
+    label: 'Разговор',
+    description: 'Практика с AI',
+    iconColor: 'text-accent',
+  },
+  {
+    to: '/vocabulary',
+    icon: BookOpen,
+    label: 'Словарь',
+    description: 'Новые слова',
+    iconColor: 'text-warm',
+  },
+  {
+    to: '/grammar',
+    icon: FileText,
+    label: 'Грамматика',
+    description: 'Справочник',
+    iconColor: 'text-lavender',
+  },
+  {
+    to: '/exercises',
+    icon: PenLine,
+    label: 'Упражнения',
+    description: 'Повторение',
+    iconColor: 'text-accent',
+  },
+]
+
 export default function HomeScreen() {
   const { profile, progress, currentLanguage, setCurrentLanguage } = useAuthContext()
   const { stats, languageStats, loading: statsLoading } = useHomeStats()
@@ -40,10 +72,11 @@ export default function HomeScreen() {
   return (
     <div className="space-y-6">
       {/* Greeting */}
-      <div className="text-center py-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {greetings[currentLanguage]}, {profile.name}!
+      <div className="py-4">
+        <h1 className="text-xl font-semibold text-text-primary">
+          {greetings[currentLanguage]}, {profile.name}
         </h1>
+        <p className="text-sm text-text-muted mt-0.5">Продолжайте обучение</p>
       </div>
 
       {/* Main progress card */}
@@ -59,22 +92,19 @@ export default function HomeScreen() {
       {stats && (
         <div className="flex gap-3">
           <StatsCard
-            icon="📚"
+            icon={<BookOpen size={20} className="text-accent" />}
             value={stats.wordsLearned}
             label="Слов изучено"
-            iconColor="#10B981"
           />
           <StatsCard
-            icon="⏱"
+            icon={<Clock size={20} className="text-lavender" />}
             value={formatTotalTime(stats.totalDialogueMinutes)}
             label="Всего диалогов"
-            iconColor="#3B82F6"
           />
           <StatsCard
-            icon="💬"
+            icon={<MessageCircle size={20} className="text-warm" />}
             value={`${stats.averageDialogueMinutes} мин`}
             label="Средняя длина"
-            iconColor="#F59E0B"
           />
         </div>
       )}
@@ -82,7 +112,7 @@ export default function HomeScreen() {
       {/* Per-language progress */}
       {hasMultipleLanguages && languageStats.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">
+          <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wide px-1">
             Мои языки
           </h2>
           <div className="space-y-2">
@@ -101,79 +131,38 @@ export default function HomeScreen() {
       {/* Loading state */}
       {statsLoading && (
         <div className="flex justify-center py-4">
-          <div className="animate-pulse text-gray-400">Загрузка...</div>
+          <div className="animate-pulse text-text-muted">Загрузка...</div>
         </div>
       )}
 
       {/* Quick actions - 2x2 grid */}
       <div className="grid grid-cols-2 gap-3">
-        <Link to="/topics">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">💬</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Разговор
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Практика с AI
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/vocabulary">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">🔤</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Словарь
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Новые слова
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/grammar">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">📖</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Грамматика
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Справочник
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/exercises">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">✏️</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Упражнения
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Повторение
-              </p>
-            </div>
-          </Card>
-        </Link>
+        {quickActions.map((action, index) => {
+          const Icon = action.icon
+          return (
+            <Link key={action.to} to={action.to}>
+              <Card
+                variant="elevated"
+                className="cursor-pointer hover:scale-[1.02] transition-transform h-full animate-slide-up"
+                style={{
+                  animationFillMode: 'forwards',
+                  opacity: 0,
+                  animationDelay: `${index * 75}ms`,
+                }}
+              >
+                <div className="flex flex-col items-center text-center py-2">
+                  <Icon size={28} className={`${action.iconColor} mb-2`} />
+                  <h3 className="font-semibold text-text-primary text-sm">
+                    {action.label}
+                  </h3>
+                  <p className="text-xs text-text-muted mt-1">
+                    {action.description}
+                  </p>
+                </div>
+              </Card>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )

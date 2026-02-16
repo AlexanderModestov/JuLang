@@ -2,12 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Midnight Jade Design System ───────────────────────────── */
+
 :root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.5;
+  /* Surface layers */
+  --surface-0: #F2F3F7;
+  --surface-1: #FFFFFF;
+  --surface-2: #FFFFFF;
+  --surface-3: #E8EAF0;
+
+  /* Borders */
+  --border: #D8DAE3;
+  --border-subtle: #E8EAF0;
+
+  /* Typography */
+  --text-primary: #171A27;
+  --text-secondary: #5E6278;
+  --text-muted: #8E92A6;
+  --text-inverse: #F2F3F7;
+
+  /* Accent — jade */
+  --accent: #4A8073;
+  --accent-hover: #3D6B60;
+  --accent-muted: #6B9F92;
+  --accent-subtle: rgba(74, 128, 115, 0.08);
+
+  /* Warm — terracotta */
+  --warm: #B87D5E;
+  --warm-hover: #A06B4E;
+  --warm-muted: #C99A7F;
+  --warm-subtle: rgba(184, 125, 94, 0.08);
+
+  /* Lavender */
+  --lavender: #8474AE;
+  --lavender-muted: #A496C7;
+  --lavender-subtle: rgba(132, 116, 174, 0.08);
+
+  /* Semantic */
+  --success: #5A9E7A;
+  --success-muted: #7BB896;
+  --success-subtle: rgba(90, 158, 122, 0.08);
+  --warning: #C4A55A;
+  --warning-subtle: rgba(196, 165, 90, 0.08);
+  --error: #C06868;
+  --error-muted: #D48A8A;
+  --error-subtle: rgba(192, 104, 104, 0.08);
+
+  font-family: 'Sora', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
   font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
+  color: var(--text-primary);
+  background-color: var(--surface-0);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,8 +60,51 @@
 }
 
 .dark {
-  color: #e5e7eb;
-  background-color: #1f2937;
+  /* Surface layers — deep navy */
+  --surface-0: #0D1017;
+  --surface-1: #151921;
+  --surface-2: #1C2030;
+  --surface-3: #262B3D;
+
+  /* Borders */
+  --border: #2A2F42;
+  --border-subtle: #222738;
+
+  /* Typography */
+  --text-primary: #DFE1E8;
+  --text-secondary: #828699;
+  --text-muted: #565C72;
+  --text-inverse: #171A27;
+
+  /* Accent — jade (lighter for dark bg) */
+  --accent: #5E9B8A;
+  --accent-hover: #72B4A1;
+  --accent-muted: #3D6B60;
+  --accent-subtle: rgba(94, 155, 138, 0.1);
+
+  /* Warm — terracotta */
+  --warm: #C4956A;
+  --warm-hover: #D4A880;
+  --warm-muted: #8B6548;
+  --warm-subtle: rgba(196, 149, 106, 0.1);
+
+  /* Lavender */
+  --lavender: #9B8BB8;
+  --lavender-muted: #6E5F8A;
+  --lavender-subtle: rgba(155, 139, 184, 0.1);
+
+  /* Semantic */
+  --success: #6BAE8A;
+  --success-muted: #3D6B52;
+  --success-subtle: rgba(107, 174, 138, 0.1);
+  --warning: #C4A86B;
+  --warning-subtle: rgba(196, 168, 107, 0.1);
+  --error: #C47878;
+  --error-muted: #7A3E3E;
+  --error-subtle: rgba(196, 120, 120, 0.1);
+
+  color: var(--text-primary);
+  background-color: var(--surface-0);
 }
 
 * {
@@ -29,20 +117,104 @@ html, body, #root {
   height: 100%;
 }
 
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for dark theme */
+.dark ::-webkit-scrollbar {
+  width: 6px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: var(--surface-1);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Focus ring utility */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface-0;
+}
+
+/* ─── Component layer ───────────────────────────────────────── */
+
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-accent hover:bg-accent-hover text-text-inverse font-medium py-2.5 px-5 rounded-xl transition-all duration-200;
   }
 
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-surface-2 hover:bg-surface-3 text-text-primary font-medium py-2.5 px-5 rounded-xl border border-border-subtle transition-all duration-200;
   }
 
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6;
+    @apply bg-surface-1 rounded-2xl border border-border-subtle p-5;
   }
 
   .input {
-    @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white;
+    @apply w-full px-4 py-2.5 border border-border rounded-xl bg-surface-1 text-text-primary placeholder-text-muted transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent;
   }
 }
+
+/* ─── Slider styling ──────────────────────────────────── */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px var(--accent-subtle);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+/* ─── Select styling ───────────────────────────────────── */
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23828699' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 40px;
+}
+
+/* ─── Animation utilities ─────────────────────────────── */
+
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }

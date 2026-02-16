@@ -32,7 +32,7 @@ export default function ExerciseFillBlank({ exercise, onResult }: Props) {
 
   return (
     <div className="space-y-4">
-      <p className="text-lg text-gray-900 dark:text-white font-medium text-center">
+      <p className="text-lg text-text-primary font-medium text-center">
         {exercise.question}
       </p>
 
@@ -49,15 +49,12 @@ export default function ExerciseFillBlank({ exercise, onResult }: Props) {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck={false}
-          className={`flex-1 px-4 py-2 border-2 rounded-lg transition-colors
-            focus:outline-none focus:ring-2 focus:ring-primary-500
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-            placeholder-gray-400 dark:placeholder-gray-500
+          className={`flex-1 px-4 py-2 border-2 rounded-xl transition-colors
+            focus:outline-none focus:ring-2 focus:ring-accent/30
+            bg-surface-1 text-text-primary placeholder-text-muted
             ${answered
-              ? correct
-                ? 'border-green-500'
-                : 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
+              ? correct ? 'border-success' : 'border-error'
+              : 'border-border'
             }`}
         />
         {!answered && (
@@ -70,8 +67,8 @@ export default function ExerciseFillBlank({ exercise, onResult }: Props) {
       {answered && (
         <div className={`p-3 rounded-lg text-sm ${
           correct
-            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
-            : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+            ? 'bg-success-subtle text-success'
+            : 'bg-error-subtle text-error'
         }`}>
           {!correct && (
             <p className="font-medium mb-1">

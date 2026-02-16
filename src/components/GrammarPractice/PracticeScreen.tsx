@@ -15,12 +15,24 @@ import type { GrammarCard, PracticeType, PracticeExercise, PracticeResult } from
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import { Tabs, TabList, Tab, TabPanel } from '@/components/ui/Tabs'
+import {
+  Loader2,
+  PenLine,
+  Mic,
+  MicOff,
+  MessageCircle,
+  Volume2,
+  CheckCircle,
+  XCircle,
+  Trophy,
+  X,
+} from 'lucide-react'
 
-const PRACTICE_TYPES: { id: PracticeType; label: string; icon: string }[] = [
-  { id: 'written_translation', label: 'Перевод', icon: '✏️' },
-  { id: 'repeat_aloud', label: 'Повторить', icon: '🎤' },
-  { id: 'oral_translation', label: 'Устный', icon: '🎙️' },
-  { id: 'grammar_dialog', label: 'Диалог', icon: '💬' },
+const PRACTICE_TYPES: { id: PracticeType; label: string; icon: React.ReactNode }[] = [
+  { id: 'written_translation', label: 'Перевод', icon: <PenLine size={16} /> },
+  { id: 'repeat_aloud', label: 'Повторить', icon: <Mic size={16} /> },
+  { id: 'oral_translation', label: 'Устный', icon: <Volume2 size={16} /> },
+  { id: 'grammar_dialog', label: 'Диалог', icon: <MessageCircle size={16} /> },
 ]
 
 export default function PracticeScreen() {
@@ -169,7 +181,7 @@ export default function PracticeScreen() {
   if (!card) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin text-4xl">⏳</div>
+        <Loader2 className="w-10 h-10 text-accent animate-spin" />
       </div>
     )
   }
@@ -185,23 +197,23 @@ export default function PracticeScreen() {
     return (
       <div className="space-y-6">
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">🎉</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          <Trophy className="w-12 h-12 text-accent mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-text-primary mb-4">
             Практика завершена!
           </h2>
           <div className="grid grid-cols-2 gap-4 mb-6">
-            <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <div className="text-2xl font-bold text-primary-600">
+            <div className="p-4 bg-surface-2 rounded-lg">
+              <div className="text-2xl font-bold text-accent">
                 {correctAnswers}/{exercisesCompleted}
               </div>
-              <div className="text-sm text-gray-500">Правильных</div>
+              <div className="text-sm text-text-muted">Правильных</div>
             </div>
             {avgPronunciation !== null && (
-              <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-                <div className="text-2xl font-bold text-primary-600">
+              <div className="p-4 bg-surface-2 rounded-lg">
+                <div className="text-2xl font-bold text-accent">
                   {avgPronunciation}%
                 </div>
-                <div className="text-sm text-gray-500">Произношение</div>
+                <div className="text-sm text-text-muted">Произношение</div>
               </div>
             )}
           </div>
@@ -221,15 +233,15 @@ export default function PracticeScreen() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-text-primary">
             {card.topic}
           </h1>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-text-muted">
             {exercisesCompleted}/10 упражнений
           </p>
         </div>
         <Button variant="ghost" onClick={() => navigate('/review')}>
-          ✕
+          <X size={18} />
         </Button>
       </div>
 
@@ -237,7 +249,7 @@ export default function PracticeScreen() {
       <Tabs defaultTab={currentType} onChange={(id) => setCurrentType(id as PracticeType)}>
         <TabList>
           {PRACTICE_TYPES.map((type) => (
-            <Tab key={type.id} id={type.id} icon={<span>{type.icon}</span>}>
+            <Tab key={type.id} id={type.id} icon={type.icon}>
               {type.label}
             </Tab>
           ))}
@@ -247,14 +259,14 @@ export default function PracticeScreen() {
         <TabPanel id="written_translation" className="pt-6">
           {isLoading && !result ? (
             <Card className="text-center py-8">
-              <div className="animate-spin text-4xl">⏳</div>
+              <Loader2 className="w-10 h-10 text-accent animate-spin mx-auto" />
             </Card>
           ) : (
             <Card>
               {exercise?.sourceText && (
                 <div className="mb-6">
-                  <p className="text-sm text-gray-500 mb-2">Переведите на французский:</p>
-                  <p className="text-xl text-gray-900 dark:text-white">
+                  <p className="text-sm text-text-muted mb-2">Переведите на французский:</p>
+                  <p className="text-xl text-text-primary">
                     {exercise.sourceText}
                   </p>
                 </div>
@@ -266,7 +278,7 @@ export default function PracticeScreen() {
                 onChange={(e) => setUserAnswer(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSubmitWritten()}
                 placeholder="Введите перевод..."
-                className="w-full px-4 py-3 text-lg border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white mb-4"
+                className="w-full px-4 py-3 text-lg border border-border rounded-xl bg-surface-1 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200 mb-4"
                 disabled={!!result}
                 autoComplete="off"
                 autoCorrect="off"
@@ -277,18 +289,21 @@ export default function PracticeScreen() {
               />
 
               {result && (
-                <div className={`p-4 rounded-lg mb-4 ${result.isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
+                <div className={`p-4 rounded-lg mb-4 ${result.isCorrect ? 'bg-success-subtle' : 'bg-error-subtle'}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{result.isCorrect ? '✅' : '❌'}</span>
-                    <span className="font-medium">{result.feedback}</span>
+                    {result.isCorrect
+                      ? <CheckCircle className="w-5 h-5 text-success" />
+                      : <XCircle className="w-5 h-5 text-error" />
+                    }
+                    <span className="font-medium text-text-primary">{result.feedback}</span>
                   </div>
                   {!result.isCorrect && result.correctAnswer && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-text-secondary">
                       Правильный ответ: <strong>{result.correctAnswer}</strong>
                     </p>
                   )}
                   {result.grammarNotes && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    <p className="text-sm text-text-secondary mt-2">
                       {result.grammarNotes}
                     </p>
                   )}
@@ -313,12 +328,13 @@ export default function PracticeScreen() {
           <Card>
             {exercise?.targetText && (
               <div className="text-center mb-6">
-                <p className="text-sm text-gray-500 mb-4">Прослушайте и повторите:</p>
-                <p className="text-2xl text-gray-900 dark:text-white mb-4">
+                <p className="text-sm text-text-muted mb-4">Прослушайте и повторите:</p>
+                <p className="text-2xl text-text-primary mb-4">
                   {exercise.targetText}
                 </p>
                 <Button variant="secondary" onClick={() => speak(exercise.targetText!)}>
-                  🔊 Прослушать
+                  <Volume2 size={16} className="mr-2" />
+                  Прослушать
                 </Button>
               </div>
             )}
@@ -326,26 +342,29 @@ export default function PracticeScreen() {
             {!result && (
               <Button
                 onClick={handleVoiceInput}
-                className={`w-full ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
+                className={`w-full ${isListening ? 'bg-error hover:bg-error' : ''}`}
                 size="lg"
               >
-                {isListening ? '🔴 Запись...' : '🎤 Записать'}
+                {isListening
+                  ? <><MicOff size={18} className="mr-2" /> Запись...</>
+                  : <><Mic size={18} className="mr-2" /> Записать</>
+                }
               </Button>
             )}
 
             {userAnswer && (
-              <p className="text-center text-gray-600 dark:text-gray-400 mt-4">
+              <p className="text-center text-text-secondary mt-4">
                 Распознано: {userAnswer}
               </p>
             )}
 
             {result && (
               <div className="mt-4">
-                <div className={`p-4 rounded-lg ${result.isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-yellow-50 dark:bg-yellow-900/20'}`}>
+                <div className={`p-4 rounded-lg ${result.isCorrect ? 'bg-success-subtle' : 'bg-warm/10'}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium">{result.feedback}</span>
+                    <span className="font-medium text-text-primary">{result.feedback}</span>
                     {result.pronunciationScore !== undefined && (
-                      <span className="text-2xl font-bold text-primary-600">
+                      <span className="text-2xl font-bold text-accent">
                         {result.pronunciationScore}%
                       </span>
                     )}
@@ -364,8 +383,8 @@ export default function PracticeScreen() {
           <Card>
             {exercise?.sourceText && (
               <div className="text-center mb-6">
-                <p className="text-sm text-gray-500 mb-4">Переведите устно:</p>
-                <p className="text-2xl text-gray-900 dark:text-white mb-4">
+                <p className="text-sm text-text-muted mb-4">Переведите устно:</p>
+                <p className="text-2xl text-text-primary mb-4">
                   {exercise.sourceText}
                 </p>
               </div>
@@ -374,33 +393,39 @@ export default function PracticeScreen() {
             {!result && (
               <Button
                 onClick={handleVoiceInput}
-                className={`w-full ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
+                className={`w-full ${isListening ? 'bg-error hover:bg-error' : ''}`}
                 size="lg"
               >
-                {isListening ? '🔴 Запись...' : '🎤 Ответить'}
+                {isListening
+                  ? <><MicOff size={18} className="mr-2" /> Запись...</>
+                  : <><Mic size={18} className="mr-2" /> Ответить</>
+                }
               </Button>
             )}
 
             {userAnswer && (
-              <p className="text-center text-gray-600 dark:text-gray-400 mt-4">
+              <p className="text-center text-text-secondary mt-4">
                 Вы сказали: {userAnswer}
               </p>
             )}
 
             {result && (
               <div className="mt-4">
-                <div className={`p-4 rounded-lg ${result.isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
+                <div className={`p-4 rounded-lg ${result.isCorrect ? 'bg-success-subtle' : 'bg-error-subtle'}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{result.isCorrect ? '✅' : '❌'}</span>
-                    <span className="font-medium">{result.feedback}</span>
+                    {result.isCorrect
+                      ? <CheckCircle className="w-5 h-5 text-success" />
+                      : <XCircle className="w-5 h-5 text-error" />
+                    }
+                    <span className="font-medium text-text-primary">{result.feedback}</span>
                   </div>
                   {result.correctAnswer && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-text-secondary">
                       Эталон: <strong>{result.correctAnswer}</strong>
                     </p>
                   )}
                   {result.pronunciationScore !== undefined && (
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    <p className="text-sm text-text-secondary mt-2">
                       Произношение: {result.pronunciationScore}%
                     </p>
                   )}
@@ -416,8 +441,8 @@ export default function PracticeScreen() {
         {/* Grammar Dialog */}
         <TabPanel id="grammar_dialog" className="pt-6">
           <Card className="text-center py-8">
-            <span className="text-4xl mb-4 block">💬</span>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <MessageCircle className="w-12 h-12 text-accent mx-auto mb-4" />
+            <p className="text-text-secondary mb-4">
               Мини-диалог с фокусом на {card.topic}
             </p>
             <Button onClick={() => navigate(`/conversation?topic=${encodeURIComponent(card.topic)}`)}>

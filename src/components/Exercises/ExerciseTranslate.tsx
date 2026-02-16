@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import type { ExerciseTranslate as ExerciseTRType } from '@/types'
 import { checkAnswer } from '@/modules/ExercisesEngine'
+import { Languages } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 interface Props {
@@ -33,10 +34,11 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded-full mb-2">
+        <span className="inline-flex items-center gap-1 px-2 py-1 text-xs bg-warm-subtle text-warm rounded-full mb-2">
+          <Languages className="w-3 h-3" />
           Переведите
         </span>
-        <p className="text-lg text-gray-900 dark:text-white font-medium">
+        <p className="text-lg text-text-primary font-medium">
           {exercise.question}
         </p>
       </div>
@@ -55,14 +57,14 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
           autoCapitalize="off"
           spellCheck={false}
           className={`flex-1 px-4 py-2 border-2 rounded-lg transition-colors
-            focus:outline-none focus:ring-2 focus:ring-primary-500
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-            placeholder-gray-400 dark:placeholder-gray-500
+            focus:outline-none focus:ring-2 focus:ring-accent
+            bg-surface-1 text-text-primary
+            placeholder-text-muted
             ${answered
               ? correct
-                ? 'border-green-500'
-                : 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
+                ? 'border-success'
+                : 'border-error'
+              : 'border-border'
             }`}
         />
         {!answered && (
@@ -75,8 +77,8 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
       {answered && (
         <div className={`p-3 rounded-lg text-sm ${
           correct
-            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
-            : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+            ? 'bg-success-subtle text-success'
+            : 'bg-error-subtle text-error'
         }`}>
           {!correct && (
             <p className="font-medium mb-1">

@@ -7,6 +7,12 @@ import { ensureCardsForLevel, getGrammarTopicById } from '@/modules/GrammarEngin
 import type { GrammarCard, GrammarTopic, SRSQuality, FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
+import {
+  BookOpen,
+  CheckCircle,
+  Trophy,
+  Sparkles,
+} from 'lucide-react'
 
 const LEVELS: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
@@ -87,7 +93,7 @@ export default function ReviewScreen() {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-text-primary">
             Грамматика
           </h1>
           {cards.length > 0 && (
@@ -98,14 +104,14 @@ export default function ReviewScreen() {
         </div>
 
         {cards.length > 0 && (
-          <Card className="bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800">
+          <Card className="bg-accent-subtle border-accent/20">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">📚</span>
+              <BookOpen className="w-6 h-6 text-accent flex-shrink-0" />
               <div>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="font-medium text-text-primary">
                   {cards.length} {cards.length === 1 ? 'карточка' : 'карточек'} для повторения
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-text-secondary">
                   Нажмите "Повторить" чтобы начать
                 </p>
               </div>
@@ -119,8 +125,8 @@ export default function ReviewScreen() {
 
           return (
             <div key={level}>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 rounded">
+              <h3 className="font-semibold text-text-primary mb-3 flex items-center gap-2">
+                <span className="inline-block px-2 py-0.5 text-xs font-medium bg-accent-subtle text-accent rounded">
                   {level}
                 </span>
                 <span>{levelCards.length} тем</span>
@@ -134,23 +140,23 @@ export default function ReviewScreen() {
                         <div className="flex-1 min-w-0">
                           <Link
                             to={`/review/${card.topicId}`}
-                            className="font-medium text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400"
+                            className="font-medium text-text-primary hover:text-accent transition-colors"
                           >
                             {card.topic}
                           </Link>
                           <div className="flex items-center gap-2 mt-1">
                             {isDue ? (
-                              <span className="text-xs text-orange-600 dark:text-orange-400">
+                              <span className="text-xs text-warm">
                                 Пора повторить
                               </span>
                             ) : (
-                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                              <span className="text-xs text-text-muted">
                                 Через {formatInterval(card.interval)}
                               </span>
                             )}
                             {card.isEnhanced && (
-                              <span className="text-xs text-green-600 dark:text-green-400">
-                                ✨ Расширено
+                              <span className="text-xs text-success inline-flex items-center gap-1">
+                                <Sparkles size={12} /> Расширено
                               </span>
                             )}
                           </div>
@@ -171,11 +177,11 @@ export default function ReviewScreen() {
 
         {allCards.length === 0 && (
           <Card className="text-center py-8">
-            <span className="text-5xl block mb-4">📖</span>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <BookOpen className="w-12 h-12 text-text-muted mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-text-primary mb-2">
               Нет карточек
             </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-text-secondary">
               Карточки создаются автоматически при регистрации.
             </p>
           </Card>
@@ -189,11 +195,11 @@ export default function ReviewScreen() {
     return (
       <div className="space-y-6">
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">✅</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-text-primary mb-2">
             Сессия завершена!
           </h2>
-          <div className="text-gray-600 dark:text-gray-400 mb-6">
+          <div className="text-text-secondary mb-6">
             <p>Повторено карточек: {sessionStats.reviewed}</p>
             <p>Средняя оценка: {sessionStats.avgQuality.toFixed(1)} / 5</p>
           </div>
@@ -221,11 +227,11 @@ export default function ReviewScreen() {
     return (
       <div className="space-y-6">
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">🎉</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <Trophy className="w-12 h-12 text-accent mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-text-primary mb-2">
             Нет карточек для повторения!
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
+          <p className="text-text-secondary mb-4">
             Вы всё повторили. Отличная работа!
           </p>
           <div className="flex justify-center gap-3">
@@ -247,15 +253,15 @@ export default function ReviewScreen() {
       {/* Header with back button */}
       <div className="flex items-center gap-4">
         <Button variant="ghost" onClick={() => setViewMode('browse')}>
-          ← Назад
+          &larr; Назад
         </Button>
-        <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="flex-1 h-2 bg-surface-2 rounded-full overflow-hidden">
           <div
-            className="h-full bg-primary-600 transition-all duration-300"
+            className="h-full bg-accent transition-all duration-300"
             style={{ width: `${((currentIndex + 1) / cards.length) * 100}%` }}
           />
         </div>
-        <span className="text-sm text-gray-600 dark:text-gray-400">
+        <span className="text-sm text-text-muted">
           {currentIndex + 1} / {cards.length}
         </span>
       </div>
@@ -265,10 +271,10 @@ export default function ReviewScreen() {
         {/* Front */}
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <span className="inline-block px-3 py-1 text-xs font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 rounded-full mb-4">
+            <span className="inline-block px-3 py-1 text-xs font-medium bg-accent-subtle text-accent rounded-full mb-4">
               {currentCard.level}
             </span>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-text-primary">
               {currentCard.topic}
             </h2>
           </div>
@@ -279,18 +285,18 @@ export default function ReviewScreen() {
           const staticTopic = getGrammarTopicById(currentCard.topicId, currentLanguage) as GrammarTopic | undefined
           const formation = staticTopic?.content?.formation
           return (
-            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
-              <p className="text-gray-700 dark:text-gray-300 mb-4">
+            <div className="border-t border-border-subtle pt-4 mt-4">
+              <p className="text-text-secondary mb-4">
                 {currentCard.explanation}
               </p>
 
               {/* Formation (brief) */}
               {formation && (
-                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 mb-4">
-                  <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
+                <div className="bg-surface-2 rounded-lg p-3 mb-4">
+                  <p className="text-xs font-medium text-text-muted mb-1">
                     Образование:
                   </p>
-                  <code className="text-sm font-mono text-gray-900 dark:text-white">
+                  <code className="text-sm font-mono text-text-primary">
                     {formation.formula}
                   </code>
                 </div>
@@ -299,11 +305,11 @@ export default function ReviewScreen() {
               {currentCard.examples.length > 0 && (
                 <div className="space-y-2 mb-4">
                   {currentCard.examples.slice(0, 3).map((ex, i) => (
-                    <div key={i} className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg">
-                      <p className="font-medium text-gray-900 dark:text-white">
+                    <div key={i} className="bg-surface-2 p-3 rounded-lg">
+                      <p className="font-medium text-text-primary">
                         {ex.french}
                       </p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-text-muted">
                         {ex.russian}
                       </p>
                     </div>
@@ -311,11 +317,11 @@ export default function ReviewScreen() {
                 </div>
               )}
               {currentCard.commonMistakes.length > 0 && (
-                <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
-                  <p className="text-sm font-medium text-red-800 dark:text-red-300 mb-1">
+                <div className="bg-error-subtle p-3 rounded-lg">
+                  <p className="text-sm font-medium text-error mb-1">
                     Частые ошибки:
                   </p>
-                  <ul className="text-sm text-red-700 dark:text-red-400 list-disc list-inside">
+                  <ul className="text-sm text-text-secondary list-disc list-inside">
                     {currentCard.commonMistakes.map((mistake, i) => (
                       <li key={i}>{mistake}</li>
                     ))}

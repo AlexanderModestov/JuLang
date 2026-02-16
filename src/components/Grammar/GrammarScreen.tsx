@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { BookOpen } from 'lucide-react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllGrammarTopics } from '@/modules/GrammarEngine'
@@ -51,16 +52,16 @@ export default function GrammarScreen() {
 
   if (topics.length === 0) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="space-y-6 animate-fade-in">
+        <h1 className="text-2xl font-bold text-text-primary">
           Грамматика
         </h1>
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">📖</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <BookOpen className="w-12 h-12 text-text-muted mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-text-primary mb-2">
             Нет доступных тем
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-text-secondary">
             Грамматические правила скоро появятся.
           </p>
         </Card>
@@ -69,18 +70,18 @@ export default function GrammarScreen() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-text-primary">
           Грамматика
         </h1>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-text-muted">
           {topics.length} тем для уровня {profile?.french_level || 'A1'}
         </span>
       </div>
 
       <Card padding="md">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-text-secondary">
           Справочник грамматических правил. {languageLabels[currentLanguage]}. Выберите тему для
           изучения.
         </p>

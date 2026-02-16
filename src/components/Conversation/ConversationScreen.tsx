@@ -15,6 +15,7 @@ import type { Message, Conversation } from '@/types'
 import { languageTTSCodes } from '@/types'
 import Button from '@/components/ui/Button'
 import WordPopup from './WordPopup'
+import { Keyboard, Mic, Volume2, Send } from 'lucide-react'
 
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
@@ -230,12 +231,12 @@ export default function ConversationScreen() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)]">
+    <div className="flex flex-col h-[calc(100vh-140px)] animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
         <div>
-          <h2 className="font-semibold text-gray-900 dark:text-white">{topic}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <h2 className="font-semibold text-text-primary">{topic}</h2>
+          <p className="text-sm text-text-muted">
             {messages.length} сообщений
           </p>
         </div>
@@ -245,14 +246,14 @@ export default function ConversationScreen() {
             size="sm"
             onClick={() => setMode('text')}
           >
-            ⌨️
+            <Keyboard size={16} />
           </Button>
           <Button
             variant={mode === 'voice' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setMode('voice')}
           >
-            🎤
+            <Mic size={16} />
           </Button>
           <Button variant="secondary" size="sm" onClick={handleEndConversation}>
             Завершить
@@ -270,11 +271,11 @@ export default function ConversationScreen() {
             <div
               className={`max-w-[80%] p-3 rounded-xl ${
                 message.role === 'user'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700'
+                  ? 'bg-accent text-text-inverse'
+                  : 'bg-surface-2'
               }`}
             >
-              <p className={message.role === 'user' ? 'text-white' : 'text-gray-900 dark:text-white'}>
+              <p className={message.role === 'user' ? 'text-text-inverse' : 'text-text-primary'}>
                 {message.role === 'assistant'
                   ? message.content.split(/(\s+)/).map((part, i) => {
                       const trimmed = part.replace(/[.,!?;:'"()«»\-—]/g, '')
@@ -282,7 +283,7 @@ export default function ConversationScreen() {
                       return (
                         <span
                           key={i}
-                          className="cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded px-0.5 transition-colors"
+                          className="cursor-pointer hover:bg-accent-subtle rounded px-0.5 transition-colors"
                           onClick={() => setPopupWord({ word: trimmed, sentence: message.content })}
                         >
                           {part}
@@ -294,8 +295,9 @@ export default function ConversationScreen() {
               {message.role === 'assistant' && (
                 <button
                   onClick={() => speak(message.content, { language: currentLanguage })}
-                  className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  className="mt-2 flex items-center gap-1.5 text-xs text-text-muted hover:text-text-secondary transition-colors"
                 >
+                  <Volume2 size={14} />
                   Прослушать
                 </button>
               )}
@@ -305,8 +307,8 @@ export default function ConversationScreen() {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700">
-              <div className="flex gap-1">
+            <div className="p-3 rounded-xl bg-surface-2">
+              <div className="flex gap-1 text-text-muted">
                 <span className="animate-bounce">.</span>
                 <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
                 <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
@@ -319,7 +321,7 @@ export default function ConversationScreen() {
       </div>
 
       {/* Input */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="pt-4 border-t border-border-subtle">
         <div className="flex gap-2">
           {mode === 'text' ? (
             <>
@@ -330,13 +332,13 @@ export default function ConversationScreen() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
                 placeholder={{
-                  fr: 'Écrivez en français...',
+                  fr: 'Ecrivez en francais...',
                   en: 'Write in English...',
-                  es: 'Escribe en español...',
+                  es: 'Escribe en espanol...',
                   de: 'Schreiben Sie auf Deutsch...',
-                  pt: 'Escreva em português...',
+                  pt: 'Escreva em portugues...',
                 }[currentLanguage] || 'Write here...'}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 px-4 py-2.5 border border-border rounded-xl bg-surface-1 text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
                 disabled={isLoading}
                 autoComplete="off"
                 autoCorrect="off"
@@ -346,21 +348,23 @@ export default function ConversationScreen() {
                 data-gramm_editor="false"
               />
               <Button onClick={() => sendMessage(input)} disabled={!input.trim() || isLoading}>
+                <Send size={16} className="mr-1.5" />
                 Отправить
               </Button>
             </>
           ) : (
             <Button
               onClick={handleVoiceInput}
-              className={`flex-1 ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
+              className={`flex-1 ${isListening ? 'bg-error hover:bg-error-muted' : ''}`}
               size="lg"
             >
-              {isListening ? '🔴 Запись...' : '🎤 Нажмите и говорите'}
+              <Mic size={18} className={`mr-2 ${isListening ? 'animate-pulse' : ''}`} />
+              {isListening ? 'Запись...' : 'Нажмите и говорите'}
             </Button>
           )}
         </div>
         {input && mode === 'voice' && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-text-muted">
             Распознано: {input}
           </p>
         )}

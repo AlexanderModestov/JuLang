@@ -1,33 +1,31 @@
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 
 interface StatsCardProps extends HTMLAttributes<HTMLDivElement> {
-  icon: string
+  icon: ReactNode
   value: string | number
   label: string
-  iconColor?: string
 }
 
 export default function StatsCard({
   icon,
   value,
   label,
-  iconColor = '#3B82F6',
   className = '',
   ...props
 }: StatsCardProps) {
   return (
     <div
-      className={`flex-1 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md ${className}`}
+      className={`flex-1 bg-surface-1 border border-border-subtle rounded-2xl p-4 ${className}`}
       {...props}
     >
       <div className="flex flex-col items-center text-center gap-1">
-        <span className="text-2xl" style={{ color: iconColor }}>
+        <div className="mb-1">
           {icon}
-        </span>
-        <span className="text-xl font-bold text-gray-900 dark:text-white">
+        </div>
+        <span className="text-xl font-bold text-text-primary">
           {value}
         </span>
-        <span className="text-xs text-gray-500 dark:text-gray-400">
+        <span className="text-xs text-text-muted">
           {label}
         </span>
       </div>

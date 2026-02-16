@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
 import type { FrenchLevel, TopicStats } from '@/types'
 import { getTopicStats } from '@/modules/ExercisesEngine'
+import { Check, ArrowLeft } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 
@@ -56,13 +57,14 @@ export default function TopicSelector() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h2 className="text-lg font-bold text-text-primary">
           Выбрать тему
         </h2>
         <button
           onClick={() => navigate('/exercises')}
-          className="text-sm text-primary-600 dark:text-primary-400"
+          className="flex items-center gap-1 text-sm text-accent hover:text-accent-hover transition-colors"
         >
+          <ArrowLeft className="w-4 h-4" />
           Назад
         </button>
       </div>
@@ -78,8 +80,8 @@ export default function TopicSelector() {
             }}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
               selectedLevel === level
-                ? 'bg-primary-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                ? 'bg-accent text-text-inverse'
+                : 'bg-surface-2 text-text-secondary border border-border-subtle hover:bg-surface-3'
             }`}
           >
             {level}
@@ -90,11 +92,11 @@ export default function TopicSelector() {
       {/* Topic list */}
       {loading ? (
         <div className="flex justify-center py-8">
-          <p className="text-gray-500 dark:text-gray-400">Загрузка тем...</p>
+          <p className="text-text-muted">Загрузка тем...</p>
         </div>
       ) : topics.length === 0 ? (
         <Card>
-          <p className="text-center text-gray-500 dark:text-gray-400 py-4">
+          <p className="text-center text-text-muted py-4">
             Нет тем для уровня {selectedLevel}
           </p>
         </Card>
@@ -115,48 +117,46 @@ export default function TopicSelector() {
                 onClick={() => toggleTopic(topic.topicId)}
                 className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                   isSelected
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-accent bg-accent-subtle'
+                    : 'border-border-subtle bg-surface-1 hover:border-border'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   {/* Checkbox */}
                   <div className={`w-5 h-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${
                     isSelected
-                      ? 'bg-primary-600 border-primary-600'
-                      : 'border-gray-300 dark:border-gray-600'
+                      ? 'bg-accent border-accent'
+                      : 'border-border'
                   }`}>
                     {isSelected && (
-                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
+                      <Check className="w-3 h-3 text-text-inverse" />
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <span className="text-sm font-medium text-text-primary truncate">
                         {topic.topicName}
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                      <span className="text-xs text-text-muted ml-2 flex-shrink-0">
                         {topic.solved}/{topic.total}
                       </span>
                     </div>
 
                     {/* Progress bar */}
                     <div className="mt-1.5 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-surface-3 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${
                             progressPercent === 100
-                              ? 'bg-green-500'
-                              : 'bg-primary-500'
+                              ? 'bg-success'
+                              : 'bg-accent'
                           }`}
                           style={{ width: `${progressPercent}%` }}
                         />
                       </div>
                       {topic.attempts > 0 && (
-                        <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
+                        <span className="text-xs text-text-muted flex-shrink-0">
                           {accuracyPercent}%
                         </span>
                       )}

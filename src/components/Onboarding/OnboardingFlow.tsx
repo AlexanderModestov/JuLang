@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { userDataService } from '@/services/userDataService'
 import { ensureCardsForLevel } from '@/modules/GrammarEngine'
-import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS, languageLabels, languageFlags } from '@/types'
+import { getDefaultPauseTimeout, DEFAULT_SPEECH_SETTINGS, languageLabels } from '@/types'
 import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import Card from '@/components/ui/Card'
 
 type Step = 'welcome' | 'name' | 'level' | 'creating'
 
@@ -59,15 +59,17 @@ export default function OnboardingFlow() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-surface-0 flex items-center justify-center p-4">
+      <div className="bg-surface-1 border border-border-subtle rounded-2xl p-8 w-full max-w-md">
         {step === 'welcome' && (
-          <div className="text-center">
-            <span className="text-6xl mb-4 block">{languageFlags[currentLanguage]}</span>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Добро пожаловать в JuLang!
+          <div className="text-center animate-fade-in">
+            <h1 className="text-3xl font-bold text-accent mb-2 font-sora tracking-tight">
+              JuLang
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <h2 className="text-xl font-semibold text-text-primary mb-2">
+              Добро пожаловать!
+            </h2>
+            <p className="text-text-secondary text-sm mb-8">
               Ваш персональный помощник для изучения языков
             </p>
             <Button onClick={() => setStep('name')} size="lg" className="w-full">
@@ -77,15 +79,15 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'name' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="animate-fade-in">
+            <h2 className="text-xl font-semibold text-text-primary mb-4">
               Как вас зовут?
             </h2>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Введите ваше имя"
-              className="mb-4"
+              className="mb-6"
             />
             <div className="flex gap-3">
               <Button variant="secondary" onClick={() => setStep('welcome')}>
@@ -99,8 +101,8 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'level' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="animate-fade-in">
+            <h2 className="text-xl font-semibold text-text-primary mb-4">
               Ваш уровень ({languageLabels[currentLanguage]})
             </h2>
             <div className="space-y-2 mb-6">
@@ -109,25 +111,25 @@ export default function OnboardingFlow() {
                   key={l.value}
                   onClick={() => setLevel(l.value)}
                   className={`
-                    w-full text-left p-3 rounded-lg border-2 transition-colors
+                    w-full text-left p-3 rounded-xl border transition-all duration-200
                     ${
                       level === l.value
-                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                        ? 'border-accent bg-accent/10'
+                        : 'border-border-subtle hover:border-border'
                     }
                   `}
                 >
-                  <div className="font-medium text-gray-900 dark:text-white">
+                  <div className="font-medium text-text-primary text-sm">
                     {l.label}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-text-muted mt-0.5">
                     {l.description}
                   </div>
                 </button>
               ))}
             </div>
             {error && (
-              <p className="text-red-500 text-sm mb-4">{error}</p>
+              <p className="text-error text-sm mb-4">{error}</p>
             )}
             <div className="flex gap-3">
               <Button variant="secondary" onClick={() => setStep('name')}>
@@ -141,14 +143,14 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'creating' && (
-          <div className="text-center py-8">
-            <div className="animate-spin text-4xl mb-4">⏳</div>
-            <p className="text-gray-600 dark:text-gray-400">
+          <div className="text-center py-8 animate-fade-in">
+            <Loader2 className="w-10 h-10 text-accent animate-spin mx-auto mb-4" />
+            <p className="text-text-secondary text-sm">
               Создаём карточки грамматики...
             </p>
           </div>
         )}
-      </Card>
+      </div>
     </div>
   )
 }

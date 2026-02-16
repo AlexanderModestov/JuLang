@@ -73,7 +73,7 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-gray-600 dark:text-gray-400 text-center">
+      <p className="text-sm text-text-secondary text-center">
         {exercise.instruction}
       </p>
 
@@ -85,13 +85,13 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
             const isSelected = selectedLeft === pair.left
             const isError = errorPair?.left === pair.left
 
-            let style = 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+            let style = 'border-border-subtle bg-surface-1 text-text-primary'
             if (isMatched) {
-              style = 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 opacity-60'
+              style = 'border-success bg-success-subtle text-success opacity-60'
             } else if (isError) {
-              style = 'border-red-500 bg-red-50 dark:bg-red-900/30'
+              style = 'border-error bg-error-subtle text-text-primary'
             } else if (isSelected) {
-              style = 'border-primary-500 bg-primary-50 dark:bg-primary-900/30 ring-2 ring-primary-300'
+              style = 'border-accent bg-accent-subtle ring-2 ring-accent/30 text-text-primary'
             }
 
             return (
@@ -99,7 +99,7 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
                 key={pair.left}
                 onClick={() => handleLeftClick(pair.left)}
                 disabled={isMatched}
-                className={`w-full px-3 py-2.5 border-2 rounded-lg text-center transition-all text-gray-900 dark:text-white text-sm font-medium ${style}`}
+                className={`w-full px-3 py-2.5 border-2 rounded-lg text-center transition-all text-sm font-medium ${style}`}
               >
                 {pair.left}
               </button>
@@ -113,13 +113,13 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
             const isMatched = matchedRightSet.has(right)
             const isError = errorPair?.right === right
 
-            let style = 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'
+            let style = 'border-border-subtle bg-surface-1 text-text-primary'
             if (isMatched) {
-              style = 'border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 opacity-60'
+              style = 'border-success bg-success-subtle text-success opacity-60'
             } else if (isError) {
-              style = 'border-red-500 bg-red-50 dark:bg-red-900/30'
+              style = 'border-error bg-error-subtle text-text-primary'
             } else if (selectedLeft) {
-              style = 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-primary-400 dark:hover:border-primary-500'
+              style = 'border-border-subtle bg-surface-1 hover:border-accent text-text-primary'
             }
 
             return (
@@ -127,7 +127,7 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
                 key={right}
                 onClick={() => handleRightClick(right)}
                 disabled={isMatched || !selectedLeft}
-                className={`w-full px-3 py-2.5 border-2 rounded-lg text-center transition-all text-gray-900 dark:text-white text-sm font-medium ${style}`}
+                className={`w-full px-3 py-2.5 border-2 rounded-lg text-center transition-all text-sm font-medium ${style}`}
               >
                 {right}
               </button>
@@ -139,8 +139,8 @@ export default function ExerciseMatching({ exercise, onResult }: Props) {
       {allMatched && (
         <div className={`p-3 rounded-lg text-sm ${
           !hadError
-            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
-            : 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300'
+            ? 'bg-success-subtle text-success'
+            : 'bg-warning-subtle text-warning'
         }`}>
           {exercise.explanation}
         </div>

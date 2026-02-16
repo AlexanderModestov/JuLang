@@ -1,3 +1,4 @@
+import { Clock } from 'lucide-react'
 import type { FrenchLevel } from '@/types'
 import StreakBadge from './StreakBadge'
 
@@ -22,46 +23,42 @@ export default function MainProgressCard({
 
   return (
     <div
-      className={`relative w-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-5 shadow-lg text-white ${className}`}
+      className={`relative w-full bg-surface-2 border border-border-subtle rounded-2xl p-5 ${className}`}
     >
       {/* Streak badge in top-right corner */}
       {currentStreak > 0 && (
-        <div className="absolute top-3 right-3">
-          <StreakBadge
-            days={currentStreak}
-            size="sm"
-            className="bg-white/20 dark:bg-white/20 text-white dark:text-white"
-          />
+        <div className="absolute top-4 right-4">
+          <StreakBadge days={currentStreak} size="sm" />
         </div>
       )}
 
       {/* Level progress section */}
       <div className="mb-4">
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-2xl font-bold">{current}</span>
+        <div className="flex items-baseline gap-2 mb-3">
+          <span className="text-2xl font-bold text-text-primary">{current}</span>
           {next && (
             <>
-              <span className="text-white/70">→</span>
-              <span className="text-lg text-white/70">{next}</span>
+              <span className="text-text-muted">&rarr;</span>
+              <span className="text-lg text-text-secondary">{next}</span>
             </>
           )}
         </div>
 
         {/* Progress bar */}
-        <div className="w-full bg-white/20 rounded-full h-2.5 mb-1">
+        <div className="w-full bg-surface-3 rounded-full h-2 mb-1.5">
           <div
-            className="bg-white rounded-full h-2.5 transition-all duration-300"
+            className="bg-accent rounded-full h-2 transition-all duration-500 ease-out"
             style={{ width: `${percent}%` }}
           />
         </div>
-        <div className="text-sm text-white/80">{percent}% завершено</div>
+        <div className="text-sm text-text-muted">{percent}% завершено</div>
       </div>
 
       {/* Today's practice time */}
-      <div className="flex items-center gap-2">
-        <span className="text-lg">⏱️</span>
+      <div className="flex items-center gap-2 text-text-secondary">
+        <Clock size={16} className="text-text-muted" />
         <span className="text-sm">
-          Сегодня: <span className="font-semibold">{todayMinutes} мин</span>
+          Сегодня: <span className="font-semibold text-text-primary">{todayMinutes} мин</span>
         </span>
       </div>
     </div>
