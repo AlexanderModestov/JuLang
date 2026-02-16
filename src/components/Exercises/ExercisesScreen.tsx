@@ -25,13 +25,13 @@ interface MixedExercise {
 
 export default function ExercisesScreen() {
   const navigate = useNavigate()
-  const { user, currentLanguage } = useAuthContext()
+  const { user, currentLanguage, incrementLanguageStats } = useAuthContext()
   const [loading, setLoading] = useState(true)
   const [exercises, setExercises] = useState<MixedExercise[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [showResult, setShowResult] = useState(false)
   const [lastCorrect, setLastCorrect] = useState(false)
-  const [stats, setStats] = useState({ correct: 0, total: 0 })
+  const [stats, setStats] = useState({ correct: 0, total: 0, grammarCorrect: 0 })
   const [sessionComplete, setSessionComplete] = useState(false)
 
   useEffect(() => {
@@ -88,9 +88,15 @@ export default function ExercisesScreen() {
   const handleResult = useCallback(async (correct: boolean) => {
     setLastCorrect(correct)
     setShowResult(true)
-    setStats((s) => ({ correct: s.correct + (correct ? 1 : 0), total: s.total + 1 }))
 
     const current = exercises[currentIndex]
+    const isGrammarCorrect = correct && current.source === 'grammar'
+
+    setStats((s) => ({
+      correct: s.correct + (correct ? 1 : 0),
+      total: s.total + 1,
+      grammarCorrect: s.grammarCorrect + (isGrammarCorrect ? 1 : 0),
+    }))
 
     // Schedule based on result
     if (current.source === 'vocabulary' && current.vocabProgress) {
@@ -102,12 +108,22 @@ export default function ExercisesScreen() {
     setTimeout(() => {
       setShowResult(false)
       if (currentIndex >= exercises.length - 1) {
+        // Session complete — update language stats
+        const finalStats = {
+          correct: stats.correct + (correct ? 1 : 0),
+          total: stats.total + 1,
+          grammarCorrect: stats.grammarCorrect + (isGrammarCorrect ? 1 : 0),
+        }
+        incrementLanguageStats({
+          exercisesSolved: finalStats.total,
+          ...(finalStats.grammarCorrect > 0 && { grammarTopicsCompleted: finalStats.grammarCorrect }),
+        })
         setSessionComplete(true)
       } else {
         setCurrentIndex((i) => i + 1)
       }
     }, 1200)
-  }, [currentIndex, exercises])
+  }, [currentIndex, exercises, stats, incrementLanguageStats])
 
   const handleBack = () => {
     navigate('/')

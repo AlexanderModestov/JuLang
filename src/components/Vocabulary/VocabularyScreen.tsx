@@ -29,7 +29,7 @@ type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
-  const { user, profile, currentLanguage, currentLevel } = useAuthContext()
+  const { user, profile, currentLanguage, currentLevel, incrementLanguageStats } = useAuthContext()
   const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
@@ -90,7 +90,11 @@ export default function VocabularyScreen() {
 
   const handleCardLearned = async (cardId: string) => {
     if (!user) return undefined
-    return await addCardToProgress(user.id, cardId, currentLanguage)
+    const progress = await addCardToProgress(user.id, cardId, currentLanguage)
+    if (progress) {
+      incrementLanguageStats({ wordsLearned: 1 })
+    }
+    return progress
   }
 
   const handleComplete = () => {

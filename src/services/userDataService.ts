@@ -419,4 +419,26 @@ export const userDataService = {
     if (error) throw error
     return data
   },
+
+  async incrementStats(
+    userId: string,
+    language: Language,
+    increments: Partial<Record<'words_learned' | 'grammar_topics_completed' | 'conversations_count' | 'exercises_solved', number>>,
+  ): Promise<void> {
+    const current = await this.getLanguageSetting(userId, language)
+    if (!current) return
+
+    const updates: Record<string, number> = {}
+    for (const [key, amount] of Object.entries(increments)) {
+      updates[key] = ((current as any)[key] || 0) + (amount || 0)
+    }
+
+    const { error } = await supabase
+      .from('user_language_settings')
+      .update(updates)
+      .eq('user_id', userId)
+      .eq('language', language)
+
+    if (error) throw error
+  },
 }

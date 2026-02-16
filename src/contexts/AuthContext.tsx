@@ -31,6 +31,7 @@ interface AuthContextType {
   updateProgress: (updates: Partial<UserProgress>) => Promise<void>
   setCurrentLanguage: (language: Language) => Promise<void>
   refreshLanguageSettings: () => Promise<void>
+  incrementLanguageStats: (increments: Partial<LanguageSettingStats>) => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -282,6 +283,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const incrementLanguageStats = async (increments: Partial<LanguageSettingStats>) => {
+    if (!user) return
+    try {
+      // Map camelCase keys to snake_case DB columns
+      const dbIncrements: Record<string, number> = {}
+      if (increments.wordsLearned) dbIncrements.words_learned = increments.wordsLearned
+      if (increments.grammarTopicsCompleted) dbIncrements.grammar_topics_completed = increments.grammarTopicsCompleted
+      if (increments.conversationsCount) dbIncrements.conversations_count = increments.conversationsCount
+      if (increments.exercisesSolved) dbIncrements.exercises_solved = increments.exercisesSolved
+
+      await userDataService.incrementStats(user.id, currentLanguage, dbIncrements as any)
+
+      // Update local state optimistically
+      setCurrentLanguageStats((prev) => ({
+        wordsLearned: prev.wordsLearned + (increments.wordsLearned || 0),
+        grammarTopicsCompleted: prev.grammarTopicsCompleted + (increments.grammarTopicsCompleted || 0),
+        conversationsCount: prev.conversationsCount + (increments.conversationsCount || 0),
+        exercisesSolved: prev.exercisesSolved + (increments.exercisesSolved || 0),
+      }))
+    } catch (err) {
+      console.error('Failed to increment language stats:', err)
+    }
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -303,6 +328,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         updateProgress,
         setCurrentLanguage,
         refreshLanguageSettings,
+        incrementLanguageStats,
       }}
     >
       {children}

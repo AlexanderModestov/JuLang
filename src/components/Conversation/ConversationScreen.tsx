@@ -19,7 +19,7 @@ import WordPopup from './WordPopup'
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { user, profile, progress, updateProgress, currentLanguage, currentLevel } = useAuthContext()
+  const { user, profile, progress, updateProgress, currentLanguage, currentLevel, incrementLanguageStats } = useAuthContext()
   const { speak } = useSpeech()
 
   const topic = searchParams.get('topic') || 'conversation libre'
@@ -194,6 +194,7 @@ export default function ConversationScreen() {
           timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
         })),
       })
+      incrementLanguageStats({ conversationsCount: 1 })
     } catch (err) {
       console.error('Failed to save conversation to Supabase:', err)
     }
