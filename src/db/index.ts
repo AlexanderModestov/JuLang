@@ -7,6 +7,7 @@ import type {
   VocabularyProgress,
   TeacherMessage,
   ExerciseProgress,
+  UserLanguageSetting,
 } from '@/types'
 
 export class JuLangDB extends Dexie {
@@ -17,6 +18,7 @@ export class JuLangDB extends Dexie {
   vocabularyProgress!: Table<VocabularyProgress>
   teacherMessages!: Table<TeacherMessage>
   exerciseProgress!: Table<ExerciseProgress>
+  userLanguageSettings!: Table<UserLanguageSetting>
 
   constructor() {
     super('julang')
@@ -69,7 +71,7 @@ export class JuLangDB extends Dexie {
       teacherMessages: '++id, timestamp',
     })
 
-    // Version 5: Add exercise progress table
+    // Version 5: Add exercise progress and user language settings tables
     this.version(5).stores({
       grammarCards: 'id, userId, topic, level, nextReview',
       conversations: 'id, userId, topicId, startedAt',
@@ -78,6 +80,7 @@ export class JuLangDB extends Dexie {
       vocabularyProgress: 'id, userId, cardId, nextReview',
       teacherMessages: '++id, timestamp',
       exerciseProgress: 'id, odIndex, odUserId, exerciseId, topicId, level',
+      userLanguageSettings: 'id, userId, language, [userId+language]',
     })
   }
 }

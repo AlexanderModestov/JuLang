@@ -1,7 +1,7 @@
 // src/services/userDataService.ts
 import { supabase } from '../lib/supabase'
 import type { Database } from '../types/supabase'
-import type { Language } from '../types'
+import type { Language, LanguageLevel } from '../types'
 
 type UserProfile = Database['public']['Tables']['user_profiles']['Row']
 type UserProgress = Database['public']['Tables']['user_progress']['Row']
@@ -10,6 +10,7 @@ type VocabularyProgress = Database['public']['Tables']['vocabulary_progress']['R
 type Conversation = Database['public']['Tables']['conversations']['Row']
 type PracticeSession = Database['public']['Tables']['practice_sessions']['Row']
 type TeacherMessage = Database['public']['Tables']['teacher_messages']['Row']
+type UserLanguageSettingRow = Database['public']['Tables']['user_language_settings']['Row']
 
 export const userDataService = {
   // ============ User Profile ============
@@ -359,5 +360,85 @@ export const userDataService = {
 
     if (error) throw error
     return count || 0
+  },
+
+  // ============ User Language Settings ============
+  async getLanguageSettings(userId: string): Promise<UserLanguageSettingRow[]> {
+    const { data, error } = await supabase
+      .from('user_language_settings')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: true })
+
+    if (error) throw error
+    return data || []
+  },
+
+  async getLanguageSetting(userId: string, language: Language): Promise<UserLanguageSettingRow | null> {
+    const { data, error } = await supabase
+      .from('user_language_settings')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('language', language)
+      .maybeSingle()
+
+    if (error) throw error
+    return data
+  },
+
+  async addLanguage(userId: string, language: Language, level: LanguageLevel = 'A1'): Promise<UserLanguageSettingRow> {
+    const { data, error } = await supabase
+      .from('user_language_settings')
+      .insert({ user_id: userId, language, level })
+      .select()
+      .single()
+
+    if (error) throw error
+    return data
+  },
+
+  async removeLanguage(userId: string, language: Language): Promise<void> {
+    const { error } = await supabase
+      .from('user_language_settings')
+      .delete()
+      .eq('user_id', userId)
+      .eq('language', language)
+
+    if (error) throw error
+  },
+
+  async updateLanguageLevel(userId: string, language: Language, level: LanguageLevel): Promise<UserLanguageSettingRow> {
+    const { data, error } = await supabase
+      .from('user_language_settings')
+      .update({ level })
+      .eq('user_id', userId)
+      .eq('language', language)
+      .select()
+      .single()
+
+    if (error) throw error
+    return data
+  },
+
+  async incrementStats(
+    userId: string,
+    language: Language,
+    increments: Partial<Record<'words_learned' | 'grammar_topics_completed' | 'conversations_count' | 'exercises_solved', number>>,
+  ): Promise<void> {
+    const current = await this.getLanguageSetting(userId, language)
+    if (!current) return
+
+    const updates: Record<string, number> = {}
+    for (const [key, amount] of Object.entries(increments)) {
+      updates[key] = ((current as any)[key] || 0) + (amount || 0)
+    }
+
+    const { error } = await supabase
+      .from('user_language_settings')
+      .update(updates)
+      .eq('user_id', userId)
+      .eq('language', language)
+
+    if (error) throw error
   },
 }

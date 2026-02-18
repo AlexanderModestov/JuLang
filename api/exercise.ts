@@ -134,6 +134,189 @@ Respond in English only.`
   }
 }
 
+const getSpanishExercisePrompt = (
+  grammarTopic: string,
+  level: FrenchLevel,
+  practiceType: PracticeType
+) => {
+  const basePrompt = `
+Eres un asistente para el aprendizaje del español.
+Regla gramatical: ${grammarTopic}
+Nivel: ${level}
+`
+
+  switch (practiceType) {
+    case 'written_translation':
+      return `${basePrompt}
+Genera una frase en ruso que el estudiante debe traducir al español.
+La frase DEBE usar la regla gramatical "${grammarTopic}".
+Adapta la dificultad al nivel ${level}.
+
+Responde en JSON:
+{
+  "russian": "frase en ruso",
+  "french": "traducción correcta en español",
+  "hint": "pista opcional"
+}`
+
+    case 'repeat_aloud':
+      return `${basePrompt}
+Genera una frase en español que el estudiante debe repetir en voz alta.
+La frase DEBE usar la regla gramatical "${grammarTopic}".
+Adapta la dificultad al nivel ${level}.
+
+Responde en JSON:
+{
+  "french": "frase para repetir",
+  "phonetic": "ayuda de pronunciación",
+  "translation": "traducción en ruso"
+}`
+
+    case 'oral_translation':
+      return `${basePrompt}
+Genera una frase en ruso para traducción oral al español.
+La frase DEBE usar la regla gramatical "${grammarTopic}".
+Adapta la dificultad al nivel ${level}.
+
+Responde en JSON:
+{
+  "russian": "frase en ruso",
+  "french": "traducción correcta en español",
+  "keyWords": ["palabras", "clave", "importantes"]
+}`
+
+    case 'grammar_dialog':
+      return `${basePrompt}
+Comienza un diálogo que fomente el uso de "${grammarTopic}".
+Haz una pregunta que requiera una respuesta usando esta regla.
+Nivel ${level}.
+
+Responde únicamente en español.`
+  }
+}
+
+const getGermanExercisePrompt = (
+  grammarTopic: string,
+  level: FrenchLevel,
+  practiceType: PracticeType
+) => {
+  const basePrompt = `
+Du bist ein Assistent zum Erlernen der deutschen Sprache.
+Grammatikregel: ${grammarTopic}
+Niveau: ${level}
+`
+
+  switch (practiceType) {
+    case 'written_translation':
+      return `${basePrompt}
+Erstelle einen Satz auf Russisch, den der Schüler ins Deutsche übersetzen soll.
+Der Satz MUSS die Grammatikregel "${grammarTopic}" verwenden.
+Passe den Schwierigkeitsgrad an das Niveau ${level} an.
+
+Antworte in JSON:
+{
+  "russian": "Satz auf Russisch",
+  "french": "korrekte Übersetzung auf Deutsch",
+  "hint": "optionaler Hinweis"
+}`
+
+    case 'repeat_aloud':
+      return `${basePrompt}
+Erstelle einen Satz auf Deutsch, den der Schüler laut wiederholen soll.
+Der Satz MUSS die Grammatikregel "${grammarTopic}" verwenden.
+Passe den Schwierigkeitsgrad an das Niveau ${level} an.
+
+Antworte in JSON:
+{
+  "french": "Satz zum Wiederholen",
+  "phonetic": "Aussprachehilfe",
+  "translation": "Übersetzung auf Russisch"
+}`
+
+    case 'oral_translation':
+      return `${basePrompt}
+Erstelle einen Satz auf Russisch zur mündlichen Übersetzung ins Deutsche.
+Der Satz MUSS die Grammatikregel "${grammarTopic}" verwenden.
+Passe den Schwierigkeitsgrad an das Niveau ${level} an.
+
+Antworte in JSON:
+{
+  "russian": "Satz auf Russisch",
+  "french": "korrekte Übersetzung auf Deutsch",
+  "keyWords": ["wichtige", "Schlüssel", "Wörter"]
+}`
+
+    case 'grammar_dialog':
+      return `${basePrompt}
+Beginne einen Dialog, der die Verwendung von "${grammarTopic}" fördert.
+Stelle eine Frage, die eine Antwort mit dieser Regel erfordert.
+Niveau ${level}.
+
+Antworte ausschließlich auf Deutsch.`
+  }
+}
+
+const getPortugueseExercisePrompt = (
+  grammarTopic: string,
+  level: FrenchLevel,
+  practiceType: PracticeType
+) => {
+  const basePrompt = `
+Você é um assistente para o aprendizado de português.
+Regra gramatical: ${grammarTopic}
+Nível: ${level}
+`
+
+  switch (practiceType) {
+    case 'written_translation':
+      return `${basePrompt}
+Gere uma frase em russo que o aluno deve traduzir para o português.
+A frase DEVE usar a regra gramatical "${grammarTopic}".
+Adapte a dificuldade ao nível ${level}.
+
+Responda em JSON:
+{
+  "russian": "frase em russo",
+  "french": "tradução correta em português",
+  "hint": "dica opcional"
+}`
+
+    case 'repeat_aloud':
+      return `${basePrompt}
+Gere uma frase em português que o aluno deve repetir em voz alta.
+A frase DEVE usar a regra gramatical "${grammarTopic}".
+Adapte a dificuldade ao nível ${level}.
+
+Responda em JSON:
+{
+  "french": "frase para repetir",
+  "phonetic": "ajuda de pronúncia",
+  "translation": "tradução em russo"
+}`
+
+    case 'oral_translation':
+      return `${basePrompt}
+Gere uma frase em russo para tradução oral para o português.
+A frase DEVE usar a regra gramatical "${grammarTopic}".
+Adapte a dificuldade ao nível ${level}.
+
+Responda em JSON:
+{
+  "russian": "frase em russo",
+  "french": "tradução correta em português",
+  "keyWords": ["palavras", "chave", "importantes"]
+}`
+
+    case 'grammar_dialog':
+      return `${basePrompt}
+Comece um diálogo que incentive o uso de "${grammarTopic}".
+Faça uma pergunta que exija uma resposta usando esta regra.
+Nível ${level}.
+
+Responda apenas em português.`
+  }
+}
+
 const getGrammarExercisePrompt = (
   grammarTopic: string,
   level: FrenchLevel,
@@ -143,6 +326,12 @@ const getGrammarExercisePrompt = (
   switch (language) {
     case 'en':
       return getEnglishExercisePrompt(grammarTopic, level, practiceType)
+    case 'es':
+      return getSpanishExercisePrompt(grammarTopic, level, practiceType)
+    case 'de':
+      return getGermanExercisePrompt(grammarTopic, level, practiceType)
+    case 'pt':
+      return getPortugueseExercisePrompt(grammarTopic, level, practiceType)
     case 'fr':
     default:
       return getFrenchExercisePrompt(grammarTopic, level, practiceType)
@@ -188,10 +377,76 @@ Respond in JSON:
   "grammarNotes": "explanations about the rule if necessary (in Russian)"
 }`
 
+const getSpanishCheckPrompt = (grammarTopic: string, level: FrenchLevel) => `Eres un evaluador de español amable.
+Regla gramatical en foco: ${grammarTopic}
+Nivel del estudiante: ${level}
+
+Reglas de evaluación:
+1. Evalúa el sentido y la gramática, no la ortografía
+2. IMPORTANTE: La ausencia de tildes o signos diacríticos NO es un error
+   - "espanol" = "español" — es CORRECTO
+   - "informacion" = "información" — es CORRECTO
+   - "como estas" = "¿cómo estás?" — es CORRECTO
+3. NO des feedback sobre acentos faltantes
+4. Considera la respuesta como correcta si el sentido y la gramática son buenos
+
+Responde en JSON:
+{
+  "isCorrect": true/false,
+  "feedback": "feedback alentador en español",
+  "grammarNotes": "explicaciones sobre la regla si es necesario (en ruso)"
+}`
+
+const getGermanCheckPrompt = (grammarTopic: string, level: FrenchLevel) => `Du bist ein freundlicher Deutschbewerter.
+Grammatikregel im Fokus: ${grammarTopic}
+Schülerniveau: ${level}
+
+Bewertungsregeln:
+1. Bewerte Bedeutung und Grammatik, nicht die Rechtschreibung
+2. WICHTIG: Fehlende Umlaute oder Sonderzeichen sind KEIN Fehler
+   - "uber" = "über" — ist KORREKT
+   - "schon" = "schön" — ist KORREKT
+   - "strasse" = "Straße" — ist KORREKT
+3. Gib KEIN Feedback zu fehlenden Umlauten
+4. Betrachte die Antwort als korrekt, wenn Bedeutung und Grammatik stimmen
+
+Antworte in JSON:
+{
+  "isCorrect": true/false,
+  "feedback": "ermutigendes Feedback auf Deutsch",
+  "grammarNotes": "Erklärungen zur Regel falls nötig (auf Russisch)"
+}`
+
+const getPortugueseCheckPrompt = (grammarTopic: string, level: FrenchLevel) => `Você é um avaliador de português gentil.
+Regra gramatical em foco: ${grammarTopic}
+Nível do aluno: ${level}
+
+Regras de avaliação:
+1. Avalie o sentido e a gramática, não a ortografia
+2. IMPORTANTE: A ausência de acentos ou sinais diacríticos NÃO é um erro
+   - "portugues" = "português" — está CORRETO
+   - "voce" = "você" — está CORRETO
+   - "informacao" = "informação" — está CORRETO
+3. NÃO dê feedback sobre acentos faltantes
+4. Considere a resposta como correta se o sentido e a gramática estiverem bons
+
+Responda em JSON:
+{
+  "isCorrect": true/false,
+  "feedback": "feedback encorajador em português",
+  "grammarNotes": "explicações sobre a regra se necessário (em russo)"
+}`
+
 const getCheckPrompt = (grammarTopic: string, level: FrenchLevel, language: Language = 'fr') => {
   switch (language) {
     case 'en':
       return getEnglishCheckPrompt(grammarTopic, level)
+    case 'es':
+      return getSpanishCheckPrompt(grammarTopic, level)
+    case 'de':
+      return getGermanCheckPrompt(grammarTopic, level)
+    case 'pt':
+      return getPortugueseCheckPrompt(grammarTopic, level)
     case 'fr':
     default:
       return getFrenchCheckPrompt(grammarTopic, level)
@@ -222,10 +477,55 @@ Respond in JSON:
   "feedback": "brief comment in English"
 }`
 
+const getSpanishAnalyzePrompt = (grammarTopic: string) => `Analiza si el estudiante usó correctamente la regla "${grammarTopic}" en su mensaje.
+
+IMPORTANTE: Ignora la ausencia de tildes o signos diacríticos.
+"espanol" = "español", no es un error.
+
+Evalúa ÚNICAMENTE la corrección de la construcción gramatical.
+
+Responde en JSON:
+{
+  "usedCorrectly": true/false,
+  "feedback": "breve comentario en español"
+}`
+
+const getGermanAnalyzePrompt = (grammarTopic: string) => `Analysiere, ob der Schüler die Regel "${grammarTopic}" in seiner Nachricht korrekt verwendet hat.
+
+WICHTIG: Ignoriere fehlende Umlaute oder Sonderzeichen.
+"uber" = "über", das ist kein Fehler.
+
+Bewerte AUSSCHLIESSLICH die Korrektheit der grammatischen Konstruktion.
+
+Antworte in JSON:
+{
+  "usedCorrectly": true/false,
+  "feedback": "kurzer Kommentar auf Deutsch"
+}`
+
+const getPortugueseAnalyzePrompt = (grammarTopic: string) => `Analise se o aluno usou corretamente a regra "${grammarTopic}" em sua mensagem.
+
+IMPORTANTE: Ignore a ausência de acentos ou sinais diacríticos.
+"portugues" = "português", não é um erro.
+
+Avalie APENAS a correção da construção gramatical.
+
+Responda em JSON:
+{
+  "usedCorrectly": true/false,
+  "feedback": "breve comentário em português"
+}`
+
 const getAnalyzePrompt = (grammarTopic: string, language: Language = 'fr') => {
   switch (language) {
     case 'en':
       return getEnglishAnalyzePrompt(grammarTopic)
+    case 'es':
+      return getSpanishAnalyzePrompt(grammarTopic)
+    case 'de':
+      return getGermanAnalyzePrompt(grammarTopic)
+    case 'pt':
+      return getPortugueseAnalyzePrompt(grammarTopic)
     case 'fr':
     default:
       return getFrenchAnalyzePrompt(grammarTopic)
@@ -305,9 +605,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'Missing required fields' })
       }
 
-      const checkUserPrompt = lang === 'en'
-        ? `Correct answer: "${correctAnswer}"\nStudent's answer: "${userAnswer}"`
-        : `Réponse correcte: "${correctAnswer}"\nRéponse de l'élève: "${userAnswer}"`
+      const checkUserPromptTemplates: Record<Language, string> = {
+        fr: `Réponse correcte: "${correctAnswer}"\nRéponse de l'élève: "${userAnswer}"`,
+        en: `Correct answer: "${correctAnswer}"\nStudent's answer: "${userAnswer}"`,
+        es: `Respuesta correcta: "${correctAnswer}"\nRespuesta del estudiante: "${userAnswer}"`,
+        de: `Korrekte Antwort: "${correctAnswer}"\nAntwort des Schülers: "${userAnswer}"`,
+        pt: `Resposta correta: "${correctAnswer}"\nResposta do aluno: "${userAnswer}"`,
+      }
+      const checkUserPrompt = checkUserPromptTemplates[lang] || checkUserPromptTemplates.fr
 
       const response = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
@@ -340,9 +645,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         s.toLowerCase().trim().replace(/[.,!?]/g, '')
       const isCorrect = normalized(userAnswer) === normalized(correctAnswer)
 
-      const feedback = lang === 'en'
-        ? (isCorrect ? 'Very good!' : 'Not quite correct.')
-        : (isCorrect ? 'Très bien!' : 'Pas tout à fait correct.')
+      const feedbackTemplates: Record<Language, { correct: string; incorrect: string }> = {
+        fr: { correct: 'Très bien!', incorrect: 'Pas tout à fait correct.' },
+        en: { correct: 'Very good!', incorrect: 'Not quite correct.' },
+        es: { correct: '¡Muy bien!', incorrect: 'No es del todo correcto.' },
+        de: { correct: 'Sehr gut!', incorrect: 'Nicht ganz richtig.' },
+        pt: { correct: 'Muito bem!', incorrect: 'Não está totalmente correto.' },
+      }
+      const fb = feedbackTemplates[lang] || feedbackTemplates.fr
+      const feedback = isCorrect ? fb.correct : fb.incorrect
 
       return res.json({
         isCorrect,

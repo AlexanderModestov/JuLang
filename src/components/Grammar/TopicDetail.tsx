@@ -59,7 +59,7 @@ function AccordionSection({
 export default function TopicDetail() {
   const { topicId } = useParams<{ topicId: string }>()
   const navigate = useNavigate()
-  const { user, profile } = useAuthContext()
+  const { user, profile, currentLevel } = useAuthContext()
   const { speakWithPauses } = useSpeech()
 
   const [card, setCard] = useState<GrammarCard | null>(null)
@@ -84,8 +84,7 @@ export default function TopicDetail() {
   const availableTopics = useMemo(() => {
     if (!profile) return []
     const allTopics = getAllGrammarTopics(currentLanguage) as GrammarTopic[]
-    const frenchLevel = profile.french_level || 'A1'
-    const userLevelIndex = LEVEL_ORDER.indexOf(frenchLevel)
+    const userLevelIndex = LEVEL_ORDER.indexOf(currentLevel)
     const allowedLevels = LEVEL_ORDER.slice(0, userLevelIndex + 1)
     return allTopics.filter((t) =>
       allowedLevels.includes(t.level as FrenchLevel)

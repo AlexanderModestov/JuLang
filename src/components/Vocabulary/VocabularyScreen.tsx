@@ -29,7 +29,7 @@ type Mode = 'new' | 'review' | 'list' | 'detail' | 'practice'
 
 export default function VocabularyScreen() {
   const navigate = useNavigate()
-  const { user, profile, currentLanguage } = useAuthContext()
+  const { user, profile, currentLanguage, currentLevel, incrementLanguageStats } = useAuthContext()
   const [mode, setMode] = useState<Mode>('list')
   const [newCards, setNewCards] = useState<VocabularyCard[]>([])
   const [reviewQueue, setReviewQueue] = useState<VocabularyProgress[]>([])
@@ -63,9 +63,8 @@ export default function VocabularyScreen() {
     if (!user || !profile) return
     setLoading(true)
     try {
-      const frenchLevel = profile.french_level || 'A1'
       const [nc, rq, supabaseProgress] = await Promise.all([
-        getNewCards(user.id, frenchLevel, currentLanguage),
+        getNewCards(user.id, currentLevel, currentLanguage),
         getReviewQueue(user.id, currentLanguage),
         userDataService.getVocabularyProgress(user.id),
       ])
@@ -75,7 +74,7 @@ export default function VocabularyScreen() {
         .map(toLocalVocabularyProgress)
       setNewCards(nc)
       setReviewQueue(rq)
-      setAllCards(getCardsUpToLevel(frenchLevel, currentLanguage))
+      setAllCards(getCardsUpToLevel(currentLevel, currentLanguage))
       setAllProgress(progress)
     } catch (error) {
       console.error('Failed to load vocabulary data:', error)
@@ -91,7 +90,11 @@ export default function VocabularyScreen() {
 
   const handleCardLearned = async (cardId: string) => {
     if (!user) return undefined
-    return await addCardToProgress(user.id, cardId, currentLanguage)
+    const progress = await addCardToProgress(user.id, cardId, currentLanguage)
+    if (progress) {
+      incrementLanguageStats({ wordsLearned: 1 })
+    }
+    return progress
   }
 
   const handleComplete = () => {
@@ -293,7 +296,7 @@ export default function VocabularyScreen() {
             Словарь
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Уровень: {profile.french_level || 'A1'}
+            Уровень: {currentLevel}
           </p>
         </div>
         <Button variant="ghost" size="sm" onClick={handleBackToMain}>

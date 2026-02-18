@@ -42,7 +42,7 @@ export function useHomeStats(): {
   languageStats: LanguageStats[]
   loading: boolean
 } {
-  const { user, profile, progress, currentLanguage } = useAuthContext()
+  const { user, profile, progress, currentLanguage, currentLevel } = useAuthContext()
   const [stats, setStats] = useState<HomeStats | null>(null)
   const [languageStats, setLanguageStats] = useState<LanguageStats[]>([])
   const [loading, setLoading] = useState(true)
@@ -79,7 +79,6 @@ export function useHomeStats(): {
       )
 
       // Calculate level progress for current language
-      const currentLevel = profile.french_level || 'A1'
       const nextLevel = getNextLevel(currentLevel)
       const cardsAtLevel = getCardsByLevel(currentLevel, currentLanguage)
       const cardIdsAtLevel = new Set(cardsAtLevel.map((c) => c.id))

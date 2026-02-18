@@ -19,7 +19,7 @@ import WordPopup from './WordPopup'
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
-  const { user, profile, progress, updateProgress, currentLanguage } = useAuthContext()
+  const { user, profile, progress, updateProgress, currentLanguage, currentLevel, incrementLanguageStats } = useAuthContext()
   const { speak } = useSpeech()
 
   const topic = searchParams.get('topic') || 'conversation libre'
@@ -55,7 +55,7 @@ export default function ConversationScreen() {
 
     setIsLoading(true)
     try {
-      const greeting = await startConversation(topic, profile.french_level || 'A1', currentLanguage)
+      const greeting = await startConversation(topic, currentLevel, currentLanguage)
       const aiMessage: Message = {
         id: crypto.randomUUID(),
         role: 'assistant',
@@ -91,7 +91,7 @@ export default function ConversationScreen() {
 
     try {
       const allMessages = [...messages, userMessage]
-      const response = await continueConversation(allMessages, profile.french_level || 'A1', topic, currentLanguage)
+      const response = await continueConversation(allMessages, currentLevel, topic, currentLanguage)
 
       const aiMessage: Message = {
         id: crypto.randomUUID(),
@@ -194,6 +194,7 @@ export default function ConversationScreen() {
           timestamp: m.timestamp instanceof Date ? m.timestamp.toISOString() : String(m.timestamp),
         })),
       })
+      incrementLanguageStats({ conversationsCount: 1 })
     } catch (err) {
       console.error('Failed to save conversation to Supabase:', err)
     }
