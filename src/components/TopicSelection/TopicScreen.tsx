@@ -80,29 +80,35 @@ export default function TopicScreen() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-white/90 tracking-wide">
           Выберите тему для разговора
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
-          Уровень: {currentLevel}
+        <p className="text-white/40 mt-1 text-sm">
+          Уровень: <span className="text-primary-400 font-semibold">{currentLevel}</span>
         </p>
       </div>
 
-      {/* Random topic button */}
       <Button
         onClick={handleRandomTopic}
         variant="secondary"
         className="w-full"
         size="lg"
       >
-        🎲 Случайная тема
+        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect x="2" y="2" width="20" height="20" rx="3" />
+          <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+          <circle cx="16" cy="8" r="1.5" fill="currentColor" />
+          <circle cx="8" cy="16" r="1.5" fill="currentColor" />
+          <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+          <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+        Случайная тема
       </Button>
 
-      {/* Random topic preview */}
       {randomTopic && (
-        <Card className="border-2 border-primary-300 dark:border-primary-700">
+        <Card className="neon-border-cyan">
           <div className="text-center">
-            <p className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            <p className="text-lg font-medium text-white/90 mb-4">
               {randomTopic}
             </p>
             <div className="flex gap-3 justify-center">
@@ -117,9 +123,8 @@ export default function TopicScreen() {
         </Card>
       )}
 
-      {/* Custom topic */}
       <Card>
-        <h3 className="font-medium text-gray-900 dark:text-white mb-3">
+        <h3 className="font-medium text-white/90 mb-3 tracking-wide">
           Или введите свою тему
         </h3>
         <div className="flex gap-2">
@@ -139,19 +144,19 @@ export default function TopicScreen() {
         </div>
       </Card>
 
-      {/* Categories */}
       {!selectedCategory ? (
         <div className="grid grid-cols-2 gap-3">
-          {CATEGORIES.map((category) => (
+          {CATEGORIES.map((category, i) => (
             <Card
               key={category.id}
               variant="elevated"
-              className="cursor-pointer hover:scale-[1.02] transition-transform"
+              className="cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-all animate-slide-up"
+              style={{ animationDelay: `${i * 0.05}s`, animationFillMode: 'backwards' } as React.CSSProperties}
               onClick={() => handleSelectCategory(category)}
             >
               <div className="text-center">
                 <span className="text-3xl block mb-2">{category.icon}</span>
-                <h3 className="font-medium text-gray-900 dark:text-white text-sm">
+                <h3 className="font-medium text-white/90 text-sm tracking-wide">
                   {category.name}
                 </h3>
               </div>
@@ -168,7 +173,7 @@ export default function TopicScreen() {
             >
               ← Назад
             </Button>
-            <h3 className="font-medium text-gray-900 dark:text-white">
+            <h3 className="font-medium text-white/90">
               {selectedCategory.icon} {selectedCategory.name}
             </h3>
           </div>
@@ -179,12 +184,14 @@ export default function TopicScreen() {
                 key={topic}
                 variant="outlined"
                 padding="sm"
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                className="cursor-pointer hover:bg-white/[0.06] hover:border-white/[0.15] transition-all"
                 onClick={() => handleStartConversation(topic)}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-900 dark:text-white">{topic}</span>
-                  <span className="text-gray-400">→</span>
+                  <span className="text-white/80">{topic}</span>
+                  <svg className="w-4 h-4 text-primary-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </div>
               </Card>
             ))}

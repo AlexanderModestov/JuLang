@@ -104,13 +104,13 @@ export default function SettingsScreen() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <h1 className="text-2xl font-bold text-white/90 tracking-wide">
         Настройки
       </h1>
 
       {/* Profile */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Профиль
         </h3>
         <Input
@@ -122,7 +122,7 @@ export default function SettingsScreen() {
 
       {/* My Languages */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Мои языки
         </h3>
 
@@ -135,41 +135,41 @@ export default function SettingsScreen() {
             return (
               <div
                 key={setting.language}
-                className="border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                className="border border-white/[0.08] rounded-xl p-4 bg-white/[0.02]"
               >
                 {/* Header row */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-2xl">{languageFlags[lang]}</span>
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className="font-medium text-white/90">
                       {languageLabels[lang]}
                     </span>
                   </div>
-                  <span className="text-sm font-semibold text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20 px-2 py-0.5 rounded">
+                  <span className="text-sm font-semibold text-primary-400 bg-primary-500/10 border border-primary-500/20 px-2.5 py-0.5 rounded-lg">
                     {setting.level}
                   </span>
                 </div>
 
                 {/* Stats row */}
-                <div className="flex gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
+                <div className="flex gap-4 text-sm text-white/40 mb-3">
                   <span>Слов: {setting.words_learned}</span>
                   <span>Грамматика: {setting.grammar_topics_completed}</span>
                 </div>
 
                 {/* Level editing */}
                 {isEditing && (
-                  <div className="mb-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Выберите уровень:</p>
+                  <div className="mb-3 p-3 bg-white/[0.03] rounded-xl border border-white/[0.06]">
+                    <p className="text-sm text-white/40 mb-2">Выберите уровень:</p>
                     <div className="flex flex-wrap gap-2">
                       {LEVELS.map((level) => (
                         <button
                           key={level}
                           onClick={() => handleLevelChange(setting.language, level)}
                           className={`
-                            px-3 py-1.5 rounded-lg text-sm font-medium transition-colors
+                            px-3 py-1.5 rounded-lg text-sm font-medium transition-all
                             ${setting.level === level
-                              ? 'bg-primary-600 text-white'
-                              : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'
+                              ? 'bg-primary-500 text-surface-900 shadow-glow-cyan-sm'
+                              : 'bg-white/[0.06] text-white/70 border border-white/[0.08] hover:bg-white/[0.10] hover:border-white/[0.15]'
                             }
                           `}
                         >
@@ -182,20 +182,20 @@ export default function SettingsScreen() {
 
                 {/* Delete confirmation */}
                 {isDeleting && (
-                  <div className="mb-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                    <p className="text-sm text-red-700 dark:text-red-300 mb-2">
+                  <div className="mb-3 p-3 bg-danger-500/10 border border-danger-500/20 rounded-xl">
+                    <p className="text-sm text-danger-400 mb-2">
                       Удалить {languageLabels[lang]}? Прогресс сохранится и будет доступен при повторном добавлении.
                     </p>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleRemoveLanguage(setting.language)}
-                        className="px-3 py-1.5 text-sm font-medium bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                        className="px-3 py-1.5 text-sm font-medium bg-danger-500 text-white rounded-lg hover:bg-danger-600 transition-colors"
                       >
                         Удалить
                       </button>
                       <button
                         onClick={() => setDeleteConfirm(null)}
-                        className="px-3 py-1.5 text-sm font-medium bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                        className="px-3 py-1.5 text-sm font-medium bg-white/[0.08] text-white/70 rounded-lg hover:bg-white/[0.12] transition-colors"
                       >
                         Отмена
                       </button>
@@ -207,14 +207,14 @@ export default function SettingsScreen() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setEditingLevelFor(isEditing ? null : setting.language)}
-                    className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+                    className="text-sm text-primary-400 hover:text-primary-300 transition-colors"
                   >
                     {isEditing ? 'Отмена' : 'Изменить уровень'}
                   </button>
                   {languageSettings.length > 1 && (
                     <button
                       onClick={() => setDeleteConfirm(isDeleting ? null : setting.language)}
-                      className="text-sm text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 transition-colors"
+                      className="text-sm text-danger-400 hover:text-danger-500 transition-colors"
                     >
                       Удалить
                     </button>
@@ -228,7 +228,7 @@ export default function SettingsScreen() {
           {availableToAdd.length > 0 && (
             <button
               onClick={() => { setShowAddLanguage(true); setAddLanguageStep('select') }}
-              className="w-full py-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-gray-500 dark:text-gray-400 hover:border-primary-400 hover:text-primary-600 dark:hover:border-primary-500 dark:hover:text-primary-400 transition-colors"
+              className="w-full py-3 border-2 border-dashed border-white/[0.10] rounded-xl text-white/40 hover:border-primary-500/40 hover:text-primary-400 transition-all"
             >
               + Добавить язык
             </button>
@@ -238,16 +238,16 @@ export default function SettingsScreen() {
 
       {/* Add language modal */}
       {showAddLanguage && (
-        <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl w-full max-w-sm max-h-[80vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-surface-900/80 backdrop-blur-md flex items-end sm:items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-surface-700/95 backdrop-blur-2xl border border-white/[0.10] rounded-t-3xl sm:rounded-3xl w-full max-w-sm max-h-[80vh] overflow-y-auto shadow-glass-lg animate-slide-up">
             <div className="p-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-white/90 tracking-wide">
                   {addLanguageStep === 'select' ? 'Добавить язык' : `Уровень ${languageLabels[selectedNewLanguage!]}`}
                 </h3>
                 <button
                   onClick={() => { setShowAddLanguage(false); setSelectedNewLanguage(null); setAddLanguageStep('select') }}
-                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="text-white/30 hover:text-white/60 p-1.5 hover:bg-white/[0.06] rounded-lg transition-all"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -270,19 +270,19 @@ export default function SettingsScreen() {
                         }}
                         disabled={!isImplemented}
                         className={`
-                          w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors
+                          w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all
                           ${isImplemented
-                            ? 'hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer'
-                            : 'opacity-50 cursor-not-allowed'
+                            ? 'hover:bg-white/[0.06] cursor-pointer'
+                            : 'opacity-30 cursor-not-allowed'
                           }
                         `}
                       >
                         <span className="text-2xl">{languageFlags[language]}</span>
-                        <span className="flex-1 font-medium text-gray-900 dark:text-white">
+                        <span className="flex-1 font-medium text-white/90">
                           {languageLabels[language]}
                         </span>
                         {!isImplemented && (
-                          <span className="text-xs text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">
+                          <span className="text-xs text-white/30 bg-white/[0.06] px-2 py-0.5 rounded-lg">
                             Скоро
                           </span>
                         )}
@@ -298,14 +298,14 @@ export default function SettingsScreen() {
                     <button
                       key={level}
                       onClick={() => handleAddLanguage(selectedNewLanguage, level)}
-                      className="w-full text-left p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-400 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
+                      className="w-full text-left p-3 rounded-xl border border-white/[0.08] hover:border-primary-500/30 hover:bg-primary-500/5 transition-all"
                     >
-                      <span className="font-medium text-gray-900 dark:text-white">{level}</span>
+                      <span className="font-medium text-white/90">{level}</span>
                     </button>
                   ))}
                   <button
                     onClick={() => { setAddLanguageStep('select'); setSelectedNewLanguage(null) }}
-                    className="w-full text-center text-sm text-gray-500 dark:text-gray-400 py-2"
+                    className="w-full text-center text-sm text-white/40 py-2 hover:text-white/60 transition-colors"
                   >
                     Назад к выбору языка
                   </button>
@@ -318,14 +318,14 @@ export default function SettingsScreen() {
 
       {/* Voice settings (TTS) */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Озвучка
         </h3>
 
         <div className="space-y-4">
           {/* Voice selector */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-white/50 mb-2 tracking-wide">
               Голос
             </label>
             <select
@@ -333,7 +333,7 @@ export default function SettingsScreen() {
               onChange={(e) => updateProfile({
                 speech_settings: { ...profile.speech_settings, voiceName: e.target.value || null }
               })}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              className="w-full px-4 py-2.5 border border-white/[0.10] rounded-xl bg-white/[0.05] backdrop-blur-sm text-white/90 hover:bg-white/[0.07] hover:border-white/[0.15] transition-all focus:outline-none focus:ring-2 focus:ring-primary-500/50"
             >
               <option value="">
                 Автовыбор{bestVoice ? ` (${bestVoice.name})` : ''}
@@ -348,8 +348,8 @@ export default function SettingsScreen() {
 
           {/* Speech rate slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Скорость речи: {profile.speech_settings.rate.toFixed(1)}x
+            <label className="block text-sm font-medium text-white/50 mb-2 tracking-wide">
+              Скорость речи: <span className="text-primary-400">{profile.speech_settings.rate.toFixed(1)}x</span>
             </label>
             <input
               type="range"
@@ -362,7 +362,7 @@ export default function SettingsScreen() {
               })}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-white/30 mt-1">
               <span>0.5x</span>
               <span>1.5x</span>
             </div>
@@ -370,8 +370,8 @@ export default function SettingsScreen() {
 
           {/* Pitch slider */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Высота голоса: {profile.speech_settings.pitch.toFixed(1)}x
+            <label className="block text-sm font-medium text-white/50 mb-2 tracking-wide">
+              Высота голоса: <span className="text-primary-400">{profile.speech_settings.pitch.toFixed(1)}x</span>
             </label>
             <input
               type="range"
@@ -384,7 +384,7 @@ export default function SettingsScreen() {
               })}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-white/30 mt-1">
               <span>0.5x</span>
               <span>1.5x</span>
             </div>
@@ -413,14 +413,14 @@ export default function SettingsScreen() {
 
       {/* Voice input settings */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Голосовой ввод
         </h3>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Пауза для завершения записи: {profile.speech_pause_timeout} сек
+            <label className="block text-sm font-medium text-white/50 mb-2 tracking-wide">
+              Пауза для завершения записи: <span className="text-primary-400">{profile.speech_pause_timeout} сек</span>
             </label>
             <input
               type="range"
@@ -431,11 +431,11 @@ export default function SettingsScreen() {
               onChange={(e) => updateProfile({ speech_pause_timeout: parseInt(e.target.value) })}
               className="w-full"
             />
-            <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-white/30 mt-1">
               <span>1 сек</span>
               <span>15 сек</span>
             </div>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-sm text-white/30 mt-2">
               Чем больше значение, тем дольше можно думать между фразами.
             </p>
           </div>
@@ -444,7 +444,7 @@ export default function SettingsScreen() {
 
       {/* Theme */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Оформление
         </h3>
 
@@ -454,11 +454,11 @@ export default function SettingsScreen() {
               key={theme}
               onClick={() => handleThemeChange(theme)}
               className={`
-                flex-1 px-4 py-3 rounded-lg font-medium transition-colors
+                flex-1 px-4 py-3 rounded-xl font-medium transition-all
                 ${
                   settings.theme === theme
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-primary-500 text-surface-900 shadow-glow-cyan-sm'
+                    : 'bg-white/[0.06] text-white/60 hover:bg-white/[0.10] hover:text-white/80 border border-white/[0.06]'
                 }
               `}
             >
@@ -472,7 +472,7 @@ export default function SettingsScreen() {
 
       {/* Data */}
       <Card>
-        <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+        <h3 className="font-semibold text-white/90 mb-4 tracking-wide">
           Данные
         </h3>
 
@@ -490,21 +490,21 @@ export default function SettingsScreen() {
       </Card>
 
       {/* Sign out */}
-      <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+      <div className="mt-8 pt-8 border-t border-white/[0.06]">
+        <p className="text-sm text-white/30 mb-2">
           Вы вошли как {user?.email}
         </p>
         <button
           onClick={signOut}
-          className="w-full px-4 py-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+          className="w-full px-4 py-3 bg-danger-500/10 border border-danger-500/20 text-danger-400 rounded-xl hover:bg-danger-500/20 hover:border-danger-500/30 transition-all"
         >
           Выйти из аккаунта
         </button>
       </div>
 
       {/* Version */}
-      <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-        JuLang v0.1.0
+      <div className="text-center text-sm text-white/20 font-medium tracking-wider">
+        JULANG v0.1.0
       </div>
     </div>
   )

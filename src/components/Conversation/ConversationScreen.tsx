@@ -233,10 +233,10 @@ export default function ConversationScreen() {
   return (
     <div className="flex flex-col h-[calc(100vh-140px)]">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
         <div>
-          <h2 className="font-semibold text-gray-900 dark:text-white">{topic}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <h2 className="font-semibold text-white/90 tracking-wide">{topic}</h2>
+          <p className="text-sm text-white/30">
             {messages.length} сообщений
           </p>
         </div>
@@ -246,14 +246,20 @@ export default function ConversationScreen() {
             size="sm"
             onClick={() => setMode('text')}
           >
-            ⌨️
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M6 16h12" />
+            </svg>
           </Button>
           <Button
             variant={mode === 'voice' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setMode('voice')}
           >
-            🎤
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="9" y="2" width="6" height="12" rx="3" />
+              <path d="M5 10a7 7 0 0014 0M12 18v4M8 22h8" />
+            </svg>
           </Button>
           <Button variant="secondary" size="sm" onClick={handleEndConversation}>
             Завершить
@@ -269,13 +275,13 @@ export default function ConversationScreen() {
             className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] p-3 rounded-xl ${
+              className={`max-w-[80%] p-3.5 rounded-2xl ${
                 message.role === 'user'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700'
+                  ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-surface-900'
+                  : 'bg-white/[0.06] border border-white/[0.08]'
               }`}
             >
-              <p className={message.role === 'user' ? 'text-white' : 'text-gray-900 dark:text-white'}>
+              <p className={message.role === 'user' ? 'text-surface-900 font-medium' : 'text-white/90'}>
                 {message.role === 'assistant'
                   ? message.content.split(/(\s+)/).map((part, i) => {
                       const trimmed = part.replace(/[.,!?;:'"()«»\-—]/g, '')
@@ -283,7 +289,7 @@ export default function ConversationScreen() {
                       return (
                         <span
                           key={i}
-                          className="cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded px-0.5 transition-colors"
+                          className="cursor-pointer hover:bg-primary-500/15 hover:text-primary-300 rounded px-0.5 transition-colors"
                           onClick={() => setPopupWord({ word: trimmed, sentence: message.content })}
                         >
                           {part}
@@ -295,8 +301,11 @@ export default function ConversationScreen() {
               {message.role === 'assistant' && (
                 <button
                   onClick={() => speak(message.content, { language: currentLanguage })}
-                  className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  className="mt-2 text-xs text-white/30 hover:text-primary-400 transition-colors flex items-center gap-1"
                 >
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
                   Прослушать
                 </button>
               )}
@@ -306,11 +315,11 @@ export default function ConversationScreen() {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700">
-              <div className="flex gap-1">
-                <span className="animate-bounce">.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+            <div className="p-3.5 rounded-2xl bg-white/[0.06] border border-white/[0.08]">
+              <div className="flex gap-1.5">
+                <span className="w-2 h-2 bg-primary-400/60 rounded-full animate-bounce" />
+                <span className="w-2 h-2 bg-primary-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }} />
+                <span className="w-2 h-2 bg-primary-400/60 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }} />
               </div>
             </div>
           </div>
@@ -320,7 +329,7 @@ export default function ConversationScreen() {
       </div>
 
       {/* Input */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="pt-4 border-t border-white/[0.06]">
         <div className="flex gap-2">
           {mode === 'text' ? (
             <>
@@ -331,13 +340,13 @@ export default function ConversationScreen() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
                 placeholder={{
-                  fr: 'Écrivez en français...',
+                  fr: 'Ecrivez en fran\u00e7ais...',
                   en: 'Write in English...',
-                  es: 'Escribe en español...',
+                  es: 'Escribe en espa\u00f1ol...',
                   de: 'Schreiben Sie auf Deutsch...',
-                  pt: 'Escreva em português...',
+                  pt: 'Escreva em portugu\u00eas...',
                 }[currentLanguage] || 'Write here...'}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 px-4 py-2.5 border border-white/[0.10] rounded-xl bg-white/[0.05] backdrop-blur-sm text-white/90 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50 hover:bg-white/[0.07] hover:border-white/[0.15] transition-all placeholder-white/25"
                 disabled={isLoading}
                 autoComplete="off"
                 autoCorrect="off"
@@ -347,21 +356,36 @@ export default function ConversationScreen() {
                 data-gramm_editor="false"
               />
               <Button onClick={() => sendMessage(input)} disabled={!input.trim() || isLoading}>
-                Отправить
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+                </svg>
               </Button>
             </>
           ) : (
             <Button
               onClick={handleVoiceInput}
-              className={`flex-1 ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
+              className={`flex-1 ${isListening ? 'bg-gradient-to-r from-danger-500 to-danger-600 hover:from-danger-400 hover:to-danger-500 shadow-[0_0_20px_rgba(255,51,102,0.3)]' : ''}`}
               size="lg"
             >
-              {isListening ? '🔴 Запись...' : '🎤 Нажмите и говорите'}
+              {isListening ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-3 h-3 bg-white rounded-full animate-pulse" />
+                  Запись...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="9" y="2" width="6" height="12" rx="3" />
+                    <path d="M5 10a7 7 0 0014 0M12 18v4M8 22h8" />
+                  </svg>
+                  Нажмите и говорите
+                </span>
+              )}
             </Button>
           )}
         </div>
         {input && mode === 'voice' && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-white/30">
             Распознано: {input}
           </p>
         )}

@@ -72,7 +72,7 @@ export default function ExerciseSession() {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка упражнений...</p>
+        <p className="text-white/40">Загрузка упражнений...</p>
       </div>
     )
   }
@@ -82,10 +82,10 @@ export default function ExerciseSession() {
       <Card>
         <div className="text-center py-8 space-y-4">
           <div className="text-5xl">✨</div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-xl font-bold text-white/90">
             Всё выполнено!
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white/50">
             Нет доступных упражнений по выбранным темам.
           </p>
           <Button onClick={handleExit}>Назад</Button>
@@ -103,10 +103,10 @@ export default function ExerciseSession() {
             {accuracy >= 80 ? '🎉' : accuracy >= 60 ? '👍' : '💪'}
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-bold text-white/90">
               Сессия завершена!
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-lg text-white/50 mt-2">
               {stats.correct}/{stats.total} правильно ({accuracy}%)
             </p>
           </div>
@@ -131,20 +131,20 @@ export default function ExerciseSession() {
       <div className="flex items-center justify-between">
         <button
           onClick={handleExit}
-          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm"
+          className="text-white/40 hover:text-white/70 text-sm"
         >
           ✕ Выйти
         </button>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-white/40">
           {currentIndex + 1}/{exercises.length}
         </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-white/40">
           {stats.correct}/{stats.total} ✓
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
         <div
           className="h-full bg-primary-500 transition-all duration-300"
           style={{ width: `${((currentIndex + 1) / exercises.length) * 100}%` }}
@@ -155,12 +155,12 @@ export default function ExerciseSession() {
       <div className="flex justify-center">
         <span className={`inline-block px-2 py-1 text-xs rounded-full ${
           current.type === 'multiple_choice'
-            ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300'
+            ? 'bg-purple-500/10 text-purple-400'
             : current.type === 'fill_blank'
-            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+            ? 'bg-primary-500/10 text-primary-400'
             : current.type === 'translate'
-            ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
-            : 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300'
+            ? 'bg-warning-500/10 text-warning-400'
+            : 'bg-teal-500/10 text-teal-400'
         }`}>
           {current.type === 'multiple_choice' && 'Выбор варианта'}
           {current.type === 'fill_blank' && 'Заполни пропуск'}

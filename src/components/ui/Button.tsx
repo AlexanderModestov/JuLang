@@ -20,23 +20,23 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+      'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-800 disabled:opacity-40 disabled:cursor-not-allowed tracking-wide'
 
     const variants = {
       primary:
-        'bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500',
+        'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-surface-900 focus:ring-primary-500 shadow-glow-cyan-sm hover:shadow-glow-cyan',
       secondary:
-        'bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-gray-200 focus:ring-gray-500',
+        'bg-white/[0.08] hover:bg-white/[0.14] text-white/90 border border-white/[0.12] hover:border-white/[0.20] focus:ring-white/30 backdrop-blur-sm',
       ghost:
-        'bg-transparent hover:bg-gray-100 text-gray-700 dark:hover:bg-gray-800 dark:text-gray-300 focus:ring-gray-500',
+        'bg-transparent hover:bg-white/[0.06] text-white/70 hover:text-white focus:ring-white/20',
       danger:
-        'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
+        'bg-gradient-to-r from-danger-500 to-danger-600 hover:from-danger-400 hover:to-danger-500 text-white focus:ring-danger-500 shadow-[0_0_10px_rgba(255,51,102,0.2)] hover:shadow-[0_0_20px_rgba(255,51,102,0.3)]',
     }
 
     const sizes = {
       sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-base',
-      lg: 'px-6 py-3 text-lg',
+      md: 'px-5 py-2.5 text-sm',
+      lg: 'px-7 py-3.5 text-base',
     }
 
     return (

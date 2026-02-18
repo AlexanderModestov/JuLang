@@ -18,7 +18,7 @@ export default function VocabularyListItem({
   return (
     <button
       onClick={onClick}
-      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-white/[0.06] transition-colors border-b border-white/[0.04] last:border-b-0"
     >
       {/* Status icon */}
       <span className="text-lg flex-shrink-0" title={statusInfo.label}>
@@ -28,16 +28,16 @@ export default function VocabularyListItem({
       {/* Word with article and translation */}
       <div className="flex-1 min-w-0">
         {word.article && (
-          <span className="font-medium text-primary-600 dark:text-primary-400">
+          <span className="font-medium text-primary-400">
             {word.article}
             {word.article !== "l'" && ' '}
           </span>
         )}
-        <span className="font-medium text-gray-900 dark:text-white">
+        <span className="font-medium text-white/90">
           {getCardWord(word)}
         </span>
-        <span className="text-gray-400 dark:text-gray-500 mx-2">—</span>
-        <span className="text-gray-600 dark:text-gray-400 truncate">
+        <span className="text-white/30 mx-2">—</span>
+        <span className="text-white/50 truncate">
           {word.russian}
         </span>
       </div>

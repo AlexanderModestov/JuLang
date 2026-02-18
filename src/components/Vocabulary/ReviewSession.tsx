@@ -48,7 +48,7 @@ export default function ReviewSession({ queue, onComplete }: ReviewSessionProps)
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400">Нет карточек для повторения.</p>
+          <p className="text-white/50">Нет карточек для повторения.</p>
         </div>
       </Card>
     )
@@ -57,13 +57,13 @@ export default function ReviewSession({ queue, onComplete }: ReviewSessionProps)
   return (
     <div className="space-y-4">
       {/* Progress indicator */}
-      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+      <div className="flex items-center justify-between text-sm text-white/40">
         <span>{currentIndex + 1} / {queue.length}</span>
         <span>{stats.correct}/{stats.total} правильно</span>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+      <div className="h-1 bg-white/[0.08] rounded-full overflow-hidden">
         <div
           className="h-full bg-primary-500 transition-all duration-300"
           style={{ width: `${((currentIndex + 1) / queue.length) * 100}%` }}
@@ -80,10 +80,10 @@ export default function ReviewSession({ queue, onComplete }: ReviewSessionProps)
       ) : (
         <Card>
           <div className="text-center py-8">
-            <p className={`text-2xl font-bold ${lastCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+            <p className={`text-2xl font-bold ${lastCorrect ? 'text-success-500' : 'text-danger-400'}`}>
               {lastCorrect ? '✓ Правильно!' : '✗ Неправильно'}
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-sm text-white/40 mt-2">
               {currentIndex < queue.length - 1 ? 'Следующее слово...' : 'Завершение...'}
             </p>
           </div>

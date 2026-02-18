@@ -17,8 +17,8 @@ export default function TeacherMessage({ message }: TeacherMessageProps) {
       <div
         className={`max-w-[85%] px-3 py-2 rounded-xl text-sm ${
           isUser
-            ? 'bg-primary-600 text-white rounded-br-sm'
-            : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-sm'
+            ? 'bg-primary-500 text-white rounded-br-sm'
+            : 'bg-white/[0.06] text-white/90 rounded-bl-sm'
         }`}
       >
         <p className="whitespace-pre-wrap break-words">{message.content}</p>
@@ -26,7 +26,7 @@ export default function TeacherMessage({ message }: TeacherMessageProps) {
           className={`text-[10px] mt-1 ${
             isUser
               ? 'text-primary-200'
-              : 'text-gray-400 dark:text-gray-500'
+              : 'text-white/30'
           }`}
         >
           {formatTime(message.timestamp)}

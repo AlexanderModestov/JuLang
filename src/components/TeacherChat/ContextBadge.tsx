@@ -30,7 +30,7 @@ export default function ContextBadge({ context }: ContextBadgeProps) {
   const hasItem = context.itemId && context.itemPreview
 
   return (
-    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md">
+    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-white/40 bg-white/[0.06] rounded-md">
       <span className="flex-shrink-0">📍</span>
       <span className="truncate">
         {screenLabel}

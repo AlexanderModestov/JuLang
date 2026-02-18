@@ -156,7 +156,7 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
       <div className="space-y-4">
         {/* Prompt */}
         <div className="text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+          <p className="text-sm text-white/40 mb-2">
             {getPromptText()}
           </p>
 
@@ -164,13 +164,13 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
           {exerciseType === 'listening' ? (
             <button
               onClick={handlePlayAudio}
-              className="mx-auto flex items-center justify-center gap-2 px-6 py-4 bg-primary-100 dark:bg-primary-900/30 rounded-xl hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+              className="mx-auto flex items-center justify-center gap-2 px-6 py-4 bg-primary-500/10 rounded-xl hover:bg-primary-500/20 transition-colors"
             >
               <span className="text-4xl">🔊</span>
-              <span className="text-lg text-primary-700 dark:text-primary-300">Прослушать</span>
+              <span className="text-lg text-primary-300">Прослушать</span>
             </button>
           ) : (
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">
+            <p className="text-2xl font-bold text-white/90">
               {getPromptWord()}
             </p>
           )}
@@ -192,11 +192,11 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
                   className={`w-full text-left p-3 rounded-lg border transition-colors ${
                     showResult
                       ? option === correctAnswer
-                        ? 'bg-green-100 dark:bg-green-900/30 border-green-500'
+                        ? 'bg-success-500/10 border-success-500'
                         : option === selectedOption && !isCorrect
-                          ? 'bg-red-100 dark:bg-red-900/30 border-red-500'
-                          : 'border-gray-200 dark:border-gray-700'
-                      : 'border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                          ? 'bg-danger-500/10 border-danger-400'
+                          : 'border-white/[0.08]'
+                      : 'border-white/[0.08] hover:bg-white/[0.06]'
                   }`}
                 >
                   {option}
@@ -228,22 +228,22 @@ export default function ExerciseCard({ card, exerciseType, onResult }: ExerciseC
 
         {/* Result */}
         {showResult && (
-          <div className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
-            <p className={`font-medium ${isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+          <div className={`p-3 rounded-lg ${isCorrect ? 'bg-success-500/10' : 'bg-danger-500/10'}`}>
+            <p className={`font-medium ${isCorrect ? 'text-success-500' : 'text-danger-400'}`}>
               {isCorrect ? '✓ Правильно!' : '✗ Неправильно'}
             </p>
             {!isCorrect && (
-              <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+              <p className="text-sm text-white/70 mt-1">
                 Правильный ответ: <strong>{getWordWithArticle(card)}</strong> — {card.russian}
               </p>
             )}
             {/* Show first example */}
             {card.examples.length > 0 && (
-              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-                <p className="text-sm text-gray-600 dark:text-gray-400 italic">
+              <div className="mt-2 pt-2 border-t border-white/[0.08]">
+                <p className="text-sm text-white/50 italic">
                   {getExampleText(card.examples[0])}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-500 italic">
+                <p className="text-sm text-white/40 italic">
                   {card.examples[0].ru}
                 </p>
               </div>

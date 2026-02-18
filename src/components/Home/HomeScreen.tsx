@@ -25,6 +25,42 @@ const greetings: Record<Language, string> = {
   pt: 'Olá',
 }
 
+// Geometric SVG icons for each action
+const icons = {
+  conversation: (
+    <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+      <path d="M6 8h20v14H18l-6 4v-4H6V8z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <circle cx="12" cy="15" r="1" fill="currentColor" />
+      <circle cx="16" cy="15" r="1" fill="currentColor" />
+      <circle cx="20" cy="15" r="1" fill="currentColor" />
+    </svg>
+  ),
+  vocabulary: (
+    <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+      <rect x="6" y="4" width="20" height="24" rx="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M10 10h12M10 14h8M10 18h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  grammar: (
+    <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+      <path d="M8 6l8 20M24 6l-8 20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M6 18h20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
+  exercises: (
+    <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none">
+      <path d="M16 4l3 6h7l-5.5 4.5 2 7L16 17l-6.5 4.5 2-7L6 10h7l3-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+    </svg>
+  ),
+}
+
+const actionCards = [
+  { to: '/topics', icon: icons.conversation, label: 'Разговор', sub: 'Практика с AI', color: 'from-primary-500/20 to-primary-500/5', borderColor: 'hover:border-primary-500/30', iconColor: 'text-primary-400' },
+  { to: '/vocabulary', icon: icons.vocabulary, label: 'Словарь', sub: 'Новые слова', color: 'from-accent-500/20 to-accent-500/5', borderColor: 'hover:border-accent-500/30', iconColor: 'text-accent-400' },
+  { to: '/grammar', icon: icons.grammar, label: 'Грамматика', sub: 'Справочник', color: 'from-neon-400/20 to-neon-400/5', borderColor: 'hover:border-neon-400/30', iconColor: 'text-neon-300' },
+  { to: '/exercises', icon: icons.exercises, label: 'Упражнения', sub: 'Повторение', color: 'from-warning-500/20 to-warning-500/5', borderColor: 'hover:border-warning-500/30', iconColor: 'text-warning-400' },
+]
+
 export default function HomeScreen() {
   const { profile, progress, currentLanguage, setCurrentLanguage } = useAuthContext()
   const { stats, languageStats, loading: statsLoading } = useHomeStats()
@@ -38,11 +74,11 @@ export default function HomeScreen() {
   const hasMultipleLanguages = userLanguages.length > 1
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Greeting */}
       <div className="text-center py-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {greetings[currentLanguage]}, {profile.name}!
+        <h1 className="text-2xl font-bold text-white tracking-wide">
+          <span className="gradient-text-cyber">{greetings[currentLanguage]}</span>, {profile.name}!
         </h1>
       </div>
 
@@ -59,22 +95,36 @@ export default function HomeScreen() {
       {stats && (
         <div className="flex gap-3">
           <StatsCard
-            icon="📚"
+            icon={
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="2" width="18" height="20" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M7 7h10M7 11h6M7 15h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            }
             value={stats.wordsLearned}
             label="Слов изучено"
-            iconColor="#10B981"
+            accentColor="text-success-500"
           />
           <StatsCard
-            icon="⏱"
+            icon={
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M12 7v5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+            }
             value={formatTotalTime(stats.totalDialogueMinutes)}
             label="Всего диалогов"
-            iconColor="#3B82F6"
+            accentColor="text-primary-400"
           />
           <StatsCard
-            icon="💬"
+            icon={
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                <path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            }
             value={`${stats.averageDialogueMinutes} мин`}
             label="Средняя длина"
-            iconColor="#F59E0B"
+            accentColor="text-warning-400"
           />
         </div>
       )}
@@ -82,7 +132,7 @@ export default function HomeScreen() {
       {/* Per-language progress */}
       {hasMultipleLanguages && languageStats.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">
+          <h2 className="text-xs font-semibold text-white/40 uppercase tracking-[0.15em] px-1">
             Мои языки
           </h2>
           <div className="space-y-2">
@@ -101,79 +151,33 @@ export default function HomeScreen() {
       {/* Loading state */}
       {statsLoading && (
         <div className="flex justify-center py-4">
-          <div className="animate-pulse text-gray-400">Загрузка...</div>
+          <div className="animate-pulse text-white/30 font-medium">Загрузка...</div>
         </div>
       )}
 
       {/* Quick actions - 2x2 grid */}
       <div className="grid grid-cols-2 gap-3">
-        <Link to="/topics">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">💬</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Разговор
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Практика с AI
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/vocabulary">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">🔤</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Словарь
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Новые слова
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/grammar">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">📖</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Грамматика
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Справочник
-              </p>
-            </div>
-          </Card>
-        </Link>
-
-        <Link to="/exercises">
-          <Card
-            variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
-          >
-            <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">✏️</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
-                Упражнения
-              </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                Повторение
-              </p>
-            </div>
-          </Card>
-        </Link>
+        {actionCards.map((card, i) => (
+          <Link key={card.to} to={card.to}>
+            <Card
+              variant="elevated"
+              className={`cursor-pointer hover:scale-[1.03] active:scale-[0.98] transition-all duration-200 h-full bg-gradient-to-br ${card.color} ${card.borderColor} animate-slide-up`}
+              style={{ animationDelay: `${i * 0.05}s`, animationFillMode: 'backwards' }}
+            >
+              <div className="flex flex-col items-center text-center py-2 gap-2">
+                <div className={card.iconColor}>
+                  {card.icon}
+                </div>
+                <h3 className="font-semibold text-white/90 text-sm tracking-wide">
+                  {card.label}
+                </h3>
+                <p className="text-xs text-white/40">
+                  {card.sub}
+                </p>
+              </div>
+            </Card>
+          </Link>
+        ))}
       </div>
     </div>
   )

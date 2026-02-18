@@ -173,7 +173,10 @@ export default function VocabularyScreen() {
   if (!user || !profile || loading) {
     return (
       <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка...</p>
+        <div className="flex items-center gap-3">
+          <div className="w-5 h-5 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
+          <p className="text-white/40 font-medium">Загрузка...</p>
+        </div>
       </div>
     )
   }
@@ -186,7 +189,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white/90 tracking-wide">
             Новые слова
           </h1>
         </div>
@@ -207,7 +210,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white/90 tracking-wide">
             Повторение
           </h1>
         </div>
@@ -224,7 +227,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('detail')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white/90 tracking-wide">
             Практика
           </h1>
         </div>
@@ -242,13 +245,13 @@ export default function VocabularyScreen() {
               <p
                 className={`text-2xl font-bold ${
                   lastPracticeCorrect
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-red-600 dark:text-red-400'
+                    ? 'text-success-500 text-glow-cyan'
+                    : 'text-danger-400'
                 }`}
               >
                 {lastPracticeCorrect ? '✓ Правильно!' : '✗ Неправильно'}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-white/30">
                 Переход к карточке...
               </p>
             </div>
@@ -268,10 +271,10 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={handleBackToList}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white/90 tracking-wide">
             {getCardWord(selectedWord)}
           </h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+          <span className="text-sm text-white/30 ml-auto font-medium">
             {filteredWordsIndex + 1} / {filteredWords.length}
           </span>
         </div>
@@ -292,11 +295,11 @@ export default function VocabularyScreen() {
       {/* Header with title and level */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-white/90 tracking-wide">
             Словарь
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Уровень: {currentLevel}
+          <p className="text-sm text-white/40">
+            Уровень: <span className="text-primary-400 font-semibold">{currentLevel}</span>
           </p>
         </div>
         <Button variant="ghost" size="sm" onClick={handleBackToMain}>
@@ -332,8 +335,8 @@ export default function VocabularyScreen() {
       />
 
       {/* Word count */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
-        Показано: {filteredWords.length} из {allCards.length} слов
+      <p className="text-sm text-white/30">
+        Показано: <span className="text-white/60 font-medium">{filteredWords.length}</span> из {allCards.length} слов
       </p>
 
       {/* Word list */}

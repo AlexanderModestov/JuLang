@@ -41,7 +41,7 @@ export default function VocabularyList({
     return (
       <Card>
         <div className="text-center py-8">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-white/50">
             Нет слов для отображения.
           </p>
         </div>

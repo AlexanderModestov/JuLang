@@ -15,7 +15,7 @@ export default function TeacherChatButton() {
   return (
     <button
       onClick={toggleChat}
-      className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-surface-900 shadow-glow-cyan hover:shadow-glow-cyan transition-all duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-surface-900"
       aria-label="Открыть чат с учителем"
     >
       {/* Teacher icon - graduation cap */}
@@ -46,7 +46,7 @@ export default function TeacherChatButton() {
 
       {/* Unread badge */}
       {unreadCount > 0 && (
-        <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 rounded-full bg-red-500 text-white text-xs font-medium flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1.5 rounded-full bg-danger-500 text-white text-xs font-medium flex items-center justify-center shadow-[0_0_10px_rgba(255,51,102,0.4)]">
           {unreadCount > 99 ? '99+' : unreadCount}
         </span>
       )}

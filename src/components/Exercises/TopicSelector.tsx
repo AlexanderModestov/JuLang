@@ -56,12 +56,12 @@ export default function TopicSelector() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h2 className="text-lg font-bold text-white/90">
           Выбрать тему
         </h2>
         <button
           onClick={() => navigate('/exercises')}
-          className="text-sm text-primary-600 dark:text-primary-400"
+          className="text-sm text-primary-400"
         >
           Назад
         </button>
@@ -78,8 +78,8 @@ export default function TopicSelector() {
             }}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
               selectedLevel === level
-                ? 'bg-primary-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                ? 'bg-primary-500 text-white'
+                : 'bg-white/[0.06] text-white/70 hover:bg-white/[0.08]'
             }`}
           >
             {level}
@@ -90,11 +90,11 @@ export default function TopicSelector() {
       {/* Topic list */}
       {loading ? (
         <div className="flex justify-center py-8">
-          <p className="text-gray-500 dark:text-gray-400">Загрузка тем...</p>
+          <p className="text-white/40">Загрузка тем...</p>
         </div>
       ) : topics.length === 0 ? (
         <Card>
-          <p className="text-center text-gray-500 dark:text-gray-400 py-4">
+          <p className="text-center text-white/40 py-4">
             Нет тем для уровня {selectedLevel}
           </p>
         </Card>
@@ -115,16 +115,16 @@ export default function TopicSelector() {
                 onClick={() => toggleTopic(topic.topicId)}
                 className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                   isSelected
-                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                    ? 'border-primary-500 bg-primary-500/10'
+                    : 'border-white/[0.08] bg-white/[0.05] hover:border-white/[0.10]'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   {/* Checkbox */}
                   <div className={`w-5 h-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${
                     isSelected
-                      ? 'bg-primary-600 border-primary-600'
-                      : 'border-gray-300 dark:border-gray-600'
+                      ? 'bg-primary-500 border-primary-500'
+                      : 'border-white/[0.10]'
                   }`}>
                     {isSelected && (
                       <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -135,28 +135,28 @@ export default function TopicSelector() {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                      <span className="text-sm font-medium text-white/90 truncate">
                         {topic.topicName}
                       </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                      <span className="text-xs text-white/40 ml-2 flex-shrink-0">
                         {topic.solved}/{topic.total}
                       </span>
                     </div>
 
                     {/* Progress bar */}
                     <div className="mt-1.5 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                      <div className="flex-1 h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${
                             progressPercent === 100
-                              ? 'bg-green-500'
+                              ? 'bg-success-500'
                               : 'bg-primary-500'
                           }`}
                           style={{ width: `${progressPercent}%` }}
                         />
                       </div>
                       {topic.attempts > 0 && (
-                        <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
+                        <span className="text-xs text-white/40 flex-shrink-0">
                           {accuracyPercent}%
                         </span>
                       )}

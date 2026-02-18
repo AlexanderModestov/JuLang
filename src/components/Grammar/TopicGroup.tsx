@@ -23,15 +23,19 @@ export default function TopicGroup({
     <div className="mb-4">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-2 py-2 text-left focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded"
+        className="w-full flex items-center gap-2 py-2 text-left focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-surface-900 rounded"
       >
-        <span className="text-gray-500 dark:text-gray-400 w-4 text-center">
-          {isExpanded ? '\u25BC' : '\u25B6'}
-        </span>
-        <h3 className="font-semibold text-gray-900 dark:text-white">
+        <svg
+          className={`w-3.5 h-3.5 text-white/30 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M8 5l8 7-8 7z" />
+        </svg>
+        <h3 className="font-semibold text-white/90 tracking-wide">
           {groupName}
         </h3>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-white/30">
           ({topics.length})
         </span>
       </button>

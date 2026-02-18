@@ -36,7 +36,7 @@ interface TabListProps {
 export function TabList({ children, className = '' }: TabListProps) {
   return (
     <div
-      className={`flex border-b border-gray-200 dark:border-gray-700 ${className}`}
+      className={`flex gap-1 p-1 bg-white/[0.04] rounded-xl border border-white/[0.06] ${className}`}
       role="tablist"
     >
       {children}
@@ -63,12 +63,12 @@ export function Tab({ id, children, icon }: TabProps) {
       aria-selected={isActive}
       onClick={() => setActiveTab(id)}
       className={`
-        flex items-center gap-2 px-4 py-3 text-sm font-medium
-        border-b-2 -mb-px transition-colors
+        flex items-center gap-2 px-4 py-2.5 text-sm font-medium
+        rounded-lg transition-all duration-200
         ${
           isActive
-            ? 'border-primary-500 text-primary-600 dark:text-primary-400'
-            : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
+            ? 'bg-primary-500/20 text-primary-300 border border-primary-500/30 shadow-glow-cyan-sm'
+            : 'text-white/50 hover:text-white/80 hover:bg-white/[0.04] border border-transparent'
         }
       `}
     >

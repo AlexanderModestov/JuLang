@@ -16,12 +16,15 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     },
     ref
   ) => {
-    const baseStyles = 'rounded-xl'
+    const baseStyles = 'rounded-2xl transition-all duration-300'
 
     const variants = {
-      default: 'bg-white dark:bg-gray-800 shadow-md',
-      outlined: 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700',
-      elevated: 'bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow',
+      default:
+        'bg-white/[0.05] backdrop-blur-xl border border-white/[0.08]',
+      outlined:
+        'bg-white/[0.03] backdrop-blur-xl border border-white/[0.12]',
+      elevated:
+        'bg-white/[0.07] backdrop-blur-xl border border-white/[0.10] shadow-glass hover:shadow-glass-lg hover:bg-white/[0.09] hover:border-white/[0.15]',
     }
 
     const paddings = {

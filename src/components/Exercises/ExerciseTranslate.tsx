@@ -33,10 +33,10 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
   return (
     <div className="space-y-4">
       <div className="text-center">
-        <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 rounded-full mb-2">
+        <span className="inline-block px-2 py-1 text-xs bg-primary-500/10 text-primary-400 rounded-full mb-2">
           Переведите
         </span>
-        <p className="text-lg text-gray-900 dark:text-white font-medium">
+        <p className="text-lg text-white/90 font-medium">
           {exercise.question}
         </p>
       </div>
@@ -56,13 +56,13 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
           spellCheck={false}
           className={`flex-1 px-4 py-2 border-2 rounded-lg transition-colors
             focus:outline-none focus:ring-2 focus:ring-primary-500
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-            placeholder-gray-400 dark:placeholder-gray-500
+            bg-white/[0.06] text-white/90
+            placeholder-white/30
             ${answered
               ? correct
-                ? 'border-green-500'
-                : 'border-red-500'
-              : 'border-gray-300 dark:border-gray-600'
+                ? 'border-success-500'
+                : 'border-danger-400'
+              : 'border-white/[0.10]'
             }`}
         />
         {!answered && (
@@ -75,8 +75,8 @@ export default function ExerciseTranslate({ exercise, onResult }: Props) {
       {answered && (
         <div className={`p-3 rounded-lg text-sm ${
           correct
-            ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300'
-            : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+            ? 'bg-success-500/10 text-success-500'
+            : 'bg-danger-500/10 text-danger-400'
         }`}>
           {!correct && (
             <p className="font-medium mb-1">

@@ -38,9 +38,9 @@ export default function LanguageSwitcher() {
   // Don't show dropdown if user has only one language
   if (displayLanguages.length <= 1) {
     return (
-      <div className="flex items-center gap-1 px-2 py-1">
+      <div className="flex items-center gap-1.5 px-2 py-1">
         <span className="text-lg">{languageFlags[currentLanguage]}</span>
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{currentLevel}</span>
+        <span className="text-xs font-semibold text-primary-400">{currentLevel}</span>
       </div>
     )
   }
@@ -49,16 +49,16 @@ export default function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] border border-transparent hover:border-white/[0.08] transition-all"
         title="Сменить язык"
         aria-label={`Текущий язык: ${languageLabels[currentLanguage]} ${currentLevel}`}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
         <span className="text-lg">{languageFlags[currentLanguage]}</span>
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{currentLevel}</span>
+        <span className="text-xs font-semibold text-primary-400">{currentLevel}</span>
         <svg
-          className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          className={`w-3.5 h-3.5 text-white/40 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ export default function LanguageSwitcher() {
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-1 py-1 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50"
+          className="absolute right-0 mt-2 py-1.5 w-52 bg-surface-700/95 backdrop-blur-2xl rounded-xl shadow-glass-lg border border-white/[0.10] z-50 animate-slide-up"
           role="listbox"
           aria-label="Выберите язык"
         >
@@ -82,26 +82,26 @@ export default function LanguageSwitcher() {
                 key={language}
                 onClick={() => handleSelect(language)}
                 className={`
-                  w-full flex items-center gap-3 px-3 py-2 text-left transition-colors
+                  w-full flex items-center gap-3 px-3.5 py-2.5 text-left transition-all
                   ${isCurrentLanguage
-                    ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                    ? 'bg-primary-500/10 text-primary-300 border-l-2 border-primary-500'
+                    : 'hover:bg-white/[0.05] border-l-2 border-transparent'
                   }
                 `}
                 role="option"
                 aria-selected={isCurrentLanguage}
               >
                 <span className="text-xl">{languageFlags[language]}</span>
-                <span className="flex-1 text-sm text-gray-900 dark:text-white">
+                <span className="flex-1 text-sm text-white/90 font-medium">
                   {languageLabels[language]}
                 </span>
                 {level && (
-                  <span className="text-xs font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+                  <span className="text-xs font-semibold text-primary-400 bg-primary-500/10 px-2 py-0.5 rounded-lg">
                     {level}
                   </span>
                 )}
                 {isCurrentLanguage && (
-                  <svg className="w-4 h-4 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}

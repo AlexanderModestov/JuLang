@@ -109,12 +109,12 @@ export default function VocabularyFilters({
               flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors
               ${
                 isFilterActive(button.key)
-                  ? 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 border border-transparent'
+                  ? 'bg-primary-500/10 text-primary-300 border border-primary-500/30'
+                  : 'bg-white/[0.06] text-white/70 hover:bg-white/[0.08] border border-transparent'
               }
               ${
                 openFilter === button.key
-                  ? 'ring-2 ring-primary-500 ring-offset-1 dark:ring-offset-gray-900'
+                  ? 'ring-2 ring-primary-500 ring-offset-1 ring-offset-surface-900'
                   : ''
               }
             `}
@@ -140,12 +140,12 @@ export default function VocabularyFilters({
       {activeFilterCount > 0 && (
         <button
           onClick={onClearFilters}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-medium text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-colors"
           title="Сбросить фильтры"
         >
           <span>✕</span>
           <span className="hidden sm:inline">Сбросить</span>
-          <span className="inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300">
+          <span className="inline-flex items-center justify-center w-5 h-5 text-xs rounded-full bg-white/[0.08] text-white/70">
             {activeFilterCount}
           </span>
         </button>

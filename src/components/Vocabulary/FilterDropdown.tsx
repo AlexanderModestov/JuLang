@@ -53,7 +53,7 @@ export default function FilterDropdown<T>({
   return (
     <div
       ref={dropdownRef}
-      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-lg shadow-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
+      className="absolute top-full left-0 mt-1 z-50 min-w-[160px] py-1 rounded-xl shadow-glass bg-white/[0.05] border border-white/[0.08] backdrop-blur-lg"
     >
       {options.map((option, index) => {
         const isSelected = option.value === value
@@ -66,15 +66,15 @@ export default function FilterDropdown<T>({
               flex items-center gap-2
               ${
                 isSelected
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-medium'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-primary-500/10 text-primary-300 font-medium'
+                  : 'text-white/70 hover:bg-white/[0.08]'
               }
             `}
           >
             {option.icon && <span>{option.icon}</span>}
             <span>{option.label}</span>
             {isSelected && (
-              <span className="ml-auto text-primary-600 dark:text-primary-400">
+              <span className="ml-auto text-primary-400">
                 ✓
               </span>
             )}

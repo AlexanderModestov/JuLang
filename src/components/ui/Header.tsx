@@ -28,17 +28,17 @@ export default function Header({ title, showBack, onBack }: HeaderProps) {
   }
 
   return (
-    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+    <header className="bg-surface-800/60 backdrop-blur-xl border-b border-white/[0.06] px-4 py-3 sticky top-0 z-40">
       <div className="max-w-4xl mx-auto flex items-center justify-between">
         {/* Left side: Logo or back button + title */}
         <div className="flex items-center gap-2">
           {!isHome && showBack !== false && (
             <button
               onClick={handleBack}
-              className="p-1 -ml-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="p-1.5 -ml-1 text-white/40 hover:text-primary-400 hover:bg-white/[0.06] rounded-lg transition-all"
               aria-label="Назад"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -46,13 +46,11 @@ export default function Header({ title, showBack, onBack }: HeaderProps) {
 
           <Link to="/" className="flex items-center gap-2">
             {isHome ? (
-              <>
-                <span className="text-xl font-bold text-gray-900 dark:text-white">
-                  JuLang
-                </span>
-              </>
+              <span className="text-xl font-bold gradient-text-cyber tracking-wider">
+                JULANG
+              </span>
             ) : (
-              <span className="text-lg font-semibold text-gray-900 dark:text-white">
+              <span className="text-lg font-semibold text-white/90 tracking-wide">
                 {title || 'JuLang'}
               </span>
             )}
@@ -66,14 +64,14 @@ export default function Header({ title, showBack, onBack }: HeaderProps) {
             <LanguageSwitcher />
 
             {/* User name */}
-            <span className="text-sm text-gray-600 dark:text-gray-400 hidden sm:inline">
+            <span className="text-sm text-white/40 hidden sm:inline font-medium">
               {profile.name}
             </span>
 
             {/* Settings icon */}
             <button
               onClick={handleSettingsClick}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+              className="p-2 text-white/40 hover:text-primary-400 hover:bg-white/[0.06] rounded-lg transition-all"
               aria-label="Настройки"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

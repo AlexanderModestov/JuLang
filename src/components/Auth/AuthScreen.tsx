@@ -4,19 +4,31 @@ export default function AuthScreen() {
   const { signInWithGoogle, /* signInWithApple, */ error, loading } = useAuth()
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-surface-900 bg-mesh flex items-center justify-center p-4">
+      {/* Ambient glow effects */}
+      <div className="fixed top-1/4 left-1/4 w-64 h-64 bg-primary-500/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="fixed bottom-1/4 right-1/4 w-48 h-48 bg-accent-500/10 rounded-full blur-[80px] pointer-events-none" />
+
+      <div className="bg-white/[0.05] backdrop-blur-2xl border border-white/[0.08] rounded-3xl shadow-glass-lg p-8 w-full max-w-md animate-slide-up">
         {/* Logo and Title */}
-        <div className="text-center mb-8">
-          <div className="text-6xl mb-4">🇫🇷</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">JuLang</h1>
-          <p className="text-gray-600">Изучай французский легко</p>
+        <div className="text-center mb-10">
+          <div className="relative inline-block mb-6">
+            {/* Geometric logo mark */}
+            <div className="w-20 h-20 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/30 to-accent-500/30 rounded-2xl rotate-12 animate-float" />
+              <div className="absolute inset-0 flex items-center justify-center bg-surface-800/80 backdrop-blur-sm rounded-2xl border border-white/[0.10]">
+                <span className="text-3xl font-extrabold gradient-text-cyber">J</span>
+              </div>
+            </div>
+          </div>
+          <h1 className="text-3xl font-bold gradient-text-cyber tracking-wider mb-2">JULANG</h1>
+          <p className="text-white/40 font-medium tracking-wide">Изучай языки легко</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700 text-sm">{error.message}</p>
+          <div className="mb-6 p-4 bg-danger-500/10 border border-danger-500/30 rounded-xl">
+            <p className="text-danger-400 text-sm">{error.message}</p>
           </div>
         )}
 
@@ -25,7 +37,7 @@ export default function AuthScreen() {
           <button
             onClick={signInWithGoogle}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 bg-white/[0.06] border border-white/[0.10] rounded-xl hover:bg-white/[0.10] hover:border-white/[0.16] transition-all disabled:opacity-40 disabled:cursor-not-allowed group"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -45,30 +57,30 @@ export default function AuthScreen() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            <span className="text-gray-700 font-medium">Войти через Google</span>
+            <span className="text-white/80 font-semibold group-hover:text-white transition-colors tracking-wide">Войти через Google</span>
           </button>
 
 {/* Apple Sign In - temporarily disabled
           <button
             onClick={signInWithApple}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-5 py-3.5 bg-white text-surface-900 rounded-xl hover:bg-white/90 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
             </svg>
-            <span className="font-medium">Войти через Apple</span>
+            <span className="font-semibold tracking-wide">Войти через Apple</span>
           </button>
 */}
         </div>
 
         {/* Footer */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500">
+        <div className="mt-10 text-center">
+          <p className="text-xs text-white/25">
             Продолжая, вы соглашаетесь с{' '}
-            <a href="#" className="text-blue-600 hover:underline">условиями использования</a>
+            <a href="#" className="text-primary-500/60 hover:text-primary-400 transition-colors">условиями использования</a>
             {' '}и{' '}
-            <a href="#" className="text-blue-600 hover:underline">политикой конфиденциальности</a>
+            <a href="#" className="text-primary-500/60 hover:text-primary-400 transition-colors">политикой конфиденциальности</a>
           </p>
         </div>
       </div>

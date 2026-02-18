@@ -16,7 +16,7 @@ import Card from '@/components/ui/Card'
 
 const LEVEL_ORDER: FrenchLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
-/* ── Accordion section ─────────────────────────────────────── */
+/* Accordion section */
 
 function AccordionSection({
   title,
@@ -32,19 +32,23 @@ function AccordionSection({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+    <div className="border-b border-white/[0.06] last:border-b-0">
       <button
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-2 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded"
+        className="w-full flex items-center gap-2 py-3.5 text-left focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-surface-900 rounded"
       >
-        <span className="text-gray-500 dark:text-gray-400 w-4 text-center text-sm">
-          {open ? '\u25BC' : '\u25B6'}
-        </span>
-        <span className="font-semibold text-gray-900 dark:text-white">
+        <svg
+          className={`w-3.5 h-3.5 text-white/30 transition-transform duration-200 ${open ? 'rotate-90' : ''}`}
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M8 5l8 7-8 7z" />
+        </svg>
+        <span className="font-semibold text-white/90 tracking-wide">
           {title}
         </span>
         {count != null && (
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+          <span className="text-sm text-white/30">
             ({count})
           </span>
         )}
@@ -54,7 +58,7 @@ function AccordionSection({
   )
 }
 
-/* ── Main component ────────────────────────────────────────── */
+/* Main component */
 
 export default function TopicDetail() {
   const { topicId } = useParams<{ topicId: string }>()
@@ -175,8 +179,8 @@ export default function TopicDetail() {
     return (
       <div className="space-y-6">
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">?</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <span className="text-5xl block mb-4 text-white/20">?</span>
+          <h2 className="text-xl font-semibold text-white/90 mb-2">
             Тема не найдена
           </h2>
           <Button onClick={() => navigate('/grammar')}>
@@ -191,8 +195,10 @@ export default function TopicDetail() {
     return (
       <div className="space-y-6">
         <Card className="text-center py-8">
-          <div className="animate-pulse text-4xl mb-4">...</div>
-          <p className="text-gray-600 dark:text-gray-400">Загрузка...</p>
+          <div className="flex justify-center mb-4">
+            <div className="w-6 h-6 border-2 border-primary-500/30 border-t-primary-500 rounded-full animate-spin" />
+          </div>
+          <p className="text-white/40">Загрузка...</p>
         </Card>
       </div>
     )
@@ -218,10 +224,10 @@ export default function TopicDetail() {
           &larr; Назад
         </Button>
         <div className="flex-1">
-          <span className="inline-block px-2 py-0.5 text-xs font-medium bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300 rounded mb-1">
+          <span className="inline-block px-2.5 py-0.5 text-xs font-semibold bg-primary-500/15 text-primary-400 border border-primary-500/20 rounded-lg mb-1">
             {topic.level}
           </span>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white/90 tracking-wide">
             {topic.titleRu}
           </h1>
         </div>
@@ -230,7 +236,7 @@ export default function TopicDetail() {
       {/* French title */}
       <Card>
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+          <h2 className="text-lg font-medium text-white/90">
             {topic.title}
           </h2>
           <Button
@@ -239,26 +245,27 @@ export default function TopicDetail() {
             onClick={() => handleSpeak(topic.title)}
             aria-label="Listen to pronunciation"
           >
-            <span role="img" aria-hidden="true">
-              &#x1F50A;
-            </span>
+            <svg className="w-5 h-5 text-primary-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" />
+            </svg>
           </Button>
         </div>
       </Card>
 
       {/* Accordion content */}
       <Card padding="none" className="px-4">
-        {/* Правило — open by default */}
+        {/* Rule */}
         <AccordionSection title="Правило" defaultOpen>
-          <p className="text-gray-700 dark:text-gray-300">{explanation}</p>
+          <p className="text-white/70">{explanation}</p>
 
           {/* Enhanced explanation */}
           {card?.isEnhanced && card.enhancedExplanation && (
-            <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <p className="text-sm font-medium text-green-800 dark:text-green-300 mb-1">
+            <div className="mt-4 p-3 bg-success-500/10 border border-success-500/20 rounded-xl">
+              <p className="text-sm font-medium text-success-400 mb-1">
                 Расширенное объяснение:
               </p>
-              <p className="text-sm text-green-700 dark:text-green-400">
+              <p className="text-sm text-success-400/80">
                 {card.enhancedExplanation}
               </p>
             </div>
@@ -276,17 +283,17 @@ export default function TopicDetail() {
             </Button>
           )}
 
-          {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
+          {error && <p className="text-sm text-danger-400 mt-2">{error}</p>}
         </AccordionSection>
 
-        {/* Образование */}
+        {/* Formation */}
         {content?.formation && (
           <AccordionSection title="Образование">
-            <p className="text-gray-600 dark:text-gray-400 italic mb-2">
+            <p className="text-white/50 italic mb-2">
               {content.formation.description}
             </p>
-            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 mb-3">
-              <code className="text-sm font-mono text-gray-900 dark:text-white">
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 mb-3">
+              <code className="text-sm font-mono text-primary-300">
                 {content.formation.formula}
               </code>
             </div>
@@ -295,9 +302,9 @@ export default function TopicDetail() {
                 {content.formation.details.map((d: string, i: number) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-gray-700 dark:text-gray-300 text-sm"
+                    className="flex items-start gap-2 text-white/60 text-sm"
                   >
-                    <span className="text-gray-400 mt-0.5">&#8226;</span>
+                    <span className="text-primary-500/50 mt-0.5">&bull;</span>
                     <span>{d}</span>
                   </li>
                 ))}
@@ -306,7 +313,7 @@ export default function TopicDetail() {
           </AccordionSection>
         )}
 
-        {/* Использование */}
+        {/* Usage */}
         {content?.usage && content.usage.length > 0 && (
           <AccordionSection
             title="Использование"
@@ -316,9 +323,9 @@ export default function TopicDetail() {
               {content.usage.map((item: string, i: number) => (
                 <li
                   key={i}
-                  className="flex items-start gap-2 text-gray-700 dark:text-gray-300 text-sm"
+                  className="flex items-start gap-2 text-white/60 text-sm"
                 >
-                  <span className="text-gray-400 mt-0.5">&#8226;</span>
+                  <span className="text-primary-500/50 mt-0.5">&bull;</span>
                   <span>{item}</span>
                 </li>
               ))}
@@ -326,20 +333,20 @@ export default function TopicDetail() {
           </AccordionSection>
         )}
 
-        {/* Исключения */}
+        {/* Exceptions */}
         {content?.exceptions && content.exceptions.length > 0 && (
           <AccordionSection
             title="Исключения"
             count={content.exceptions.length}
           >
-            <div className="border-l-3 border-red-400 pl-3">
+            <div className="border-l-2 border-danger-500/40 pl-3">
               <ul className="space-y-2">
                 {content.exceptions.map((item: string, i: number) => (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-gray-700 dark:text-gray-300 text-sm"
+                    className="flex items-start gap-2 text-white/60 text-sm"
                   >
-                    <span className="text-red-400 mt-0.5">&#8226;</span>
+                    <span className="text-danger-400/70 mt-0.5">&bull;</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -348,7 +355,7 @@ export default function TopicDetail() {
           </AccordionSection>
         )}
 
-        {/* Примеры */}
+        {/* Examples */}
         {examples.length > 0 && (
           <AccordionSection title="Примеры" count={examples.length}>
             <div className="space-y-3">
@@ -356,10 +363,10 @@ export default function TopicDetail() {
                 (ex: { french: string; russian: string }, i: number) => (
                   <div
                     key={i}
-                    className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-lg"
+                    className="bg-white/[0.04] border border-white/[0.06] p-3 rounded-xl"
                   >
                     <div className="flex items-center justify-between">
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-white/90">
                         {ex.french}
                       </p>
                       <Button
@@ -368,12 +375,13 @@ export default function TopicDetail() {
                         onClick={() => handleSpeak(ex.french)}
                         aria-label="Listen to example"
                       >
-                        <span role="img" aria-hidden="true">
-                          &#x1F50A;
-                        </span>
+                        <svg className="w-4 h-4 text-primary-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                          <path d="M15.54 8.46a5 5 0 010 7.07" />
+                        </svg>
                       </Button>
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <p className="text-sm text-white/40 mt-1">
                       {ex.russian}
                     </p>
                   </div>
@@ -383,7 +391,7 @@ export default function TopicDetail() {
           </AccordionSection>
         )}
 
-        {/* Типичные ошибки */}
+        {/* Common Mistakes */}
         {commonMistakes.length > 0 && (
           <AccordionSection
             title="Типичные ошибки"
@@ -391,23 +399,23 @@ export default function TopicDetail() {
           >
             <ul className="space-y-2">
               {commonMistakes.map((mistake: string, i: number) => {
-                // Parse "wrong → right" format
-                const parts = mistake.split(' → ')
+                // Parse "wrong -> right" format
+                const parts = mistake.split(' \u2192 ')
                 if (parts.length === 2) {
                   return (
                     <li
                       key={i}
                       className="flex items-start gap-2 text-sm"
                     >
-                      <span className="text-amber-500 flex-shrink-0 mt-0.5">
+                      <span className="text-warning-500 flex-shrink-0 mt-0.5 font-bold">
                         !
                       </span>
-                      <span className="text-gray-700 dark:text-gray-300">
-                        <span className="line-through text-red-500 dark:text-red-400">
+                      <span className="text-white/60">
+                        <span className="line-through text-danger-400/70">
                           {parts[0]}
                         </span>
-                        {' → '}
-                        <span className="text-green-600 dark:text-green-400">
+                        {' \u2192 '}
+                        <span className="text-success-400">
                           {parts[1]}
                         </span>
                       </span>
@@ -417,9 +425,9 @@ export default function TopicDetail() {
                 return (
                   <li
                     key={i}
-                    className="flex items-start gap-2 text-gray-700 dark:text-gray-300 text-sm"
+                    className="flex items-start gap-2 text-white/60 text-sm"
                   >
-                    <span className="text-amber-500 flex-shrink-0 mt-0.5">
+                    <span className="text-warning-500 flex-shrink-0 mt-0.5 font-bold">
                       !
                     </span>
                     <span>{mistake}</span>
@@ -430,16 +438,18 @@ export default function TopicDetail() {
           </AccordionSection>
         )}
 
-        {/* Подсказки */}
+        {/* Tips */}
         {content?.tips && content.tips.length > 0 && (
           <AccordionSection title="Подсказки" count={content.tips.length}>
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-lg p-3 space-y-2">
+            <div className="bg-warning-500/10 border border-warning-500/20 rounded-xl p-3 space-y-2">
               {content.tips.map((tip: string, i: number) => (
                 <div
                   key={i}
-                  className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300"
+                  className="flex items-start gap-2 text-sm text-white/60"
                 >
-                  <span className="flex-shrink-0">&#x1F4A1;</span>
+                  <svg className="w-4 h-4 text-warning-400 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z" />
+                  </svg>
                   <span>{tip}</span>
                 </div>
               ))}

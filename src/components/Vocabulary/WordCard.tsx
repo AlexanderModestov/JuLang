@@ -15,9 +15,9 @@ interface WordCardProps {
 
 // Status display configuration
 const statusConfig: Record<LearningStatus, { icon: string; label: string; color: string }> = {
-  new: { icon: '❓', label: 'Новое', color: 'text-blue-600 dark:text-blue-400' },
-  learning: { icon: '📖', label: 'Изучается', color: 'text-yellow-600 dark:text-yellow-400' },
-  learned: { icon: '✅', label: 'Выучено', color: 'text-green-600 dark:text-green-400' },
+  new: { icon: '❓', label: 'Новое', color: 'text-primary-400' },
+  learning: { icon: '📖', label: 'Изучается', color: 'text-warning-400' },
+  learned: { icon: '✅', label: 'Выучено', color: 'text-success-500' },
 }
 
 // Frequency labels in Russian
@@ -32,7 +32,7 @@ const frequencyLabels: Record<1 | 2 | 3 | 4 | 5, string> = {
 // Difficulty stars display
 function DifficultyStars({ difficulty }: { difficulty: 1 | 2 | 3 }) {
   return (
-    <span className="text-yellow-500" title={`Сложность: ${difficulty}`}>
+    <span className="text-warning-400" title={`Сложность: ${difficulty}`}>
       {'⭐'.repeat(difficulty)}
     </span>
   )
@@ -48,12 +48,12 @@ function FrequencyScale({ frequency }: { frequency: 1 | 2 | 3 | 4 | 5 }) {
   return (
     <div className="flex items-center gap-2 text-sm">
       <span
-        className="font-mono text-gray-600 dark:text-gray-400"
+        className="font-mono text-white/50"
         title={`Частотность: ${label}`}
       >
         {scale}
       </span>
-      <span className="text-gray-500 dark:text-gray-400">{label}</span>
+      <span className="text-white/40">{label}</span>
     </div>
   )
 }
@@ -75,7 +75,7 @@ export default function WordCard({
     <Card>
       <div className="space-y-4">
         {/* Image placeholder or actual image */}
-        <div className="w-full h-40 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden flex items-center justify-center">
+        <div className="w-full h-40 bg-white/[0.06] rounded-xl overflow-hidden flex items-center justify-center">
           {word.imageUrl ? (
             <img
               src={word.imageUrl}
@@ -83,7 +83,7 @@ export default function WordCard({
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="text-gray-400 dark:text-gray-500 text-4xl">🖼️</div>
+            <div className="text-white/30 text-4xl">🖼️</div>
           )}
         </div>
 
@@ -91,10 +91,10 @@ export default function WordCard({
         <div className="text-center">
           <button
             onClick={() => handleSpeak(getWordWithArticle(word))}
-            className="text-3xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 transition-colors inline-flex items-center gap-2"
+            className="text-3xl font-bold text-white/90 hover:text-primary-400 transition-colors inline-flex items-center gap-2"
           >
             {word.article && (
-              <span className="text-primary-600 dark:text-primary-400">
+              <span className="text-primary-400">
                 {word.article}
                 {word.article !== "l'" && ' '}
               </span>
@@ -105,8 +105,8 @@ export default function WordCard({
         </div>
 
         {/* Translation */}
-        <div className="text-center border-t border-gray-200 dark:border-gray-700 pt-4">
-          <p className="text-xl text-gray-800 dark:text-gray-200">{word.russian}</p>
+        <div className="text-center border-t border-white/[0.08] pt-4">
+          <p className="text-xl text-white/90">{word.russian}</p>
         </div>
 
         {/* Status, Difficulty, Frequency row */}
@@ -119,7 +119,7 @@ export default function WordCard({
 
           {/* Difficulty stars */}
           <div className="flex items-center gap-1">
-            <span className="text-gray-500 dark:text-gray-400">Сложность:</span>
+            <span className="text-white/40">Сложность:</span>
             <DifficultyStars difficulty={word.difficulty} />
           </div>
         </div>
@@ -130,20 +130,20 @@ export default function WordCard({
         </div>
 
         {/* Examples with TTS (up to 3) */}
-        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 space-y-3">
-          <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Примеры:</p>
+        <div className="bg-white/[0.03] rounded-xl p-4 space-y-3">
+          <p className="text-sm font-medium text-white/50">Примеры:</p>
           {word.examples.map((example, index) => (
-            <div key={index} className="border-l-2 border-primary-300 dark:border-primary-600 pl-3">
+            <div key={index} className="border-l-2 border-primary-500 pl-3">
               <button
                 onClick={() => handleSpeak(getExampleText(example))}
-                className="text-gray-800 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-colors text-left w-full"
+                className="text-white/90 hover:text-primary-400 transition-colors text-left w-full"
               >
                 <span className="inline-flex items-center gap-2">
                   <span className="text-lg">🔊</span>
                   <span className="italic">{getExampleText(example)}</span>
                 </span>
               </button>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 ml-7">
+              <p className="text-sm text-white/40 mt-1 ml-7">
                 {example.ru}
               </p>
             </div>
