@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JuLang Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   CSS CUSTOM PROPERTIES — DESIGN TOKENS
+   ======================================== */
+:root {
+  /* Primary */
+  --color-primary: #8B5CF6;
+  --color-primary-deep: #6D28D9;
+  --color-primary-hover: #7C3AED;
+  --color-primary-light: #A78BFA;
+  --color-primary-subtle: #EDE9FE;
+
+  /* Secondary / Surfaces */
+  --color-surface-light: #F3EFFF;
+  --color-surface-white: #FAF9FF;
+  --color-surface-pure: #FFFFFF;
+  --color-surface-card: #FFFFFF;
+
+  /* Text */
+  --color-text-primary: #1F2430;
+  --color-text-secondary: #5B6178;
+  --color-text-tertiary: #8E93A6;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-surface: #1F2430;
+
+  /* Accent */
+  --color-accent: #4C6FFF;
+  --color-accent-hover: #3B5EEE;
+  --color-accent-light: #E8EDFF;
+
+  /* Semantic */
+  --color-success: #22C55E;
+  --color-success-light: #ECFDF5;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FFFBEB;
+  --color-error: #EF4444;
+  --color-error-light: #FEF2F2;
+
+  /* Borders */
+  --color-border: #E5E2F0;
+  --color-border-light: #F0EDF8;
+  --color-border-focus: #8B5CF6;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(31, 36, 48, 0.04);
+  --shadow-sm: 0 1px 3px rgba(31, 36, 48, 0.06), 0 1px 2px rgba(31, 36, 48, 0.04);
+  --shadow-md: 0 4px 12px rgba(31, 36, 48, 0.06), 0 1px 4px rgba(31, 36, 48, 0.04);
+  --shadow-lg: 0 8px 24px rgba(31, 36, 48, 0.08), 0 2px 8px rgba(31, 36, 48, 0.04);
+  --shadow-xl: 0 16px 40px rgba(31, 36, 48, 0.10), 0 4px 12px rgba(31, 36, 48, 0.04);
+  --shadow-primary: 0 4px 14px rgba(139, 92, 246, 0.20);
+  --shadow-accent: 0 4px 14px rgba(76, 111, 255, 0.20);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* Typography */
+  --font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-base: 0.9375rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.3125rem;
+  --font-size-2xl: 1.625rem;
+  --font-size-3xl: 2rem;
+  --font-size-4xl: 2.5rem;
+  --font-size-5xl: 3.25rem;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.55;
+  --line-height-relaxed: 1.7;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: -0.01em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.06em;
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 350ms ease;
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-white);
+  letter-spacing: var(--letter-spacing-normal);
+}
+
+/* ========================================
+   LAYOUT
+   ======================================== */
+.ds-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6);
+}
+
+.ds-section {
+  margin-bottom: var(--space-20);
+}
+
+.ds-section-title {
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+.ds-section-heading {
+  font-size: var(--font-size-3xl);
+  font-weight: 800;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.ds-section-desc {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  max-width: 640px;
+  margin-bottom: var(--space-10);
+}
+
+.ds-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.ds-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.ds-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+}
+
+.ds-flex {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ds-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.ds-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ds-subsection {
+  margin-bottom: var(--space-12);
+}
+
+.ds-subsection-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-6);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.ds-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-2);
+}
+
+/* ========================================
+   HERO / HEADER
+   ======================================== */
+.ds-hero {
+  padding: var(--space-20) 0 var(--space-16);
+  text-align: center;
+  position: relative;
+}
+
+.ds-hero::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ds-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -40px;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(ellipse, rgba(76, 111, 255, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ds-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--space-8);
+}
+
+.ds-logo svg {
+  width: 72px;
+  height: 72px;
+}
+
+.ds-hero h1 {
+  font-size: var(--font-size-5xl);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.ds-hero h1 span {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-deep) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ds-hero p {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+.ds-hero-divider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: var(--radius-full);
+  margin: var(--space-10) auto 0;
+}
+
+/* ========================================
+   SECTION: COLORS
+   ======================================== */
+.ds-color-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-light);
+  transition: box-shadow var(--transition-base);
+}
+
+.ds-color-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.ds-color-swatch {
+  height: 100px;
+  position: relative;
+}
+
+.ds-color-swatch-large {
+  height: 140px;
+}
+
+.ds-color-info {
+  padding: var(--space-4);
+  background: var(--color-surface-pure);
+}
+
+.ds-color-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.ds-color-hex {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.ds-color-role {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+
+/* Gradient samples */
+.ds-gradient-card {
+  border-radius: var(--radius-lg);
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-3) var(--space-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.ds-gradient-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+/* ========================================
+   SECTION: TYPOGRAPHY
+   ======================================== */
+.ds-type-sample {
+  padding: var(--space-6) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+}
+
+.ds-type-sample:last-child {
+  border-bottom: none;
+}
+
+.ds-type-meta {
+  flex-shrink: 0;
+  width: 180px;
+}
+
+.ds-type-meta-name {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ds-type-meta-spec {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.ds-type-preview {
+  flex: 1;
+  color: var(--color-text-primary);
+}
+
+/* ========================================
+   SECTION: BUTTONS
+   ======================================== */
+.ju-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-family);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  white-space: nowrap;
+  outline: none;
+}
+
+.ju-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}
+
+/* Primary */
+.ju-btn-primary {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.ju-btn-primary:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-primary);
+  transform: translateY(-1px);
+}
+
+.ju-btn-primary:active {
+  background: var(--color-primary-deep);
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Secondary */
+.ju-btn-secondary {
+  background: var(--color-surface-pure);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+}
+
+.ju-btn-secondary:hover {
+  background: var(--color-surface-light);
+  border-color: var(--color-primary-light);
+  color: var(--color-primary-deep);
+}
+
+.ju-btn-secondary:active {
+  background: var(--color-primary-subtle);
+}
+
+/* Ghost */
+.ju-btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+}
+
+.ju-btn-ghost:hover {
+  background: var(--color-surface-light);
+  color: var(--color-primary);
+}
+
+.ju-btn-ghost:active {
+  background: var(--color-primary-subtle);
+}
+
+/* Accent */
+.ju-btn-accent {
+  background: var(--color-accent);
+  color: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+}
+
+.ju-btn-accent:hover {
+  background: var(--color-accent-hover);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-1px);
+}
+
+.ju-btn-accent:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Danger */
+.ju-btn-danger {
+  background: transparent;
+  color: var(--color-error);
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(239, 68, 68, 0.3);
+}
+
+.ju-btn-danger:hover {
+  background: var(--color-error-light);
+  border-color: var(--color-error);
+}
+
+.ju-btn-danger:active {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* Sizes */
+.ju-btn-sm {
+  font-size: var(--font-size-sm);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.ju-btn-md {
+  font-size: var(--font-size-base);
+  padding: 10px 20px;
+}
+
+.ju-btn-lg {
+  font-size: var(--font-size-md);
+  padding: 14px 28px;
+  border-radius: var(--radius-lg);
+}
+
+/* Icon button */
+.ju-btn-icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: var(--radius-md);
+}
+
+.ju-btn-icon.ju-btn-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+/* Disabled */
+.ju-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Loading */
+.ju-btn-loading {
+  position: relative;
+  color: transparent !important;
+}
+
+.ju-btn-loading::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   SECTION: CARDS
+   ======================================== */
+.ju-card {
+  background: var(--color-surface-pure);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-light);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.ju-card-elevated {
+  box-shadow: var(--shadow-sm);
+  border-color: transparent;
+}
+
+.ju-card-elevated:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.ju-card-interactive {
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  border-color: transparent;
+}
+
+.ju-card-interactive:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--color-primary-light);
+}
+
+.ju-card-interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.ju-card-outlined {
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+}
+
+.ju-card-outlined:hover {
+  border-color: var(--color-primary-light);
+  background: var(--color-surface-white);
+}
+
+.ju-card-accent {
+  background: var(--color-surface-light);
+  border-color: transparent;
+}
+
+/* Card inner elements */
+.ju-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.ju-card-title {
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.ju-card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+  margin-top: 2px;
+}
+
+.ju-card-body {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* ========================================
+   SECTION: INPUTS
+   ======================================== */
+.ju-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ju-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ju-input {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-surface-pure);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  outline: none;
+  transition: all var(--transition-base);
+  width: 100%;
+}
+
+.ju-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.ju-input:hover {
+  border-color: var(--color-primary-light);
+}
+
+.ju-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+.ju-input-error {
+  border-color: var(--color-error);
+}
+
+.ju-input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+  border-color: var(--color-error);
+}
+
+.ju-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--color-surface-light);
+}
+
+.ju-helper {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+.ju-error-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+/* Textarea */
+.ju-textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-surface-pure);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  outline: none;
+  transition: all var(--transition-base);
+  width: 100%;
+  min-height: 100px;
+  resize: vertical;
+  line-height: var(--line-height-normal);
+}
+
+.ju-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+/* Select */
+.ju-select {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: var(--color-surface-pure);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 40px 10px 16px;
+  outline: none;
+  transition: all var(--transition-base);
+  width: 100%;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238E93A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.ju-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.12);
+}
+
+/* Checkbox */
+.ju-checkbox-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.ju-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  background: var(--color-surface-pure);
+}
+
+.ju-checkbox.checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.ju-checkbox.checked svg {
+  opacity: 1;
+}
+
+.ju-checkbox svg {
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  color: white;
+  transition: opacity var(--transition-fast);
+}
+
+.ju-checkbox-label {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+}
+
+/* Toggle */
+.ju-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.ju-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  position: relative;
+  transition: background var(--transition-base);
+  flex-shrink: 0;
+}
+
+.ju-toggle.active {
+  background: var(--color-primary);
+}
+
+.ju-toggle-knob {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform var(--transition-base);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ju-toggle.active .ju-toggle-knob {
+  transform: translateX(20px);
+}
+
+/* ========================================
+   SECTION: NAVIGATION
+   ======================================== */
+.ju-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px var(--space-6);
+  background: var(--color-surface-pure);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.ju-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.ju-nav-logo svg {
+  width: 32px;
+  height: 32px;
+}
+
+.ju-nav-logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.ju-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ju-nav-link {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-base);
+}
+
+.ju-nav-link:hover {
+  color: var(--color-primary);
+  background: var(--color-surface-light);
+}
+
+.ju-nav-link.active {
+  color: var(--color-primary);
+  background: var(--color-primary-subtle);
+  font-weight: 600;
+}
+
+.ju-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* Tabs */
+.ju-tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1.5px solid var(--color-border-light);
+}
+
+.ju-tab {
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px;
+  transition: all var(--transition-base);
+}
+
+.ju-tab:hover {
+  color: var(--color-text-primary);
+}
+
+.ju-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* Sidebar nav */
+.ju-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ju-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 10px var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-family);
+}
+
+.ju-sidebar-item:hover {
+  background: var(--color-surface-light);
+  color: var(--color-text-primary);
+}
+
+.ju-sidebar-item.active {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.ju-sidebar-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  opacity: 0.65;
+}
+
+.ju-sidebar-item.active svg {
+  opacity: 1;
+}
+
+/* ========================================
+   SECTION: BADGES & TAGS
+   ======================================== */
+.ju-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.ju-badge-primary {
+  background: var(--color-primary-subtle);
+  color: var(--color-primary-deep);
+}
+
+.ju-badge-accent {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.ju-badge-success {
+  background: var(--color-success-light);
+  color: #16A34A;
+}
+
+.ju-badge-warning {
+  background: var(--color-warning-light);
+  color: #D97706;
+}
+
+.ju-badge-error {
+  background: var(--color-error-light);
+  color: var(--color-error);
+}
+
+.ju-badge-neutral {
+  background: #F0F0F4;
+  color: var(--color-text-secondary);
+}
+
+/* ========================================
+   SECTION: PROGRESS
+   ======================================== */
+.ju-progress {
+  height: 6px;
+  background: var(--color-border-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.ju-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  transition: width var(--transition-slow);
+}
+
+.ju-progress-fill-primary {
+  background: var(--color-primary);
+}
+
+/* ========================================
+   SECTION: TOOLTIP
+   ======================================== */
+.ju-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.ju-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text-primary);
+  color: white;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.ju-tooltip-wrap:hover .ju-tooltip {
+  opacity: 1;
+}
+
+/* ========================================
+   SECTION: ICONS (custom SVG style)
+   ======================================== */
+.ju-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke: currentColor;
+}
+
+.ju-icon-sm { width: 16px; height: 16px; }
+.ju-icon-lg { width: 24px; height: 24px; }
+
+/* ========================================
+   SHOWCASE-SPECIFIC STYLES
+   ======================================== */
+.ds-demo-box {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+}
+
+.ds-demo-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  margin-bottom: var(--space-4);
+}
+
+.ds-principle-card {
+  background: var(--color-surface-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.ds-principle-card h4 {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.ds-principle-card p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.ds-divider {
+  height: 1px;
+  background: var(--color-border-light);
+  margin: var(--space-16) 0;
+}
+
+/* Spacing visual */
+.ds-space-block {
+  background: var(--color-primary-subtle);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* Radius visual */
+.ds-radius-demo {
+  width: 80px;
+  height: 80px;
+  background: var(--color-surface-light);
+  border: 1.5px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+/* Inline code */
+code {
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.85em;
+  background: var(--color-surface-light);
+  padding: 2px 7px;
+  border-radius: 5px;
+  color: var(--color-primary-deep);
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ds-animate-in {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ds-grid-2, .ds-grid-3, .ds-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .ds-type-sample {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .ds-type-meta { width: auto; }
+  .ds-hero h1 { font-size: var(--font-size-3xl); }
+}
+</style>
+</head>
+<body>
+
+<div class="ds-page">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="ds-hero ds-animate-in">
+    <div class="ds-logo">
+      <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="4" width="64" height="52" rx="16" fill="#8B5CF6"/>
+        <path d="M20 56 L28 68 L36 56" fill="#8B5CF6"/>
+        <text x="16" y="40" font-family="Manrope, sans-serif" font-weight="800" font-size="28" fill="white" letter-spacing="-1">JL</text>
+      </svg>
+    </div>
+    <h1>JuLang <span>Design System</span></h1>
+    <p>Визуальный язык интеллектуального EdTech-продукта. Спокойный, продуманный, аккуратный.</p>
+    <div class="ds-hero-divider"></div>
+  </section>
+
+  <!-- ==================== COLORS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">01 / Цвета</div>
+    <h2 class="ds-section-heading">Цветовая система</h2>
+    <p class="ds-section-desc">Сиреневый используется как акцент, не как доминирующий цвет. Основная палитра построена на нейтральных тонах с фиолетовым подтоном.</p>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Primary</div>
+      <div class="ds-grid-4">
+        <div class="ds-color-card">
+          <div class="ds-color-swatch ds-color-swatch-large" style="background: #8B5CF6;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Сиреневый</div>
+            <div class="ds-color-hex">#8B5CF6</div>
+            <div class="ds-color-role">Кнопки, акценты, ссылки</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch ds-color-swatch-large" style="background: #6D28D9;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Глубокий фиолетовый</div>
+            <div class="ds-color-hex">#6D28D9</div>
+            <div class="ds-color-role">Hover, pressed, выделение</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch ds-color-swatch-large" style="background: #7C3AED;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Средний</div>
+            <div class="ds-color-hex">#7C3AED</div>
+            <div class="ds-color-role">Hover-состояние primary</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch ds-color-swatch-large" style="background: #A78BFA;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Светлый</div>
+            <div class="ds-color-hex">#A78BFA</div>
+            <div class="ds-color-role">Бордеры hover, декор</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Поверхности</div>
+      <div class="ds-grid-4">
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #FAF9FF; border-bottom: 1px solid #E5E2F0;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Почти белый</div>
+            <div class="ds-color-hex">#FAF9FF</div>
+            <div class="ds-color-role">Фон страницы</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #FFFFFF; border-bottom: 1px solid #E5E2F0;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Чистый белый</div>
+            <div class="ds-color-hex">#FFFFFF</div>
+            <div class="ds-color-role">Карточки, модалки</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #F3EFFF;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Светлый сиреневый</div>
+            <div class="ds-color-hex">#F3EFFF</div>
+            <div class="ds-color-role">Активные состояния, тонировка</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #EDE9FE;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Сиреневый фон</div>
+            <div class="ds-color-hex">#EDE9FE</div>
+            <div class="ds-color-role">Бейджи, подложки</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Текст и бордеры</div>
+      <div class="ds-grid-4">
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #1F2430;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Основной текст</div>
+            <div class="ds-color-hex">#1F2430</div>
+            <div class="ds-color-role">Заголовки, основной текст</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #5B6178;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Вторичный текст</div>
+            <div class="ds-color-hex">#5B6178</div>
+            <div class="ds-color-role">Описания, подтекст</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #8E93A6;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Третичный</div>
+            <div class="ds-color-hex">#8E93A6</div>
+            <div class="ds-color-role">Плейсхолдеры, метаданные</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #E5E2F0; border-bottom: 1px solid #E5E2F0;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Бордер</div>
+            <div class="ds-color-hex">#E5E2F0</div>
+            <div class="ds-color-role">Разделители, рамки</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Акцент и семантика</div>
+      <div class="ds-grid-4">
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #4C6FFF;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Спокойный синий</div>
+            <div class="ds-color-hex">#4C6FFF</div>
+            <div class="ds-color-role">Прогресс, интерактив</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #22C55E;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Успех</div>
+            <div class="ds-color-hex">#22C55E</div>
+            <div class="ds-color-role">Правильные ответы, статусы</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #F59E0B;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Предупреждение</div>
+            <div class="ds-color-hex">#F59E0B</div>
+            <div class="ds-color-role">Внимание, напоминания</div>
+          </div>
+        </div>
+        <div class="ds-color-card">
+          <div class="ds-color-swatch" style="background: #EF4444;"></div>
+          <div class="ds-color-info">
+            <div class="ds-color-name">Ошибка</div>
+            <div class="ds-color-hex">#EF4444</div>
+            <div class="ds-color-role">Ошибки, удаление</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Градиенты</div>
+      <p class="ds-note" style="margin-bottom: var(--space-4);">Мягкие, едва заметные. Не кислотные, не маркетинговые.</p>
+      <div class="ds-grid-3">
+        <div class="ds-gradient-card" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">
+          <span class="ds-gradient-label">Primary Gradient</span>
+        </div>
+        <div class="ds-gradient-card" style="background: linear-gradient(135deg, #8B5CF6 0%, #4C6FFF 100%);">
+          <span class="ds-gradient-label">Brand Blend</span>
+        </div>
+        <div class="ds-gradient-card" style="background: linear-gradient(135deg, #F3EFFF 0%, #E8EDFF 100%);">
+          <span class="ds-gradient-label" style="color: var(--color-text-secondary); text-shadow: none;">Surface Tint</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== TYPOGRAPHY ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">02 / Типографика</div>
+    <h2 class="ds-section-heading">Шрифтовая система</h2>
+    <p class="ds-section-desc">Manrope &mdash; геометрический гротеск с теплым характером. Один шрифт для всей иерархии, различие через размер и насыщенность.</p>
+
+    <div class="ds-subsection">
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Display</div>
+          <div class="ds-type-meta-spec">52px / 800 / -0.035em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 3.25rem; font-weight: 800; letter-spacing: -0.035em; line-height: 1.1;">
+          Изучай языки
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Heading 1</div>
+          <div class="ds-type-meta-spec">40px / 800 / -0.025em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.2;">
+          Грамматика французского
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Heading 2</div>
+          <div class="ds-type-meta-spec">32px / 700 / -0.025em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 2rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.25;">
+          Раздел упражнений
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Heading 3</div>
+          <div class="ds-type-meta-spec">26px / 700 / -0.02em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 1.625rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.3;">
+          Спряжение глаголов
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Heading 4</div>
+          <div class="ds-type-meta-spec">21px / 700 / -0.01em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 1.3125rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35;">
+          Pass&eacute; compos&eacute; avec avoir
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Subheading</div>
+          <div class="ds-type-meta-spec">18px / 600 / -0.01em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.4;">
+          Правила образования и исключения
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Body</div>
+          <div class="ds-type-meta-spec">15px / 400 / -0.01em</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 0.9375rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.55;">
+          Le pass&eacute; compos&eacute; est form&eacute; avec l'auxiliaire avoir ou &ecirc;tre au pr&eacute;sent de l'indicatif suivi du participe pass&eacute; du verbe. C'est le temps le plus utilis&eacute; pour exprimer une action achev&eacute;e dans le pass&eacute;.
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Small</div>
+          <div class="ds-type-meta-spec">13px / 500 / normal</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 0.8125rem; font-weight: 500; letter-spacing: 0; line-height: 1.5; color: var(--color-text-secondary);">
+          Последний раз повторено 2 дня назад. Следующее повторение через 5 дней.
+        </div>
+      </div>
+
+      <div class="ds-type-sample">
+        <div class="ds-type-meta">
+          <div class="ds-type-meta-name">Caption</div>
+          <div class="ds-type-meta-spec">12px / 600 / 0.06em / uppercase</div>
+        </div>
+        <div class="ds-type-preview" style="font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; line-height: 1.4; text-transform: uppercase; color: var(--color-text-tertiary);">
+          Уровень A2 &middot; Грамматика
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== BUTTONS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">03 / Кнопки</div>
+    <h2 class="ds-section-heading">Стиль кнопок</h2>
+    <p class="ds-section-desc">Четыре варианта. Primary для главного действия, secondary для второстепенного, ghost для контекстных действий, accent для прогресса.</p>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Варианты</div>
+      <div class="ds-demo-box">
+        <div class="ds-flex-wrap" style="gap: 16px;">
+          <button class="ju-btn ju-btn-primary ju-btn-md">Начать урок</button>
+          <button class="ju-btn ju-btn-secondary ju-btn-md">Подробнее</button>
+          <button class="ju-btn ju-btn-ghost ju-btn-md">Отмена</button>
+          <button class="ju-btn ju-btn-accent ju-btn-md">Продолжить</button>
+          <button class="ju-btn ju-btn-danger ju-btn-md">Удалить</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Размеры</div>
+      <div class="ds-demo-box">
+        <div class="ds-flex-wrap" style="align-items: center; gap: 16px;">
+          <button class="ju-btn ju-btn-primary ju-btn-sm">Small</button>
+          <button class="ju-btn ju-btn-primary ju-btn-md">Medium</button>
+          <button class="ju-btn ju-btn-primary ju-btn-lg">Large</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">С иконками</div>
+      <div class="ds-demo-box">
+        <div class="ds-flex-wrap" style="gap: 16px;">
+          <button class="ju-btn ju-btn-primary ju-btn-md">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg>
+            Начать практику
+          </button>
+          <button class="ju-btn ju-btn-secondary ju-btn-md">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Добавить тему
+          </button>
+          <button class="ju-btn ju-btn-ghost ju-btn-icon">
+            <svg class="ju-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          </button>
+          <button class="ju-btn ju-btn-ghost ju-btn-icon">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="m21 21-4.35-4.35"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Состояния</div>
+      <div class="ds-demo-box">
+        <div class="ds-demo-label">Hover &mdash; наведите курсор</div>
+        <div class="ds-flex-wrap" style="gap: 16px; margin-bottom: 24px;">
+          <button class="ju-btn ju-btn-primary ju-btn-md">Hover me</button>
+          <button class="ju-btn ju-btn-secondary ju-btn-md">Hover me</button>
+          <button class="ju-btn ju-btn-ghost ju-btn-md">Hover me</button>
+        </div>
+
+        <div class="ds-demo-label">Disabled</div>
+        <div class="ds-flex-wrap" style="gap: 16px; margin-bottom: 24px;">
+          <button class="ju-btn ju-btn-primary ju-btn-md" disabled>Недоступно</button>
+          <button class="ju-btn ju-btn-secondary ju-btn-md" disabled>Недоступно</button>
+          <button class="ju-btn ju-btn-accent ju-btn-md" disabled>Недоступно</button>
+        </div>
+
+        <div class="ds-demo-label">Loading</div>
+        <div class="ds-flex-wrap" style="gap: 16px;">
+          <button class="ju-btn ju-btn-primary ju-btn-md ju-btn-loading">Loading</button>
+          <button class="ju-btn ju-btn-accent ju-btn-md ju-btn-loading">Loading</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== CARDS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">04 / Карточки</div>
+    <h2 class="ds-section-heading">Стиль карточек</h2>
+    <p class="ds-section-desc">Карточки &mdash; основной контейнер контента. Мягкие тени, аккуратные бордеры, округления 16px.</p>
+
+    <div class="ds-grid-3">
+      <!-- Default card -->
+      <div class="ju-card">
+        <div class="ju-card-header">
+          <div>
+            <div class="ju-card-title">Базовая карточка</div>
+            <div class="ju-card-subtitle">Default variant</div>
+          </div>
+          <span class="ju-badge ju-badge-neutral">A1</span>
+        </div>
+        <div class="ju-card-body">
+          Стандартная карточка с бордером. Используется для статичного контента без интерактивности.
+        </div>
+      </div>
+
+      <!-- Elevated card -->
+      <div class="ju-card ju-card-elevated">
+        <div class="ju-card-header">
+          <div>
+            <div class="ju-card-title">Приподнятая</div>
+            <div class="ju-card-subtitle">Elevated variant</div>
+          </div>
+          <span class="ju-badge ju-badge-primary">Active</span>
+        </div>
+        <div class="ju-card-body">
+          Карточка с тенью, hover-эффект поднятия. Для основных блоков контента.
+        </div>
+      </div>
+
+      <!-- Interactive card -->
+      <div class="ju-card ju-card-interactive">
+        <div class="ju-card-header">
+          <div>
+            <div class="ju-card-title">Интерактивная</div>
+            <div class="ju-card-subtitle">Interactive variant</div>
+          </div>
+          <svg class="ju-icon" style="color: var(--color-text-tertiary);" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+        </div>
+        <div class="ju-card-body">
+          Кликабельная. Используется для навигации: список тем, уроков, упражнений.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-6);"></div>
+
+    <div class="ds-grid-2">
+      <!-- Outlined card -->
+      <div class="ju-card ju-card-outlined">
+        <div class="ju-card-header">
+          <div>
+            <div class="ju-card-title">Outlined</div>
+            <div class="ju-card-subtitle">Только бордер, без тени</div>
+          </div>
+        </div>
+        <div class="ju-card-body">
+          Лёгкая карточка для вторичного контента. Бордер получает акцент при hover.
+        </div>
+      </div>
+
+      <!-- Accent surface card -->
+      <div class="ju-card ju-card-accent">
+        <div class="ju-card-header">
+          <div>
+            <div class="ju-card-title">Accent Surface</div>
+            <div class="ju-card-subtitle">Сиреневая подложка</div>
+          </div>
+        </div>
+        <div class="ju-card-body">
+          Тонированный фон для выделения блоков: подсказки, статистика, промо-элементы.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-8);"></div>
+
+    <!-- Card composition example -->
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Пример композиции: карточка урока</div>
+      <div style="max-width: 400px;">
+        <div class="ju-card ju-card-interactive" style="padding: 0; overflow: hidden;">
+          <div style="height: 6px; background: linear-gradient(90deg, var(--color-accent), var(--color-primary)); border-radius: var(--radius-lg) var(--radius-lg) 0 0;"></div>
+          <div style="padding: var(--space-6);">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: var(--space-3);">
+              <div>
+                <span class="ju-badge ju-badge-accent" style="margin-bottom: 8px; display: inline-flex;">Conversation</span>
+                <div class="ju-card-title" style="font-size: var(--font-size-lg);">Au restaurant</div>
+                <div class="ju-card-subtitle">Заказ еды, чаевые, просьбы</div>
+              </div>
+              <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center;">
+                <svg class="ju-icon-lg" style="color: var(--color-primary); width: 22px; height: 22px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+            </div>
+            <div style="margin-top: var(--space-4);">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-size: var(--font-size-xs); color: var(--color-text-tertiary); font-weight: 500;">Прогресс</span>
+                <span style="font-size: var(--font-size-xs); color: var(--color-accent); font-weight: 600;">68%</span>
+              </div>
+              <div class="ju-progress">
+                <div class="ju-progress-fill" style="width: 68%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== INPUTS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">05 / Формы</div>
+    <h2 class="ds-section-heading">Стиль инпутов</h2>
+    <p class="ds-section-desc">Формы спокойные и чёткие. Бордер с фиолетовым подтоном, фокус через сиреневое кольцо, ненавязчивые плейсхолдеры.</p>
+
+    <div class="ds-grid-2">
+      <div class="ds-demo-box">
+        <div class="ds-demo-label">Text Input</div>
+        <div class="ds-stack" style="gap: 20px;">
+          <div class="ju-input-group">
+            <label class="ju-label">Имя пользователя</label>
+            <input class="ju-input" type="text" placeholder="Введите имя">
+          </div>
+          <div class="ju-input-group">
+            <label class="ju-label">Email</label>
+            <input class="ju-input" type="email" value="user@julang.app">
+            <span class="ju-helper">Используется для входа в аккаунт</span>
+          </div>
+          <div class="ju-input-group">
+            <label class="ju-label">Тема разговора</label>
+            <input class="ju-input ju-input-error" type="text" value="">
+            <span class="ju-error-text">Обязательное поле</span>
+          </div>
+          <div class="ju-input-group">
+            <label class="ju-label">Disabled</label>
+            <input class="ju-input" type="text" value="Недоступно" disabled>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-demo-box">
+        <div class="ds-demo-label">Other Controls</div>
+        <div class="ds-stack" style="gap: 20px;">
+          <div class="ju-input-group">
+            <label class="ju-label">Язык обучения</label>
+            <select class="ju-select">
+              <option>Francais</option>
+              <option>English</option>
+              <option>Espanol</option>
+              <option>Deutsch</option>
+            </select>
+          </div>
+          <div class="ju-input-group">
+            <label class="ju-label">Сообщение</label>
+            <textarea class="ju-textarea" placeholder="Напишите ваш ответ..."></textarea>
+          </div>
+          <div>
+            <div class="ds-demo-label" style="margin-bottom: 12px;">Чекбоксы</div>
+            <div class="ds-stack" style="gap: 12px;">
+              <div class="ju-checkbox-wrap" onclick="this.querySelector('.ju-checkbox').classList.toggle('checked')">
+                <div class="ju-checkbox checked">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </div>
+                <span class="ju-checkbox-label">Озвучивать ответы</span>
+              </div>
+              <div class="ju-checkbox-wrap" onclick="this.querySelector('.ju-checkbox').classList.toggle('checked')">
+                <div class="ju-checkbox">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                </div>
+                <span class="ju-checkbox-label">Показывать перевод</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="ds-demo-label" style="margin-bottom: 12px;">Тоггл</div>
+            <div class="ds-stack" style="gap: 12px;">
+              <div class="ju-toggle-wrap" onclick="this.querySelector('.ju-toggle').classList.toggle('active')">
+                <div class="ju-toggle active"><div class="ju-toggle-knob"></div></div>
+                <span class="ju-checkbox-label">Тёмная тема</span>
+              </div>
+              <div class="ju-toggle-wrap" onclick="this.querySelector('.ju-toggle').classList.toggle('active')">
+                <div class="ju-toggle"><div class="ju-toggle-knob"></div></div>
+                <span class="ju-checkbox-label">Уведомления</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">06 / Навигация</div>
+    <h2 class="ds-section-heading">Навигация и табы</h2>
+    <p class="ds-section-desc">Три паттерна навигации: верхняя панель, боковое меню, табы. Все используют единую систему hover-состояний и активных индикаторов.</p>
+
+    <div class="ds-subsection">
+      <div class="ds-subsection-title">Top Navigation</div>
+      <div style="border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--color-border-light);">
+        <nav class="ju-nav">
+          <a class="ju-nav-logo" href="#">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="28" height="23" rx="7" fill="#8B5CF6"/>
+              <path d="M9 25 L13 31 L17 25" fill="#8B5CF6"/>
+              <text x="7" y="19" font-family="Manrope, sans-serif" font-weight="800" font-size="12.5" fill="white" letter-spacing="-0.5">JL</text>
+            </svg>
+            <span class="ju-nav-logo-text">JuLang</span>
+          </a>
+          <div class="ju-nav-links">
+            <a class="ju-nav-link active" href="#">Главная</a>
+            <a class="ju-nav-link" href="#">Грамматика</a>
+            <a class="ju-nav-link" href="#">Разговор</a>
+            <a class="ju-nav-link" href="#">Словарь</a>
+            <a class="ju-nav-link" href="#">Упражнения</a>
+          </div>
+          <div class="ju-nav-actions">
+            <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary); font-weight: 500;">Aleksei</span>
+            <button class="ju-btn ju-btn-ghost ju-btn-icon ju-btn-sm">
+              <svg class="ju-icon" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="ds-grid-2">
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Sidebar Navigation</div>
+        <div class="ds-demo-box" style="padding: var(--space-4); max-width: 260px;">
+          <nav class="ju-sidebar-nav">
+            <button class="ju-sidebar-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              Главная
+            </button>
+            <button class="ju-sidebar-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Разговор
+            </button>
+            <button class="ju-sidebar-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+              Грамматика
+            </button>
+            <button class="ju-sidebar-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+              Словарь
+            </button>
+            <button class="ju-sidebar-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Упражнения
+            </button>
+            <button class="ju-sidebar-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+              Настройки
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Tabs</div>
+        <div class="ds-demo-box">
+          <div class="ju-tabs" style="margin-bottom: var(--space-6);">
+            <button class="ju-tab active">Все темы</button>
+            <button class="ju-tab">В процессе</button>
+            <button class="ju-tab">Завершённые</button>
+          </div>
+          <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Контент выбранной вкладки отображается здесь. Индикатор активной вкладки &mdash; сиреневая линия снизу.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== BADGES, PROGRESS, MISC ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">07 / Элементы</div>
+    <h2 class="ds-section-heading">Бейджи, прогресс, тултипы</h2>
+    <p class="ds-section-desc">Мелкие, но важные элементы системы. Каждый выполнен в едином стиле.</p>
+
+    <div class="ds-grid-2">
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Бейджи</div>
+        <div class="ds-demo-box">
+          <div class="ds-flex-wrap" style="gap: 10px;">
+            <span class="ju-badge ju-badge-primary">A2 Level</span>
+            <span class="ju-badge ju-badge-accent">In Progress</span>
+            <span class="ju-badge ju-badge-success">Completed</span>
+            <span class="ju-badge ju-badge-warning">Review</span>
+            <span class="ju-badge ju-badge-error">Overdue</span>
+            <span class="ju-badge ju-badge-neutral">Draft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Прогресс-бары</div>
+        <div class="ds-demo-box">
+          <div class="ds-stack" style="gap: 16px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-secondary);">Грамматика A1</span>
+                <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-accent);">85%</span>
+              </div>
+              <div class="ju-progress"><div class="ju-progress-fill" style="width: 85%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-secondary);">Словарь</span>
+                <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-primary);">42%</span>
+              </div>
+              <div class="ju-progress"><div class="ju-progress-fill ju-progress-fill-primary" style="width: 42%;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                <span style="font-size: var(--font-size-sm); font-weight: 500; color: var(--color-text-secondary);">Общий</span>
+                <span style="font-size: var(--font-size-sm); font-weight: 600; color: var(--color-text-tertiary);">15%</span>
+              </div>
+              <div class="ju-progress"><div class="ju-progress-fill" style="width: 15%; background: var(--color-text-tertiary);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== SPACING & RADII ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">08 / Основы</div>
+    <h2 class="ds-section-heading">Радиусы и отступы</h2>
+    <p class="ds-section-desc">Единая система пропорций. Основной радиус &mdash; 12px для компонентов, 16px для карточек и модалок.</p>
+
+    <div class="ds-grid-2">
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Border Radius</div>
+        <div class="ds-demo-box">
+          <div class="ds-flex-wrap" style="gap: 20px;">
+            <div style="text-align: center;">
+              <div class="ds-radius-demo" style="border-radius: 8px;">8px</div>
+              <div class="ds-note" style="margin-top: 6px;">SM</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="ds-radius-demo" style="border-radius: 12px;">12px</div>
+              <div class="ds-note" style="margin-top: 6px;">MD</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="ds-radius-demo" style="border-radius: 16px;">16px</div>
+              <div class="ds-note" style="margin-top: 6px;">LG</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="ds-radius-demo" style="border-radius: 20px;">20px</div>
+              <div class="ds-note" style="margin-top: 6px;">XL</div>
+            </div>
+            <div style="text-align: center;">
+              <div class="ds-radius-demo" style="border-radius: 9999px; width: 80px;">Full</div>
+              <div class="ds-note" style="margin-top: 6px;">Pill</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <div class="ds-subsection-title">Spacing Scale</div>
+        <div class="ds-demo-box">
+          <div class="ds-stack" style="gap: 8px;">
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 16px; height: 24px;">4</div><span class="ds-note">space-1 &mdash; minimal</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 32px; height: 24px;">8</div><span class="ds-note">space-2 &mdash; tight</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 48px; height: 24px;">12</div><span class="ds-note">space-3 &mdash; compact</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 64px; height: 24px;">16</div><span class="ds-note">space-4 &mdash; base</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 96px; height: 24px;">24</div><span class="ds-note">space-6 &mdash; comfortable</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 128px; height: 24px;">32</div><span class="ds-note">space-8 &mdash; spacious</span></div>
+            <div class="ds-flex" style="gap: 12px;"><div class="ds-space-block" style="width: 192px; height: 24px;">48</div><span class="ds-note">space-12 &mdash; section</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== SHADOWS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">09 / Тени</div>
+    <h2 class="ds-section-heading">Система теней</h2>
+    <p class="ds-section-desc">Мягкие, нейтральные тени с минимальным размытием. Специальные тени для primary и accent элементов с цветным подтоном.</p>
+
+    <div class="ds-flex-wrap" style="gap: 24px;">
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-xs); display: flex; align-items: center; justify-content: center;"><span class="ds-note">XS</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center;"><span class="ds-note">SM</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center;"><span class="ds-note">MD</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: center;"><span class="ds-note">LG</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: white; border-radius: var(--radius-md); box-shadow: var(--shadow-xl); display: flex; align-items: center; justify-content: center;"><span class="ds-note">XL</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: var(--color-primary); border-radius: var(--radius-md); box-shadow: var(--shadow-primary); display: flex; align-items: center; justify-content: center;"><span class="ds-note" style="color: white;">Primary</span></div>
+      </div>
+      <div style="text-align: center;">
+        <div style="width: 120px; height: 80px; background: var(--color-accent); border-radius: var(--radius-md); box-shadow: var(--shadow-accent); display: flex; align-items: center; justify-content: center;"><span class="ds-note" style="color: white;">Accent</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== ICONS ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">10 / Иконки</div>
+    <h2 class="ds-section-heading">Стиль иконок</h2>
+    <p class="ds-section-desc">Линейные, <code>stroke-width: 1.75</code>, скруглённые углы. Единый размер базово 20px. Не эмодзи, не заливка. Сдержанные и аккуратные.</p>
+
+    <div class="ds-demo-box">
+      <div class="ds-flex-wrap" style="gap: 24px;">
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <span class="ds-note">Home</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <span class="ds-note">Chat</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          </div>
+          <span class="ds-note">Grammar</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+          </div>
+          <span class="ds-note">Vocab</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <span class="ds-note">Practice</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <span class="ds-note">Timer</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg>
+          </div>
+          <span class="ds-note">Check</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <span class="ds-note">Search</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </div>
+          <span class="ds-note">Edit</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <span class="ds-note">Star</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          </div>
+          <span class="ds-note">Mic</span>
+        </div>
+        <div style="text-align: center; width: 56px;">
+          <div style="width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-surface-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px;">
+            <svg class="ju-icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </div>
+          <span class="ds-note">Compose</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: var(--space-6);">
+      <div class="ds-demo-box" style="display: inline-flex; gap: 24px; align-items: center;">
+        <div style="text-align: center;">
+          <svg style="width: 16px; height: 16px; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: var(--color-text-primary);" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="ds-note" style="margin-top: 4px;">16px</div>
+        </div>
+        <div style="text-align: center;">
+          <svg style="width: 20px; height: 20px; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: var(--color-text-primary);" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="ds-note" style="margin-top: 4px;">20px</div>
+        </div>
+        <div style="text-align: center;">
+          <svg style="width: 24px; height: 24px; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: var(--color-text-primary);" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <div class="ds-note" style="margin-top: 4px;">24px</div>
+        </div>
+        <div style="padding-left: 16px; border-left: 1px solid var(--color-border-light);">
+          <span style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">stroke-width: <code>1.75</code> &middot; stroke-linecap: <code>round</code></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ds-divider"></div>
+
+  <!-- ==================== PRINCIPLES ==================== -->
+  <section class="ds-section ds-animate-in">
+    <div class="ds-section-title">11 / Принципы</div>
+    <h2 class="ds-section-heading">Принципы использования</h2>
+    <p class="ds-section-desc">Как правильно применять дизайн-систему, чтобы интерфейс оставался консистентным и сдержанным.</p>
+
+    <div class="ds-grid-2" style="margin-bottom: var(--space-8);">
+      <div class="ds-principle-card">
+        <h4 style="color: var(--color-primary);">Сиреневый &mdash; акцент, не доминанта</h4>
+        <p>Primary-цвет используется точечно: CTA-кнопки, активные состояния навигации, фокус инпутов, бейджи. Никогда не заливать большие области сиреневым. На экране должно быть 1&ndash;2 сиреневых элемента, не больше. Остальное &mdash; нейтральные поверхности.</p>
+      </div>
+      <div class="ds-principle-card">
+        <h4 style="color: var(--color-accent);">Синий &mdash; прогресс и интерактив</h4>
+        <p>Accent-синий отвечает за прогресс-бары, индикаторы активности, интерактивные элементы обучения. Разделение primary и accent позволяет сохранить визуальную иерархию: сиреневый &mdash; навигация и бренд, синий &mdash; обучение и прогресс.</p>
+      </div>
+    </div>
+
+    <div class="ds-grid-3">
+      <div class="ds-principle-card">
+        <h4>Воздух важнее декора</h4>
+        <p>Не заполнять пространство. Щедрые отступы между секциями. Контент дышит. Меньше элементов &mdash; больше внимания каждому.</p>
+      </div>
+      <div class="ds-principle-card">
+        <h4>Один экран &mdash; одно действие</h4>
+        <p>Каждый экран имеет один главный CTA. Вторичные действия визуально подавлены. Пользователь не выбирает из десяти кнопок.</p>
+      </div>
+      <div class="ds-principle-card">
+        <h4>Консистентность</h4>
+        <p>Одинаковые отступы, одинаковые радиусы, одинаковые тени. Повторяемые паттерны создают предсказуемость и доверие.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer style="text-align: center; padding: var(--space-16) 0 var(--space-12); color: var(--color-text-tertiary); font-size: var(--font-size-sm);">
+    <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px;">
+        <rect x="2" y="2" width="28" height="23" rx="7" fill="#8B5CF6"/>
+        <path d="M9 25 L13 31 L17 25" fill="#8B5CF6"/>
+        <text x="7" y="19" font-family="Manrope, sans-serif" font-weight="800" font-size="12.5" fill="white" letter-spacing="-0.5">JL</text>
+      </svg>
+      <span style="font-weight: 700; color: var(--color-text-secondary);">JuLang Design System</span>
+    </div>
+    <p>v1.0 &middot; Manrope &middot; February 2026</p>
+  </footer>
+
+</div>
+</body>
+</html>
