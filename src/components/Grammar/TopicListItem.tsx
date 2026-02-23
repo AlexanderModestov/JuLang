@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { ChevronRight } from 'lucide-react'
 import type { GrammarTopic } from '@/types'
 
 interface TopicListItemProps {
@@ -15,14 +16,19 @@ export default function TopicListItem({ topic }: TopicListItemProps) {
   return (
     <button
       onClick={handleClick}
-      className="w-full text-left px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="w-full text-left px-4 py-3 bg-white/[0.03] border border-white/[0.06] rounded-lg hover:bg-white/[0.08] hover:border-primary-500/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500/20"
     >
-      <p className="font-medium text-gray-900 dark:text-white">
-        {topic.titleRu}
-      </p>
-      <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
-        {topic.title}
-      </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="font-medium text-white">
+            {topic.titleRu}
+          </p>
+          <p className="text-sm text-primary-400/60 mt-0.5">
+            {topic.title}
+          </p>
+        </div>
+        <ChevronRight className="w-4 h-4 text-primary-300 flex-shrink-0" />
+      </div>
     </button>
   )
 }

@@ -1,22 +1,25 @@
+import { Languages } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 
 export default function AuthScreen() {
   const { signInWithGoogle, /* signInWithApple, */ error, loading } = useAuth()
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+    <div className="min-h-screen bg-primary-900 flex items-center justify-center p-4" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(63,96,128,0.08) 0%, #111e2d 60%)' }}>
+      <div className="bg-white/[0.03] backdrop-blur-md rounded-2xl shadow-glass-lg border border-white/[0.08] p-8 w-full max-w-md animate-fade-in-up">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <div className="text-6xl mb-4">🇫🇷</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">JuLang</h1>
-          <p className="text-gray-600">Изучай французский легко</p>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/[0.06] mb-4">
+            <Languages className="w-8 h-8 text-primary-300" />
+          </div>
+          <h1 className="text-2xl font-bold text-gradient-cyber mb-2">JuLang</h1>
+          <p className="text-primary-400">Изучай французский легко</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700 text-sm">{error.message}</p>
+          <div className="mb-6 p-4 bg-red-900/20 border border-red-800/50 rounded-lg animate-fade-in">
+            <p className="text-red-400 text-sm">{error.message}</p>
           </div>
         )}
 
@@ -25,7 +28,7 @@ export default function AuthScreen() {
           <button
             onClick={signInWithGoogle}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-white/[0.08] rounded-lg bg-white/[0.03] hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -45,7 +48,7 @@ export default function AuthScreen() {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
               />
             </svg>
-            <span className="text-gray-700 font-medium">Войти через Google</span>
+            <span className="text-primary-200 font-medium">Войти через Google</span>
           </button>
 
 {/* Apple Sign In - temporarily disabled
@@ -64,11 +67,11 @@ export default function AuthScreen() {
 
         {/* Footer */}
         <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-primary-400/60">
             Продолжая, вы соглашаетесь с{' '}
-            <a href="#" className="text-blue-600 hover:underline">условиями использования</a>
+            <a href="#" className="text-primary-300 hover:underline">условиями использования</a>
             {' '}и{' '}
-            <a href="#" className="text-blue-600 hover:underline">политикой конфиденциальности</a>
+            <a href="#" className="text-primary-300 hover:underline">политикой конфиденциальности</a>
           </p>
         </div>
       </div>

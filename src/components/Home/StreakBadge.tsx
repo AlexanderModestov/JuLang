@@ -1,3 +1,5 @@
+import { Flame } from 'lucide-react'
+
 interface StreakBadgeProps {
   days: number
   size?: 'sm' | 'md' | 'lg'
@@ -11,9 +13,9 @@ const sizeStyles = {
 }
 
 const iconSizes = {
-  sm: 'text-sm',
-  md: 'text-lg',
-  lg: 'text-xl',
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-5 h-5',
 }
 
 export default function StreakBadge({
@@ -25,9 +27,9 @@ export default function StreakBadge({
 
   return (
     <div
-      className={`inline-flex items-center gap-1 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-full font-semibold ${sizeStyles[size]} ${className}`}
+      className={`inline-flex items-center gap-1 bg-amber-500/10 text-amber-400 rounded-full font-semibold ${sizeStyles[size]} ${className}`}
     >
-      <span className={iconSizes[size]}>🔥</span>
+      <Flame className={iconSizes[size]} />
       <span>{days}</span>
     </div>
   )

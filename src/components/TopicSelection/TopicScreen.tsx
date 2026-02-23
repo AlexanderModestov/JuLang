@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/contexts/AuthContext'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import { UtensilsCrossed, Plane, Briefcase, Palette, Home, Drama, Shuffle } from 'lucide-react'
 
 interface TopicCategory {
   id: string
   name: string
-  icon: string
+  icon: ReactNode
   topics: string[]
 }
 
@@ -16,37 +17,37 @@ const CATEGORIES: TopicCategory[] = [
   {
     id: 'food',
     name: 'Еда и рестораны',
-    icon: '🍽️',
+    icon: <UtensilsCrossed className="w-6 h-6" />,
     topics: ['В ресторане', 'Заказ еды', 'Французская кухня', 'Рецепты'],
   },
   {
     id: 'travel',
     name: 'Путешествия',
-    icon: '✈️',
+    icon: <Plane className="w-6 h-6" />,
     topics: ['В аэропорту', 'В отеле', 'Достопримечательности', 'Транспорт'],
   },
   {
     id: 'work',
     name: 'Работа и карьера',
-    icon: '💼',
+    icon: <Briefcase className="w-6 h-6" />,
     topics: ['Собеседование', 'В офисе', 'Деловая встреча', 'Телефонный разговор'],
   },
   {
     id: 'hobbies',
     name: 'Хобби и досуг',
-    icon: '🎨',
+    icon: <Palette className="w-6 h-6" />,
     topics: ['Спорт', 'Музыка', 'Кино', 'Книги'],
   },
   {
     id: 'daily',
     name: 'Повседневная жизнь',
-    icon: '🏠',
+    icon: <Home className="w-6 h-6" />,
     topics: ['Утро', 'Покупки', 'В городе', 'Погода'],
   },
   {
     id: 'culture',
     name: 'Культура и искусство',
-    icon: '🎭',
+    icon: <Drama className="w-6 h-6" />,
     topics: ['Музеи', 'Театр', 'Праздники', 'Традиции'],
   },
 ]
@@ -80,10 +81,10 @@ export default function TopicScreen() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-white">
           Выберите тему для разговора
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
+        <p className="text-primary-400 mt-1">
           Уровень: {currentLevel}
         </p>
       </div>
@@ -95,14 +96,16 @@ export default function TopicScreen() {
         className="w-full"
         size="lg"
       >
-        🎲 Случайная тема
+        <span className="inline-flex items-center gap-2">
+          <Shuffle className="w-5 h-5" /> Случайная тема
+        </span>
       </Button>
 
       {/* Random topic preview */}
       {randomTopic && (
-        <Card className="border-2 border-primary-300 dark:border-primary-700">
+        <Card className="border-2 border-white/[0.08]">
           <div className="text-center">
-            <p className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            <p className="text-lg font-medium text-white mb-4">
               {randomTopic}
             </p>
             <div className="flex gap-3 justify-center">
@@ -119,7 +122,7 @@ export default function TopicScreen() {
 
       {/* Custom topic */}
       <Card>
-        <h3 className="font-medium text-gray-900 dark:text-white mb-3">
+        <h3 className="font-medium text-white mb-3">
           Или введите свою тему
         </h3>
         <div className="flex gap-2">
@@ -146,12 +149,14 @@ export default function TopicScreen() {
             <Card
               key={category.id}
               variant="elevated"
-              className="cursor-pointer hover:scale-[1.02] transition-transform"
+              className="cursor-pointer hover:scale-[1.02] hover:border-primary-500/20 transition-all"
               onClick={() => handleSelectCategory(category)}
             >
               <div className="text-center">
-                <span className="text-3xl block mb-2">{category.icon}</span>
-                <h3 className="font-medium text-gray-900 dark:text-white text-sm">
+                <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-500 mx-auto mb-2">
+                  {category.icon}
+                </div>
+                <h3 className="font-medium text-white text-sm">
                   {category.name}
                 </h3>
               </div>
@@ -168,9 +173,14 @@ export default function TopicScreen() {
             >
               ← Назад
             </Button>
-            <h3 className="font-medium text-gray-900 dark:text-white">
-              {selectedCategory.icon} {selectedCategory.name}
-            </h3>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-500">
+                {selectedCategory.icon}
+              </div>
+              <h3 className="font-medium text-white">
+                {selectedCategory.name}
+              </h3>
+            </div>
           </div>
 
           <div className="space-y-2">
@@ -179,12 +189,12 @@ export default function TopicScreen() {
                 key={topic}
                 variant="outlined"
                 padding="sm"
-                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                className="cursor-pointer hover:bg-white/5 hover:border-primary-500/20 transition-colors"
                 onClick={() => handleStartConversation(topic)}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-900 dark:text-white">{topic}</span>
-                  <span className="text-gray-400">→</span>
+                  <span className="text-white">{topic}</span>
+                  <span className="text-primary-400/60">→</span>
                 </div>
               </Card>
             ))}

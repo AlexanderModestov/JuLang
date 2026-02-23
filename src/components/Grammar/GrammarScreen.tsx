@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { BookText } from 'lucide-react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import { useTeacherContext } from '@/store/teacherChatStore'
 import { getAllGrammarTopics } from '@/modules/GrammarEngine'
@@ -51,15 +52,17 @@ export default function GrammarScreen() {
   if (topics.length === 0) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-white">
           Грамматика
         </h1>
         <Card className="text-center py-8">
-          <span className="text-5xl block mb-4">📖</span>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          <div className="flex justify-center mb-4">
+            <BookText className="w-10 h-10 text-primary-300" />
+          </div>
+          <h2 className="text-xl font-semibold text-white mb-2">
             Нет доступных тем
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-primary-400">
             Грамматические правила скоро появятся.
           </p>
         </Card>
@@ -70,16 +73,16 @@ export default function GrammarScreen() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-white">
           Грамматика
         </h1>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-primary-400">
           {topics.length} тем для уровня {currentLevel}
         </span>
       </div>
 
       <Card padding="md">
-        <p className="text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-sm text-primary-400">
           Справочник грамматических правил. {languageLabels[currentLanguage]}. Выберите тему для
           изучения.
         </p>

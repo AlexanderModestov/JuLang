@@ -15,6 +15,7 @@ import type { Message, Conversation } from '@/types'
 import { languageTTSCodes } from '@/types'
 import Button from '@/components/ui/Button'
 import WordPopup from './WordPopup'
+import { Keyboard, Mic, MicOff } from 'lucide-react'
 
 export default function ConversationScreen() {
   const [searchParams] = useSearchParams()
@@ -233,10 +234,10 @@ export default function ConversationScreen() {
   return (
     <div className="flex flex-col h-[calc(100vh-140px)]">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
         <div>
-          <h2 className="font-semibold text-gray-900 dark:text-white">{topic}</h2>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <h2 className="font-semibold text-white">{topic}</h2>
+          <p className="text-sm text-primary-400/60">
             {messages.length} сообщений
           </p>
         </div>
@@ -246,14 +247,14 @@ export default function ConversationScreen() {
             size="sm"
             onClick={() => setMode('text')}
           >
-            ⌨️
+            <Keyboard className="w-4 h-4" />
           </Button>
           <Button
             variant={mode === 'voice' ? 'primary' : 'ghost'}
             size="sm"
             onClick={() => setMode('voice')}
           >
-            🎤
+            <Mic className="w-4 h-4" />
           </Button>
           <Button variant="secondary" size="sm" onClick={handleEndConversation}>
             Завершить
@@ -271,11 +272,11 @@ export default function ConversationScreen() {
             <div
               className={`max-w-[80%] p-3 rounded-xl ${
                 message.role === 'user'
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700'
+                  ? 'bg-primary-600 text-white shadow-glow-cyan'
+                  : 'bg-white/[0.04]'
               }`}
             >
-              <p className={message.role === 'user' ? 'text-white' : 'text-gray-900 dark:text-white'}>
+              <p className={message.role === 'user' ? 'text-white' : 'text-primary-100'}>
                 {message.role === 'assistant'
                   ? message.content.split(/(\s+)/).map((part, i) => {
                       const trimmed = part.replace(/[.,!?;:'"()«»\-—]/g, '')
@@ -283,7 +284,7 @@ export default function ConversationScreen() {
                       return (
                         <span
                           key={i}
-                          className="cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900/30 rounded px-0.5 transition-colors"
+                          className="cursor-pointer text-primary-500 underline decoration-primary-500/30 rounded px-0.5 transition-colors"
                           onClick={() => setPopupWord({ word: trimmed, sentence: message.content })}
                         >
                           {part}
@@ -295,7 +296,7 @@ export default function ConversationScreen() {
               {message.role === 'assistant' && (
                 <button
                   onClick={() => speak(message.content, { language: currentLanguage })}
-                  className="mt-2 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                  className="mt-2 text-xs text-primary-400/60 hover:text-primary-300"
                 >
                   Прослушать
                 </button>
@@ -306,11 +307,11 @@ export default function ConversationScreen() {
 
         {isLoading && (
           <div className="flex justify-start">
-            <div className="p-3 rounded-xl bg-gray-100 dark:bg-gray-700">
+            <div className="p-3 rounded-xl bg-white/[0.04]">
               <div className="flex gap-1">
-                <span className="animate-bounce">.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>.</span>
-                <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>.</span>
+                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '100ms' }} />
+                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
               </div>
             </div>
           </div>
@@ -320,7 +321,7 @@ export default function ConversationScreen() {
       </div>
 
       {/* Input */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="pt-4 border-t border-white/[0.06]">
         <div className="flex gap-2">
           {mode === 'text' ? (
             <>
@@ -331,13 +332,13 @@ export default function ConversationScreen() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage(input)}
                 placeholder={{
-                  fr: 'Écrivez en français...',
+                  fr: 'Ecrivez en francais...',
                   en: 'Write in English...',
-                  es: 'Escribe en español...',
+                  es: 'Escribe en espanol...',
                   de: 'Schreiben Sie auf Deutsch...',
-                  pt: 'Escreva em português...',
+                  pt: 'Escreva em portugues...',
                 }[currentLanguage] || 'Write here...'}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="flex-1 px-4 py-2 border border-white/[0.08] rounded-lg bg-white/[0.04] text-primary-50 placeholder-primary-400/40 focus:outline-none focus:ring-2 focus:ring-primary-500/20"
                 disabled={isLoading}
                 autoComplete="off"
                 autoCorrect="off"
@@ -356,12 +357,20 @@ export default function ConversationScreen() {
               className={`flex-1 ${isListening ? 'bg-red-600 hover:bg-red-700' : ''}`}
               size="lg"
             >
-              {isListening ? '🔴 Запись...' : '🎤 Нажмите и говорите'}
+              {isListening ? (
+                <span className="inline-flex items-center gap-2">
+                  <MicOff className="w-4 h-4" /> Запись...
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2">
+                  <Mic className="w-5 h-5" /> Нажмите и говорите
+                </span>
+              )}
             </Button>
           )}
         </div>
         {input && mode === 'voice' && (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-2 text-sm text-primary-400/60">
             Распознано: {input}
           </p>
         )}

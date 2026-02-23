@@ -1,4 +1,12 @@
 import { Link } from 'react-router-dom'
+import {
+  MessageCircle,
+  BookOpen,
+  BookText,
+  PenLine,
+  Clock,
+  BarChart3,
+} from 'lucide-react'
 import { useAuthContext } from '@/contexts/AuthContext'
 import type { Language } from '@/types'
 import { useTeacherContext } from '@/store/teacherChatStore'
@@ -41,7 +49,7 @@ export default function HomeScreen() {
     <div className="space-y-6">
       {/* Greeting */}
       <div className="text-center py-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-2xl font-bold text-gradient-cyber">
           {greetings[currentLanguage]}, {profile.name}!
         </h1>
       </div>
@@ -59,22 +67,19 @@ export default function HomeScreen() {
       {stats && (
         <div className="flex gap-3">
           <StatsCard
-            icon="📚"
+            icon={<BookOpen className="w-5 h-5 text-primary-500" />}
             value={stats.wordsLearned}
             label="Слов изучено"
-            iconColor="#10B981"
           />
           <StatsCard
-            icon="⏱"
+            icon={<Clock className="w-5 h-5 text-primary-400" />}
             value={formatTotalTime(stats.totalDialogueMinutes)}
             label="Всего диалогов"
-            iconColor="#3B82F6"
           />
           <StatsCard
-            icon="💬"
+            icon={<BarChart3 className="w-5 h-5 text-primary-300" />}
             value={`${stats.averageDialogueMinutes} мин`}
             label="Средняя длина"
-            iconColor="#F59E0B"
           />
         </div>
       )}
@@ -82,7 +87,7 @@ export default function HomeScreen() {
       {/* Per-language progress */}
       {hasMultipleLanguages && languageStats.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide px-1">
+          <h2 className="text-sm font-semibold text-primary-400/60 uppercase tracking-wide px-1">
             Мои языки
           </h2>
           <div className="space-y-2">
@@ -101,7 +106,7 @@ export default function HomeScreen() {
       {/* Loading state */}
       {statsLoading && (
         <div className="flex justify-center py-4">
-          <div className="animate-pulse text-gray-400">Загрузка...</div>
+          <div className="animate-pulse text-primary-400/60">Загрузка...</div>
         </div>
       )}
 
@@ -110,14 +115,16 @@ export default function HomeScreen() {
         <Link to="/topics">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full animate-fade-in-up"
           >
             <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">💬</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center mb-2">
+                <MessageCircle className="w-5 h-5 text-primary-500" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">
                 Разговор
               </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-xs text-primary-400 mt-1">
                 Практика с AI
               </p>
             </div>
@@ -127,14 +134,16 @@ export default function HomeScreen() {
         <Link to="/vocabulary">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full animate-fade-in-up [animation-delay:75ms]"
           >
             <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">🔤</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center mb-2">
+                <BookOpen className="w-5 h-5 text-primary-500" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">
                 Словарь
               </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-xs text-primary-400 mt-1">
                 Новые слова
               </p>
             </div>
@@ -144,14 +153,16 @@ export default function HomeScreen() {
         <Link to="/grammar">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full animate-fade-in-up [animation-delay:150ms]"
           >
             <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">📖</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center mb-2">
+                <BookText className="w-5 h-5 text-primary-500" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">
                 Грамматика
               </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-xs text-primary-400 mt-1">
                 Справочник
               </p>
             </div>
@@ -161,14 +172,16 @@ export default function HomeScreen() {
         <Link to="/exercises">
           <Card
             variant="elevated"
-            className="cursor-pointer hover:scale-[1.02] transition-transform h-full"
+            className="cursor-pointer hover:scale-[1.02] transition-transform h-full animate-fade-in-up [animation-delay:225ms]"
           >
             <div className="flex flex-col items-center text-center py-2">
-              <span className="text-4xl mb-2">✏️</span>
-              <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center mb-2">
+                <PenLine className="w-5 h-5 text-primary-500" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">
                 Упражнения
               </h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <p className="text-xs text-primary-400 mt-1">
                 Повторение
               </p>
             </div>

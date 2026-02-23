@@ -7,6 +7,7 @@ import type { FrenchLevel } from '@/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
+import { Loader2 } from 'lucide-react'
 
 type Step = 'welcome' | 'name' | 'level' | 'creating'
 
@@ -64,15 +65,15 @@ export default function OnboardingFlow() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-primary-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         {step === 'welcome' && (
-          <div className="text-center">
+          <div className="text-center animate-in fade-in duration-300">
             <span className="text-6xl mb-4 block">{languageFlags[currentLanguage]}</span>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-2xl font-bold text-white mb-2">
               Добро пожаловать в JuLang!
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-primary-400 mb-6">
               Ваш персональный помощник для изучения языков
             </p>
             <Button onClick={() => setStep('name')} size="lg" className="w-full">
@@ -82,8 +83,8 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'name' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+            <h2 className="text-xl font-bold text-white mb-4">
               Как вас зовут?
             </h2>
             <Input
@@ -104,8 +105,8 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'level' && (
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="animate-in fade-in slide-in-from-right-4 duration-300">
+            <h2 className="text-xl font-bold text-white mb-4">
               Ваш уровень ({languageLabels[currentLanguage]})
             </h2>
             <div className="space-y-2 mb-6">
@@ -114,18 +115,18 @@ export default function OnboardingFlow() {
                   key={l.value}
                   onClick={() => setLevel(l.value)}
                   className={`
-                    w-full text-left p-3 rounded-lg border-2 transition-colors
+                    w-full text-left p-3 rounded-lg border-2 transition-all duration-200
                     ${
                       level === l.value
-                        ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                        : 'border-gray-200 dark:border-gray-700 hover:border-gray-300'
+                        ? 'border-primary-500/30 bg-primary-500/10 shadow-glow-cyan'
+                        : 'border-white/[0.06] hover:border-white/[0.12] hover:bg-white/5'
                     }
                   `}
                 >
-                  <div className="font-medium text-gray-900 dark:text-white">
+                  <div className="font-medium text-white">
                     {l.label}
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="text-sm text-primary-400/60">
                     {l.description}
                   </div>
                 </button>
@@ -146,9 +147,11 @@ export default function OnboardingFlow() {
         )}
 
         {step === 'creating' && (
-          <div className="text-center py-8">
-            <div className="animate-spin text-4xl mb-4">⏳</div>
-            <p className="text-gray-600 dark:text-gray-400">
+          <div className="text-center py-8 animate-in fade-in duration-300">
+            <div className="flex justify-center mb-4">
+              <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
+            </div>
+            <p className="text-primary-400">
               Создаём карточки грамматики...
             </p>
           </div>

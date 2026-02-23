@@ -3,20 +3,21 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
+  color: #e1e8ef;
+  background-color: #111e2d;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
 }
 
 .dark {
-  color: #e5e7eb;
-  background-color: #1f2937;
+  color: #e1e8ef;
+  background-color: #111e2d;
 }
 
 * {
@@ -29,20 +30,150 @@ html, body, #root {
   height: 100%;
 }
 
+/* ═══════════════════════════════════════
+   SCROLLBAR — Quiet Steel
+   ═══════════════════════════════════════ */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(63, 96, 128, 0.18);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(63, 96, 128, 0.32);
+}
+
+/* ═══════════════════════════════════════
+   RANGE INPUT — Steel Slider
+   ═══════════════════════════════════════ */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #3f6080;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #4a7090;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+/* ═══════════════════════════════════════
+   SELECTION
+   ═══════════════════════════════════════ */
+::selection {
+  background: rgba(63, 96, 128, 0.3);
+  color: #ffffff;
+}
+
+/* ═══════════════════════════════════════
+   COMPONENT LAYER — Quiet Steel Design System
+   ═══════════════════════════════════════ */
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   }
 
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply bg-white/5 hover:bg-white/10 text-primary-200 font-medium py-2 px-4 rounded-lg transition-all duration-200 border border-white/10;
   }
 
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6;
+    @apply rounded-xl p-6 transition-all duration-200;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .card:hover {
+    border-color: rgba(63, 96, 128, 0.18);
   }
 
   .input {
-    @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:text-white;
+    @apply w-full px-4 py-2 rounded-lg transition-all duration-200;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #e1e8ef;
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: rgba(63, 96, 128, 0.45);
+    box-shadow: 0 0 0 3px rgba(63, 96, 128, 0.1);
+  }
+
+  /* Glass panel utility */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Gradient text utility */
+  .text-gradient-cyber {
+    background: linear-gradient(135deg, #94a7bb, #3f6080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-magenta {
+    background: linear-gradient(135deg, #6f89a1, #32506e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ═══════════════════════════════════════
+   UTILITY LAYER
+   ═══════════════════════════════════════ */
+@layer utilities {
+  .glow-border-cyan {
+    border-color: rgba(63, 96, 128, 0.2);
+    box-shadow: inset 0 0 12px rgba(63, 96, 128, 0.03), 0 0 8px rgba(63, 96, 128, 0.04);
+  }
+
+  .glow-border-magenta {
+    border-color: rgba(63, 96, 128, 0.2);
+    box-shadow: inset 0 0 12px rgba(63, 96, 128, 0.03), 0 0 8px rgba(63, 96, 128, 0.04);
+  }
+
+  .glow-border-neon {
+    border-color: rgba(63, 96, 128, 0.2);
+    box-shadow: inset 0 0 12px rgba(63, 96, 128, 0.03), 0 0 8px rgba(63, 96, 128, 0.04);
   }
 }

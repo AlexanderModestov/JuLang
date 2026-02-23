@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { X } from 'lucide-react'
 
 interface ModalProps {
   isOpen: boolean
@@ -42,10 +43,10 @@ export default function Modal({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center animate-fade-in">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-primary-900/70 backdrop-blur-sm"
         onClick={onClose}
       />
 
@@ -53,34 +54,22 @@ export default function Modal({
       <div
         className={`
           relative ${sizes[size]} w-full mx-4
-          bg-white dark:bg-gray-800
-          rounded-xl shadow-xl
-          animate-in fade-in zoom-in-95 duration-200
+          bg-primary-800/90 backdrop-blur-xl
+          rounded-xl shadow-glass-lg border border-white/[0.08]
+          animate-scale-in
         `}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+            <h2 className="text-base font-semibold text-primary-100">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+              className="p-1 text-primary-400 hover:text-primary-200 transition-colors"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <X className="w-4.5 h-4.5" />
             </button>
           </div>
         )}

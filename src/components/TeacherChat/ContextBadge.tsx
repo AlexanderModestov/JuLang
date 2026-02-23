@@ -1,3 +1,4 @@
+import { MapPin } from 'lucide-react'
 import type { TeacherChatContext } from '@/store/teacherChatStore'
 
 interface ContextBadgeProps {
@@ -30,8 +31,8 @@ export default function ContextBadge({ context }: ContextBadgeProps) {
   const hasItem = context.itemId && context.itemPreview
 
   return (
-    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 rounded-md">
-      <span className="flex-shrink-0">📍</span>
+    <div className="flex items-center gap-1.5 px-2 py-1 text-xs text-primary-400/60 bg-white/5 rounded-md">
+      <MapPin className="w-3 h-3 flex-shrink-0" />
       <span className="truncate">
         {screenLabel}
         {hasItem && `: ${context.itemPreview}`}

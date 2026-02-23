@@ -173,7 +173,7 @@ export default function VocabularyScreen() {
   if (!user || !profile || loading) {
     return (
       <div className="flex justify-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">Загрузка...</p>
+        <p className="text-primary-400">Загрузка...</p>
       </div>
     )
   }
@@ -186,7 +186,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white">
             Новые слова
           </h1>
         </div>
@@ -207,7 +207,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('list')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white">
             Повторение
           </h1>
         </div>
@@ -224,7 +224,7 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={() => setMode('detail')}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white">
             Практика
           </h1>
         </div>
@@ -242,13 +242,13 @@ export default function VocabularyScreen() {
               <p
                 className={`text-2xl font-bold ${
                   lastPracticeCorrect
-                    ? 'text-green-600 dark:text-green-400'
-                    : 'text-red-600 dark:text-red-400'
+                    ? 'text-emerald-400'
+                    : 'text-red-400'
                 }`}
               >
                 {lastPracticeCorrect ? '✓ Правильно!' : '✗ Неправильно'}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-primary-400">
                 Переход к карточке...
               </p>
             </div>
@@ -268,10 +268,10 @@ export default function VocabularyScreen() {
           <Button variant="ghost" size="sm" onClick={handleBackToList}>
             ← Назад
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-white">
             {getCardWord(selectedWord)}
           </h1>
-          <span className="text-sm text-gray-500 dark:text-gray-400 ml-auto">
+          <span className="text-sm text-primary-400 ml-auto">
             {filteredWordsIndex + 1} / {filteredWords.length}
           </span>
         </div>
@@ -292,10 +292,10 @@ export default function VocabularyScreen() {
       {/* Header with title and level */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-white">
             Словарь
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-primary-400">
             Уровень: {currentLevel}
           </p>
         </div>
@@ -332,7 +332,7 @@ export default function VocabularyScreen() {
       />
 
       {/* Word count */}
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-sm text-primary-400">
         Показано: {filteredWords.length} из {allCards.length} слов
       </p>
 

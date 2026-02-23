@@ -1,3 +1,4 @@
+import { Clock } from 'lucide-react'
 import type { FrenchLevel } from '@/types'
 import StreakBadge from './StreakBadge'
 
@@ -22,7 +23,7 @@ export default function MainProgressCard({
 
   return (
     <div
-      className={`relative w-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-5 shadow-lg text-white ${className}`}
+      className={`relative w-full bg-gradient-to-r from-primary-600 to-neon-700 rounded-xl p-5 shadow-glow-cyan text-white ${className}`}
     >
       {/* Streak badge in top-right corner */}
       {currentStreak > 0 && (
@@ -30,7 +31,7 @@ export default function MainProgressCard({
           <StreakBadge
             days={currentStreak}
             size="sm"
-            className="bg-white/20 dark:bg-white/20 text-white dark:text-white"
+            className="bg-white/15 text-white"
           />
         </div>
       )}
@@ -48,7 +49,7 @@ export default function MainProgressCard({
         </div>
 
         {/* Progress bar */}
-        <div className="w-full bg-white/20 rounded-full h-2.5 mb-1">
+        <div className="w-full bg-white/15 rounded-full h-2.5 mb-1">
           <div
             className="bg-white rounded-full h-2.5 transition-all duration-300"
             style={{ width: `${percent}%` }}
@@ -59,7 +60,7 @@ export default function MainProgressCard({
 
       {/* Today's practice time */}
       <div className="flex items-center gap-2">
-        <span className="text-lg">⏱️</span>
+        <Clock className="w-4 h-4" />
         <span className="text-sm">
           Сегодня: <span className="font-semibold">{todayMinutes} мин</span>
         </span>

@@ -62,17 +62,17 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
+      <div className="absolute inset-0 bg-primary-900/40" onClick={onClose} />
 
       {/* Popup */}
-      <div className="relative bg-white dark:bg-gray-800 rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm p-5 space-y-4 shadow-xl">
+      <div className="relative bg-primary-800/95 backdrop-blur-xl border-t border-white/[0.08] sm:border sm:border-white/[0.08] rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm p-5 space-y-4 shadow-glass-lg">
         {loading ? (
           <div className="text-center py-4">
-            <p className="text-gray-500 dark:text-gray-400">Перевод...</p>
+            <p className="text-primary-400/60">Перевод...</p>
           </div>
         ) : error ? (
           <div className="text-center py-4">
-            <p className="text-red-500">Не удалось перевести</p>
+            <p className="text-red-400">Не удалось перевести</p>
             <Button variant="ghost" size="sm" onClick={onClose} className="mt-2">
               Закрыть
             </Button>
@@ -80,22 +80,22 @@ export default function WordPopup({ word, sentence, onClose }: WordPopupProps) {
         ) : translation ? (
           <>
             <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900 dark:text-white">
+              <p className="text-2xl font-bold text-white">
                 {translation.article && (
-                  <span className="text-primary-600 dark:text-primary-400">
+                  <span className="text-primary-500">
                     {translation.article}
                     {translation.article !== "l'" && ' '}
                   </span>
                 )}
                 {translation.lemma}
               </p>
-              <p className="text-lg text-gray-700 dark:text-gray-300 mt-2">
+              <p className="text-lg text-white mt-2">
                 {translation.russian}
               </p>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3">
-              <p className="text-sm text-gray-700 dark:text-gray-300 italic">
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm text-primary-200 italic">
                 {sentence}
               </p>
             </div>

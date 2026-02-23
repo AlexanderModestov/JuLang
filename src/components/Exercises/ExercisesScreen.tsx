@@ -80,10 +80,10 @@ export default function ExercisesScreen() {
       <Card>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-xl font-bold text-white">
               Упражнения
             </h1>
-            <span className="px-2 py-1 text-sm font-medium bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300 rounded-full">
+            <span className="px-2 py-1 text-sm font-medium bg-white/5 text-primary-300 rounded-full">
               {userLevel}
             </span>
           </div>
@@ -93,7 +93,7 @@ export default function ExercisesScreen() {
           </Button>
 
           {levelAttempts > 0 && (
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
+            <p className="text-sm text-primary-400 text-center">
               Решено {levelSolved}/{levelTotal} заданий · {accuracyPercent}% правильно
             </p>
           )}
@@ -102,7 +102,7 @@ export default function ExercisesScreen() {
 
       {/* Topic selection section */}
       <div className="space-y-3">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+        <h2 className="text-lg font-bold text-white">
           Выбрать тему
         </h2>
 
@@ -117,8 +117,8 @@ export default function ExercisesScreen() {
               }}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 selectedLevel === level
-                  ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-primary-500/10 text-primary-300 border border-primary-500/20'
+                  : 'bg-white/5 text-primary-400 border border-white/[0.06] hover:bg-white/[0.08]'
               }`}
             >
               {level}
@@ -129,11 +129,11 @@ export default function ExercisesScreen() {
         {/* Topic list */}
         {loading ? (
           <div className="flex justify-center py-8">
-            <p className="text-gray-500 dark:text-gray-400">Загрузка тем...</p>
+            <p className="text-primary-400">Загрузка тем...</p>
           </div>
         ) : topics.length === 0 ? (
           <Card>
-            <p className="text-center text-gray-500 dark:text-gray-400 py-4">
+            <p className="text-center text-primary-400 py-4">
               Нет тем для уровня {selectedLevel}
             </p>
           </Card>
@@ -154,8 +154,8 @@ export default function ExercisesScreen() {
                   onClick={() => toggleTopic(topic.topicId)}
                   className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
                     isSelected
-                      ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
-                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600'
+                      ? 'border-primary-500/30 bg-primary-500/10'
+                      : 'border-white/[0.06] bg-white/[0.03] hover:border-white/[0.08]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -163,7 +163,7 @@ export default function ExercisesScreen() {
                     <div className={`w-5 h-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${
                       isSelected
                         ? 'bg-primary-600 border-primary-600'
-                        : 'border-gray-300 dark:border-gray-600'
+                        : 'border-white/[0.08]'
                     }`}>
                       {isSelected && (
                         <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -174,28 +174,28 @@ export default function ExercisesScreen() {
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        <span className="text-sm font-medium text-white truncate">
                           {topic.topicName}
                         </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400 ml-2 flex-shrink-0">
+                        <span className="text-xs text-primary-400 ml-2 flex-shrink-0">
                           {topic.solved}/{topic.total}
                         </span>
                       </div>
 
                       {/* Progress bar */}
                       <div className="mt-1.5 flex items-center gap-2">
-                        <div className="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all ${
                               progressPercent === 100
-                                ? 'bg-green-500'
+                                ? 'bg-emerald-400'
                                 : 'bg-primary-500'
                             }`}
                             style={{ width: `${progressPercent}%` }}
                           />
                         </div>
                         {topic.attempts > 0 && (
-                          <span className="text-xs text-gray-500 dark:text-gray-400 flex-shrink-0">
+                          <span className="text-xs text-primary-400 flex-shrink-0">
                             {topicAccuracy}%
                           </span>
                         )}
